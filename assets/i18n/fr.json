@@ -1,0 +1,5 @@
+{
+  "hello": "Salut",
+  "login_with_google": "Se Connecter avec Google",
+  "greet_to": "Salut {{name}}"
+}

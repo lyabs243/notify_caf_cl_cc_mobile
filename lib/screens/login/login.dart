@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components/login_button.dart';
+import '../../models/localizations.dart';
 
 class Login extends StatelessWidget{
 
@@ -8,6 +9,8 @@ class Login extends StatelessWidget{
 
     double buttonWidth = MediaQuery.of(context).size.width/1.2;
     double iconSize = MediaQuery.of(context).size.width/2.5;
+
+    Map localization = MyLocalizations.of(context).localization;
 
     // TODO: implement build
     return new Container(
@@ -29,17 +32,17 @@ class Login extends StatelessWidget{
               children: <Widget>[
                 new SizedBox(
                   width: buttonWidth,
-                  child: LoginButton('Login with Google', LoginType.Google),
+                  child: LoginButton(localization['login_with_google'], LoginType.Google),
                 ),
                 new Padding(padding: EdgeInsets.only(bottom: 18.0)),
                 new SizedBox(
                   width: buttonWidth,
-                  child: LoginButton('Login with Facebook', LoginType.Facebook),
+                  child: LoginButton(localization['login_with_facebook'], LoginType.Facebook),
                 ),
                 new Padding(padding: EdgeInsets.only(bottom: 18.0)),
                 new SizedBox(
                   width: buttonWidth,
-                  child: LoginButton('Continue without login', LoginType.Nope),
+                  child: LoginButton(localization['continue_without_login'], LoginType.Nope),
                 ),
               ],
             ),
