@@ -27,7 +27,7 @@ class LoginButton extends StatelessWidget{
               Icons.warning
           )
       ),
-      color: Colors.green,
+      color: Theme.of(context).primaryColor,
       elevation: 10.0,
       textColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
