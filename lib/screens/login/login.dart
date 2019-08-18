@@ -16,7 +16,7 @@ class Login extends StatelessWidget{
 
     // TODO: implement build
     return new Container(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: new Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -19,7 +19,7 @@ class TextTermofuse extends StatelessWidget{
         children: [
           new TextSpan(
             text: this.title,
-            style: new TextStyle(color: Colors.black,fontSize: 18.0),
+            style: new TextStyle(color: Theme.of(context).textTheme.body1.color,fontSize: 18.0),
           ),
           new TextSpan(
             text: this.termUse,
