@@ -13,15 +13,13 @@ class User{
   String full_name=null;
   int id_accout_type;
 
+  static User currentUser;
+
   static final int GOOGLE_ACCOUNT_ID = 1;
   static final int FACEBOOK_ACCOUNT_ID = 2;
   static final int NOT_CONNECTED_ACCOUNT_ID = -1;
 
   static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifygroup.org/notifyapp/api/index.php/user/add';
-
-  User(){
-    this.fromMap();
-  }
 
   Future<bool> login(LoginType type) async{
     if(type == LoginType.Nope){
@@ -47,18 +45,23 @@ class User{
     }""";
   }
 
-  fromMap() async{
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String userString = sharedPreferences.getString('user');
-    if(userString != null) {
-      Map userMap = json.decode(userString);
-      this.id = userMap['id'];
-      this.id_subscriber = userMap['id_subscriber'];
-      this.id_subscriber = userMap['id_subscriber'];
-      this.username = userMap['username'];
-      this.full_name = userMap['full_name'];
-      this.id_account_user = userMap['id_account_user'];
+  static Future<User> getInstance() async{
+    if(currentUser == null){
+      currentUser = new User();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      String userString = sharedPreferences.getString('user');
+      if(userString != null) {
+        print(userString);
+        Map userMap = json.decode(userString);
+        currentUser.id = userMap['id'];
+        currentUser.id_subscriber = userMap['id_subscriber'];
+        currentUser.id_accout_type = userMap['id_accout_type'];
+        currentUser.username = userMap['username'];
+        currentUser.full_name = userMap['full_name'];
+        currentUser.id_account_user = userMap['id_account_user'];
+      }
     }
+    return currentUser;
   }
 
 }
