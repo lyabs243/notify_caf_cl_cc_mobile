@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../components/icons/login_icons.dart';
+import '../../../models/user.dart';
+import '../../home/home.dart';
 
 class LoginButton extends StatelessWidget{
 
   String title;
   LoginType type;
+  BuildContext context;
 
   LoginButton(String title,LoginType type){
     this.title = title;
@@ -13,9 +16,10 @@ class LoginButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     return new RaisedButton.icon(
       onPressed: (){
-
+        login();
       },
       label: new Text(this.title,textScaleFactor: 1.2,),
       icon: new Icon(
@@ -32,6 +36,17 @@ class LoginButton extends StatelessWidget{
       textColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
     );
+  }
+
+  login() async{
+    User user = new User();
+    bool isLog = await user.login(type);
+    if(isLog){
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+        return HomePage();
+      }));
+    }
   }
 
 }
