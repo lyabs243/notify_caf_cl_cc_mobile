@@ -23,7 +23,6 @@ class Login extends StatelessWidget{
           children: <Widget>[
             new Container(
               child: new Card(
-                elevation: 10.0,
                 child: Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
               ),
               width: iconSize,
