@@ -4,5 +4,6 @@
   "login_with_facebook": "Login with Facebook",
   "continue_without_login": "Continue without login",
   "term_use_text": "by logging in you accept our ",
-  "term_use": "Terms of use"
+  "term_use": "Terms of use",
+  "login": "LOGIN"
 }

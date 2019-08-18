@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'components/body.dart';
 import '../../models/localizations.dart';
+import '../login/login.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -24,6 +25,16 @@ class _HomePageState extends State<HomePage>{
     return Scaffold(
       appBar: AppBar(
         title: Text(localization['app_title']),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                return Login();
+              }));
+            },
+            child: Text(localization['login'],style: TextStyle(color: Colors.white),)
+          )
+        ],
       ),
       body: Body(),
     );
