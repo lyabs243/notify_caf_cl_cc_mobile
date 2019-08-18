@@ -2,5 +2,7 @@
   "app_title": "Notify Caf Cl & CC",
   "login_with_google": "Login with Google",
   "login_with_facebook": "Login with Facebook",
-  "continue_without_login": "Continue without login"
+  "continue_without_login": "Continue without login",
+  "term_use_text": "by logging in you accept our ",
+  "term_use": "Terms of use"
 }

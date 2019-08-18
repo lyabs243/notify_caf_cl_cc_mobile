@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'components/login_button.dart';
 import '../../models/localizations.dart';
+import 'components/text_termsofuse.dart';
 
 class Login extends StatelessWidget{
 
@@ -45,6 +47,10 @@ class Login extends StatelessWidget{
                   child: LoginButton(localization['continue_without_login'], LoginType.Nope),
                 ),
               ],
+            ),
+            new SizedBox(
+              width: buttonWidth,
+              child: new TextTermofuse(localization['term_use_text'], localization['term_use']),
             ),
           ],
         ),
