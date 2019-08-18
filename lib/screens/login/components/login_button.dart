@@ -24,7 +24,7 @@ class LoginButton extends StatelessWidget{
           (
               (this.type == LoginType.Google)?
               LoginIcons.google :
-              LoginIcons.user
+              Icons.warning
           )
       ),
       color: Colors.green,
