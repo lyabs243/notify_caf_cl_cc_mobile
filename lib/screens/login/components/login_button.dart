@@ -42,8 +42,7 @@ class LoginButton extends StatelessWidget{
     User user = new User();
     bool isLog = await user.login(type);
     if(isLog){
-      Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
         return HomePage();
       }));
     }
