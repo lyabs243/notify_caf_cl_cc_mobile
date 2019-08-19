@@ -14,7 +14,7 @@ class NotifyApi {
       'version': '1',
       'timezone': '+00:00'
     };
-
+    //print("params -- ${params}");
     if (params != null) {
       map.addAll(params);
     }
@@ -25,7 +25,7 @@ class NotifyApi {
       mapResult = json.decode(response.body);
     }
 
-    print(mapResult['NOTIFYGROUP']);
+    //print(mapResult['NOTIFYGROUP']);
 
     return mapResult;
   }
