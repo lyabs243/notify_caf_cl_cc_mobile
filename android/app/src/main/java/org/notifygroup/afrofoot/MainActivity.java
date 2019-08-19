@@ -1,4 +1,4 @@
-package org.notifygroup.flutter_cafclcc;
+package org.notifygroup.afrofoot;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
