@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage>{
                     NetworkImage(user.url_profil_pic),
                     backgroundColor: Colors.transparent,
                   ):
-                  Icon(Icons.supervised_user_circle),
+                  Image.asset('assets/icons/profile.png'),
                 )
               ],
             ),

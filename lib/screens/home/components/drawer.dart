@@ -74,7 +74,9 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 ),
                 onTap: (){
                 },
-                leading: ImageIcon(AssetImage('assets/icons/login.png'),color: Colors.white,),
+                leading: (drawerItems[i].iconPath != null) ?
+                  ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
+                  null,
               );
             }
           }),
@@ -87,8 +89,8 @@ class _HomeDrawerState extends State<HomeDrawer>{
   initDrawerItems(){
 
     DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
-    DrawerItem login = new DrawerItem(1, this.widget.localization['login'], DrawerType.item);
-    DrawerItem logout = new DrawerItem(2, this.widget.localization['logout'], DrawerType.item);
+    DrawerItem login = new DrawerItem(1, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem logout = new DrawerItem(2, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
