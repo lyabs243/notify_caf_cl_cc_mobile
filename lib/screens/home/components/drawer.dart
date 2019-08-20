@@ -63,6 +63,9 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 ),
               );
             }
+            else if(!drawerItems[i].visible){
+              return Container();
+            }
             else{
               return new ListTile(
                 title: Text(
@@ -94,9 +97,11 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
+      print('ici');
       logout.visible = false;
     }
     else{
+      print('la bas');
       login.visible = false;
     }
 
