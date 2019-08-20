@@ -69,6 +69,7 @@ class User{
           if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
             this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
             this.toMap();
+            currentUser = null;
           }
           else{
             success = false;
