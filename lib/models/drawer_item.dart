@@ -6,8 +6,9 @@ class DrawerItem{
   String title;
   DrawerType drawerType;
   bool visible;
+  String iconPath;
 
-  DrawerItem(this.id,this.title,this.drawerType,{this.visible: true});
+  DrawerItem(this.id,this.title,this.drawerType,this.iconPath,{this.visible: true});
 
 }
 
