@@ -3,6 +3,7 @@ import 'components/body.dart';
 import '../../models/localizations.dart';
 import '../login/login.dart';
 import '../../models/user.dart';
+import 'components/drawer.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -70,6 +71,7 @@ class _HomePageState extends State<HomePage>{
               ],
             ),
             body: Body(),
+            drawer: HomeDrawer(user, localization),
           );
         }
     );
