@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../models/drawer_item.dart';
 import '../../../models/user.dart';
+import '../../../screens/login/login.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -76,6 +77,8 @@ class _HomeDrawerState extends State<HomeDrawer>{
                   ),
                 ),
                 onTap: (){
+                  Navigator.pop(context);
+                  onDrawerItemSelected(i);
                 },
                 leading: (drawerItems[i].iconPath != null) ?
                   ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
@@ -97,17 +100,40 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
-      print('ici');
       logout.visible = false;
     }
     else{
-      print('la bas');
       login.visible = false;
     }
 
     drawerItems.add(header);
     drawerItems.add(login);
     drawerItems.add(logout);
+  }
+
+  onDrawerItemSelected(int id){
+    switch(id){
+      case 1: //click on login
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute
+          (
+              builder: (BuildContext context){
+                return Login();
+              }
+          ));
+        break;
+      case 2: //click on logout
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context){
+                  this.widget.user.logout();
+                  return Login();
+                }
+            ));
+        break;
+    }
   }
 
 }

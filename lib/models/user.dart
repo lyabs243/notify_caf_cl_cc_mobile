@@ -102,6 +102,18 @@ class User{
     await sharedPreferences.setString('user', map);
   }
 
+  logout(){
+    currentUser.id=0;
+    currentUser.id_subscriber=0;
+    currentUser.id_account_user=null;
+    currentUser.username=null;
+    currentUser.full_name=null;
+    currentUser.id_accout_type=null;
+    currentUser.url_profil_pic=null;
+    currentUser.toMap();
+    currentUser = null;
+  }
+
   static Future<User> getInstance() async{
     if(currentUser == null){
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
