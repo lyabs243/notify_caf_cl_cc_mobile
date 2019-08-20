@@ -8,7 +8,7 @@ class DrawerItem{
   bool visible;
   String iconPath;
 
-  DrawerItem(this.id,this.title,this.drawerType,this.iconPath,{this.visible: true});
+  DrawerItem(this.id,this.title,this.drawerType,{this.visible: true,this.iconPath: 'assets/icons/empty.png'});
 
 }
 
