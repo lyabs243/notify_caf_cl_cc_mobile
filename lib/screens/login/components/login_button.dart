@@ -3,16 +3,25 @@ import '../../../components/icons/login_icons.dart';
 import '../../../models/user.dart';
 import '../../home/home.dart';
 
-class LoginButton extends StatelessWidget{
+class LoginButton extends StatefulWidget{
 
   String title;
   LoginType type;
-  BuildContext context;
+  Function seLoginState;
 
-  LoginButton(String title,LoginType type){
-    this.title = title;
-    this.type = type;
+  LoginButton(this.title,this.type,this.seLoginState);
+
+  @override
+  _LoginButton createState() {
+    // TODO: implement createState
+    return new _LoginButton();
   }
+
+}
+
+class _LoginButton extends State<LoginButton>{
+
+  BuildContext context;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +30,12 @@ class LoginButton extends StatelessWidget{
       onPressed: (){
         login();
       },
-      label: new Text(this.title,textScaleFactor: 1.2,),
+      label: new Text(this.widget.title,textScaleFactor: 1.2,),
       icon: new Icon(
-          (this.type == LoginType.Facebook)?
+          (this.widget.type == LoginType.Facebook)?
           LoginIcons.facebook :
           (
-              (this.type == LoginType.Google)?
+              (this.widget.type == LoginType.Google)?
               LoginIcons.google :
               Icons.warning
           )
@@ -40,7 +49,7 @@ class LoginButton extends StatelessWidget{
 
   login() async{
     User user = new User();
-    bool isLog = await user.login(type);
+    bool isLog = await user.login(widget.type,this.widget.seLoginState);
     if(isLog){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
         return HomePage();

@@ -16,6 +16,8 @@ class User{
   int id_accout_type;
   String url_profil_pic=null;
 
+  Function setLoginState;
+
   static User currentUser;
 
   static final int GOOGLE_ACCOUNT_ID = 1;
@@ -25,7 +27,8 @@ class User{
   static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifygroup.org/notifyapp/api/index.php/user/add';
   static final String URL_ADD_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/add';
 
-  Future<bool> login(LoginType type) async{
+  Future<bool> login(LoginType type,Function setLoginState) async{
+    this.setLoginState = setLoginState;
     if(type == LoginType.Nope){
       return continueWithoutLogin();
     }
@@ -35,8 +38,10 @@ class User{
   }
 
   Future<bool> continueWithoutLogin() async{
+    this.setLoginState(true);
     this.id_accout_type = NOT_CONNECTED_ACCOUNT_ID;
     this.toMap();
+    this.setLoginState(false);
     return true;
   }
 
@@ -44,7 +49,7 @@ class User{
     bool success = true;
     final facebookLogin = FacebookLogin();
     final result = await facebookLogin.logInWithReadPermissions(['email']);
-
+    this.setLoginState(true);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final graphResponse = await http.get(
@@ -78,6 +83,7 @@ class User{
         print("error -- "+result.errorMessage);
         break;
     }
+    this.setLoginState(false);
     return success;
   }
 
@@ -97,11 +103,11 @@ class User{
 
   static Future<User> getInstance() async{
     if(currentUser == null){
-      currentUser = new User();
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       String userString = sharedPreferences.getString('user');
       if(userString != null) {
         Map userMap = json.decode(userString);
+        currentUser = new User();
         currentUser.id = userMap['id'];
         currentUser.id_subscriber = userMap['id_subscriber'];
         currentUser.id_accout_type = userMap['id_accout_type'];

@@ -3,8 +3,21 @@ import 'package:flutter/material.dart';
 import 'components/login_button.dart';
 import '../../models/localizations.dart';
 import 'components/text_termsofuse.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class Login extends StatelessWidget{
+class Login extends StatefulWidget{
+
+  @override
+  _Login createState() {
+    // TODO: implement createState
+    return new _Login();
+  }
+
+}
+
+class _Login extends State<Login>{
+
+  bool isLoging = false;
 
   @override
   Widget build(BuildContext context) {
@@ -15,46 +28,57 @@ class Login extends StatelessWidget{
     Map localization = MyLocalizations.of(context).localization;
 
     // TODO: implement build
-    return new Container(
-      color: Theme.of(context).cardColor,
-      child: new Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            new Container(
-              child: new Card(
-                child: Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
+    return ModalProgressHUD(
+      child: new Container(
+        color: Theme.of(context).cardColor,
+        child: new Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new Container(
+                child: new Card(
+                  child: Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
+                ),
+                width: iconSize,
+                height: iconSize,
               ),
-              width: iconSize,
-              height: iconSize,
-            ),
-            new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new SizedBox(
-                  width: buttonWidth,
-                  child: LoginButton(localization['login_with_google'], LoginType.Google),
-                ),
-                new Padding(padding: EdgeInsets.only(bottom: 18.0)),
-                new SizedBox(
-                  width: buttonWidth,
-                  child: LoginButton(localization['login_with_facebook'], LoginType.Facebook),
-                ),
-                new Padding(padding: EdgeInsets.only(bottom: 18.0)),
-                new SizedBox(
-                  width: buttonWidth,
-                  child: LoginButton(localization['continue_without_login'], LoginType.Nope),
-                ),
-              ],
-            ),
-            new SizedBox(
-              width: buttonWidth,
-              child: new TextTermofuse(localization['term_use_text'], localization['term_use']),
-            ),
-          ],
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new SizedBox(
+                    width: buttonWidth,
+                    child: LoginButton(localization['login_with_google'], LoginType.Google,this.setLoginState),
+                  ),
+                  new Padding(padding: EdgeInsets.only(bottom: 18.0)),
+                  new SizedBox(
+                    width: buttonWidth,
+                    child: LoginButton(localization['login_with_facebook'], LoginType.Facebook,this.setLoginState),
+                  ),
+                  new Padding(padding: EdgeInsets.only(bottom: 18.0)),
+                  new SizedBox(
+                    width: buttonWidth,
+                    child: LoginButton(localization['continue_without_login'], LoginType.Nope,this.setLoginState),
+                  ),
+                ],
+              ),
+              new SizedBox(
+                width: buttonWidth,
+                child: new TextTermofuse(localization['term_use_text'], localization['term_use']),
+              ),
+            ],
+          ),
         ),
       ),
+      inAsyncCall: isLoging,
+      dismissible: false,
+      opacity: 0.5,
     );
+  }
+
+  void setLoginState(bool isLoging){
+    setState(() {
+      this.isLoging = isLoging;
+    });
   }
 
 }
