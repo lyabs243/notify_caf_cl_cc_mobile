@@ -45,10 +45,10 @@ class _HomePageState extends State<HomePage>{
             appBar: AppBar(
               title: Text(localization['app_title']),
               actions: <Widget>[
-                (user == null || user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID) ?
+                (!(user != null && user.id_accout_type != User.NOT_CONNECTED_ACCOUNT_ID)) ?
                 new FlatButton(
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
                         return Login();
                       }));
                     },
