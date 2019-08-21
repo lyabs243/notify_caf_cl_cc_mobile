@@ -31,8 +31,12 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
           child: (user != null && user.url_profil_pic != null)?
           CircleAvatar(
             radius: 30.0,
-            backgroundImage:
-            NetworkImage(user.url_profil_pic),
+            child: ClipOval(
+              child: Image.network(
+                user.url_profil_pic,
+              ),
+            ),
+            backgroundImage: AssetImage('assets/icons/profile.png'),
             backgroundColor: Colors.transparent,
           ):
           Image.asset('assets/icons/profile.png'),
