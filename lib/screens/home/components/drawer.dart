@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../models/drawer_item.dart';
 import '../../../models/user.dart';
 import '../../../screens/login/login.dart';
+import '../../../screens/user_profile/user_profile.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -95,11 +96,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
   initDrawerItems(){
 
     DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
-    DrawerItem login = new DrawerItem(1, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem logout = new DrawerItem(2, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+    DrawerItem profil = new DrawerItem(1, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+    DrawerItem login = new DrawerItem(2, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem logout = new DrawerItem(3, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
+      profil.visible = false;
       logout.visible = false;
     }
     else{
@@ -107,13 +110,24 @@ class _HomeDrawerState extends State<HomeDrawer>{
     }
 
     drawerItems.add(header);
+    drawerItems.add(profil);
     drawerItems.add(login);
     drawerItems.add(logout);
   }
 
   onDrawerItemSelected(int id){
     switch(id){
-      case 1: //click on login
+      case 1: //click on profil
+        Navigator.push(
+            context,
+            MaterialPageRoute
+              (
+                builder: (BuildContext context){
+                  return UserProfile(this.widget.user,this.widget.localization);
+                }
+            ));
+        break;
+      case 2: //click on login
         Navigator.pushReplacement(
           context,
           MaterialPageRoute
@@ -123,7 +137,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
               }
           ));
         break;
-      case 2: //click on logout
+      case 3: //click on logout
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

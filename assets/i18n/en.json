@@ -4,7 +4,10 @@
   "login_with_facebook": "Login with Facebook",
   "continue_without_login": "Continue without login",
   "term_use_text": "by logging in you accept our ",
+  "connected_with_facebook": "Connected with Facebook account",
+  "connected_with_google": "Connected with Google account",
   "term_use": "Terms of use",
   "login": "Login",
-  "logout": "Logout"
+  "logout": "Logout",
+  "profil": "Profil"
 }

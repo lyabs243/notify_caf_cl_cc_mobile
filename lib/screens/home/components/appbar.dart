@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../models/user.dart';
 import '../../login/login.dart';
+import '../../user_profile/user_profile.dart';
+import '../../../components/profil_avatar.dart';
 
 class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
 
@@ -24,22 +26,18 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
             },
             child: Text(localization['login'],style: TextStyle(color: Colors.white),)
         ) :
-        new Container(
-          width: 40,
-          height: 40,
-          margin: EdgeInsets.only(top: 9.0,bottom: 9.0, right: 5.0),
-          child: (user != null && user.url_profil_pic != null)?
-          CircleAvatar(
-            radius: 30.0,
-            child: ClipOval(
-              child: Image.network(
-                user.url_profil_pic,
-              ),
-            ),
-            backgroundImage: AssetImage('assets/icons/profile.png'),
-            backgroundColor: Colors.transparent,
-          ):
-          Image.asset('assets/icons/profile.png'),
+        new InkWell(
+          child: ProfilAvatar(user,width: 40.0,height: 40.0),
+          onTap: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute
+                  (
+                    builder: (BuildContext context){
+                      return UserProfile(this.user,localization);
+                    }
+                ));
+          },
         )
       ],
     );
