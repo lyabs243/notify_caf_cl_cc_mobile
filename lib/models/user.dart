@@ -14,6 +14,8 @@ class User{
   String username=null;
   String full_name=null;
   int id_accout_type;
+  int active=0;
+  int type=0;
   String url_profil_pic=null;
 
   Function setLoginState;
@@ -26,6 +28,9 @@ class User{
 
   static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifygroup.org/notifyapp/api/index.php/user/add';
   static final String URL_ADD_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/add';
+
+  static final int USER_TYPE_ADMIN = 2;
+  static final int USER_TYPE_SIMPLE = 1;
 
   Future<bool> login(LoginType type,Function setLoginState) async{
     this.setLoginState = setLoginState;
@@ -68,6 +73,8 @@ class User{
         await NotifyApi().getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
           if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
             this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
+            this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
+            this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
             this.toMap();
             currentUser = null;
           }
@@ -96,7 +103,9 @@ class User{
       "full_name": "${this.full_name}",
       "id_accout_type": ${this.id_accout_type},
       "id_account_user": "${this.id_account_user}",
-      "url_profil_pic": "${this.url_profil_pic}"
+      "url_profil_pic": "${this.url_profil_pic}",
+      "active": ${this.active},
+      "type": ${this.type}
     }""";
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('user', map);
@@ -105,6 +114,8 @@ class User{
   logout(){
     currentUser.id=0;
     currentUser.id_subscriber=0;
+    currentUser.active=0;
+    currentUser.type=0;
     currentUser.id_account_user=null;
     currentUser.username=null;
     currentUser.full_name=null;
@@ -128,6 +139,8 @@ class User{
         currentUser.full_name = userMap['full_name'];
         currentUser.id_account_user = userMap['id_account_user'];
         currentUser.url_profil_pic = userMap['url_profil_pic'];
+        currentUser.active = userMap['active'];
+        currentUser.type = userMap['type'];
       }
     }
     return currentUser;
