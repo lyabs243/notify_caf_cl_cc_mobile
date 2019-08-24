@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../components/icons/login_icons.dart';
 import '../../../models/user.dart';
 import '../../home/home.dart';
+import 'package:toast/toast.dart';
 
 class LoginButton extends StatefulWidget{
 
   String title;
   LoginType type;
   Function seLoginState;
+  Map localization;
 
-  LoginButton(this.title,this.type,this.seLoginState);
+  LoginButton(this.title,this.type,this.seLoginState,this.localization);
 
   @override
   _LoginButton createState() {
@@ -54,6 +56,9 @@ class _LoginButton extends State<LoginButton>{
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
         return HomePage();
       }));
+    }
+    else{
+      Toast.show(this.widget.localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
   }
 

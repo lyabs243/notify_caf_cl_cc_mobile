@@ -47,17 +47,17 @@ class _Login extends State<Login>{
                 children: <Widget>[
                   new SizedBox(
                     width: buttonWidth,
-                    child: LoginButton(localization['login_with_google'], LoginType.Google,this.setLoginState),
+                    child: LoginButton(localization['login_with_google'], LoginType.Google,this.setLoginState,localization),
                   ),
                   new Padding(padding: EdgeInsets.only(bottom: 18.0)),
                   new SizedBox(
                     width: buttonWidth,
-                    child: LoginButton(localization['login_with_facebook'], LoginType.Facebook,this.setLoginState),
+                    child: LoginButton(localization['login_with_facebook'], LoginType.Facebook,this.setLoginState,localization),
                   ),
                   new Padding(padding: EdgeInsets.only(bottom: 18.0)),
                   new SizedBox(
                     width: buttonWidth,
-                    child: LoginButton(localization['continue_without_login'], LoginType.Nope,this.setLoginState),
+                    child: LoginButton(localization['continue_without_login'], LoginType.Nope,this.setLoginState,localization),
                   ),
                 ],
               ),
