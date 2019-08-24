@@ -22,10 +22,15 @@ class NotifyApi {
     final response = await http.post(url,body: map);
     this.statusCode = response.statusCode;
     if (response.statusCode == 200) {
-      mapResult = json.decode(response.body);
+      try {
+        //print(response.body);
+        mapResult = json.decode(response.body);
+        //print(mapResult['NOTIFYGROUP']);
+      }
+      catch(e){
+        //print(e);
+      }
     }
-
-    //print(mapResult['NOTIFYGROUP']);
 
     return mapResult;
   }
