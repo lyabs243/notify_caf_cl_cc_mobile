@@ -23,7 +23,7 @@ class NotifyApi {
     this.statusCode = response.statusCode;
     if (response.statusCode == 200) {
       try {
-        //print(response.body);
+        print(response.body);
         mapResult = json.decode(response.body);
         //print(mapResult['NOTIFYGROUP']);
       }

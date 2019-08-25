@@ -16,7 +16,7 @@ class UserProfile extends StatelessWidget{
       appBar: AppBar(
         title: new Text(_localization['profil']),
       ),
-      body: Body(_user, _localization),
+      body: Body(_user, _user, _localization),
     );
   }
 

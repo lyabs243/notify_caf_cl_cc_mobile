@@ -28,6 +28,8 @@ class User{
 
   static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifygroup.org/notifyapp/api/index.php/user/add';
   static final String URL_ADD_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/add';
+  static final String URL_BLOCK_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/block/';
+  static final String URL_UNBLOCK_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/unblock/';
 
   static final int USER_TYPE_ADMIN = 2;
   static final int USER_TYPE_SIMPLE = 1;
@@ -92,6 +94,23 @@ class User{
         break;
     }
     this.setLoginState(false);
+    return success;
+  }
+
+  Future<bool> block(int idSubscriber,Function setBlockingState) async{
+    bool success = true;
+    setBlockingState(true);
+    String url = URL_BLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
+    print(url);
+    await NotifyApi().getJsonFromServer(url,null).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
+        //action success
+      }
+      else{
+        success = false;
+      }
+    });
+    setBlockingState(false);
     return success;
   }
 
