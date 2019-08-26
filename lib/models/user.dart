@@ -192,6 +192,14 @@ class User{
       final facebookLogin = FacebookLogin();
       facebookLogin.logOut();
     }
+    else if(currentUser.id_accout_type == GOOGLE_ACCOUNT_ID){
+      GoogleSignIn _googleSignIn = GoogleSignIn(
+        scopes: [
+          'email',
+        ],
+      );
+      _googleSignIn.signOut();
+    }
     currentUser.id=0;
     currentUser.id_subscriber=0;
     currentUser.active=0;
