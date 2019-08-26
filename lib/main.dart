@@ -31,12 +31,12 @@ class MyApp extends StatelessWidget {
           this.user = user;
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
-          /*if (user != null && user.id_accout_type != null && user.id_accout_type != null){
+          if (user != null && user.id_accout_type != null && user.id_accout_type != null){
             /// is because there is user already logged
             return HomePage();
-          }*/
+          }
           /// other way there is no user logged.
-          return Center();
+          return Login();
         }
       ),
     );
