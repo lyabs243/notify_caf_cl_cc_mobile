@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_sign_in/google_sign_in.dart';
 
 class User{
 
@@ -39,6 +40,9 @@ class User{
     if(type == LoginType.Nope){
       return continueWithoutLogin();
     }
+    else if(type == LoginType.Google){
+      return googleLogin();
+    }
     else if(type == LoginType.Facebook){
       return facebookLogin();
     }
@@ -66,24 +70,8 @@ class User{
         this.id_account_user = profile['id'];
         this.url_profil_pic = profile["picture"]["data"]["url"];
         this.id_accout_type = FACEBOOK_ACCOUNT_ID;
-        Map<String,String> params = {
-          'full_name': this.full_name.toString(),
-          'url_profil_pic': this.url_profil_pic.toString(),
-          'id_account': this.id_account_user.toString(),
-          'id_account_type': this.id_accout_type.toString()
-        };
-        await NotifyApi().getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
-          if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
-            this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
-            this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
-            this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
-            this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
-            this.toMap();
-            currentUser = null;
-          }
-          else{
-            success = false;
-          }
+        await this.getFieldsFromServer().then((_success){
+          success = _success;
         });
         break;
       case FacebookLoginStatus.cancelledByUser:
@@ -95,6 +83,55 @@ class User{
         break;
     }
     this.setLoginState(false);
+    return success;
+  }
+
+  Future<bool> googleLogin() async{
+    bool success = true;
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+      ],
+    );
+    try {
+      final result = await _googleSignIn.signIn();
+      this.setLoginState(true);
+      this.full_name = result.displayName;
+      this.id_account_user = result.id;
+      this.url_profil_pic = result.photoUrl;
+      this.id_accout_type = GOOGLE_ACCOUNT_ID;
+      await this.getFieldsFromServer().then((_success){
+        success = _success;
+      });
+    } catch (error) {
+      success = false;
+      print(error);
+    }
+    this.setLoginState(false);
+    return success;
+  }
+
+  Future<bool> getFieldsFromServer() async{
+    bool success = true;
+    Map<String,String> params = {
+      'full_name': this.full_name.toString(),
+      'url_profil_pic': this.url_profil_pic.toString(),
+      'id_account': this.id_account_user.toString(),
+      'id_account_type': this.id_accout_type.toString()
+    };
+    await NotifyApi().getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
+        this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
+        this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
+        this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
+        this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
+        this.toMap();
+        currentUser = null;
+      }
+      else{
+        success = false;
+      }
+    });
     return success;
   }
 
