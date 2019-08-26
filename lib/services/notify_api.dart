@@ -19,17 +19,17 @@ class NotifyApi {
       map.addAll(params);
     }
 
-    final response = await http.post(url,body: map);
-    this.statusCode = response.statusCode;
-    if (response.statusCode == 200) {
-      try {
-        print(response.body);
-        mapResult = json.decode(response.body);
-        //print(mapResult['NOTIFYGROUP']);
+    try{
+      final response = await http.post(url,body: map);
+      this.statusCode = response.statusCode;
+      if (response.statusCode == 200) {
+          print(response.body);
+          mapResult = json.decode(response.body);
+          //print(mapResult['NOTIFYGROUP']);
       }
-      catch(e){
-        //print(e);
-      }
+    }
+    catch(e){
+      //print(e);
     }
 
     return mapResult;
