@@ -126,7 +126,6 @@ class User{
         this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
         this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
         this.toMap();
-        currentUser = null;
       }
       else{
         success = false;

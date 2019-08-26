@@ -29,7 +29,19 @@ class _BodyState extends State<Body>{
 
   List<DrawerItem> _drawerItems;
   BuildContext _context;
+  bool isPageLoading = true;
   bool isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.widget._currentUser.getFieldsFromServer().then((value){
+      setState(() {
+        isPageLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +49,11 @@ class _BodyState extends State<Body>{
     _drawerItems = new List<DrawerItem>();
     initDrawerItems();
     return ModalProgressHUD(
-      child:  ListView.builder(
+      child:  (isPageLoading)?
+      Center(
+        child: CircularProgressIndicator(),
+      ):
+      ListView.builder(
         itemBuilder: ((context,i){
           if(i == 0){
             return Container(

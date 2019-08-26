@@ -53,6 +53,7 @@ class _LoginButton extends State<LoginButton>{
     User user = new User();
     bool isLog = await user.login(widget.type,this.widget.seLoginState);
     if(isLog){
+      User.currentUser = null;
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
         return HomePage();
       }));
