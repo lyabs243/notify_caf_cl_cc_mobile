@@ -105,7 +105,8 @@ class User{
     print(url);
     await NotifyApi().getJsonFromServer(url,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
-        //action success
+        this.active = 0;
+        this.toMap();
       }
       else{
         success = false;
@@ -122,7 +123,8 @@ class User{
     print(url);
     await NotifyApi().getJsonFromServer(url,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
-        //action success
+        this.active = 1;
+        this.toMap();
       }
       else{
         success = false;
