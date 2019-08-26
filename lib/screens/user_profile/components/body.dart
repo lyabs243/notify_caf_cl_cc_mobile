@@ -145,7 +145,6 @@ class _BodyState extends State<Body>{
             this.widget._localization['want_block_user'],
             this.widget._localization,
             (){
-              print('Hello');
               blockSubscriber();
             }
         );
@@ -172,6 +171,7 @@ class _BodyState extends State<Body>{
   }
 
   blockSubscriber() async{
+    print('${this.widget._currentUser.id_subscriber} et ${this.widget._user.id_subscriber}');
     bool isBlock = await this.widget._currentUser.block(this.widget._user.id_subscriber, setBlockingState);
     if(isBlock){
       Toast.show(this.widget._localization['user_blocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);

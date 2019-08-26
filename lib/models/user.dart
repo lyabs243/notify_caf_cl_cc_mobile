@@ -75,6 +75,7 @@ class User{
         await NotifyApi().getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
           if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
             this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
+            this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
             this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
             this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
             this.toMap();
