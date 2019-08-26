@@ -131,6 +131,10 @@ class User{
   }
 
   logout(){
+    if(currentUser.id_accout_type == FACEBOOK_ACCOUNT_ID){
+      final facebookLogin = FacebookLogin();
+      facebookLogin.logOut();
+    }
     currentUser.id=0;
     currentUser.id_subscriber=0;
     currentUser.active=0;
