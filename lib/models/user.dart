@@ -104,7 +104,24 @@ class User{
     String url = URL_BLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
     print(url);
     await NotifyApi().getJsonFromServer(url,null).then((map){
-      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
+      if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
+        //action success
+      }
+      else{
+        success = false;
+      }
+    });
+    setBlockingState(false);
+    return success;
+  }
+
+  Future<bool> unblock(int idSubscriber,Function setBlockingState) async{
+    bool success = true;
+    setBlockingState(true);
+    String url = URL_UNBLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
+    print(url);
+    await NotifyApi().getJsonFromServer(url,null).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
         //action success
       }
       else{

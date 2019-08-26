@@ -139,7 +139,7 @@ class _BodyState extends State<Body>{
         break;
       case 2: //click on block user
         alert.showAlertDialog
-          (
+        (
             _context,
             this.widget._localization['warning'],
             this.widget._localization['want_block_user'],
@@ -150,6 +150,16 @@ class _BodyState extends State<Body>{
         );
         break;
       case 3: //click on unblock user
+        alert.showAlertDialog
+        (
+            _context,
+            this.widget._localization['warning'],
+            this.widget._localization['want_unblock_user'],
+            this.widget._localization,
+            (){
+              unblockSubscriber();
+            }
+        );
         break;
       case 4: //click on logout
         Navigator.pushReplacement(
@@ -171,10 +181,19 @@ class _BodyState extends State<Body>{
   }
 
   blockSubscriber() async{
-    print('${this.widget._currentUser.id_subscriber} et ${this.widget._user.id_subscriber}');
     bool isBlock = await this.widget._currentUser.block(this.widget._user.id_subscriber, setBlockingState);
     if(isBlock){
       Toast.show(this.widget._localization['user_blocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    else{
+      Toast.show(this.widget._localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+  }
+
+  unblockSubscriber() async{
+    bool isUnblock = await this.widget._currentUser.unblock(this.widget._user.id_subscriber, setBlockingState);
+    if(isUnblock){
+      Toast.show(this.widget._localization['user_unblocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
     else{
       Toast.show(this.widget._localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
