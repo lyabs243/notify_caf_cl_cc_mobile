@@ -3,6 +3,7 @@ import '../../../models/drawer_item.dart';
 import '../../../models/user.dart';
 import '../../../screens/login/login.dart';
 import '../../../screens/user_profile/user_profile.dart';
+import '../../../screens/appeal/appeal_page.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -133,14 +134,14 @@ class _HomeDrawerState extends State<HomeDrawer>{
             ));
         break;
       case 2: //click on appeal
-        /*Navigator.pushReplacement(
+        Navigator.push(
             context,
             MaterialPageRoute
               (
                 builder: (BuildContext context){
-                  return Login();
+                  return AppealPage(this.widget.localization);
                 }
-            ));*/
+            ));
         break;
       case 3: //click on login
         Navigator.pushReplacement(
