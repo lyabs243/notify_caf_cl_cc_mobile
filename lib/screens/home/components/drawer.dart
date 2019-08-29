@@ -97,8 +97,9 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
     DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
     DrawerItem profil = new DrawerItem(1, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem login = new DrawerItem(2, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem logout = new DrawerItem(3, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+    DrawerItem appeal = new DrawerItem(2, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+    DrawerItem login = new DrawerItem(3, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem logout = new DrawerItem(4, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -107,10 +108,14 @@ class _HomeDrawerState extends State<HomeDrawer>{
     }
     else{
       login.visible = false;
+      if(this.widget.user.type == User.USER_TYPE_ADMIN){
+        appeal.visible = true;
+      }
     }
 
     drawerItems.add(header);
     drawerItems.add(profil);
+    drawerItems.add(appeal);
     drawerItems.add(login);
     drawerItems.add(logout);
   }
@@ -127,7 +132,17 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 }
             ));
         break;
-      case 2: //click on login
+      case 2: //click on appeal
+        /*Navigator.pushReplacement(
+            context,
+            MaterialPageRoute
+              (
+                builder: (BuildContext context){
+                  return Login();
+                }
+            ));*/
+        break;
+      case 3: //click on login
         Navigator.pushReplacement(
           context,
           MaterialPageRoute
@@ -137,7 +152,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
               }
           ));
         break;
-      case 3: //click on logout
+      case 4: //click on logout
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
