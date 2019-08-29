@@ -20,7 +20,7 @@ class NotifyApi {
     }
 
     try{
-      final response = await http.post(url,body: map);
+      final response = await http.post(url,body: map).timeout(Duration(seconds: 15));
       this.statusCode = response.statusCode;
       if (response.statusCode == 200) {
           print(response.body);
