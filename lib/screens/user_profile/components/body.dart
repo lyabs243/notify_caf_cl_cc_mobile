@@ -102,7 +102,7 @@ class _BodyState extends State<Body>{
                     children: <Widget>[
                       Container(
                         child: Text(
-                            'Your account has been blocked, click on \'Make a Call\' if you have not yet done so to reactivate your account.',
+                            this.widget._localization['account_been_blocked'],
                           style: TextStyle(
                             color: Colors.white
                           ),
@@ -111,7 +111,7 @@ class _BodyState extends State<Body>{
                       ),
                       OutlineButton(
                         child: Text(
-                            'Appeal',
+                            this.widget._localization['appeal'],
                           style: TextStyle(
                               color: Colors.white
                           ),
@@ -119,7 +119,7 @@ class _BodyState extends State<Body>{
                         onPressed: (){
                           Navigator.push(context, MaterialPageRoute(
                               builder: (BuildContext context){
-                                return Appeal();
+                                return Appeal(this.widget._localization);
                               },
                           fullscreenDialog: true
                           ));

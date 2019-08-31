@@ -24,7 +24,7 @@ class _AppealPageState extends State<AppealPage>{
       appBar: AppBar(
         title: Text(this.widget.localization['subscriber_appeal'])
       ),
-      body: ItemAppeal(),
+      body: ItemAppeal(this.widget.localization),
     );
   }
 

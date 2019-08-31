@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppealDialog extends StatefulWidget{
 
+  Map localization;
+
+  AppealDialog(this.localization);
+
   @override
   _AppealDialogState createState() {
     // TODO: implement createState
@@ -17,11 +21,11 @@ class _AppealDialogState extends State<AppealDialog>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appeal'),
+        title: Text(this.widget.localization['appeal']),
         actions: <Widget>[
           FlatButton(
             child: Text(
-              'Approve',
+              this.widget.localization['approve'],
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -32,7 +36,7 @@ class _AppealDialogState extends State<AppealDialog>{
           ),
           FlatButton(
             child: Text(
-              'Desactivate',
+              this.widget.localization['deactivate'],
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -72,7 +76,7 @@ class _AppealDialogState extends State<AppealDialog>{
                   padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
                   color: Colors.red,
                   child: Text(
-                    'Do not acknowledge that have violated the rules of use',
+                    this.widget.localization['appeal_recognize_violated_false'],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -86,7 +90,7 @@ class _AppealDialogState extends State<AppealDialog>{
                   padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
                   color: Colors.green,
                   child: Text(
-                    'Promise to no longer violate the terms of use in the event of account reactivation',
+                    this.widget.localization['appeal_promise_not_violated_true'],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,

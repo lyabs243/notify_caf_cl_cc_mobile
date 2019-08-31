@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class Appeal extends StatefulWidget{
 
+  Map localization;
+
+  Appeal(this.localization);
+
   @override
   _AppealState createState() {
     // TODO: implement createState
@@ -20,7 +24,7 @@ class _AppealState extends State<Appeal>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appeal'),
+        title: Text(this.widget.localization['appeal']),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -39,7 +43,7 @@ class _AppealState extends State<Appeal>{
             Padding(padding: EdgeInsets.only(bottom: 20.0),),
             Center(
               child: Text(
-                'Answer the questionnaire to appeal',
+                this.widget.localization['answer_questionnaire_appeal'],
                 textScaleFactor: 1.5,
                 style: TextStyle(
                     fontWeight: FontWeight.bold
@@ -53,7 +57,7 @@ class _AppealState extends State<Appeal>{
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
-                    'Do you acknowledge that you violated the terms of use?',
+                    this.widget.localization['is_recognize_violated_terms'],
                     textScaleFactor: 1.4,
                   ),
                 ),
@@ -74,7 +78,7 @@ class _AppealState extends State<Appeal>{
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
-                    'After your account is reactivated, will you respect the terms of use?',
+                    this.widget.localization['is_recognize_not_violated_terms_after_activate'],
                     textScaleFactor: 1.4,
                   ),
                 ),
@@ -91,7 +95,7 @@ class _AppealState extends State<Appeal>{
             Padding(padding: EdgeInsets.only(bottom: 30.0),),
             TextField(
               decoration: new InputDecoration(
-                labelText: 'Appeal description',
+                labelText: this.widget.localization['appeal_description'],
                 alignLabelWithHint: true
               ),
               maxLines: 10,

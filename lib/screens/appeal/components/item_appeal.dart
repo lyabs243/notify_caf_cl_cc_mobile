@@ -4,6 +4,10 @@ import 'appeal_dialog.dart';
 
 class ItemAppeal extends StatelessWidget{
 
+  Map localization;
+
+  ItemAppeal(this.localization);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -67,7 +71,7 @@ class ItemAppeal extends StatelessWidget{
             onTap: (){
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context){
-                    return new AppealDialog();
+                    return new AppealDialog(this.localization);
                   },
                   fullscreenDialog: true
               ));
