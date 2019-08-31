@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../screens/login/login.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
+import 'add_appeal.dart';
 import '../../../models/constants.dart' as constants;
 import '../../../components/alert_dialog.dart' as alert;
 
@@ -116,7 +117,12 @@ class _BodyState extends State<Body>{
                           ),
                         ),
                         onPressed: (){
-
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (BuildContext context){
+                                return Appeal();
+                              },
+                          fullscreenDialog: true
+                          ));
                         },
                         borderSide: BorderSide(
                           color: Colors.white, //Color of the border
