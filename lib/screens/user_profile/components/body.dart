@@ -56,37 +56,78 @@ class _BodyState extends State<Body>{
       ListView.builder(
         itemBuilder: ((context,i){
           if(i == 0){
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  ProfilAvatar(this.widget._user,width: 80.0,height: 80.0),
-                  new Text(
-                    this.widget._user.full_name,
-                    textScaleFactor: 1.8,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
+            return Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: <Widget>[
+                      ProfilAvatar(this.widget._user,width: 80.0,height: 80.0),
+                      new Text(
+                        this.widget._user.full_name,
+                        textScaleFactor: 1.8,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      new Text(
+                        (this.widget._user.id_accout_type == User.FACEBOOK_ACCOUNT_ID)?
+                        this.widget._localization['connected_with_facebook']:
+                        this.widget._localization['connected_with_google'],
+                        textScaleFactor: 1.2,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic
+                        ),
+                      )
+                    ],
+                  ),
+                  decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: new DecorationImage(
+                      image: new AssetImage('assets/bg_cat.jpg'),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  new Text(
-                    (this.widget._user.id_accout_type == User.FACEBOOK_ACCOUNT_ID)?
-                    this.widget._localization['connected_with_facebook']:
-                    this.widget._localization['connected_with_google'],
-                    textScaleFactor: 1.2,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.italic
-                    ),
-                  )
-                ],
-              ),
-              decoration: new BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                image: new DecorationImage(
-                  image: new AssetImage('assets/bg_cat.jpg'),
-                  fit: BoxFit.cover,
                 ),
-              ),
+                (this.widget._user.active == 1)?
+                Center():
+                Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                            'Your account has been blocked, click on \'Make a Call\' if you have not yet done so to reactivate your account.',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        width: MediaQuery.of(context).size.width/1.4,
+                      ),
+                      OutlineButton(
+                        child: Text(
+                            'Appeal',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        ),
+                        onPressed: (){
+
+                        },
+                        borderSide: BorderSide(
+                          color: Colors.white, //Color of the border
+                          style: BorderStyle.solid, //Style of the border
+                          width: 0.8, //width of the border
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             );
           }
           else if(!_drawerItems[i].visible){
