@@ -135,7 +135,7 @@ class _ItemAppealState extends State<ItemAppeal>{
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context){
-                      return new AppealDialog(this.localization);
+                      return new AppealDialog(this.localization,items[i]);
                     },
                     fullscreenDialog: true
                 ));

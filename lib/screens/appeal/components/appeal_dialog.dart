@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../../models/appeal_item.dart';
 
 class AppealDialog extends StatefulWidget{
 
   Map localization;
+  AppealItem appealItem;
 
-  AppealDialog(this.localization);
+  AppealDialog(this.localization,this.appealItem);
 
   @override
   _AppealDialogState createState() {
@@ -57,7 +59,7 @@ class _AppealDialogState extends State<AppealDialog>{
               height: MediaQuery.of(context).size.height * 0.08,
               child: Center(
                 child: Text(
-                  'Ítem 4',
+                  this.widget.appealItem.full_name,
                   textScaleFactor: 2.0,
                   style: TextStyle(
                       fontWeight: FontWeight.bold
@@ -74,8 +76,10 @@ class _AppealDialogState extends State<AppealDialog>{
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.06,
                   padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
-                  color: Colors.red,
+                  color: (this.widget.appealItem.is_policie_violate)? Colors.green : Colors.red,
                   child: Text(
+                    (this.widget.appealItem.is_policie_violate)?
+                    this.widget.localization['appeal_recognize_violated_true'] :
                     this.widget.localization['appeal_recognize_violated_false'],
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -88,9 +92,11 @@ class _AppealDialogState extends State<AppealDialog>{
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.06,
                   padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
-                  color: Colors.green,
+                  color: (this.widget.appealItem.is_policie_respect_after_activation)? Colors.green : Colors.red,
                   child: Text(
-                    this.widget.localization['appeal_promise_not_violated_true'],
+                    (this.widget.appealItem.is_policie_respect_after_activation)?
+                    this.widget.localization['appeal_promise_not_violated_true']:
+                    this.widget.localization['appeal_promise_not_violated_false'],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
@@ -108,8 +114,7 @@ class _AppealDialogState extends State<AppealDialog>{
               height: MediaQuery.of(context).size.height * 0.5,
               child: SingleChildScrollView(
                 child: Text(
-                  '''Promet de ne plus enfeindre les conditions d'utilisation en cas de reactivation de compte, en plus c vraiment honteux grave honteux car notre pays doit aller de l'avat ce n'est pas de cette maniere qu'o peut evoluer car le congo a besoin de ses enfant!!! Promet de ne plus enfeindre les conditions d'utilisation en cas de reactivation de compte, en plus c vraiment honteux grave honteux car notre pays doit aller de l'avat ce n'est pas de cette maniere qu'o peut evoluer car le congo a besoin de ses enfant!!! Promet de ne plus enfeindre les conditions d'utilisation en cas de reactivation de compte, en plus c vraiment honteux grave honteux car notre pays doit aller de l'avat ce n'est pas de cette maniere qu'o peut evoluer car le congo a besoin de ses enfant!!! Promet de ne plus enfeindre les conditions d'utilisation en cas de reactivation de compte, en plus c vraiment honteux grave honteux car notre pays doit aller de l'avat ce n'est pas de cette maniere qu'o peut evoluer car le congo a b!!! 
-                  ''',
+                  this.widget.appealItem.appeal_description,
                   textScaleFactor: 1.2,
                 ),
               ),
