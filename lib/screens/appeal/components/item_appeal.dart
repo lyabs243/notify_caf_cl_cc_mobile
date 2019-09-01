@@ -26,6 +26,8 @@ class _ItemAppealState extends State<ItemAppeal>{
   bool isPageLoading = true;
   bool isPageRefresh = false;
 
+  int page = 1;
+
   RefreshController _refreshController;
 
   @override
@@ -49,6 +51,7 @@ class _ItemAppealState extends State<ItemAppeal>{
       )),
       controller: _refreshController,
       onRefresh: _onRefresh,
+      onLoading: _onLoading,
       child: (isPageLoading)?
       Center(
         child: CircularProgressIndicator(),
@@ -133,15 +136,33 @@ class _ItemAppealState extends State<ItemAppeal>{
     _refreshController.refreshCompleted();
   }
 
+  void _onLoading() async{
+    if(mounted)
+      addItems();
+  }
+
   Future initItems() async{
-    List<AppealItem> appeals = await AppealItem.getAppeals(page: 1);
+    page = 1;
+    List<AppealItem> appeals = await AppealItem.getAppeals(page: page);
     if(appeals.length > 0){
       setState(() {
         items.clear();
         items = appeals;
         isPageRefresh = false;
         isPageLoading = false;
+        page++;
       });
     }
+  }
+
+  Future addItems() async{
+    List<AppealItem> appeals = await AppealItem.getAppeals(page: page);
+    if(appeals.length > 0){
+      setState(() {
+        items.addAll(appeals);
+        page++;
+      });
+    }
+    _refreshController.loadComplete();
   }
 }
