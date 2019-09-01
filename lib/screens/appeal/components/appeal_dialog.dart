@@ -51,6 +51,7 @@ class _AppealDialogState extends State<AppealDialog>{
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Card(
             elevation: 15.0,
@@ -68,6 +69,23 @@ class _AppealDialogState extends State<AppealDialog>{
               ),
             ),
           ),
+          Container(
+              padding: EdgeInsets.all(10.0),
+                decoration: new BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15.0),
+                  bottomRight: Radius.circular(15.0),
+                ),
+                  color: Theme.of(context).primaryColor
+              ),
+              child: Text(
+                  this.widget.appealItem.register_date.toString(),
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white
+                  ),
+                ),
+            ),
           Card(
             elevation: 15.0,
             child: Column(
