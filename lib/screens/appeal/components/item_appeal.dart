@@ -86,7 +86,7 @@ class _ItemAppealState extends State<ItemAppeal>{
                             height: 20.0,
                             margin: EdgeInsets.only(left: 5.0),
                             decoration: BoxDecoration(
-                                color: (items[0].is_policie_violate)? Colors.green : Colors.red,
+                                color: (items[i].is_policie_violate)? Colors.green : Colors.red,
                                 shape: BoxShape.circle
                             ),
                           ),
@@ -95,7 +95,7 @@ class _ItemAppealState extends State<ItemAppeal>{
                             height: 20.0,
                             margin: EdgeInsets.only(left: 5.0),
                             decoration: BoxDecoration(
-                                color: (items[0].is_policie_respect_after_activation)? Colors.green : Colors.red,
+                                color: (items[i].is_policie_respect_after_activation)? Colors.green : Colors.red,
                                 shape: BoxShape.circle
                             ),
                           ),
