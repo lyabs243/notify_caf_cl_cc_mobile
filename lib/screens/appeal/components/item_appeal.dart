@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'appeal_dialog.dart';
 import '.././../../models/appeal_item.dart';
+import '../../../components/empty_data.dart';
 
 class ItemAppeal extends StatefulWidget{
 
@@ -41,9 +42,11 @@ class _ItemAppealState extends State<ItemAppeal>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return (isPageLoading)?
-        Center(
-          child: CircularProgressIndicator(),
-        ):
+      Center(
+        child: CircularProgressIndicator(),
+      ):
+      (items.length<=0)?
+        EmptyData(localization):
         ListView.builder(
             itemCount: items.length,
             itemBuilder: ((context,i){

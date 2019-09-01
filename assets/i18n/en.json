@@ -22,6 +22,7 @@
   "approve": "Approve",
   "deactivate": "Deactivate",
   "appeal_sended": "Appeal sended",
+  "no_data_found": "No data found",
   "appeal_recognize_violated_false": "Do not acknowledge that have violated the rules of use",
   "appeal_recognize_violated_true": "knowledge that have violated the rules of use",
   "appeal_promise_not_violated_true": "Promise to no longer violate the terms of use in the event of account reactivation",
