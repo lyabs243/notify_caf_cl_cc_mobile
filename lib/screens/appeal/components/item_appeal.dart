@@ -128,19 +128,20 @@ class _ItemAppealState extends State<ItemAppeal>{
   }
 
   void _onRefresh() async{
+    isPageRefresh = true;
     await initItems();
     _refreshController.refreshCompleted();
   }
 
   Future initItems() async{
     setState(() {
-      isPageRefresh = true;
       items.clear();
     });
     List<AppealItem> appeals = await AppealItem.getAppeals(page: 1);
     setState(() {
       items = appeals;
       isPageRefresh = false;
+      isPageLoading = false;
     });
   }
 }
