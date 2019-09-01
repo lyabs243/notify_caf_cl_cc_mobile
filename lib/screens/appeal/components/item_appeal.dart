@@ -43,7 +43,7 @@ class _ItemAppealState extends State<ItemAppeal>{
     // TODO: implement build
     return SmartRefresher(
       enablePullDown: true,
-      enablePullUp: true,
+      enablePullUp: (items.length>0)? true : false,
       header: (WaterDropMaterialHeader(
         backgroundColor: Theme.of(context).primaryColor,
       )),
