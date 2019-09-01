@@ -81,74 +81,85 @@ class _AppealState extends State<Appeal>{
         opacity: 0.5,
         color: Colors.black,
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(bottom: 20.0),),
-              Center(
-                child: Text(
-                  this.widget.localization['answer_questionnaire_appeal'],
-                  textScaleFactor: 1.5,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 20.0),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    child: Text(
-                      this.widget.localization['is_recognize_violated_terms'],
-                      textScaleFactor: 1.4,
+          child: Container(
+            padding: EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(bottom: 20.0),),
+                Center(
+                  child: Text(
+                    this.widget.localization['answer_questionnaire_appeal'],
+                    textScaleFactor: 1.5,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
                     ),
                   ),
-                  Checkbox(
-                      value: isRecongnizeViolated,
-                      onChanged: (value){
-                        setState(() {
-                          isRecongnizeViolated = value;
-                        });
-                      }
-                  )
-                ],
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 20.0),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    child: Text(
-                      this.widget.localization['is_recognize_not_violated_terms_after_activate'],
-                      textScaleFactor: 1.4,
-                    ),
-                  ),
-                  Checkbox(
-                      value: isViolatedAgain,
-                      onChanged: (value){
-                        setState(() {
-                          isViolatedAgain = value;
-                        });
-                      }
-                  ),
-                ],
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 30.0),),
-              TextField(
-                decoration: new InputDecoration(
-                    labelText: this.widget.localization['appeal_description'],
-                    alignLabelWithHint: true
                 ),
-                maxLines: 10,
-                maxLength: 1000,
-                onChanged: (val){
-                  appealDescription = val;
-                },
-              ),
-            ],
+                Padding(padding: EdgeInsets.only(bottom: 20.0),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      child: Text(
+                        this.widget.localization['is_recognize_violated_terms'],
+                        textScaleFactor: 1.4,
+                      ),
+                    ),
+                    Checkbox(
+                        value: isRecongnizeViolated,
+                        onChanged: (value){
+                          setState(() {
+                            isRecongnizeViolated = value;
+                          });
+                        }
+                    )
+                  ],
+                ),
+                Padding(padding: EdgeInsets.only(bottom: 20.0),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      child: Text(
+                        this.widget.localization['is_recognize_not_violated_terms_after_activate'],
+                        textScaleFactor: 1.4,
+                      ),
+                    ),
+                    Checkbox(
+                        value: isViolatedAgain,
+                        onChanged: (value){
+                          setState(() {
+                            isViolatedAgain = value;
+                          });
+                        }
+                    ),
+                  ],
+                ),
+                Padding(padding: EdgeInsets.only(bottom: 30.0),),
+                TextField(
+                  decoration: new InputDecoration(
+                      labelText: this.widget.localization['appeal_description'],
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white, //Color of the border
+                            style: BorderStyle.solid, //Style of the border
+                            width: 0.8, //width of the border
+                          ),
+                          borderRadius: BorderRadius.circular(5.0)
+                      ),
+                      alignLabelWithHint: true
+                  ),
+                  maxLines: 10,
+                  maxLength: 1000,
+                  onChanged: (val){
+                    appealDescription = val;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
