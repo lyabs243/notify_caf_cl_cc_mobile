@@ -49,6 +49,21 @@ class _ItemAppealState extends State<ItemAppeal>{
       header: (WaterDropMaterialHeader(
         backgroundColor: Theme.of(context).primaryColor,
       )),
+      footer: CustomFooter(
+        builder: (BuildContext context,LoadStatus mode){
+          Widget body ;
+          if(mode==LoadStatus.loading){
+            body =  CircularProgressIndicator();
+          }
+          else{
+            body = Container();
+          }
+          return Container(
+            height: 55.0,
+            child: Center(child:body),
+          );
+        },
+      ),
       controller: _refreshController,
       onRefresh: _onRefresh,
       onLoading: _onLoading,
