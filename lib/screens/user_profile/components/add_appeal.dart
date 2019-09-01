@@ -63,12 +63,12 @@ class _AppealState extends State<Appeal>{
                   isLoading = false;
                 });
                 if(result){
-                  Toast.show(this.widget.localization['appeal_sended'], context, duration: Toast.LENGTH_SHORT,
+                  Toast.show(this.widget.localization['appeal_sended'], context, duration: Toast.LENGTH_LONG,
                       gravity:  Toast.BOTTOM);
                   Navigator.of(context).pop();
                 }
                 else{
-                  Toast.show(this.widget.localization['error_occured'], context, duration: Toast.LENGTH_SHORT,
+                  Toast.show(this.widget.localization['error_occured'], context, duration: Toast.LENGTH_LONG,
                       gravity:  Toast.BOTTOM);
                 }
               });
