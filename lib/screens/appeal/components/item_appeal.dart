@@ -134,14 +134,14 @@ class _ItemAppealState extends State<ItemAppeal>{
   }
 
   Future initItems() async{
-    setState(() {
-      items.clear();
-    });
     List<AppealItem> appeals = await AppealItem.getAppeals(page: 1);
-    setState(() {
-      items = appeals;
-      isPageRefresh = false;
-      isPageLoading = false;
-    });
+    if(appeals.length > 0){
+      setState(() {
+        items.clear();
+        items = appeals;
+        isPageRefresh = false;
+        isPageLoading = false;
+      });
+    }
   }
 }
