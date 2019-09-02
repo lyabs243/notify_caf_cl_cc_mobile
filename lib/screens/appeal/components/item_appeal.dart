@@ -131,7 +131,7 @@ class _ItemAppealState extends State<ItemAppeal>{
                           ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(bottom: 5.0),),
+                      Padding(padding: EdgeInsets.only(bottom: 10.0),),
                       Text(
                         items[i].appeal_description,
                         maxLines: 3,
