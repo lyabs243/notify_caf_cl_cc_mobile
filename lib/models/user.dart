@@ -29,6 +29,7 @@ class User{
 
   static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifygroup.org/notifyapp/api/index.php/user/add';
   static final String URL_ADD_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/add';
+  static final String URL_GET_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/get/';
   static final String URL_BLOCK_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/block/';
   static final String URL_UNBLOCK_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/unblock/';
 
@@ -121,11 +122,31 @@ class User{
     };
     await NotifyApi().getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
-        this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
+        this.id = int.parse(map['NOTIFYGROUP'][0]['id'].toString());
         this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
         this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
         this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
         this.toMap();
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
+
+  Future<bool> getSubscriber() async{
+    bool success = true;
+    await NotifyApi().getJsonFromServer(URL_GET_SUBSCRIBER+this.id_subscriber.toString(),null).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == 1.toString()) {
+        this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
+        this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
+        this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
+        this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
+        this.full_name = map['NOTIFYGROUP'][0]['full_name'];
+        this.url_profil_pic = map['NOTIFYGROUP'][0]['url_profil_pic'];
+        this.id_accout_type = int.parse(map['NOTIFYGROUP'][0]['id_account_type']);
+        this.id_account_user = map['NOTIFYGROUP'][0]['id_account_user'];
       }
       else{
         success = false;

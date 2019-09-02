@@ -5,6 +5,7 @@ import '.././../../models/appeal_item.dart';
 import '../../../components/empty_data.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../models/user.dart';
+import '../../user_profile/user_profile.dart';
 
 class ItemAppeal extends StatefulWidget{
 
@@ -102,7 +103,11 @@ class _ItemAppealState extends State<ItemAppeal>{
                               ),
                               recognizer: new TapGestureRecognizer()
                                 ..onTap = () {
-
+                                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    User user = new User();
+                                    user.id_subscriber = items[i].id_subscriber;
+                                    return new UserProfile(currentUser,user,localization);
+                                  }));
                                 },
                             ),
                           ),

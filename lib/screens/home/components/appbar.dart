@@ -34,7 +34,7 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
                 MaterialPageRoute
                   (
                     builder: (BuildContext context){
-                      return UserProfile(this.user,localization);
+                      return UserProfile(this.user,this.user,localization);
                     }
                 ));
           },

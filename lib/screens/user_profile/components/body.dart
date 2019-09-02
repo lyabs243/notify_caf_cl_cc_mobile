@@ -9,6 +9,7 @@ import 'package:toast/toast.dart';
 import 'add_appeal.dart';
 import '../../../models/constants.dart' as constants;
 import '../../../components/alert_dialog.dart' as alert;
+import '../../../components/empty_data.dart';
 
 class Body extends StatefulWidget{
 
@@ -33,15 +34,35 @@ class _BodyState extends State<Body>{
   bool isPageLoading = true;
   bool isLoading = false;
 
+  bool isCurrentUser = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    this.widget._currentUser.getFieldsFromServer().then((value){
-      setState(() {
-        isPageLoading = false;
+    if(this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber) {
+      this.widget._currentUser.getFieldsFromServer().then((value) {
+        setState(() {
+          widget._user = widget._currentUser;
+          isCurrentUser = true;
+          isPageLoading = false;
+        });
       });
-    });
+    }
+    else{
+      this.widget._user.getSubscriber().then((success){
+        setState(() {
+          isPageLoading = false;
+        });
+        if(success){
+
+        }
+        else{
+          Toast.show(this.widget._localization['error_occured'], context, duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM);
+        }
+      });
+    }
   }
 
   @override
@@ -54,6 +75,8 @@ class _BodyState extends State<Body>{
       Center(
         child: CircularProgressIndicator(),
       ):
+      (widget._user.full_name == null)?
+      EmptyData(widget._localization):
       ListView.builder(
         itemBuilder: ((context,i){
           if(i == 0){
@@ -72,6 +95,7 @@ class _BodyState extends State<Body>{
                             fontWeight: FontWeight.bold
                         ),
                       ),
+                      (isCurrentUser)?
                       new Text(
                         (this.widget._user.id_accout_type == User.FACEBOOK_ACCOUNT_ID)?
                         this.widget._localization['connected_with_facebook']:
@@ -81,7 +105,8 @@ class _BodyState extends State<Body>{
                             color: Colors.white,
                             fontStyle: FontStyle.italic
                         ),
-                      )
+                      ):
+                      Container()
                     ],
                   ),
                   decoration: new BoxDecoration(
@@ -92,7 +117,7 @@ class _BodyState extends State<Body>{
                     ),
                   ),
                 ),
-                (this.widget._user.active == 1)?
+                (this.widget._user.active == 1 || !isCurrentUser)?
                 Center():
                 Container(
                   color: Colors.red,

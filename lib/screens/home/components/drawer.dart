@@ -129,7 +129,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
             MaterialPageRoute
               (
                 builder: (BuildContext context){
-                  return UserProfile(this.widget.user,this.widget.localization);
+                  return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
                 }
             ));
         break;

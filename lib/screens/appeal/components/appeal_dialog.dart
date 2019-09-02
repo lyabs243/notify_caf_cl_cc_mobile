@@ -3,6 +3,7 @@ import '../../../models/appeal_item.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 import '../../../models/user.dart';
+import '../../user_profile/user_profile.dart';
 import '../../../models/constants.dart' as constant;
 
 class AppealDialog extends StatefulWidget{
@@ -93,21 +94,30 @@ class _AppealDialogState extends State<AppealDialog>{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Card(
-              elevation: 15.0,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.08,
-                child: Center(
-                  child: Text(
-                    this.widget.appealItem.full_name,
-                    textScaleFactor: 2.0,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
+            InkWell(
+              child: Card(
+                elevation: 15.0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  child: Center(
+                    child: Text(
+                      this.widget.appealItem.full_name,
+                      textScaleFactor: 2.0,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
                 ),
               ),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  User user = new User();
+                  user.id_subscriber = this.widget.appealItem.id_subscriber;
+                  return new UserProfile(this.widget.currentUser,user,this.widget.localization);
+                }));
+              },
             ),
             Container(
               padding: EdgeInsets.all(10.0),

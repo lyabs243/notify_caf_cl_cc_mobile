@@ -4,10 +4,11 @@ import 'components/body.dart';
 
 class UserProfile extends StatelessWidget{
 
+  User _currentUser;
   User _user;
   Map _localization;
 
-  UserProfile(this._user,this._localization);
+  UserProfile(this._currentUser,this._user,this._localization);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class UserProfile extends StatelessWidget{
       appBar: AppBar(
         title: new Text(_localization['profil']),
       ),
-      body: Body(_user, _user, _localization),
+      body: Body(this._currentUser, _user, _localization),
     );
   }
 
