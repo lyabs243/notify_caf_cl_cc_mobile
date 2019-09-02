@@ -161,6 +161,7 @@ class _BodyState extends State<Body>{
       ),
       inAsyncCall: isLoading,
       dismissible: false,
+      color: Colors.black,
       opacity: 0.5,
     );
   }

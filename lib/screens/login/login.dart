@@ -71,6 +71,7 @@ class _Login extends State<Login>{
       ),
       inAsyncCall: isLoging,
       dismissible: false,
+      color: Colors.black,
       opacity: 0.5,
     );
   }
