@@ -4,6 +4,7 @@ import 'appeal_dialog.dart';
 import '.././../../models/appeal_item.dart';
 import '../../../components/empty_data.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../../models/user.dart';
 
 class ItemAppeal extends StatefulWidget{
 
@@ -25,6 +26,7 @@ class _ItemAppealState extends State<ItemAppeal>{
   List<AppealItem> items;
   bool isPageLoading = true;
   bool isPageRefresh = false;
+  User currentUser;
 
   int page = 1;
 
@@ -36,6 +38,11 @@ class _ItemAppealState extends State<ItemAppeal>{
     super.initState();
     localization = this.widget.localization;
     _refreshController = RefreshController(initialRefresh: false);
+    User.getInstance().then((_user){
+      setState(() {
+        currentUser = _user;
+      });
+    });
     items = new List<AppealItem>();
     initItems();
   }
@@ -135,10 +142,19 @@ class _ItemAppealState extends State<ItemAppeal>{
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context){
-                      return new AppealDialog(this.localization,items[i]);
+                      return new AppealDialog(this.localization,items[i],currentUser);
                     },
                     fullscreenDialog: true
-                ));
+                )).then((appeal){
+                  if(appeal != null){
+                    //si on approuve ou o desactive l appel on le supprime de la liste
+                    if(appeal.approve || !appeal.active){
+                      setState(() {
+                        items.removeAt(i);
+                      });
+                    }
+                  }
+                });
               },
             );
           })),

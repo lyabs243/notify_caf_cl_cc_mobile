@@ -16,6 +16,7 @@ class AppealItem{
 
   static final String URL_ADD_APPEAL = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/add/';
   static final String URL_GET_APPEALS = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/get_appeals/';
+  static final String URL_APPROVE_APPEAL = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/approve_appeal/';
 
   AppealItem(this.id, this.id_subscriber, this.is_policie_violate,
       this.is_policie_respect_after_activation, this.full_name,
@@ -31,6 +32,20 @@ class AppealItem{
     await NotifyApi().getJsonFromServer(URL_ADD_APPEAL+id_subscriber.toString(),params).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
 
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
+
+  Future<bool> approveAppeal(int id_admin) async{
+    bool success = true;
+    await NotifyApi().getJsonFromServer(URL_APPROVE_APPEAL+id.toString()+'/'+id_admin.toString()+'/'+
+        id_subscriber.toString(),null).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
+        approve = true;
       }
       else{
         success = false;
