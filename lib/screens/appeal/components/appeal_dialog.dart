@@ -68,7 +68,23 @@ class _AppealDialogState extends State<AppealDialog>{
                 ),
               ),
               onPressed: (){
-
+                setState(() {
+                  isLoading = true;
+                  this.widget.appealItem.deactivateAppeal(this.widget.currentUser.id_subscriber).then((success){
+                    setState(() {
+                      isLoading = false;
+                    });
+                    if(success) {
+                      Toast.show(this.widget.localization['appeal_deactivated'], context,duration: Toast.LENGTH_LONG,
+                          gravity: Toast.BOTTOM);
+                      Navigator.pop(context, this.widget.appealItem);
+                    }
+                    else{
+                      Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+                          gravity: Toast.BOTTOM);
+                    }
+                  });
+                });
               },
             ),
           ],
