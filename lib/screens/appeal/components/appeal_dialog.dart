@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../models/appeal_item.dart';
+import '../../../models/constants.dart' as constant;
 
 class AppealDialog extends StatefulWidget{
 
@@ -79,7 +80,7 @@ class _AppealDialogState extends State<AppealDialog>{
                   color: Theme.of(context).primaryColor
               ),
               child: Text(
-                  this.widget.appealItem.register_date.toString(),
+                  constant.convertDateToAbout(this.widget.appealItem.register_date,this.widget.localization),
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: Colors.white
