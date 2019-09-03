@@ -44,7 +44,7 @@ class _AppealDialogState extends State<AppealDialog>{
               onPressed: (){
                 setState(() {
                   isLoading = true;
-                  this.widget.appealItem.approveAppeal(this.widget.currentUser.id_subscriber).then((success){
+                  this.widget.appealItem.approveAppeal(this.widget.currentUser.id_subscriber,context).then((success){
                     setState(() {
                       isLoading = false;
                     });
@@ -71,7 +71,7 @@ class _AppealDialogState extends State<AppealDialog>{
               onPressed: (){
                 setState(() {
                   isLoading = true;
-                  this.widget.appealItem.deactivateAppeal(this.widget.currentUser.id_subscriber).then((success){
+                  this.widget.appealItem.deactivateAppeal(this.widget.currentUser.id_subscriber,context).then((success){
                     setState(() {
                       isLoading = false;
                     });

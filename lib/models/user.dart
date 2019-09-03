@@ -3,6 +3,7 @@ import 'dart:async';
 import '../screens/login/components/login_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -36,16 +37,16 @@ class User{
   static final int USER_TYPE_ADMIN = 2;
   static final int USER_TYPE_SIMPLE = 1;
 
-  Future<bool> login(LoginType type,Function setLoginState) async{
+  Future<bool> login(LoginType type,Function setLoginState,BuildContext context) async{
     this.setLoginState = setLoginState;
     if(type == LoginType.Nope){
       return continueWithoutLogin();
     }
     else if(type == LoginType.Google){
-      return googleLogin();
+      return googleLogin(context);
     }
     else if(type == LoginType.Facebook){
-      return facebookLogin();
+      return facebookLogin(context);
     }
   }
 
@@ -57,7 +58,7 @@ class User{
     return true;
   }
 
-  Future<bool> facebookLogin() async{
+  Future<bool> facebookLogin(BuildContext context) async{
     bool success = true;
     final facebookLogin = FacebookLogin();
     final result = await facebookLogin.logInWithReadPermissions(['email']);
@@ -71,7 +72,7 @@ class User{
         this.id_account_user = profile['id'];
         this.url_profil_pic = profile["picture"]["data"]["url"];
         this.id_accout_type = FACEBOOK_ACCOUNT_ID;
-        await this.getFieldsFromServer().then((_success){
+        await this.getFieldsFromServer(context).then((_success){
           success = _success;
         });
         break;
@@ -87,7 +88,7 @@ class User{
     return success;
   }
 
-  Future<bool> googleLogin() async{
+  Future<bool> googleLogin(BuildContext context) async{
     bool success = true;
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
@@ -101,7 +102,7 @@ class User{
       this.id_account_user = result.id;
       this.url_profil_pic = result.photoUrl;
       this.id_accout_type = GOOGLE_ACCOUNT_ID;
-      await this.getFieldsFromServer().then((_success){
+      await this.getFieldsFromServer(context).then((_success){
         success = _success;
       });
     } catch (error) {
@@ -112,7 +113,7 @@ class User{
     return success;
   }
 
-  Future<bool> getFieldsFromServer() async{
+  Future<bool> getFieldsFromServer(BuildContext context) async{
     bool success = true;
     Map<String,String> params = {
       'full_name': this.full_name.toString(),
@@ -120,7 +121,7 @@ class User{
       'id_account': this.id_account_user.toString(),
       'id_account_type': this.id_accout_type.toString()
     };
-    await NotifyApi().getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
+    await NotifyApi(context).getJsonFromServer(URL_ADD_SUBSCRIBER,params).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1) {
         this.id = int.parse(map['NOTIFYGROUP'][0]['id'].toString());
         this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
@@ -135,9 +136,9 @@ class User{
     return success;
   }
 
-  Future<bool> getSubscriber() async{
+  Future<bool> getSubscriber(BuildContext context) async{
     bool success = true;
-    await NotifyApi().getJsonFromServer(URL_GET_SUBSCRIBER+this.id_subscriber.toString(),null).then((map){
+    await NotifyApi(context).getJsonFromServer(URL_GET_SUBSCRIBER+this.id_subscriber.toString(),null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == 1.toString()) {
         this.id = int.parse(map['NOTIFYGROUP'][0]['id']);
         this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
@@ -155,12 +156,12 @@ class User{
     return success;
   }
 
-  Future<bool> block(int idSubscriber,Function setBlockingState) async{
+  Future<bool> block(int idSubscriber,Function setBlockingState,BuildContext context) async{
     bool success = true;
     setBlockingState(true);
     String url = URL_BLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
     print(url);
-    await NotifyApi().getJsonFromServer(url,null).then((map){
+    await NotifyApi(context).getJsonFromServer(url,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
         this.active = 0;
         this.toMap();
@@ -173,12 +174,12 @@ class User{
     return success;
   }
 
-  Future<bool> unblock(int idSubscriber,Function setBlockingState) async{
+  Future<bool> unblock(int idSubscriber,Function setBlockingState,BuildContext context) async{
     bool success = true;
     setBlockingState(true);
     String url = URL_UNBLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
     print(url);
-    await NotifyApi().getJsonFromServer(url,null).then((map){
+    await NotifyApi(context).getJsonFromServer(url,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
         this.active = 1;
         this.toMap();

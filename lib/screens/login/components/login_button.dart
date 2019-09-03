@@ -51,7 +51,7 @@ class _LoginButton extends State<LoginButton>{
 
   login() async{
     User user = new User();
-    bool isLog = await user.login(widget.type,this.widget.seLoginState);
+    bool isLog = await user.login(widget.type,this.widget.seLoginState,context);
     if(isLog){
       User.currentUser = null;
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){

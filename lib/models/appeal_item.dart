@@ -1,5 +1,5 @@
 import '../services/notify_api.dart';
-import 'user.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppealItem{
@@ -23,14 +23,14 @@ class AppealItem{
       this.is_policie_respect_after_activation, this.full_name,
       this.appeal_description, this.approve, this.register_date, this.active);
 
-  Future<bool> addAppeal() async{
+  Future<bool> addAppeal(BuildContext context) async{
     bool success = true;
     Map<String,String> params = {
       'is_policie_violate': this.is_policie_violate? 1.toString() : 0.toString(),
       'is_policie_respect_after_activation': this.is_policie_respect_after_activation? 1.toString() : 0.toString(),
       'appeal_description': this.appeal_description
     };
-    await NotifyApi().getJsonFromServer(URL_ADD_APPEAL+id_subscriber.toString(),params).then((map){
+    await NotifyApi(context).getJsonFromServer(URL_ADD_APPEAL+id_subscriber.toString(),params).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
 
       }
@@ -41,9 +41,9 @@ class AppealItem{
     return success;
   }
 
-  Future<bool> approveAppeal(int id_admin) async{
+  Future<bool> approveAppeal(int id_admin,BuildContext context) async{
     bool success = true;
-    await NotifyApi().getJsonFromServer(URL_APPROVE_APPEAL+id.toString()+'/'+id_admin.toString()+'/'+
+    await NotifyApi(context).getJsonFromServer(URL_APPROVE_APPEAL+id.toString()+'/'+id_admin.toString()+'/'+
         id_subscriber.toString(),null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
         approve = true;
@@ -55,9 +55,9 @@ class AppealItem{
     return success;
   }
 
-  Future<bool> deactivateAppeal(int id_admin) async{
+  Future<bool> deactivateAppeal(int id_admin,BuildContext context) async{
     bool success = true;
-    await NotifyApi().getJsonFromServer(URL_DEACTIVATE_APPEAL+id.toString()+'/'+id_admin.toString()
+    await NotifyApi(context).getJsonFromServer(URL_DEACTIVATE_APPEAL+id.toString()+'/'+id_admin.toString()
         ,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
         active = false;
@@ -69,9 +69,9 @@ class AppealItem{
     return success;
   }
 
-   static Future<List<AppealItem>> getAppeals({page: 1}) async{
+   static Future<List<AppealItem>> getAppeals(BuildContext context,{page: 1}) async{
     List<AppealItem> items = new List<AppealItem>();
-    await NotifyApi().getJsonFromServer(URL_GET_APPEALS+page.toString(),null).then((map){
+    await NotifyApi(context).getJsonFromServer(URL_GET_APPEALS+page.toString(),null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
         List data = map['NOTIFYGROUP'][0]['data'];
         data.forEach((map){

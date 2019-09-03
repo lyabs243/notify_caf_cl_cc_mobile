@@ -34,40 +34,22 @@ class _BodyState extends State<Body>{
   bool isPageLoading = true;
   bool isLoading = false;
 
+  //verifie si les donnees du subscriber ot deja ete mis a jour
+  bool isDataLoaded = false;
+
   bool isCurrentUser = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber) {
-      this.widget._currentUser.getFieldsFromServer().then((value) {
-        setState(() {
-          widget._user = widget._currentUser;
-          isCurrentUser = true;
-          isPageLoading = false;
-        });
-      });
-    }
-    else{
-      this.widget._user.getSubscriber().then((success){
-        setState(() {
-          isPageLoading = false;
-        });
-        if(success){
-
-        }
-        else{
-          Toast.show(this.widget._localization['error_occured'], context, duration: Toast.LENGTH_LONG,
-          gravity: Toast.BOTTOM);
-        }
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     _context = context;
+    if(!isDataLoaded)
+      initSubscriber();
     _drawerItems = new List<DrawerItem>();
     initDrawerItems();
     return ModalProgressHUD(
@@ -191,6 +173,35 @@ class _BodyState extends State<Body>{
     );
   }
 
+  initSubscriber(){
+    if(this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber) {
+      this.widget._currentUser.getFieldsFromServer(_context).then((value) {
+        setState(() {
+          widget._user = widget._currentUser;
+          isCurrentUser = true;
+          isPageLoading = false;
+          isDataLoaded = true;
+        });
+      });
+    }
+    else{
+      this.widget._user.getSubscriber(_context).then((success){
+        setState(() {
+          isPageLoading = false;
+        });
+        if(success){
+          setState(() {
+            isDataLoaded = true;
+          });
+        }
+        else{
+          //Toast.show(this.widget._localization['error_occured'], _context, duration: Toast.LENGTH_LONG,
+            //  gravity: Toast.BOTTOM);
+        }
+      });
+    }
+  }
+
   initDrawerItems(){
 
     DrawerItem header = new DrawerItem(0, this.widget._user.full_name, DrawerType.header);
@@ -270,7 +281,7 @@ class _BodyState extends State<Body>{
   }
 
   blockSubscriber() async{
-    bool isBlock = await this.widget._currentUser.block(this.widget._user.id_subscriber, setBlockingState);
+    bool isBlock = await this.widget._currentUser.block(this.widget._user.id_subscriber, setBlockingState,context);
     if(isBlock){
       Toast.show(this.widget._localization['user_blocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
@@ -280,7 +291,7 @@ class _BodyState extends State<Body>{
   }
 
   unblockSubscriber() async{
-    bool isUnblock = await this.widget._currentUser.unblock(this.widget._user.id_subscriber, setBlockingState);
+    bool isUnblock = await this.widget._currentUser.unblock(this.widget._user.id_subscriber, setBlockingState,context);
     if(isUnblock){
       Toast.show(this.widget._localization['user_unblocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }

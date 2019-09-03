@@ -28,6 +28,7 @@ class _ItemAppealState extends State<ItemAppeal>{
   bool isPageLoading = true;
   bool isPageRefresh = false;
   User currentUser;
+  BuildContext _context;
 
   int page = 1;
 
@@ -45,12 +46,13 @@ class _ItemAppealState extends State<ItemAppeal>{
       });
     });
     items = new List<AppealItem>();
-    initItems();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    _context = context;
+    if(items.length < 1)
+      initItems();
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: (items.length>0)? true : false,
@@ -179,7 +181,7 @@ class _ItemAppealState extends State<ItemAppeal>{
 
   Future initItems() async{
     page = 1;
-    List<AppealItem> appeals = await AppealItem.getAppeals(page: page);
+    List<AppealItem> appeals = await AppealItem.getAppeals(_context,page: page);
     if(appeals.length > 0){
       setState(() {
         items.clear();
@@ -192,7 +194,7 @@ class _ItemAppealState extends State<ItemAppeal>{
   }
 
   Future addItems() async{
-    List<AppealItem> appeals = await AppealItem.getAppeals(page: page);
+    List<AppealItem> appeals = await AppealItem.getAppeals(context,page: page);
     if(appeals.length > 0){
       setState(() {
         items.addAll(appeals);

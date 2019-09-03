@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -5,14 +6,21 @@ class NotifyApi {
 
   int statusCode;
   Map mapResult;
+  BuildContext context;
+
+  NotifyApi(this.context);
 
   Future<Map> getJsonFromServer(String url, Map params) async {
-
+    Locale myLocale = Localizations.localeOf(context);
+    String langCode = myLocale.languageCode;
+    String timezone = DateTime.now().timeZoneOffset.toString().substring(0,
+        DateTime.now().timeZoneOffset.toString().lastIndexOf(new RegExp(':')));
+    timezone = ((timezone.startsWith(new RegExp('-')))? '' : '+') + timezone;
     Map<String,String> map = {
       'access_api': 'sgdhrnt_234lyS__',
-      'lang': 'en',
+      'lang': langCode,
       'version': '1',
-      'timezone': '+00:00'
+      'timezone': timezone
     };
     //print("params -- ${params}");
     if (params != null) {

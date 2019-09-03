@@ -58,7 +58,7 @@ class _AppealState extends State<Appeal>{
               });
               AppealItem appealItem = new AppealItem(null, user.id_subscriber, isRecongnizeViolated,
                   isViolatedAgain, null, appealDescription, null, null, null);
-              appealItem.addAppeal().then((result){
+              appealItem.addAppeal(context).then((result){
                 setState(() {
                   isLoading = false;
                 });
