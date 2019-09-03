@@ -186,12 +186,12 @@ class _ItemAppealState extends State<ItemAppeal>{
       setState(() {
         items.clear();
         items = appeals;
-        isPageRefresh = false;
         page++;
       });
     }
     setState(() {
       isPageLoading = false;
+      isPageRefresh = false;
     });
   }
 
