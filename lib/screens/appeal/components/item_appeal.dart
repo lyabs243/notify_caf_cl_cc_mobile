@@ -187,10 +187,12 @@ class _ItemAppealState extends State<ItemAppeal>{
         items.clear();
         items = appeals;
         isPageRefresh = false;
-        isPageLoading = false;
         page++;
       });
     }
+    setState(() {
+      isPageLoading = false;
+    });
   }
 
   Future addItems() async{
