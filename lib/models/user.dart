@@ -156,15 +156,17 @@ class User{
     return success;
   }
 
-  Future<bool> block(int idSubscriber,Function setBlockingState,BuildContext context) async{
+  Future<bool> block(User user,Function setBlockingState,BuildContext context) async{
     bool success = true;
     setBlockingState(true);
-    String url = URL_BLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
-    print(url);
+    String url = URL_BLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + user.id_subscriber.toString();
     await NotifyApi(context).getJsonFromServer(url,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
-        this.active = 0;
-        this.toMap();
+        user.active = 0;
+        if(user.id_subscriber == this.id_subscriber) {
+          this.active = 0;
+          this.toMap();
+        }
       }
       else{
         success = false;
@@ -174,15 +176,17 @@ class User{
     return success;
   }
 
-  Future<bool> unblock(int idSubscriber,Function setBlockingState,BuildContext context) async{
+  Future<bool> unblock(User user,Function setBlockingState,BuildContext context) async{
     bool success = true;
     setBlockingState(true);
-    String url = URL_UNBLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + idSubscriber.toString();
-    print(url);
+    String url = URL_UNBLOCK_SUBSCRIBER + this.id_subscriber.toString() + "/" + user.id_subscriber.toString();
     await NotifyApi(context).getJsonFromServer(url,null).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == '1') {
-        this.active = 1;
-        this.toMap();
+        user.active = 1;
+        if(user.id_subscriber == this.id_subscriber) {
+          this.active = 1;
+          this.toMap();
+        }
       }
       else{
         success = false;

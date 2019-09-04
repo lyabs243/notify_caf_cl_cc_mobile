@@ -281,7 +281,7 @@ class _BodyState extends State<Body>{
   }
 
   blockSubscriber() async{
-    bool isBlock = await this.widget._currentUser.block(this.widget._user.id_subscriber, setBlockingState,context);
+    bool isBlock = await this.widget._currentUser.block(this.widget._user, setBlockingState,context);
     if(isBlock){
       Toast.show(this.widget._localization['user_blocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
@@ -291,7 +291,7 @@ class _BodyState extends State<Body>{
   }
 
   unblockSubscriber() async{
-    bool isUnblock = await this.widget._currentUser.unblock(this.widget._user.id_subscriber, setBlockingState,context);
+    bool isUnblock = await this.widget._currentUser.unblock(this.widget._user, setBlockingState,context);
     if(isUnblock){
       Toast.show(this.widget._localization['user_unblocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
