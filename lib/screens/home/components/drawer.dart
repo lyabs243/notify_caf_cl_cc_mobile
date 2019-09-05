@@ -4,6 +4,7 @@ import '../../../models/user.dart';
 import '../../../screens/login/login.dart';
 import '../../../screens/user_profile/user_profile.dart';
 import '../../../screens/appeal/appeal_page.dart';
+import '../../../models/competition_item.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -23,6 +24,7 @@ class HomeDrawer extends StatefulWidget{
 class _HomeDrawerState extends State<HomeDrawer>{
 
   List<DrawerItem> drawerItems;
+  bool isExpand = false;
 
   @override
   void initState() {
@@ -66,6 +68,40 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 ),
               );
             }
+            else if(drawerItems[i].drawerType == DrawerType.expandable){
+              return ExpansionTile(
+                title: Text(
+                  drawerItems[i].title,
+                  textScaleFactor: 1.2,
+                  style: TextStyle(
+                      color: Colors.white
+                  ),
+                ),
+                trailing: (isExpand)?
+                Icon(Icons.expand_less,color: Colors.white,):
+                Icon(Icons.expand_more,color: Colors.white,),
+                onExpansionChanged: (val){
+                  setState(() {
+                    isExpand = val;
+                  });
+                },
+                leading: (drawerItems[i].iconPath != null) ?
+                  ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
+                  null,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: drawerItems[i].expandableItems,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
             else if(!drawerItems[i].visible){
               return Container();
             }
@@ -97,10 +133,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
   initDrawerItems(){
 
     DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
-    DrawerItem profil = new DrawerItem(1, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem appeal = new DrawerItem(2, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-    DrawerItem login = new DrawerItem(3, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem logout = new DrawerItem(4, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+    List competitions = initCompetitions();
+    DrawerItem competition = new DrawerItem(1, this.widget.localization['competition'], DrawerType.expandable,
+        iconPath: 'assets/icons/profile.png',expandableItems: competitions);
+    DrawerItem profil = new DrawerItem(2, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+    DrawerItem appeal = new DrawerItem(3, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+    DrawerItem login = new DrawerItem(4, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem logout = new DrawerItem(5, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -115,6 +154,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
     }
 
     drawerItems.add(header);
+    drawerItems.add(competition);
     drawerItems.add(profil);
     drawerItems.add(appeal);
     drawerItems.add(login);
@@ -123,7 +163,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
   onDrawerItemSelected(int id){
     switch(id){
-      case 1: //click on profil
+      case 2: //click on profil
         Navigator.push(
             context,
             MaterialPageRoute
@@ -133,7 +173,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 }
             ));
         break;
-      case 2: //click on appeal
+      case 3: //click on appeal
         Navigator.push(
             context,
             MaterialPageRoute
@@ -143,7 +183,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 }
             ));
         break;
-      case 3: //click on login
+      case 4: //click on login
         Navigator.pushReplacement(
           context,
           MaterialPageRoute
@@ -153,7 +193,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
               }
           ));
         break;
-      case 4: //click on logout
+      case 5: //click on logout
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -164,6 +204,58 @@ class _HomeDrawerState extends State<HomeDrawer>{
             ));
         break;
     }
+  }
+
+  //init competion list
+  List<Widget> initCompetitions(){
+
+    CompetitionItem champions_league = new CompetitionItem(1, 1, 1, this.widget.localization['champions_league']);
+    CompetitionItem confederation_cup = new CompetitionItem(1, 1, 1, this.widget.localization['confederation_cup']);
+
+    List<CompetitionItem> competitions = [champions_league,confederation_cup];
+
+    DrawerItem drawerCL = new DrawerItem(0, competitions[0].name, DrawerType.item);
+    DrawerItem drawerCC = new DrawerItem(1, competitions[1].name, DrawerType.item);
+    DrawerItem drawerMore = new DrawerItem(2, this.widget.localization['more'], DrawerType.item);
+
+    List competitionDrawerItems = [];
+    competitionDrawerItems.add(drawerCL);
+    competitionDrawerItems.add(drawerCC);
+    competitionDrawerItems.add(drawerMore);
+
+    List<Widget> listWidget = [];
+
+    competitionDrawerItems.forEach((item){
+      listWidget.add(
+        Row(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(left: 50.0)),
+            InkWell(
+                child: Text(
+                  item.title,
+                  textScaleFactor: 1,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: (){
+                  switch(item.id){
+                    case 0:
+                      break;
+                    case 1:
+                      break;
+                    case 2:
+                      break;
+                  }
+                }
+            )
+          ],
+        )
+      );
+      listWidget.add(Padding(padding: EdgeInsets.only(bottom: 18.0)));
+    });
+
+    return listWidget;
   }
 
 }
