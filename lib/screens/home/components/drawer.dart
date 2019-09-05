@@ -5,6 +5,8 @@ import '../../../screens/login/login.dart';
 import '../../../screens/user_profile/user_profile.dart';
 import '../../../screens/appeal/appeal_page.dart';
 import '../../../models/competition_item.dart';
+import 'body.dart';
+import '../home.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -134,12 +136,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
     DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
     List competitions = initCompetitions();
-    DrawerItem competition = new DrawerItem(1, this.widget.localization['competition'], DrawerType.expandable,
+    DrawerItem home = new DrawerItem(1, this.widget.localization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem competition = new DrawerItem(2, this.widget.localization['competition'], DrawerType.expandable,
         iconPath: 'assets/icons/profile.png',expandableItems: competitions);
-    DrawerItem profil = new DrawerItem(2, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem appeal = new DrawerItem(3, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-    DrawerItem login = new DrawerItem(4, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem logout = new DrawerItem(5, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+    DrawerItem profil = new DrawerItem(3, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+    DrawerItem appeal = new DrawerItem(4, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+    DrawerItem login = new DrawerItem(5, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem logout = new DrawerItem(6, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     //set visibility
     if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -154,6 +157,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
     }
 
     drawerItems.add(header);
+    drawerItems.add(home);
     drawerItems.add(competition);
     drawerItems.add(profil);
     drawerItems.add(appeal);
@@ -163,7 +167,17 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
   onDrawerItemSelected(int id){
     switch(id){
-      case 2: //click on profil
+      case 1: //click on profil
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute
+              (
+                builder: (BuildContext context){
+                  return HomePage(fragment: Fragment.HOME,);
+                }
+            ));
+        break;
+      case 3: //click on profil
         Navigator.push(
             context,
             MaterialPageRoute
@@ -173,7 +187,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 }
             ));
         break;
-      case 3: //click on appeal
+      case 4: //click on appeal
         Navigator.push(
             context,
             MaterialPageRoute
@@ -183,7 +197,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 }
             ));
         break;
-      case 4: //click on login
+      case 5: //click on login
         Navigator.pushReplacement(
           context,
           MaterialPageRoute
@@ -193,7 +207,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
               }
           ));
         break;
-      case 5: //click on logout
+      case 6: //click on logout
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -240,11 +254,25 @@ class _HomeDrawerState extends State<HomeDrawer>{
                 ),
                 onTap: (){
                   switch(item.id){
-                    case 0:
+                    case 0://champoions league
+                    case 1://confederation cup
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context){
+                                return HomePage(fragment: Fragment.COMPETITION,
+                                competitionItem: competitions[item.id],);
+                              }
+                          ));
                       break;
-                    case 1:
-                      break;
-                    case 2:
+                    case 2://more
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context){
+                                return HomePage(fragment: Fragment.COMPETITION_LIST,);
+                              }
+                          ));
                       break;
                   }
                 }

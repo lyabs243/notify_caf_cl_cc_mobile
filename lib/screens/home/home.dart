@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
 import 'components/body.dart';
 import '../../models/localizations.dart';
-import '../login/login.dart';
 import '../../models/user.dart';
 import 'components/drawer.dart';
 import 'components/appbar.dart';
+import '../../models/competition_item.dart';
 
 class HomePage extends StatefulWidget{
 
-  HomePage({Key key, this.title}) : super(key: key);
+  Fragment fragment;
+  CompetitionItem competitionItem;
+
+
+  HomePage({Key key, this.title,this.fragment: Fragment.HOME,this.competitionItem}) : super(key: key);
 
   final String title;
 
   @override
   State<HomePage> createState() {
     // TODO: implement createState
-    return new _HomePageState();
+    return new _HomePageState(this.fragment,this.competitionItem);
   }
 
 }
 
 class _HomePageState extends State<HomePage>{
 
+  Fragment fragment;
   User user;
+  CompetitionItem competitionItem;
+
+  _HomePageState(this.fragment,this.competitionItem);
 
   @override
   void initState() {
@@ -45,7 +53,7 @@ class _HomePageState extends State<HomePage>{
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
           return Scaffold(
             appBar: HomeAppBar(user,localization),
-            body: Body(),
+            body: Body(fragment: this.fragment,competitionItem: this.competitionItem,),
             drawer: HomeDrawer(user, localization),
           );
         }

@@ -17,6 +17,7 @@
   "want_unblock_user": "Do you want to unblock this user?",
   "yes": "Yes",
   "no": "No",
+  "home": "Home",
   "about_sec": "about {{value}} sec",
   "about_min": "about {{value}} min",
   "about_hour": "about {{value}} hour",
