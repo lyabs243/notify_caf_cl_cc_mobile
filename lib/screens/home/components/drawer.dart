@@ -5,6 +5,7 @@ import '../../../screens/login/login.dart';
 import '../../../screens/user_profile/user_profile.dart';
 import '../../../screens/appeal/appeal_page.dart';
 import '../../../models/competition_item.dart';
+import '../../../components/no_animation_pageroute.dart';
 import 'body.dart';
 import '../home.dart';
 
@@ -167,11 +168,10 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
   onDrawerItemSelected(int id){
     switch(id){
-      case 1: //click on profil
+      case 1: //click on home
         Navigator.pushReplacement(
             context,
-            MaterialPageRoute
-              (
+            NoAnimationMaterialPageRoute(
                 builder: (BuildContext context){
                   return HomePage(fragment: Fragment.HOME,);
                 }
@@ -256,19 +256,19 @@ class _HomeDrawerState extends State<HomeDrawer>{
                   switch(item.id){
                     case 0://champoions league
                     case 1://confederation cup
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context){
-                                return HomePage(fragment: Fragment.COMPETITION,
+                    Navigator.pushReplacement(
+                        context,
+                        NoAnimationMaterialPageRoute(
+                            builder: (BuildContext context){
+                              return HomePage(fragment: Fragment.COMPETITION,
                                 competitionItem: competitions[item.id],);
-                              }
-                          ));
+                            }
+                        ));
                       break;
                     case 2://more
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
+                          NoAnimationMaterialPageRoute(
                               builder: (BuildContext context){
                                 return HomePage(fragment: Fragment.COMPETITION_LIST,);
                               }
