@@ -11,279 +11,279 @@ import '../home.dart';
 
 class HomeDrawer extends StatefulWidget{
 
-  Map localization;
-  User user;
+	Map localization;
+	User user;
 
-  HomeDrawer(this.user,this.localization);
+	HomeDrawer(this.user,this.localization);
 
-  @override
-  _HomeDrawerState createState() {
-    // TODO: implement createState
-    return new _HomeDrawerState();
-  }
+	@override
+	_HomeDrawerState createState() {
+		// TODO: implement createState
+		return new _HomeDrawerState();
+	}
 
 }
 
 class _HomeDrawerState extends State<HomeDrawer>{
 
-  List<DrawerItem> drawerItems;
-  bool isExpand = false;
+	List<DrawerItem> drawerItems;
+	bool isExpand = false;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    drawerItems = new List<DrawerItem>();
-    initDrawerItems();
-  }
+	@override
+	void initState() {
+		// TODO: implement initState
+		super.initState();
+		drawerItems = new List<DrawerItem>();
+		initDrawerItems();
+	}
 
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Container(
-        decoration: new BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          image: new DecorationImage(
-            image: new AssetImage('assets/bg_nav.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: ListView.builder(
-          itemBuilder: ((context,i){
-            if(i == 0){
-              return Container(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 80.0,
-                      height: 80.0,
-                      child: Image.asset('assets/app_icon_white.png'),
-                    ),
-                    new Text(
-                      this.widget.localization['app_title'],
-                      textScaleFactor: 1.8,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-            else if(drawerItems[i].drawerType == DrawerType.expandable){
-              return ExpansionTile(
-                title: Text(
-                  drawerItems[i].title,
-                  textScaleFactor: 1.2,
-                  style: TextStyle(
-                      color: Colors.white
-                  ),
-                ),
-                trailing: (isExpand)?
-                Icon(Icons.expand_less,color: Colors.white,):
-                Icon(Icons.expand_more,color: Colors.white,),
-                onExpansionChanged: (val){
-                  setState(() {
-                    isExpand = val;
-                  });
-                },
-                leading: (drawerItems[i].iconPath != null) ?
-                  ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
-                  null,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: drawerItems[i].expandableItems,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }
-            else if(!drawerItems[i].visible){
-              return Container();
-            }
-            else{
-              return new ListTile(
-                title: Text(
-                  drawerItems[i].title,
-                  textScaleFactor: 1.2,
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
-                ),
-                onTap: (){
-                  Navigator.pop(context);
-                  onDrawerItemSelected(i);
-                },
-                leading: (drawerItems[i].iconPath != null) ?
-                  ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
-                  null,
-              );
-            }
-          }),
-          itemCount: drawerItems.length,
-        ),
-      ),
-    );
-  }
+	@override
+	Widget build(BuildContext context) {
+		return Drawer(
+			child: Container(
+				decoration: new BoxDecoration(
+					borderRadius: BorderRadius.circular(5),
+					image: new DecorationImage(
+						image: new AssetImage('assets/bg_nav.jpg'),
+						fit: BoxFit.cover,
+					),
+				),
+				child: ListView.builder(
+					itemBuilder: ((context,i){
+						if(i == 0){
+							return Container(
+								child: Row(
+									children: <Widget>[
+										Container(
+											width: 80.0,
+											height: 80.0,
+											child: Image.asset('assets/app_icon_white.png'),
+										),
+										new Text(
+											this.widget.localization['app_title'],
+											textScaleFactor: 1.8,
+											style: TextStyle(
+												color: Colors.white,
+												fontWeight: FontWeight.bold
+											),
+										)
+									],
+								),
+							);
+						}
+						else if(drawerItems[i].drawerType == DrawerType.expandable){
+							return ExpansionTile(
+								title: Text(
+									drawerItems[i].title,
+									textScaleFactor: 1.2,
+									style: TextStyle(
+											color: Colors.white
+									),
+								),
+								trailing: (isExpand)?
+								Icon(Icons.expand_less,color: Colors.white,):
+								Icon(Icons.expand_more,color: Colors.white,),
+								onExpansionChanged: (val){
+									setState(() {
+										isExpand = val;
+									});
+								},
+								leading: (drawerItems[i].iconPath != null) ?
+									ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
+									null,
+								children: <Widget>[
+									Padding(
+										padding: const EdgeInsets.symmetric(horizontal: 16.0),
+										child: Align(
+											alignment: Alignment.topLeft,
+											child: Column(
+												mainAxisSize: MainAxisSize.min,
+												children: drawerItems[i].expandableItems,
+											),
+										),
+									),
+								],
+							);
+						}
+						else if(!drawerItems[i].visible){
+							return Container();
+						}
+						else{
+							return new ListTile(
+								title: Text(
+									drawerItems[i].title,
+									textScaleFactor: 1.2,
+									style: TextStyle(
+										color: Colors.white
+									),
+								),
+								onTap: (){
+									Navigator.pop(context);
+									onDrawerItemSelected(i);
+								},
+								leading: (drawerItems[i].iconPath != null) ?
+									ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
+									null,
+							);
+						}
+					}),
+					itemCount: drawerItems.length,
+				),
+			),
+		);
+	}
 
-  initDrawerItems(){
+	initDrawerItems(){
 
-    DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
-    List competitions = initCompetitions();
-    DrawerItem home = new DrawerItem(1, this.widget.localization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem competition = new DrawerItem(2, this.widget.localization['competition'], DrawerType.expandable,
-        iconPath: 'assets/icons/profile.png',expandableItems: competitions);
-    DrawerItem profil = new DrawerItem(3, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem appeal = new DrawerItem(4, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-    DrawerItem login = new DrawerItem(5, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem logout = new DrawerItem(6, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+		DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
+		List competitions = initCompetitions();
+		DrawerItem home = new DrawerItem(1, this.widget.localization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem competition = new DrawerItem(2, this.widget.localization['competition'], DrawerType.expandable,
+				iconPath: 'assets/icons/profile.png',expandableItems: competitions);
+		DrawerItem profil = new DrawerItem(3, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+		DrawerItem appeal = new DrawerItem(4, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+		DrawerItem login = new DrawerItem(5, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem logout = new DrawerItem(6, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
-    //set visibility
-    if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
-      profil.visible = false;
-      logout.visible = false;
-    }
-    else{
-      login.visible = false;
-      if(this.widget.user.type == User.USER_TYPE_ADMIN){
-        appeal.visible = true;
-      }
-    }
+		//set visibility
+		if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
+			profil.visible = false;
+			logout.visible = false;
+		}
+		else{
+			login.visible = false;
+			if(this.widget.user.type == User.USER_TYPE_ADMIN){
+				appeal.visible = true;
+			}
+		}
 
-    drawerItems.add(header);
-    drawerItems.add(home);
-    drawerItems.add(competition);
-    drawerItems.add(profil);
-    drawerItems.add(appeal);
-    drawerItems.add(login);
-    drawerItems.add(logout);
-  }
+		drawerItems.add(header);
+		drawerItems.add(home);
+		drawerItems.add(competition);
+		drawerItems.add(profil);
+		drawerItems.add(appeal);
+		drawerItems.add(login);
+		drawerItems.add(logout);
+	}
 
-  onDrawerItemSelected(int id){
-    switch(id){
-      case 1: //click on home
-        Navigator.pushReplacement(
-            context,
-            NoAnimationMaterialPageRoute(
-                builder: (BuildContext context){
-                  return HomePage(fragment: Fragment.HOME,);
-                }
-            ));
-        break;
-      case 3: //click on profil
-        Navigator.push(
-            context,
-            MaterialPageRoute
-              (
-                builder: (BuildContext context){
-                  return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
-                }
-            ));
-        break;
-      case 4: //click on appeal
-        Navigator.push(
-            context,
-            MaterialPageRoute
-              (
-                builder: (BuildContext context){
-                  return AppealPage(this.widget.localization);
-                }
-            ));
-        break;
-      case 5: //click on login
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute
-          (
-              builder: (BuildContext context){
-                return Login();
-              }
-          ));
-        break;
-      case 6: //click on logout
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context){
-                  this.widget.user.logout();
-                  return Login();
-                }
-            ));
-        break;
-    }
-  }
+	onDrawerItemSelected(int id){
+		switch(id){
+			case 1: //click on home
+				Navigator.pushReplacement(
+						context,
+						NoAnimationMaterialPageRoute(
+								builder: (BuildContext context){
+									return HomePage(fragment: Fragment.HOME,);
+								}
+						));
+				break;
+			case 3: //click on profil
+				Navigator.push(
+						context,
+						MaterialPageRoute
+							(
+								builder: (BuildContext context){
+									return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
+								}
+						));
+				break;
+			case 4: //click on appeal
+				Navigator.push(
+						context,
+						MaterialPageRoute
+							(
+								builder: (BuildContext context){
+									return AppealPage(this.widget.localization);
+								}
+						));
+				break;
+			case 5: //click on login
+				Navigator.pushReplacement(
+					context,
+					MaterialPageRoute
+					(
+							builder: (BuildContext context){
+								return Login();
+							}
+					));
+				break;
+			case 6: //click on logout
+				Navigator.pushReplacement(
+						context,
+						MaterialPageRoute(
+								builder: (BuildContext context){
+									this.widget.user.logout();
+									return Login();
+								}
+						));
+				break;
+		}
+	}
 
-  //init competion list
-  List<Widget> initCompetitions(){
+	//init competion list
+	List<Widget> initCompetitions(){
 
-    CompetitionItem champions_league = new CompetitionItem(1, 1, 1, this.widget.localization['champions_league']);
-    CompetitionItem confederation_cup = new CompetitionItem(1, 1, 1, this.widget.localization['confederation_cup']);
+		CompetitionItem champions_league = new CompetitionItem(1, 1, 1, this.widget.localization['champions_league']);
+		CompetitionItem confederation_cup = new CompetitionItem(1, 1, 1, this.widget.localization['confederation_cup']);
 
-    List<CompetitionItem> competitions = [champions_league,confederation_cup];
+		List<CompetitionItem> competitions = [champions_league,confederation_cup];
 
-    DrawerItem drawerCL = new DrawerItem(0, competitions[0].name, DrawerType.item);
-    DrawerItem drawerCC = new DrawerItem(1, competitions[1].name, DrawerType.item);
-    DrawerItem drawerMore = new DrawerItem(2, this.widget.localization['more'], DrawerType.item);
+		DrawerItem drawerCL = new DrawerItem(0, competitions[0].name, DrawerType.item);
+		DrawerItem drawerCC = new DrawerItem(1, competitions[1].name, DrawerType.item);
+		DrawerItem drawerMore = new DrawerItem(2, this.widget.localization['more'], DrawerType.item);
 
-    List competitionDrawerItems = [];
-    competitionDrawerItems.add(drawerCL);
-    competitionDrawerItems.add(drawerCC);
-    competitionDrawerItems.add(drawerMore);
+		List competitionDrawerItems = [];
+		competitionDrawerItems.add(drawerCL);
+		competitionDrawerItems.add(drawerCC);
+		competitionDrawerItems.add(drawerMore);
 
-    List<Widget> listWidget = [];
+		List<Widget> listWidget = [];
 
-    competitionDrawerItems.forEach((item){
-      listWidget.add(
-        Row(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(left: 50.0)),
-            InkWell(
-                child: Text(
-                  item.title,
-                  textScaleFactor: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onTap: (){
-                  switch(item.id){
-                    case 0://champoions league
-                    case 1://confederation cup
-                    Navigator.pushReplacement(
-                        context,
-                        NoAnimationMaterialPageRoute(
-                            builder: (BuildContext context){
-                              return HomePage(fragment: Fragment.COMPETITION,
-                                competitionItem: competitions[item.id],);
-                            }
-                        ));
-                      break;
-                    case 2://more
-                      Navigator.pushReplacement(
-                          context,
-                          NoAnimationMaterialPageRoute(
-                              builder: (BuildContext context){
-                                return HomePage(fragment: Fragment.COMPETITION_LIST,);
-                              }
-                          ));
-                      break;
-                  }
-                }
-            )
-          ],
-        )
-      );
-      listWidget.add(Padding(padding: EdgeInsets.only(bottom: 18.0)));
-    });
+		competitionDrawerItems.forEach((item){
+			listWidget.add(
+				InkWell(
+					child: Row(
+						children: <Widget>[
+							Padding(padding: EdgeInsets.only(left: 50.0)),
+							Text(
+							  item.title,
+								textScaleFactor: 1,
+								  style: TextStyle(
+									color: Colors.white,
+								),
+							),
+						],
+					),
+					onTap: (){
+					  switch(item.id){
+						  case 0://champoions league
+							case 1://confederation cup
+							  Navigator.pushReplacement(
+								  context,
+                  NoAnimationMaterialPageRoute(
+									  builder: (BuildContext context){
+										  return HomePage(fragment: Fragment.COMPETITION,
+															competitionItem: competitions[item.id],);
+										}
+									));
+							  break;
+							case 2://more
+							  Navigator.pushReplacement(
+								  context,
+									NoAnimationMaterialPageRoute(
+									  builder: (BuildContext context){
+										  return HomePage(fragment: Fragment.COMPETITION_LIST,);
+										}
+									));
+								break;
+							}
+						}
+				),
+			);
+			listWidget.add(Padding(padding: EdgeInsets.only(bottom: 18.0)));
+		});
 
-    return listWidget;
-  }
+		return listWidget;
+	}
 
 }
