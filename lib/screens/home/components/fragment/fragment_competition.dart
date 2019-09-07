@@ -17,9 +17,26 @@ class FragmentCompetition extends StatefulWidget{
 
 class _FragmentCompetitionState extends State<FragmentCompetition>{
 
+  String url_icon;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    url_icon = this.widget.competitionItem.trophy_icon_url;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    if(!(url_icon != null && url_icon.length > 0)) {
+      this.widget.competitionItem.getCompetition(context).then((success) {
+        if (success) {
+          setState(() {
+            url_icon = this.widget.competitionItem.trophy_icon_url;
+          });
+        }
+      });
+    }
     return Center(
       child: Column(
         children: <Widget>[
@@ -31,6 +48,8 @@ class _FragmentCompetitionState extends State<FragmentCompetition>{
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  (url_icon != null && url_icon.length > 0)?
+                  ImageIcon(NetworkImage(url_icon),color: Colors.white,size: 100.0):
                   ImageIcon(AssetImage('assets/default_trophy.png'),color: Colors.white,size: 100.0),
                   Container(
                     alignment: Alignment(0, -0.37),
