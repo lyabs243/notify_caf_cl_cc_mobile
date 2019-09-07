@@ -36,7 +36,7 @@ class _FragmentCompetitionState extends State<FragmentCompetition>{
                     alignment: Alignment(0, -0.37),
                     width: MediaQuery.of(context).size.width/1.4,
                     child: Text(
-                      this.widget.competitionItem.name,
+                      this.widget.competitionItem.title,
                       textAlign: TextAlign.center,
                       textScaleFactor: 2.1,
                       style: TextStyle(color: Colors.white),

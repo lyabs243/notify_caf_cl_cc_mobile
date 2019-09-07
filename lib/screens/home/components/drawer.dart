@@ -223,13 +223,15 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	//init competion list
 	List<Widget> initCompetitions(){
 
-		CompetitionItem champions_league = new CompetitionItem(1, 1, 1, this.widget.localization['champions_league']);
-		CompetitionItem confederation_cup = new CompetitionItem(1, 1, 1, this.widget.localization['confederation_cup']);
+		CompetitionItem champions_league = new CompetitionItem(2, this.widget.localization['champions_league'],
+        null, '','',null);
+		CompetitionItem confederation_cup = new CompetitionItem(3, this.widget.localization['confederation_cup'],
+        null, '','',null);
 
 		List<CompetitionItem> competitions = [champions_league,confederation_cup];
 
-		DrawerItem drawerCL = new DrawerItem(0, competitions[0].name, DrawerType.item);
-		DrawerItem drawerCC = new DrawerItem(1, competitions[1].name, DrawerType.item);
+		DrawerItem drawerCL = new DrawerItem(0, competitions[0].title, DrawerType.item);
+		DrawerItem drawerCC = new DrawerItem(1, competitions[1].title, DrawerType.item);
 		DrawerItem drawerMore = new DrawerItem(2, this.widget.localization['more'], DrawerType.item);
 
 		List competitionDrawerItems = [];
