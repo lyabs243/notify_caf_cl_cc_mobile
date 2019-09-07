@@ -173,7 +173,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						context,
 						NoAnimationMaterialPageRoute(
 								builder: (BuildContext context){
-									return HomePage(fragment: Fragment.HOME,);
+									return HomePage(this.widget.localization,fragment: Fragment.HOME,);
 								}
 						));
 				break;
@@ -264,7 +264,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								  context,
                   NoAnimationMaterialPageRoute(
 									  builder: (BuildContext context){
-										  return HomePage(fragment: Fragment.COMPETITION,
+										  return HomePage(this.widget.localization,fragment: Fragment.COMPETITION,
 															competitionItem: competitions[item.id],);
 										}
 									));
@@ -274,7 +274,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								  context,
 									NoAnimationMaterialPageRoute(
 									  builder: (BuildContext context){
-										  return HomePage(fragment: Fragment.COMPETITION_LIST,);
+										  return HomePage(this.widget.localization,fragment: Fragment.COMPETITION_LIST,);
 										}
 									));
 								break;

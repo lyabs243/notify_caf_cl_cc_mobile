@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
           if (user != null && user.id_accout_type != null && user.id_accout_type != null){
             /// is because there is user already logged
-            return HomePage();
+            return HomePage(MyLocalizations.of(context).localization);
           }
           /// other way there is no user logged.
           return Login();

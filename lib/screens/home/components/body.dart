@@ -7,8 +7,9 @@ class Body extends StatefulWidget{
 
   Fragment fragment;
   CompetitionItem competitionItem;
+  Map localization;
 
-  Body({this.fragment: Fragment.HOME,this.competitionItem});
+  Body(this.localization,{this.fragment: Fragment.HOME,this.competitionItem});
 
   @override
   _BodyState createState() {
@@ -32,7 +33,7 @@ class _BodyState extends State<Body>{
       homeContenair = FragmentCompetitionList();
     }
     else if(this.fragment == Fragment.COMPETITION && this.competitionItem != null){
-      homeContenair = FragmentCompetition(competitionItem);
+      homeContenair = FragmentCompetition(competitionItem,this.widget.localization);
     }
     else{
       homeContenair = Center(

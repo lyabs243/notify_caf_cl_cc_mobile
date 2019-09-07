@@ -55,7 +55,7 @@ class _LoginButton extends State<LoginButton>{
     if(isLog){
       User.currentUser = null;
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
-        return HomePage();
+        return HomePage(this.widget.localization);
       }));
     }
     else{
