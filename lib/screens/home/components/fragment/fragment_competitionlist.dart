@@ -168,7 +168,7 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
     });
   }
 
-  Future addItems() async{print('Hello');
+  Future addItems() async{
     List<CompetitionItem> competItems = await CompetitionItem.getCompetitions(context,page);
     if(competItems.length > 0){
       setState(() {
