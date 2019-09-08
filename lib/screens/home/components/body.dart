@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'fragment/fragment_competition.dart';
 import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
 
@@ -30,10 +29,7 @@ class _BodyState extends State<Body>{
   @override
   Widget build(BuildContext context) {
     if(this.fragment == Fragment.COMPETITION_LIST){
-      homeContenair = FragmentCompetitionList();
-    }
-    else if(this.fragment == Fragment.COMPETITION && this.competitionItem != null){
-      homeContenair = FragmentCompetition(competitionItem,this.widget.localization);
+      homeContenair = FragmentCompetitionList(this.widget.localization);
     }
     else{
       homeContenair = Center(

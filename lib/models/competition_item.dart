@@ -35,4 +35,29 @@ class CompetitionItem{
     return success;
   }
 
+  static Future<List<CompetitionItem>> getCompetitions(BuildContext context,int page) async{
+    List<CompetitionItem> list = [];
+
+    await NotifyApi(context).getJsonFromServer(URL_GET_COMPETITIONS+page.toString(),null).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'].toString() == 1.toString()) {
+        List result = map['NOTIFYGROUP'][0]['data'];
+        result.forEach((item){
+          int id = int.parse(item['id']);
+          String title = item['title'];
+          String title_small = item['title_small'];
+          String trophy_icon_url = item['trophy_icon_url'];
+          String description = item['description'];
+
+          String format = 'yyyy-MM-dd H:mm:ss';
+          DateFormat formater = DateFormat(format);
+
+          DateTime register_date = formater.parse(item['register_date']);
+
+          list.add(new CompetitionItem(id, title, title_small, description, trophy_icon_url, register_date));
+        });
+      }
+    });
+    return list;
+  }
+
 }

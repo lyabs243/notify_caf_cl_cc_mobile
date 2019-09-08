@@ -8,6 +8,7 @@ import '../../../models/competition_item.dart';
 import '../../../components/no_animation_pageroute.dart';
 import 'body.dart';
 import '../home.dart';
+import '../../competition/competition.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -260,12 +261,11 @@ class _HomeDrawerState extends State<HomeDrawer>{
 					  switch(item.id){
 						  case 0://champoions league
 							case 1://confederation cup
-							  Navigator.pushReplacement(
+							  Navigator.push(
 								  context,
-                  NoAnimationMaterialPageRoute(
+                  MaterialPageRoute(
 									  builder: (BuildContext context){
-										  return HomePage(this.widget.localization,fragment: Fragment.COMPETITION,
-															competitionItem: competitions[item.id],);
+										  return CompetitionPage(competitions[item.id],this.widget.localization);
 										}
 									));
 							  break;

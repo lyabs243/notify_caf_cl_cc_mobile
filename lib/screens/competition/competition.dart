@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import '../../../../models/competition_item.dart';
-import '../../../../models/drawer_item.dart';
-import '../../../../components/curve_painter.dart';
+import '../../models/competition_item.dart';
+import '../../models/drawer_item.dart';
+import '../../components/curve_painter.dart';
 
-class FragmentCompetition extends StatefulWidget{
+class CompetitionPage extends StatefulWidget{
 
   CompetitionItem competitionItem;
   Map localization;
 
-  FragmentCompetition(this.competitionItem,this.localization);
+  CompetitionPage(this.competitionItem,this.localization);
 
   @override
-  _FragmentCompetitionState createState() {
+  _CompetitionPageState createState() {
     // TODO: implement createState
-    return new _FragmentCompetitionState();
+    return new _CompetitionPageState();
   }
 
 }
 
-class _FragmentCompetitionState extends State<FragmentCompetition>{
+class _CompetitionPageState extends State<CompetitionPage>{
 
   String url_icon;
   List<DrawerItem> items = [];
@@ -48,7 +48,11 @@ class _FragmentCompetitionState extends State<FragmentCompetition>{
         }
       });
     }
-    return Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(this.widget.localization['competition']),
+      ),
+      body: Column(
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height/4,
@@ -93,7 +97,7 @@ class _FragmentCompetitionState extends State<FragmentCompetition>{
                         children: <Widget>[
                           ImageIcon(
                             AssetImage(
-                              items[i].iconPath
+                                items[i].iconPath
                             ),
                             color: Theme.of(context).primaryColor,
                             size: 50.0,
@@ -102,7 +106,7 @@ class _FragmentCompetitionState extends State<FragmentCompetition>{
                             items[i].title,
                             textScaleFactor: 1.8,
                             style: TextStyle(
-                              color: Theme.of(context).primaryColor
+                                color: Theme.of(context).primaryColor
                             ),
                           )
                         ],
@@ -116,7 +120,8 @@ class _FragmentCompetitionState extends State<FragmentCompetition>{
             ),
           )
         ],
-      );
+      ),
+    );
   }
 
   initItems(){
