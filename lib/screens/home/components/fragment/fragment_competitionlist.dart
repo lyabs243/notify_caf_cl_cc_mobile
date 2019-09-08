@@ -22,13 +22,18 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
 
   List<CompetitionItem> list = [];
   int page=1;
+  bool isLoadPage = true;
 
   @override
   Widget build(BuildContext context) {
     if(list.length == 0){
       initItems();
     }
-    return Column(
+    return (isLoadPage)?
+      Center(
+        child: CircularProgressIndicator(),
+      ):
+      Column(
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width,
@@ -105,6 +110,9 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
           list.addAll(result);
         });
       }
+      setState(() {
+        isLoadPage = false;
+      });
     });
   }
 
