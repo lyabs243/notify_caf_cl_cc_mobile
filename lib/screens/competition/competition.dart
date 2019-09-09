@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/competition_item.dart';
 import '../../models/drawer_item.dart';
 import '../../components/curve_painter.dart';
+import '../competition_stage/competition_stage.dart';
 
 class CompetitionPage extends StatefulWidget{
 
@@ -113,7 +114,24 @@ class _CompetitionPageState extends State<CompetitionPage>{
                       ),
                     ),
                     onTap: (){
-
+                      switch(items[i].id){
+                        case 1: //live
+                          break;
+                        case 2: //last result
+                          break;
+                        case 3: //schedule
+                          break;
+                        case 4: //stages
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context){
+                              return new CompetitionStage(this.widget.localization);
+                            },
+                            fullscreenDialog: true,
+                          ));
+                          break;
+                        case 5: //scorers
+                          break;
+                      }
                     },
                   );
                 }
