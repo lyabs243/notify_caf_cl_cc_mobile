@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../models/group_stage.dart';
+import '../../components/empty_data.dart';
+import '../../models/competition_item.dart';
 import '../../models/competition_stage.dart' as stage;
 
 class CompetitionStage extends StatefulWidget{
 
   Map localization;
+  CompetitionItem competitionItem;
 
-  CompetitionStage(this.localization);
+  CompetitionStage(this.localization,this.competitionItem);
 
   @override
   _CompetitionStageState createState() {
@@ -21,6 +24,8 @@ class _CompetitionStageState extends State<CompetitionStage>{
   List<stage.CompetitionStage> competitionStages = [];
   List<Tab> tabs = [];
 
+  bool isLoading = true;
+
   List<int> selectedGroups = [];
   List<int> selectedButtons = [];  //to know zhich button between (result,schedule and table) is selected
   
@@ -28,13 +33,15 @@ class _CompetitionStageState extends State<CompetitionStage>{
   Widget build(BuildContext context) {
     if(competitionStages.length == 0){
       initCompetitionStages();
-      competitionStages.forEach((stage){
-        tabs.add(Tab(text: '${stage.title}',));
-      });
     }
     List<Widget> tabViews = [];
     initTabs(tabViews);
-    return DefaultTabController(
+    return (isLoading || competitionStages.length <= 0)?
+        Scaffold(
+          appBar: AppBar(title: Text(this.widget.localization['stages']),),
+          body: (isLoading)? Center(child: CircularProgressIndicator(),) : EmptyData(this.widget.localization),
+        ):
+    DefaultTabController(
       length: competitionStages.length,
       child: Scaffold(
         appBar: AppBar(
@@ -54,37 +61,17 @@ class _CompetitionStageState extends State<CompetitionStage>{
   }
 
   initCompetitionStages(){
-    stage.CompetitionStage st1 = new stage.CompetitionStage(1, 1, '1/2 Final',
-        stage.CompetitionStage.COMPETIONSTAGE_TYPE_NORMAL, null);
-    stage.CompetitionStage st2 = new stage.CompetitionStage(2, 1, '1/4 Final',
-        stage.CompetitionStage.COMPETIONSTAGE_TYPE_NORMAL, null);
-    stage.CompetitionStage st3 = new stage.CompetitionStage(3, 1, '1/8 Final',
-        stage.CompetitionStage.COMPETIONSTAGE_TYPE_NORMAL, null);
-
-    stage.CompetitionStage st4 = new stage.CompetitionStage(4, 1, 'Group Stage',
-        stage.CompetitionStage.COMPETIONSTAGE_TYPE_GROUP, []);
-    st4.groups.add(GroupStage(1, 1, 'Group A'));
-    st4.groups.add(GroupStage(2, 1, 'Group B'));
-    st4.groups.add(GroupStage(3, 1, 'Group C'));
-    st4.groups.add(GroupStage(4, 1, 'Group D'));
-    st4.groups.add(GroupStage(5, 1, 'Group E'));
-    st4.groups.add(GroupStage(6, 1, 'Group F'));
-
-    competitionStages.add(st1);
-    (st1.groups != null && st1.groups.length > 0)? selectedGroups.add(st1.groups[0].id) : selectedGroups.add(0);
-    selectedButtons.add(1);
-
-    competitionStages.add(st2);
-    (st2.groups != null && st2.groups.length > 0)? selectedGroups.add(st2.groups[0].id) : selectedGroups.add(0);
-    selectedButtons.add(1);
-
-    competitionStages.add(st3);
-    (st3.groups != null && st3.groups.length > 0)? selectedGroups.add(st3.groups[0].id) : selectedGroups.add(0);
-    selectedButtons.add(1);
-
-    competitionStages.add(st4);
-    (st4.groups != null && st4.groups.length > 0)? selectedGroups.add(st4.groups[0].id) : selectedGroups.add(0);
-    selectedButtons.add(1);
+    stage.CompetitionStage.getCompetitionStages(context, this.widget.competitionItem.id).then((result){
+      setState(() {
+        competitionStages.addAll(result);
+        competitionStages.forEach((cmpStage){
+          tabs.add(Tab(text: '${cmpStage.title}',));
+          (cmpStage.groups != null && cmpStage.groups.length > 0)? selectedGroups.add(cmpStage.groups[0].id) : selectedGroups.add(0);
+          selectedButtons.add(1);
+        });
+        isLoading = false;
+      });
+    });
   }
   
   initTabs(List<Widget> tabViews){

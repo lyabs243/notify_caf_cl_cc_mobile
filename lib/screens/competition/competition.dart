@@ -124,7 +124,7 @@ class _CompetitionPageState extends State<CompetitionPage>{
                         case 4: //stages
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context){
-                              return new CompetitionStage(this.widget.localization);
+                              return new CompetitionStage(this.widget.localization,this.widget.competitionItem);
                             },
                             fullscreenDialog: true,
                           ));
