@@ -225,9 +225,9 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	List<Widget> initCompetitions(){
 
 		CompetitionItem champions_league = new CompetitionItem(2, this.widget.localization['champions_league'],
-        null, '','',null);
+        null, '','',1,null);
 		CompetitionItem confederation_cup = new CompetitionItem(3, this.widget.localization['confederation_cup'],
-        null, '','',null);
+        null, '','',1,null);
 
 		List<CompetitionItem> competitions = [champions_league,confederation_cup];
 
