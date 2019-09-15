@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
+import '../../../models/home_infos.dart';
+import '../../../models/user.dart';
 
 class Body extends StatefulWidget{
 
@@ -23,6 +25,7 @@ class _BodyState extends State<Body>{
   Widget homeContenair;
   Fragment fragment;
   CompetitionItem competitionItem;
+  HomeInfos homeInfos;
 
   _BodyState(this.fragment,this.competitionItem);
 
@@ -32,6 +35,10 @@ class _BodyState extends State<Body>{
       homeContenair = FragmentCompetitionList(this.widget.localization);
     }
     else{
+      homeInfos = new HomeInfos();
+      User.getInstance().then((user){
+        homeInfos.initData(context, user.id);
+      });
       homeContenair = Center(
       );
     }
