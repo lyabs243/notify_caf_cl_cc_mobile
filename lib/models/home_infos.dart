@@ -17,7 +17,7 @@ class HomeInfos{
         URL_GET_HOME_INFOS + idUser.toString() + '/0/1', null).then((map) {
       if (map != null) {
         for(int i=0;i<map['NOTIFYGROUP']['current_match'].length;i++){
-          MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP']['latest_result'][i]);
+          MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP']['current_match'][i]);
           this.current_match.add(matchItem);
         }
       }
