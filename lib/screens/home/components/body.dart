@@ -43,7 +43,9 @@ class _BodyState extends State<Body>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    refreshController = new RefreshController(initialRefresh: false);
+    if(this.fragment == Fragment.HOME) {
+      refreshController = new RefreshController(initialRefresh: false);
+    }
   }
 
   @override
@@ -63,35 +65,35 @@ class _BodyState extends State<Body>{
           });
         }
       });
-      homeContenair = Container(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Card(
-                elevation: 10.0,
-                child: Column(
-                  children: liveWidgets,
-                ),
-              )
-            ],
-          ),
-        );
-    }print(homeInfos.current_match.length);
-    return SmartRefresher(
-        controller: refreshController,
-        enablePullUp: false,
-        enablePullDown: true,
-        onRefresh: _onRefresh,
-        header: (WaterDropMaterialHeader(
-        backgroundColor: Theme.of(context).primaryColor,
-    )),
-    child:(loadData)?
-      Center(child: CircularProgressIndicator(),):
-      (!hasHomeInfos)?
+      homeContenair = SmartRefresher(
+          controller: refreshController,
+          enablePullUp: false,
+          enablePullDown: true,
+          onRefresh: _onRefresh,
+          header: (WaterDropMaterialHeader(
+            backgroundColor: Theme.of(context).primaryColor,
+          )),
+          child:(loadData)?
+          Center(child: CircularProgressIndicator(),):
+          (!hasHomeInfos)?
           EmptyData(this.widget.localization):
-          homeContenair
-    );
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Card(
+                  elevation: 10.0,
+                  child: Column(
+                    children: liveWidgets,
+                  ),
+                )
+              ],
+            ),
+          )
+      );
+    }
+    return homeContenair;
   }
 
   void _onRefresh() async{
