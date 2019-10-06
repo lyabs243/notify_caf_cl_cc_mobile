@@ -5,6 +5,8 @@ import '../../../models/home_infos.dart';
 import '../../../models/user.dart';
 import '../../../models/match_item.dart';
 import '../../../components/match_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import './../../../components/empty_data.dart';
 
 class Body extends StatefulWidget{
 
@@ -28,11 +30,21 @@ class _BodyState extends State<Body>{
   Fragment fragment;
   CompetitionItem competitionItem;
   HomeInfos homeInfos;
+  RefreshController refreshController;
   bool loadData = true;
+  bool hasHomeInfos = false;
+  User user;
 
   List<Widget> liveWidgets = [];
 
   _BodyState(this.fragment,this.competitionItem);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    refreshController = new RefreshController(initialRefresh: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +54,8 @@ class _BodyState extends State<Body>{
     else{
       homeInfos = new HomeInfos();
       User.getInstance().then((user){
-        if(loadData) {
+        this.user = user;
+        if(!hasHomeInfos) {
           homeInfos.initData(context, user.id).then((v) {
             setState(() {
               initLiveWidgets();
@@ -64,15 +77,39 @@ class _BodyState extends State<Body>{
             ],
           ),
         );
-    }
-    return homeContenair;
+    }print(homeInfos.current_match.length);
+    return SmartRefresher(
+        controller: refreshController,
+        enablePullUp: false,
+        enablePullDown: true,
+        onRefresh: _onRefresh,
+        header: (WaterDropMaterialHeader(
+        backgroundColor: Theme.of(context).primaryColor,
+    )),
+    child:(loadData)?
+      Center(child: CircularProgressIndicator(),):
+      (!hasHomeInfos)?
+          EmptyData(this.widget.localization):
+          homeContenair
+    );
+  }
+
+  void _onRefresh() async{
+    //isPageRefresh = true;
+    homeInfos.initData(context, user.id).then((v) {
+      setState(() {
+        initLiveWidgets();
+        refreshController.refreshCompleted();
+      });
+    });
   }
 
   initLiveWidgets(){
-    liveWidgets.clear();
+    loadData = false;
     //add live match
     if(homeInfos.current_match.length > 0) {
-      loadData = false;
+      hasHomeInfos = true;
+      liveWidgets.clear();
       liveWidgets.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
