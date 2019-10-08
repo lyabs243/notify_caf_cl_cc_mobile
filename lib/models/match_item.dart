@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
 import 'competition_item.dart';
 import 'package:intl/intl.dart';
+import '../services/notify_api.dart';
 
 class MatchItem{
+
+  static final String URL_GET_CURRENT_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/current_matchs/';
 
   int id, teamAId, teamBId, id_edition_stage, teamA_goal, teamB_goal, team_a_penalty, team_b_penalty, idGroupA, idGroupB;
   String teamA_small, teamB_small, teamA, teamB, teamA_logo, teamB_logo, match_date, status;
@@ -13,6 +17,20 @@ class MatchItem{
       this.teamB_small, this.teamA, this.teamB, this.teamA_logo,
       this.teamB_logo, this.match_date, this.status, this.competition);
 
+  static Future getCurrentMatchs(BuildContext context,int idCompetition, int page, {competitionType: 0}) async {
+    List<MatchItem> matchs = [];
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_CURRENT_MATCHS + idCompetition.toString() + '/' + page.toString() + '/' + competitionType.toString()
+        , null).then((map) {
+      if (map != null) {
+        for(int i=0;i<map['NOTIFYGROUP'].length;i++){
+          MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP'][i]);
+          matchs.add(matchItem);
+        }
+      }
+    });
+    return matchs;
+  }
 
   static MatchItem getFromMap(Map item){
     int id = int.parse(item['id']);

@@ -8,8 +8,10 @@ class CompetitionItem{
   String title, title_small, description,trophy_icon_url;
   DateTime register_date;
 
+  static final int COMPETITION_TYPE = 1;
+
   static final String URL_GET_COMPETITION = 'http://notifygroup.org/notifyapp/api/index.php/competition/get/';
-  static final String URL_GET_COMPETITIONS = 'http://notifygroup.org/notifyapp/api/index.php/competition/get_all/1/';
+  static final String URL_GET_COMPETITIONS = 'http://notifygroup.org/notifyapp/api/index.php/competition/get_all/'+ COMPETITION_TYPE.toString() + '/';
 
   CompetitionItem(this.id, this.title, this.title_small, this.description,this.trophy_icon_url,this.category,this.register_date);
 

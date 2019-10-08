@@ -7,6 +7,7 @@ import '../../../models/match_item.dart';
 import '../../../components/match_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import './../../../components/empty_data.dart';
+import '../../matchs_list/matchs_list.dart';
 
 class Body extends StatefulWidget{
 
@@ -134,7 +135,13 @@ class _BodyState extends State<Body>{
                       .primaryColor
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context){
+                    return MatchsList(this.widget.localization,null,TypeList.LIVE,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
+                  }
+              ));
+            },
           )
         ],
       ));
