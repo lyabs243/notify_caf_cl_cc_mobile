@@ -117,7 +117,7 @@ class _BodyState extends State<Body>{
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            'Live',
+            this.widget.localization['live'],
             textScaleFactor: 1.4,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ class _BodyState extends State<Body>{
           ),
           FlatButton(
             child: Text(
-              'See more',
+              this.widget.localization['see_more'],
               style: TextStyle(
                   color: Theme
                       .of(context)

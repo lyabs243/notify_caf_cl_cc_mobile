@@ -31,6 +31,7 @@ class _MatchListState extends State<MatchsList>{
   int idCompetitionType;
   TypeList typeList;
   int idCompetition = 0;
+  String title = '';
 
   _MatchListState(this.competitionItem,this.idCompetitionType,this.typeList);
 
@@ -41,6 +42,9 @@ class _MatchListState extends State<MatchsList>{
     if(competitionItem != null){
       idCompetition = competitionItem.id;
     }
+    if(typeList == TypeList.LIVE){
+      title = this.widget.localization['live'];
+    }
   }
 
   @override
@@ -49,7 +53,7 @@ class _MatchListState extends State<MatchsList>{
       initItems();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Live'),
+        title: Text(title),
       ),
       body: (isLoadPage)?
       Center(
