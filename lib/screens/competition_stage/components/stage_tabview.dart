@@ -87,7 +87,7 @@ class _StageTabviewState extends State<StageTabview>{
                     width: MediaQuery.of(context).size.width/2.05,
                     child: RaisedButton(
                       child: Text(
-                        this.widget.localization['schedule'],
+                        this.widget.localization['fixture'],
                         style: TextStyle(
                           color: (selectedButton == 2)? Theme.of(context).primaryColor : Colors.white,
                         ),
@@ -102,6 +102,7 @@ class _StageTabviewState extends State<StageTabview>{
                   )
                 ],
               ),
+              (competitionStage.type == CompetitionStage.COMPETIONSTAGE_TYPE_GROUP)?
               SizedBox(
                 width: MediaQuery.of(context).size.width/2.05*2,
                 child: RaisedButton(
@@ -118,7 +119,7 @@ class _StageTabviewState extends State<StageTabview>{
                     });
                   },
                 ),
-              ),
+              ) : Container(),
             ],
           ),
         ),
