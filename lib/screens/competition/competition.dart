@@ -124,6 +124,11 @@ class _CompetitionPageState extends State<CompetitionPage>{
                           ));
                           break;
                         case 2: //last result
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context){
+                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.RESULT,);
+                              }
+                          ));
                           break;
                         case 3: //fixture
                           Navigator.push(context, MaterialPageRoute(
