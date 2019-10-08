@@ -59,7 +59,7 @@ class _BodyState extends State<Body>{
       User.getInstance().then((user){
         this.user = user;
         if(!hasHomeInfos) {
-          homeInfos.initData(context, user.id).then((v) {
+          homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
             setState(() {
               initLiveWidgets();
             });
@@ -99,11 +99,17 @@ class _BodyState extends State<Body>{
 
   void _onRefresh() async{
     //isPageRefresh = true;
-    homeInfos.initData(context, user.id).then((v) {
+    homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
       setState(() {
         initLiveWidgets();
         refreshController.refreshCompleted();
       });
+    });
+  }
+
+  setHomeInfos(HomeInfos _homeInfos){
+    setState(() {
+      homeInfos = _homeInfos;
     });
   }
 
