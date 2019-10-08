@@ -61,7 +61,7 @@ class _BodyState extends State<Body>{
         if(!hasHomeInfos) {
           homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
             setState(() {
-              initLiveWidgets();
+              initData();
             });
           });
         }
@@ -101,7 +101,7 @@ class _BodyState extends State<Body>{
     //isPageRefresh = true;
     homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
       setState(() {
-        initLiveWidgets();
+        initData();
         refreshController.refreshCompleted();
       });
     });
@@ -113,17 +113,22 @@ class _BodyState extends State<Body>{
     });
   }
 
-  initLiveWidgets(){
+  initData(){
+    //init live widgets
+    initSpecificWidget(TypeList.LIVE, homeInfos.current_match, liveWidgets, this.widget.localization['live']);
+  }
+
+  initSpecificWidget(TypeList typeList,List<MatchItem> matchList,List<Widget> widgets,String title){
     loadData = false;
     //add live match
-    if(homeInfos.current_match.length > 0) {
+    if(matchList.length > 0) {
       hasHomeInfos = true;
-      liveWidgets.clear();
-      liveWidgets.add(Row(
+      widgets.clear();
+      widgets.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            this.widget.localization['live'],
+            title,
             textScaleFactor: 1.4,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -144,7 +149,7 @@ class _BodyState extends State<Body>{
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                   builder: (context){
-                    return MatchsList(this.widget.localization,null,TypeList.LIVE,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
+                    return MatchsList(this.widget.localization,null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
                   }
               ));
             },
@@ -152,8 +157,8 @@ class _BodyState extends State<Body>{
         ],
       ));
     }
-    for(int i=0;i<homeInfos.current_match.length;i++){
-      liveWidgets.add(MatchLayout(this.widget.localization, homeInfos.current_match[i]));
+    for(int i=0;i<matchList.length;i++){
+      widgets.add(MatchLayout(this.widget.localization, matchList[i]));
     }
   }
 }
