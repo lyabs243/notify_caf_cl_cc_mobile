@@ -58,15 +58,7 @@ class _MatchListState extends State<MatchsList>{
       appBar: AppBar(
         title: Text(title),
       ),
-      body: (isLoadPage)?
-      Center(
-        child: CircularProgressIndicator(),
-      ):
-      (list.length <= 0)?
-      EmptyData(this.widget.localization):
-      Container(
-        padding: EdgeInsets.all(4.0),
-        child: SmartRefresher(
+      body: SmartRefresher(
           controller: refreshController,
           enablePullUp: (list.length > 0)? true : false,
           enablePullDown: true,
@@ -90,8 +82,15 @@ class _MatchListState extends State<MatchsList>{
               );
             },
           ),
-          child: ListView.builder(
+          child: (isLoadPage)?
+          Center(
+            child: CircularProgressIndicator(),
+          ):
+          (list.length <= 0)?
+          EmptyData(this.widget.localization):
+          ListView.builder(
               itemCount: list.length,
+              padding: EdgeInsets.all(4.0),
               itemBuilder: (context,i){
                 return Card(
                   child: MatchLayout(this.widget.localization, list[i]),
@@ -100,7 +99,6 @@ class _MatchListState extends State<MatchsList>{
               }
           ),
         ),
-      )
     );
   }
 
