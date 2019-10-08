@@ -71,9 +71,9 @@ class MatchLayoutState extends State<MatchLayout>{
                           matchItem.teamA,
                           textAlign: TextAlign.right,
                           overflow: TextOverflow.ellipsis,
-                          textScaleFactor: 1.2,
+                          textScaleFactor: 1.1,
                         ),
-                        width: MediaQuery.of(context).size.width/4.5,
+                        width: MediaQuery.of(context).size.width/4,
                       ),
                       Container(
                         child: Text(
@@ -87,9 +87,9 @@ class MatchLayoutState extends State<MatchLayout>{
                           matchItem.teamB,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
-                          textScaleFactor: 1.2,
+                          textScaleFactor: 1.1,
                         ),
-                        width: MediaQuery.of(context).size.width/4.5,
+                        width: MediaQuery.of(context).size.width/4,
                       ),
                     ],
                   ),
