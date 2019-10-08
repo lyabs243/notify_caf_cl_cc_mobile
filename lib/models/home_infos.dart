@@ -27,6 +27,11 @@ class HomeInfos{
           this.fixture.add(matchItem);
         }
 
+        for(int i=0;i<map['NOTIFYGROUP']['latest_result'].length;i++){
+          MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP']['latest_result'][i]);
+          this.latest_result.add(matchItem);
+        }
+
         setHomeInfos(this);
       }
     });

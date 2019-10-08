@@ -48,6 +48,9 @@ class _MatchListState extends State<MatchsList>{
     else if(typeList == TypeList.FIXTURE){
     title = this.widget.localization['fixture'];
     }
+    else{
+      title = this.widget.localization['last_results'];
+    }
   }
 
   @override
@@ -125,6 +128,11 @@ class _MatchListState extends State<MatchsList>{
         initMatchs(result);
       });
     }
+    else {
+      MatchItem.getLatestResults(context, idCompetition, page, competitionType: idCompetitionType).then((result) {
+        initMatchs(result);
+      });
+    }
   }
 
   initMatchs(List<MatchItem> result){
@@ -141,7 +149,13 @@ class _MatchListState extends State<MatchsList>{
   }
 
   Future addItems() async{
-    List<MatchItem> matchItems = await MatchItem.getCurrentMatchs(context, idCompetition, page, competitionType: idCompetitionType);
+    List<MatchItem> matchItems = [];
+    if(typeList == TypeList.LIVE)
+      matchItems = await MatchItem.getCurrentMatchs(context, idCompetition, page, competitionType: idCompetitionType);
+    else if(typeList == TypeList.FIXTURE)
+      matchItems = await MatchItem.getFixtureMatchs(context, idCompetition, page, competitionType: idCompetitionType);
+    else
+      matchItems = await MatchItem.getLatestResults(context, idCompetition, page, competitionType: idCompetitionType);
     if(matchItems.length > 0){
       setState(() {
         list.addAll(matchItems);

@@ -38,6 +38,7 @@ class _BodyState extends State<Body>{
 
   List<Widget> liveWidgets = [];
   List<Widget> fixtureWidgets = [];
+  List<Widget> resultWidgets = [];
 
   _BodyState(this.fragment,this.competitionItem);
 
@@ -96,6 +97,12 @@ class _BodyState extends State<Body>{
                     children: fixtureWidgets,
                   ),
                 ),
+                Card(
+                  elevation: 10.0,
+                  child: Column(
+                    children: resultWidgets,
+                  ),
+                ),
               ],
             ),
           )
@@ -126,6 +133,9 @@ class _BodyState extends State<Body>{
 
     //init fixture widgets
     initSpecificWidget(TypeList.FIXTURE, homeInfos.fixture, fixtureWidgets, this.widget.localization['fixture']);
+
+    //init fixture widgets
+    initSpecificWidget(TypeList.RESULT, homeInfos.latest_result, resultWidgets, this.widget.localization['last_results']);
   }
 
   initSpecificWidget(TypeList typeList,List<MatchItem> matchList,List<Widget> widgets,String title){
