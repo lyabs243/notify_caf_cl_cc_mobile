@@ -3,6 +3,7 @@ import '../../models/competition_item.dart';
 import '../../models/drawer_item.dart';
 import '../../components/curve_painter.dart';
 import '../competition_stage/competition_stage.dart';
+import '../matchs_list/matchs_list.dart';
 
 class CompetitionPage extends StatefulWidget{
 
@@ -116,6 +117,11 @@ class _CompetitionPageState extends State<CompetitionPage>{
                     onTap: (){
                       switch(items[i].id){
                         case 1: //live
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context){
+                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.LIVE,);
+                              }
+                          ));
                           break;
                         case 2: //last result
                           break;
