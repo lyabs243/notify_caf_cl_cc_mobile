@@ -45,6 +45,9 @@ class _MatchListState extends State<MatchsList>{
     if(typeList == TypeList.LIVE){
       title = this.widget.localization['live'];
     }
+    else if(typeList == TypeList.FIXTURE){
+    title = this.widget.localization['fixture'];
+    }
   }
 
   @override
@@ -116,18 +119,27 @@ class _MatchListState extends State<MatchsList>{
     page = 1;
     if(typeList == TypeList.LIVE) {
       MatchItem.getCurrentMatchs(context, idCompetition, page, competitionType: idCompetitionType).then((result) {
-        if (result.length > 0) {
-          setState(() {
-            page++;
-            list.clear();
-            list.addAll(result);
-          });
-        }
-        setState(() {
-          isLoadPage = false;
-        });
+        initMatchs(result);
       });
     }
+    else if(typeList == TypeList.FIXTURE) {
+      MatchItem.getFixtureMatchs(context, idCompetition, page, competitionType: idCompetitionType).then((result) {
+        initMatchs(result);
+      });
+    }
+  }
+
+  initMatchs(List<MatchItem> result){
+    if (result.length > 0) {
+      setState(() {
+        page++;
+        list.clear();
+        list.addAll(result);
+      });
+    }
+    setState(() {
+      isLoadPage = false;
+    });
   }
 
   Future addItems() async{

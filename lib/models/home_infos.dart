@@ -16,10 +16,17 @@ class HomeInfos{
     await NotifyApi(context).getJsonFromServer(
         URL_GET_HOME_INFOS + idUser.toString() + '/0/1', null).then((map) {
       if (map != null) {
+
         for(int i=0;i<map['NOTIFYGROUP']['current_match'].length;i++){
           MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP']['current_match'][i]);
           this.current_match.add(matchItem);
         }
+
+        for(int i=0;i<map['NOTIFYGROUP']['fixture'].length;i++){
+          MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP']['fixture'][i]);
+          this.fixture.add(matchItem);
+        }
+
         setHomeInfos(this);
       }
     });

@@ -125,7 +125,12 @@ class _CompetitionPageState extends State<CompetitionPage>{
                           break;
                         case 2: //last result
                           break;
-                        case 3: //schedule
+                        case 3: //fixture
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context){
+                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.FIXTURE,);
+                              }
+                          ));
                           break;
                         case 4: //stages
                           Navigator.push(context, MaterialPageRoute(
@@ -152,13 +157,13 @@ class _CompetitionPageState extends State<CompetitionPage>{
 
     DrawerItem live = new DrawerItem(1, this.widget.localization['live'], DrawerType.item,iconPath: 'assets/icons/login.png');
     DrawerItem last_results = new DrawerItem(2, this.widget.localization['last_results'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem schedule = new DrawerItem(3, this.widget.localization['schedule'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+    DrawerItem fixture = new DrawerItem(3, this.widget.localization['fixture'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
     DrawerItem stages = new DrawerItem(4, this.widget.localization['stages'], DrawerType.item,iconPath: 'assets/icons/login.png');
     DrawerItem scorers = new DrawerItem(5, this.widget.localization['scorers'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     items.add(live);
     items.add(last_results);
-    items.add(schedule);
+    items.add(fixture);
     items.add(stages);
     items.add(scorers);
   }
