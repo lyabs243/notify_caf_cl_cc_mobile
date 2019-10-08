@@ -98,7 +98,7 @@ class MatchLayoutState extends State<MatchLayout>{
                   Container(
                     child: Text
                     (
-                        'PEN 12 - 11',
+                        'PEN ${matchItem.team_a_penalty} - ${matchItem.team_b_penalty}',
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
