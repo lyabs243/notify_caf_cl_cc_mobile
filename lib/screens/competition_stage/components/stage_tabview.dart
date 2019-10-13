@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../models/competition_stage.dart';
+import '../../../models/match_item.dart';
+import '../../../components/empty_data.dart';
+import '../../../components/match_layout.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class StageTabview extends StatefulWidget{
 
@@ -22,14 +26,28 @@ class StageTabview extends StatefulWidget{
 class _StageTabviewState extends State<StageTabview>{
 
   CompetitionStage competitionStage;
-  int selectedButton;
+  int selectedButton = 1;
   int selectedGroup;
+  int page = 1;
+  List<MatchItem> listMatch = [];
+  bool loadingDone = false, isLoading = true;
+
+  RefreshController refreshController;
 
   _StageTabviewState(this.competitionStage,this.selectedGroup,this.selectedButton);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    refreshController = new RefreshController(initialRefresh: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    if(!loadingDone) {
+      getResultMatchs();
+    }
     return new Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -50,6 +68,9 @@ class _StageTabviewState extends State<StageTabview>{
                         onPressed: (){
                           setState(() {
                             selectedGroup = competitionStage.groups[index].id;
+                            selectedButton = 1;
+                            isLoading = true;
+                            initMatchs();
                           });
                         },
                         color: (selectedGroup == competitionStage.groups[index].id)? Colors.white : Theme.of(context).primaryColor,
@@ -79,6 +100,8 @@ class _StageTabviewState extends State<StageTabview>{
                       onPressed: (){
                         setState(() {
                           selectedButton = 1;
+                          isLoading = true;
+                          initMatchs();
                         });
                       },
                     ),
@@ -96,6 +119,8 @@ class _StageTabviewState extends State<StageTabview>{
                       onPressed: (){
                         setState(() {
                           selectedButton = 2;
+                          isLoading = true;
+                          initMatchs();
                         });
                       },
                     ),
@@ -120,11 +145,114 @@ class _StageTabviewState extends State<StageTabview>{
                   },
                 ),
               ) : Container(),
+              (isLoading)?
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ):
+              (listMatch.length <= 0)?
+              EmptyData(this.widget.localization):
+              Expanded(
+                child: SmartRefresher(
+                    controller: refreshController,
+                    enablePullUp: true,
+                    enablePullDown: false,
+                    onLoading: _onLoading,
+                    footer: CustomFooter(
+                      builder: (BuildContext context,LoadStatus mode){
+                        Widget body ;
+                        if(mode==LoadStatus.loading){
+                          body =  CircularProgressIndicator();
+                        }
+                        else{
+                          body = Container();
+                        }
+                        return Container(
+                          height: 55.0,
+                          child: Center(child:body),
+                        );
+                      },
+                    ),
+                    child: ListView.builder(
+                    itemCount: listMatch.length,
+                    padding: EdgeInsets.all(4.0),
+                    itemBuilder: (context,i){
+                      return Card(
+                        child: MatchLayout(this.widget.localization, listMatch[i]),
+                        elevation: 8.0,
+                      );
+                    }
+                )
+                )
+              )
             ],
           ),
         ),
       ],
     );
+  }
+
+  initMatchs(){
+    page = 1;
+    listMatch.clear();
+    // latest results
+    if(selectedButton == 1){
+      getResultMatchs();
+    }
+    // fixture
+    else if(selectedButton == 2){
+      getFixtureMatchs();
+    }
+  }
+
+  getFixtureMatchs(){
+    int idGroup = 0;
+    if(competitionStage.type == CompetitionStage.COMPETIONSTAGE_TYPE_GROUP)
+      idGroup = selectedGroup;
+    CompetitionStage.getStageFixture(context, 0, page, competitionStage.id, idGroup).then((result){
+      if(mounted)
+        setState(() {
+          listMatch.addAll(result);
+          isLoading = false;
+          loadingDone = true;
+          if(result.length > 0){
+            page++;
+          }
+        });
+    });
+  }
+
+  getResultMatchs(){
+    int idGroup = 0;
+    if(competitionStage.type == CompetitionStage.COMPETIONSTAGE_TYPE_GROUP)
+      idGroup = selectedGroup;
+    CompetitionStage.getStageLatestResults(context, 0, page, competitionStage.id, idGroup).then((result){
+      if(mounted)
+        setState(() {
+          listMatch.addAll(result);
+          isLoading = false;
+          loadingDone = true;
+          if(result.length > 0){
+            page++;
+          }
+        });
+    });
+  }
+
+  void _onLoading() async{
+    if(mounted)
+      addItems();
+  }
+
+  Future addItems() async{
+    // latest results
+    if(selectedButton == 1){
+      getResultMatchs();
+    }
+    // fixture
+    else if(selectedButton == 2){
+      getFixtureMatchs();
+    }
+    refreshController.loadComplete();
   }
 
 }
