@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/match_item.dart';
+import 'components/header.dart';
 
 class MatchDetails extends StatefulWidget{
 
@@ -41,7 +42,7 @@ class _MatchDetailsState extends State<MatchDetails>{
       ),
       body: Column(
         children: <Widget>[
-
+          Header(localization, matchItem),
         ],
       ),
     );
