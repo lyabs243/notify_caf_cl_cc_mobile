@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/match_item.dart';
+import '../screens/match_details/natch_details.dart';
 
 class MatchLayout extends StatefulWidget{
 
@@ -122,6 +123,13 @@ class MatchLayoutState extends State<MatchLayout>{
           Padding(padding: EdgeInsets.only(bottom: 6.0),)
         ],
       ),
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context){
+              return MatchDetails(localization,matchItem);
+            }
+        ));
+      },
     );
   }
 
