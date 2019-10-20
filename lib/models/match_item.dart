@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'competition_item.dart';
+import 'edition_stage.dart';
 import 'package:intl/intl.dart';
 import '../services/notify_api.dart';
 
@@ -9,15 +10,16 @@ class MatchItem{
   static final String URL_GET_FIXTURE_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/fixture/';
   static final String URL_GET_LATEST_RESULTS = 'http://notifygroup.org/notifyapp/api/index.php/competition/latest_results/';
 
-  int id, teamAId, teamBId, id_edition_stage, teamA_goal, teamB_goal, team_a_penalty, team_b_penalty, idGroupA, idGroupB;
+  int id, teamAId, teamBId, teamA_goal, teamB_goal, team_a_penalty, team_b_penalty, idGroupA, idGroupB;
   String teamA_small, teamB_small, teamA, teamB, teamA_logo, teamB_logo, match_date, status;
   CompetitionItem competition;
+  EditionStage editionStage;
 
-  MatchItem(this.id, this.teamAId, this.teamBId, this.id_edition_stage,
+  MatchItem(this.id, this.teamAId, this.teamBId,
       this.teamA_goal, this.teamB_goal, this.team_a_penalty,
       this.team_b_penalty, this.idGroupA, this.idGroupB, this.teamA_small,
       this.teamB_small, this.teamA, this.teamB, this.teamA_logo,
-      this.teamB_logo, this.match_date, this.status, this.competition);
+      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage);
 
   static Future getCurrentMatchs(BuildContext context,int idCompetition, int page, {competitionType: 0}) async {
     List<MatchItem> matchs = [];
@@ -68,7 +70,6 @@ class MatchItem{
     int id = int.parse(item['id']);
     int teamAId = int.parse(item['teamAId']);
     int teamBId = int.parse(item['teamBId']);
-    int id_edition_stage = int.parse(item['id_edition_stage']);
     int teamA_goal = int.parse(item['teamA_goal']);
     int teamB_goal = int.parse(item['teamB_goal']);
     int team_a_penalty = int.parse(item['team_a_penalty']);
@@ -84,6 +85,12 @@ class MatchItem{
     String match_date = item['match_date'];
     String status = item['status'];
 
+    EditionStage editionStage;
+    int esId = int.parse(item['edition_stage']['id']);
+    int esId_edition = int.parse(item['edition_stage']['id_edition']);
+    String esTitle = item['edition_stage']['title'];
+    int esType = int.parse(item['edition_stage']['type']);
+
     CompetitionItem competition;
     int cId = int.parse(item['competition']['id']);
     String cTitle = item['competition']['title'];
@@ -97,6 +104,10 @@ class MatchItem{
 
     DateTime cRegister_date = formater.parse(
         item['competition']['register_date']);
+
+    DateTime esRegister_date = formater.parse(
+        item['edition_stage']['register_date']);
+
     competition = new CompetitionItem(
         cId,
         cTitle,
@@ -106,11 +117,17 @@ class MatchItem{
         cCategory,
         cRegister_date);
 
+    editionStage = new EditionStage(
+        esId,
+        esId_edition,
+        esTitle,
+        esType,
+        esRegister_date);
+
     MatchItem matchItem = new MatchItem(
         id,
         teamAId,
         teamBId,
-        id_edition_stage,
         teamA_goal,
         teamB_goal,
         team_a_penalty,
@@ -125,7 +142,8 @@ class MatchItem{
         teamB_logo,
         match_date,
         status,
-        competition);
+        competition,
+        editionStage);
 
     return matchItem;
   }
