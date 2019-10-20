@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/match_item.dart';
-import '../screens/match_details/natch_details.dart';
+import '../screens/match_details/match_details.dart';
 
 class MatchLayout extends StatefulWidget{
 
