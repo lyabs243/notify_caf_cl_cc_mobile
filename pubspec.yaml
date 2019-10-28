@@ -55,6 +55,7 @@ flutter:
   assets:
    - assets/
    - assets/icons/
+   - assets/icons/match/
    - assets/i18n/
   #  - images/a_dot_ham.jpeg
 
