@@ -14,7 +14,7 @@ class MatchLineup{
   MatchLineup(this.id_player, this.id_team, this.description, this.name,
       this.num_player);
 
-  static Future<List<MatchLineup>> getMatchActions(BuildContext context,int idMatch,int idTeam) async{
+  static Future<List<MatchLineup>> getMatchLineup(BuildContext context,int idMatch,int idTeam) async{
     List<MatchLineup> list = [];
 
     await NotifyApi(context).getJsonFromServer(URL_GET_MATCH_LINEUP+idMatch.toString()+'/'+idTeam.toString(),null).then((map){
