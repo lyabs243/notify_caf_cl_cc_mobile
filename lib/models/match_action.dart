@@ -57,7 +57,7 @@ class MatchAction{
           int teamB_goal = int.parse(item['teamB_goal']);
           int minute = int.parse(item['minute']);
           int id_team = int.parse(item['id_team']);
-          int position = int.parse(item['position']);
+          int position = item['position'];
 
           list.add(new MatchAction(id, id_match, type, detail_a, detail_b, detail_c, detail_d, teamA_goal, teamB_goal, minute, id_team, position));
         });
