@@ -3,6 +3,7 @@ import '../../models/match_item.dart';
 import '../../models/edition_stage.dart';
 import 'components/header.dart';
 import '../../models/drawer_item.dart';
+import '../../components/match_actions_layout.dart';
 
 class MatchDetails extends StatefulWidget{
 
@@ -36,6 +37,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     super.initState();
     initTabsItems();
     initTabs();
+    initTabsViews();
     _controller = TabController(length: tabsItem.length, vsync: this);
   }
 
@@ -88,7 +90,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                   ),
                 ),
                 new Container(
-                  height: 80.0,
+                  height: MediaQuery.of(context).size.height/1.9,
                   child: new TabBarView(
                     controller: _controller,
                     children: tabViews,
@@ -120,8 +122,25 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   initTabs(){
     tabsItem.forEach((item){
       tabs.add(Tab(text: item.title,));
-      tabViews.add(Center(child: Text(item.title,textScaleFactor: 2.5,),));
     });
+  }
+
+  initTabsViews(){
+    //init actions
+    tabViews.add(MatchActionsLayout(localization, matchItem));
+
+    //init line up
+    tabViews.add(Center(child: Text('Line Up',textScaleFactor: 2.5,),));
+
+    //init table
+    if(this.matchItem.editionStage.type == EditionStage.TYPE_GROUP)
+      tabViews.add(Center(child: Text('Table',textScaleFactor: 2.5,),));
+
+    //init comments
+    tabViews.add(Center(child: Text('Comments',textScaleFactor: 2.5,),));
+
+    //init video
+    tabViews.add(Center(child: Text('Video',textScaleFactor: 2.5,),));
   }
 
 }

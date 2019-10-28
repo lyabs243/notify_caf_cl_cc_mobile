@@ -66,4 +66,72 @@ class MatchAction{
     return list;
   }
 
+  static getActionIconPath(int type){
+    String path = 'assets/icons/empty.png';
+
+    if(type == MATCH_ACTION_TYPE_GOAL_PENALTY){
+      path = 'assets/icons/match/match_action_goal_penalty.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_CHANGE){
+      path = 'assets/icons/match/match_action_change.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_GOAL){
+      path = 'assets/icons/match/match_action_goal.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_GOAL_CANCEL){
+      path = 'assets/icons/match/match_action_goalcancel.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_OFFSIDE){
+      path = 'assets/icons/match/match_action_offside.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_PENALTY_MISS){
+      path = 'assets/icons/match/match_action_penaltymiss.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_RED_CARD){
+      path = 'assets/icons/match/match_action_redcard.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_YELLOW_CARD){
+      path = 'assets/icons/match/match_action_yellowcard.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_EXTRA_TIME){
+      path = 'assets/icons/match/match_status_extratime.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_FULL_TIME){
+      path = 'assets/icons/match/match_status_fulltime.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_HALF_TIME){
+      path = 'assets/icons/match/match_status_halftime.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_KICKOFF){
+      path = 'assets/icons/match/match_status_kickoff.png';
+    }
+    else if(type == MATCH_ACTION_TYPE_PENALTY_KICK){
+      path = 'assets/icons/match/match_status_penaltykick.png';
+    }
+
+    return path;
+  }
+
+  static String getActionLable(int type, Map localization){
+    String label = '';
+
+    if(type == MATCH_ACTION_TYPE_KICKOFF){
+      label = localization['kick_off'];
+    }
+    else if(type == MATCH_ACTION_TYPE_HALF_TIME){
+      label = localization['half_time'];
+    }
+    else if(type == MATCH_ACTION_TYPE_FULL_TIME){
+      label = localization['full_time'];
+    }
+    else if(type == MATCH_ACTION_TYPE_EXTRA_TIME){
+      label = localization['extra_time'];
+    }
+    else if(type == MATCH_ACTION_TYPE_PENALTY_KICK){
+      label = localization['penalty_kick'];
+    }
+
+    return label;
+  }
+
 }

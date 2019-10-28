@@ -60,5 +60,10 @@
   "logout": "Logout",
   "block_user": "Block User",
   "unblock_user": "Unblock User",
-  "profil": "Profil"
+  "profil": "Profil",
+  "kick_off": "Kick Off",
+  "half_time": "Half Time",
+  "full_time": "Full Time",
+  "extra_time": "Extra Time",
+  "penalty_kick": "Penalty Kick"
 }
