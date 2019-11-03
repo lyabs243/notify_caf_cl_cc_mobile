@@ -142,7 +142,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     tabViews.add(Center(child: Text('Comments',textScaleFactor: 2.5,),));
 
     //init video
-    tabViews.add(YoutubeVideo());
+    tabViews.add(YoutubeVideo(this.localization,this.matchItem));
   }
 
 }
