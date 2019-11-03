@@ -5,6 +5,7 @@ import 'components/header.dart';
 import '../../models/drawer_item.dart';
 import '../../components/match_actions_layout.dart';
 import '../../components/match_lineup_layout.dart';
+import '../../components/youtube_video.dart';
 
 class MatchDetails extends StatefulWidget{
 
@@ -141,7 +142,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     tabViews.add(Center(child: Text('Comments',textScaleFactor: 2.5,),));
 
     //init video
-    tabViews.add(Center(child: Text('Video',textScaleFactor: 2.5,),));
+    tabViews.add(YoutubeVideo());
   }
 
 }
