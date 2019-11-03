@@ -6,6 +6,7 @@ import '../../models/drawer_item.dart';
 import '../../components/match_actions_layout.dart';
 import '../../components/match_lineup_layout.dart';
 import '../../components/youtube_video.dart';
+import '../../components/competition_table_layout.dart';
 
 class MatchDetails extends StatefulWidget{
 
@@ -136,7 +137,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
     //init table
     if(this.matchItem.editionStage.type == EditionStage.TYPE_GROUP)
-      tabViews.add(Center(child: Text('Table',textScaleFactor: 2.5,),));
+      tabViews.add(CompetitionTableLayout());
 
     //init comments
     tabViews.add(Center(child: Text('Comments',textScaleFactor: 2.5,),));
