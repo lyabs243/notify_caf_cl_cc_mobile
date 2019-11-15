@@ -78,7 +78,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                'P',
+                localization['match_played_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -90,7 +90,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                'W',
+                localization['match_win_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -102,7 +102,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                'D',
+                localization['match_draw_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -114,7 +114,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                'L',
+                localization['match_lose_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -126,7 +126,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                'GS',
+                localization['goal_scored_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -138,7 +138,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                'GC',
+                localization['goal_conceded_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -150,7 +150,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                'GD',
+                localization['goal_difference_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -162,7 +162,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                'Pts',
+                localization['points_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,

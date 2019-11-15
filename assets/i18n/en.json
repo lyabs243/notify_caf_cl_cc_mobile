@@ -65,5 +65,21 @@
   "half_time": "Half Time",
   "full_time": "Full Time",
   "extra_time": "Extra Time",
-  "penalty_kick": "Penalty Kick"
+  "penalty_kick": "Penalty Kick",
+  "match_played": "Matchs Played",
+  "match_win": "Matchs Win",
+  "match_draw": "Matchs Draw",
+  "match_lose": "Matchs Lose",
+  "goal_scored": "Goals Scored",
+  "goal_conceded": "Goals Conceded",
+  "goal_difference": "Goals Difference",
+  "points": "Points",
+  "match_played_small": "P",
+  "match_win_small": "W",
+  "match_draw_small": "D",
+  "match_lose_small": "L",
+  "goal_scored_small": "GS",
+  "goal_conceded_small": "GC",
+  "goal_difference_small": "GD",
+  "points_small": "Pts"
 }
