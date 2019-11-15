@@ -4,6 +4,7 @@ import '../../../models/match_item.dart';
 import '../../../components/empty_data.dart';
 import '../../../components/match_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../../components/competition_table_layout.dart';
 
 class StageTabview extends StatefulWidget{
 
@@ -149,6 +150,8 @@ class _StageTabviewState extends State<StageTabview>{
                   Center(
                     child: CircularProgressIndicator(),
                   ):
+              (selectedButton == 3)?
+                CompetitionTableLayout(this.widget.localization, selectedGroup, competitionStage.id)  :
               (listMatch.length <= 0)?
               EmptyData(this.widget.localization):
               Expanded(
@@ -204,17 +207,18 @@ class _StageTabviewState extends State<StageTabview>{
     }
   }
 
-  getFixtureMatchs(){
+  getFixtureMatchs() {
     int idGroup = 0;
-    if(competitionStage.type == CompetitionStage.COMPETIONSTAGE_TYPE_GROUP)
+    if (competitionStage.type == CompetitionStage.COMPETIONSTAGE_TYPE_GROUP)
       idGroup = selectedGroup;
-    CompetitionStage.getStageFixture(context, 0, page, competitionStage.id, idGroup).then((result){
-      if(mounted)
+    CompetitionStage.getStageFixture(
+        context, 0, page, competitionStage.id, idGroup).then((result) {
+      if (mounted)
         setState(() {
           listMatch.addAll(result);
           isLoading = false;
           loadingDone = true;
-          if(result.length > 0){
+          if (result.length > 0) {
             page++;
           }
         });

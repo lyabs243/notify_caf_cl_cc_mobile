@@ -1,11 +1,46 @@
 import 'package:flutter/material.dart';
+import 'empty_data.dart';
+import '../models/group_table_item.dart';
 
-class CompetitionTableLayout extends StatelessWidget{
+class CompetitionTableLayout extends StatefulWidget{
+
+  Map localization;
+  int idStageGroup, idEditionStage;
+
+
+  CompetitionTableLayout(this.localization, this.idStageGroup,
+      this.idEditionStage);
+
+  @override
+  _CompetitionTableLayoutState createState() {
+    return _CompetitionTableLayoutState(this.localization, this.idStageGroup,
+        this.idEditionStage);
+  }
+
+}
+
+class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
+
+  Map localization;
+  int idStageGroup, idEditionStage;
+
+  List<GroupTableItem> tableItems = [];
+
+  _CompetitionTableLayoutState(this.localization, this.idStageGroup,
+      this.idEditionStage);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
+    if(tableItems.length <= 0){
+      GroupTableItem.getGroupTable(context, idStageGroup, idEditionStage).then((items){
+        setState(() {
+          tableItems.addAll(items);
+        });
+      });
+    }
+    return (tableItems.length <= 0)?
+    EmptyData(localization) :
+    Container(
       child: Column(
         children: getTableRows(context),
       ),
@@ -140,7 +175,7 @@ class CompetitionTableLayout extends StatelessWidget{
     ));
 
     //add rows
-    for(int i = 1;i<= 4;i++){
+    for(int i = 1;i<= tableItems.length;i++){
       tableRows.add(Container(
         color: (i % 2 == 0)?Colors.grey[400] : Colors.white,
         //padding: EdgeInsets.all(4.0),
@@ -169,7 +204,7 @@ class CompetitionTableLayout extends StatelessWidget{
                     radius: 30.0,
                     child: ClipOval(
                       child: Image.network(
-                        'https://pbs.twimg.com/profile_images/939161800037355520/lvGNqhFT_400x400.jpg',
+                        tableItems[i-1].url_logo,
                       ),
                     ),
                     backgroundImage: AssetImage('assets/icons/profile.png'),
@@ -181,7 +216,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 12/100,
               child: Center(
                 child: Text(
-                  'DRC',
+                  tableItems[i-1].title_small,
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -193,7 +228,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 8/100,
               child: Center(
                 child: Text(
-                  '42',
+                  tableItems[i-1].matchs_played.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -205,7 +240,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 8/100,
               child: Center(
                 child: Text(
-                  '10',
+                  tableItems[i-1].win.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -217,7 +252,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 8/100,
               child: Center(
                 child: Text(
-                  '23',
+                  tableItems[i-1].draw.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -229,7 +264,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 8/100,
               child: Center(
                 child: Text(
-                  '12',
+                  tableItems[i-1].lose.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -241,7 +276,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 9/100,
               child: Center(
                 child: Text(
-                  '19',
+                  tableItems[i-1].scored.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -253,7 +288,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 9/100,
               child: Center(
                 child: Text(
-                  '15',
+                  tableItems[i-1].conceded.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -265,7 +300,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 9/100,
               child: Center(
                 child: Text(
-                  '10',
+                  tableItems[i-1].goal_difference.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,
@@ -277,7 +312,7 @@ class CompetitionTableLayout extends StatelessWidget{
               width: MediaQuery.of(context).size.width * 9/100,
               child: Center(
                 child: Text(
-                  '102',
+                  tableItems[i-1].points.toString(),
                   textScaleFactor: 1,
                   style: TextStyle(
                     color: Colors.black,

@@ -39,14 +39,14 @@ class GroupTableItem{
           String title = item['title'];
           String title_small = item['title_small'];
           String url_logo = item['url_logo'];
-          int points = int.parse(item['points']);
-          int matchs_played = int.parse(item['matchs_played']);
-          int win = int.parse(item['win']);
-          int draw = int.parse(item['draw']);
-          int lose = int.parse(item['lose']);
-          int scored = int.parse(item['scored']);
-          int conceded = int.parse(item['conceded']);
-          int goal_difference = int.parse(item['goal_difference']);
+          int points = item['points'];
+          int matchs_played = item['matchs_played'];
+          int win = item['win'];
+          int draw = item['draw'];
+          int lose = item['lose'];
+          int scored = item['scored'];
+          int conceded = item['conceded'];
+          int goal_difference = item['goal_difference'];
 
           list.add(new GroupTableItem(id, id_stage_group, id_team, title, title_small, url_logo, points, matchs_played, win, draw, lose, scored, conceded, goal_difference));
         });

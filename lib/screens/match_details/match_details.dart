@@ -137,7 +137,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
     //init table
     if(this.matchItem.editionStage.type == EditionStage.TYPE_GROUP)
-      tabViews.add(CompetitionTableLayout());
+      tabViews.add(CompetitionTableLayout(localization,matchItem.idGroupA,matchItem.editionStage.id));
 
     //init comments
     tabViews.add(Center(child: Text('Comments',textScaleFactor: 2.5,),));
