@@ -325,6 +325,98 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
       ));
     }
 
+    //add caption
+    tableRows.add(
+      SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(4.5),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '${localization['match_played_small']}: ${localization['match_played']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    '${localization['match_win_small']}: ${localization['match_win']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 8.0)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '${localization['match_draw_small']}: ${localization['match_draw']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    '${localization['match_lose_small']}: ${localization['match_lose']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 8.0)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '${localization['goal_scored_small']}: ${localization['goal_scored']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    '${localization['goal_conceded_small']}: ${localization['goal_conceded']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 8.0)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '${localization['goal_difference_small']}: ${localization['goal_difference']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    '${localization['points_small']}: ${localization['points']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      )
+    );
+
     return tableRows;
   }
 
