@@ -4,6 +4,7 @@ import '../../models/drawer_item.dart';
 import '../../components/curve_painter.dart';
 import '../competition_stage/competition_stage.dart';
 import '../matchs_list/matchs_list.dart';
+import '../competition_scorers/competition_scorers.dart';
 
 class CompetitionPage extends StatefulWidget{
 
@@ -146,6 +147,11 @@ class _CompetitionPageState extends State<CompetitionPage>{
                           ));
                           break;
                         case 5: //scorers
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context){
+                              return new CompetitionScorers(this.widget.localization, this.widget.competitionItem);
+                            },
+                          ));
                           break;
                       }
                     },
