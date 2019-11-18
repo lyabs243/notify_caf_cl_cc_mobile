@@ -34,7 +34,7 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
       ScorerEdition.getScorers(context, competitionItem.id, 1).then((items){
         setState(() {
           scorerItems.addAll(items);
-          if(items.length <= 0)
+          if(items.length > 0)
             isLoading = false;
         });
       });
