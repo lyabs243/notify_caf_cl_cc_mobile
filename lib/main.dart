@@ -5,6 +5,7 @@ import 'screens/login/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'models/user.dart';
 import 'screens/home/home.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,6 +15,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       localizationsDelegates: [
         MyLocalizationsDelegate(),
