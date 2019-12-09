@@ -40,9 +40,11 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
     }
     return (tableItems.length <= 0)?
     EmptyData(localization) :
-    Container(
-      child: Column(
-        children: getTableRows(context),
+    SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: getTableRows(context),
+        ),
       ),
     );
   }

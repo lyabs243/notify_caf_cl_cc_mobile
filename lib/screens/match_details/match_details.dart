@@ -93,7 +93,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                   ),
                 ),
                 new Container(
-                  height: MediaQuery.of(context).size.height/1.9,
+                  height: MediaQuery.of(context).size.height/2.8,
                   child: new TabBarView(
                     controller: _controller,
                     children: tabViews,

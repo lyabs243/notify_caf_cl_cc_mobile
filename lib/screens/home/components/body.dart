@@ -80,30 +80,32 @@ class _BodyState extends State<Body>{
           Center(child: CircularProgressIndicator(),):
           (!hasHomeInfos)?
           EmptyData(this.widget.localization):
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Card(
-                  elevation: 10.0,
-                  child: Column(
-                    children: liveWidgets,
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: liveWidgets,
+                    ),
                   ),
-                ),
-                Card(
-                  elevation: 10.0,
-                  child: Column(
-                    children: fixtureWidgets,
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: fixtureWidgets,
+                    ),
                   ),
-                ),
-                Card(
-                  elevation: 10.0,
-                  child: Column(
-                    children: resultWidgets,
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: resultWidgets,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           )
       );
