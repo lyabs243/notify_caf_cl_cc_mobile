@@ -45,6 +45,13 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(

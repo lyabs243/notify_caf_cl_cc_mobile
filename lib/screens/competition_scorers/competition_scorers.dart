@@ -38,6 +38,13 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(scorerItems.length <= 0){
       ScorerEdition.getScorers(context, competitionItem.id, 1).then((items){

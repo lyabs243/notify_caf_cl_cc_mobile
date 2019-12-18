@@ -60,6 +60,13 @@ class _CompetitionStageState extends State<CompetitionStage>{
     );
   }
 
+  @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
   initCompetitionStages(){
     stage.CompetitionStage.getCompetitionStages(context, this.widget.competitionItem.id).then((result){
       setState(() {

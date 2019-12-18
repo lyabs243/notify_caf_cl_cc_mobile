@@ -39,6 +39,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	}
 
 	@override
+	void setState(fn) {
+		if(mounted){
+			super.setState(fn);
+		}
+	}
+
+	@override
 	Widget build(BuildContext context) {
 		return Drawer(
 			child: Container(

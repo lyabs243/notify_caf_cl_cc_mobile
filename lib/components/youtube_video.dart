@@ -37,6 +37,13 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(matchVideo.youtube_video.length == 0){
         matchVideo.initByIdMatch(context).then((r){

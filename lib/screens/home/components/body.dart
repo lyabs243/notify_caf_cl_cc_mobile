@@ -52,6 +52,13 @@ class _BodyState extends State<Body>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(this.fragment == Fragment.COMPETITION_LIST){
       homeContenair = FragmentCompetitionList(this.widget.localization);

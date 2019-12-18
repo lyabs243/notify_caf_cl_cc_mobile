@@ -39,6 +39,13 @@ class _CompetitionPageState extends State<CompetitionPage>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     gridWidth = (MediaQuery.of(context).size.width - ((_crossAxisCount - 1) * _crossAxisSpacing)) / _crossAxisCount;
     gridHeight = gridWidth / _aspectRatio;

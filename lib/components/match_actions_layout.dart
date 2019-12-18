@@ -31,6 +31,13 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(actions.length <= 0){
       initActions();

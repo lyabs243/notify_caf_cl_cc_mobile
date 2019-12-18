@@ -35,6 +35,13 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(list.length == 0){
       initItems();

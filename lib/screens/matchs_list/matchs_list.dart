@@ -36,6 +36,13 @@ class _MatchListState extends State<MatchsList>{
   _MatchListState(this.competitionItem,this.idCompetitionType,this.typeList);
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);

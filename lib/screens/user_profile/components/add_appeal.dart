@@ -28,6 +28,13 @@ class _AppealState extends State<Appeal>{
   bool isLoading = false;
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

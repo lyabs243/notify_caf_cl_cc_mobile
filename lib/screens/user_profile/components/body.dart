@@ -40,6 +40,13 @@ class _BodyState extends State<Body>{
   bool isCurrentUser = false;
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

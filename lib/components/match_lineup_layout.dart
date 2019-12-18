@@ -35,6 +35,13 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(lineups.length <= 0){
       initLineup(idTeam);

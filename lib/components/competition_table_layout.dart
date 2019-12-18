@@ -30,6 +30,13 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
       this.idEditionStage);
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(tableItems.length <= 0){
       GroupTableItem.getGroupTable(context, idStageGroup, idEditionStage).then((items){

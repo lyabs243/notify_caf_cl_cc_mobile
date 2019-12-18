@@ -45,6 +45,13 @@ class _StageTabviewState extends State<StageTabview>{
   }
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if(!loadingDone) {
       getResultMatchs();

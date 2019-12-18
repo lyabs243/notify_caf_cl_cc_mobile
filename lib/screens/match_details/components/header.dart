@@ -23,6 +23,13 @@ class _HeaderState extends State<Header>{
   _HeaderState(this.localization,this.matchItem);
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(
