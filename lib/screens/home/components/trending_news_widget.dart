@@ -1,7 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import '../../../models/news_item.dart';
+import '../../../models/constants.dart';
 
 class TrendingNewsWidget extends StatelessWidget{
+
+  Map localization;
+  NewsItem newsItem;
+
+  TrendingNewsWidget(this.localization,this.newsItem);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,9 @@ class TrendingNewsWidget extends StatelessWidget{
                 borderRadius: BorderRadius.circular(5),
                 image: new DecorationImage(
                   colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
-                  image: new NetworkImage('https://pbs.twimg.com/profile_images/939161800037355520/lvGNqhFT_400x400.jpg'),
+                  image: (newsItem.news_featured_image.length > 0) ?
+                  new NetworkImage(newsItem.news_featured_image) :
+                  new AssetImage('assets/icons/latest.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -27,7 +36,7 @@ class TrendingNewsWidget extends StatelessWidget{
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Text(
-                    'Le titre de l\'article !!! shssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss',
+                    newsItem.news_heading,
                     maxLines: 2,
                     textScaleFactor: 1.5,
                     style: new TextStyle(
@@ -42,7 +51,7 @@ class TrendingNewsWidget extends StatelessWidget{
                         ImageIcon(AssetImage('assets/icons/date.png'),size: 15.0, color: Colors.white,),
                         Padding(padding: EdgeInsets.only(left: 2.0,right: 2.0),),
                         new Text(
-                          'il y a 2 ans',
+                          convertDateToAbout(newsItem.news_date, localization),
                           maxLines: 1,
                           style: new TextStyle(
                               color: Colors.white,

@@ -173,10 +173,13 @@ class _BodyState extends State<Body>{
 
   initNewsWidgets() {
     trendingNews.clear();
-    for(int i=0;i<5;i++) {
+    homeInfos.trending_news.forEach((news){
       trendingNews.add(
-          TrendingNewsWidget()
+          TrendingNewsWidget(this.widget.localization,news)
       );
+    });
+    if(trendingNews.length == 0) {
+      trendingNews.add(EmptyData(this.widget.localization));
     }
   }
 
