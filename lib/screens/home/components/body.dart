@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
@@ -90,49 +91,43 @@ class _BodyState extends State<Body>{
           Center(child: CircularProgressIndicator(),):
           (!hasHomeInfos)?
           EmptyData(this.widget.localization):
-          DefaultTabController(
-            length: trendingNews.length,
-            // Use a Builder here, otherwise `DefaultTabController.of(context)` below
-            // returns null.
-            child: Builder(
-              builder: (BuildContext context) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    TabPageSelector(),
-                    Expanded(
-                      child: TabBarView(children: trendingNews),
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height/3,
+                    color: Colors.white,
+                    padding: EdgeInsets.all(5.0),
+                    child: new ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: trendingNews.length,
+                      itemBuilder: (context,index){
+                        return trendingNews[index];
+                      },
                     ),
-                    SingleChildScrollView(
-                      child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Card(
-                              elevation: 10.0,
-                              child: Column(
-                                children: liveWidgets,
-                              ),
-                            ),
-                            Card(
-                              elevation: 10.0,
-                              child: Column(
-                                children: fixtureWidgets,
-                              ),
-                            ),
-                            Card(
-                              elevation: 10.0,
-                              child: Column(
-                                children: resultWidgets,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: liveWidgets,
+                    ),
+                  ),
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: fixtureWidgets,
+                    ),
+                  ),
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: resultWidgets,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -180,7 +175,28 @@ class _BodyState extends State<Body>{
     });
     if(trendingNews.length == 0) {
       trendingNews.add(EmptyData(this.widget.localization));
+    } else {
+      trendingNews.add(FlatButton(
+        child: Text(
+          this.widget.localization['see_more'],
+          style: TextStyle(
+              color: Theme
+                  .of(context)
+                  .primaryColor
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context){
+              }
+          ));
+        },
+      ));
     }
+  }
+  
+  Widget initView(List<NewsItem> listN,int index) {
+    return Text('${index} un item');
   }
 
   initSpecificWidget(TypeList typeList,List<MatchItem> matchList,List<Widget> widgets,String title){
