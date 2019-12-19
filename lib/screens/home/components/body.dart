@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
 import '../../../models/home_infos.dart';
@@ -8,6 +9,7 @@ import '../../../components/match_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import './../../../components/empty_data.dart';
 import '../../matchs_list/matchs_list.dart';
+import 'trending_news_widget.dart';
 
 class Body extends StatefulWidget{
 
@@ -39,6 +41,7 @@ class _BodyState extends State<Body>{
   List<Widget> liveWidgets = [];
   List<Widget> fixtureWidgets = [];
   List<Widget> resultWidgets = [];
+  List<Widget> trendingNews = [];
 
   _BodyState(this.fragment,this.competitionItem);
 
@@ -87,34 +90,52 @@ class _BodyState extends State<Body>{
           Center(child: CircularProgressIndicator(),):
           (!hasHomeInfos)?
           EmptyData(this.widget.localization):
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Card(
-                    elevation: 10.0,
-                    child: Column(
-                      children: liveWidgets,
+          DefaultTabController(
+            length: trendingNews.length,
+            // Use a Builder here, otherwise `DefaultTabController.of(context)` below
+            // returns null.
+            child: Builder(
+              builder: (BuildContext context) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    TabPageSelector(),
+                    Expanded(
+                      child: TabBarView(children: trendingNews),
                     ),
-                  ),
-                  Card(
-                    elevation: 10.0,
-                    child: Column(
-                      children: fixtureWidgets,
-                    ),
-                  ),
-                  Card(
-                    elevation: 10.0,
-                    child: Column(
-                      children: resultWidgets,
-                    ),
-                  ),
-                ],
+                    SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Card(
+                              elevation: 10.0,
+                              child: Column(
+                                children: liveWidgets,
+                              ),
+                            ),
+                            Card(
+                              elevation: 10.0,
+                              child: Column(
+                                children: fixtureWidgets,
+                              ),
+                            ),
+                            Card(
+                              elevation: 10.0,
+                              child: Column(
+                                children: resultWidgets,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          )
+          ),
       );
     }
     return homeContenair;
@@ -137,6 +158,9 @@ class _BodyState extends State<Body>{
   }
 
   initData(){
+    //init news widgets
+    initNewsWidgets();
+
     //init live widgets
     initSpecificWidget(TypeList.LIVE, homeInfos.current_match, liveWidgets, this.widget.localization['live']);
 
@@ -145,6 +169,15 @@ class _BodyState extends State<Body>{
 
     //init fixture widgets
     initSpecificWidget(TypeList.RESULT, homeInfos.latest_result, resultWidgets, this.widget.localization['last_results']);
+  }
+
+  initNewsWidgets() {
+    trendingNews.clear();
+    for(int i=0;i<5;i++) {
+      trendingNews.add(
+          TrendingNewsWidget()
+      );
+    }
   }
 
   initSpecificWidget(TypeList typeList,List<MatchItem> matchList,List<Widget> widgets,String title){
