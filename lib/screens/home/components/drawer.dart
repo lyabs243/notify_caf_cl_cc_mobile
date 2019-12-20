@@ -9,6 +9,7 @@ import '../../../components/no_animation_pageroute.dart';
 import 'body.dart';
 import '../home.dart';
 import '../../competition/competition.dart';
+import '../../news_list/news_list.dart';
 
 class HomeDrawer extends StatefulWidget{
 
@@ -146,12 +147,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
 		List competitions = initCompetitions();
 		DrawerItem home = new DrawerItem(1, this.widget.localization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem competition = new DrawerItem(2, this.widget.localization['competition'], DrawerType.expandable,
+		DrawerItem news = new DrawerItem(2, this.widget.localization['news'], DrawerType.item,iconPath: 'assets/icons/latest.png');
+		DrawerItem competition = new DrawerItem(3, this.widget.localization['competition'], DrawerType.expandable,
 				iconPath: 'assets/icons/profile.png',expandableItems: competitions);
-		DrawerItem profil = new DrawerItem(3, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-		DrawerItem appeal = new DrawerItem(4, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-		DrawerItem login = new DrawerItem(5, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem logout = new DrawerItem(6, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+		DrawerItem profil = new DrawerItem(4, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+		DrawerItem appeal = new DrawerItem(5, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+		DrawerItem login = new DrawerItem(6, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem logout = new DrawerItem(7, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
 		//set visibility
 		if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -167,6 +169,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
 		drawerItems.add(header);
 		drawerItems.add(home);
+		drawerItems.add(news);
 		drawerItems.add(competition);
 		drawerItems.add(profil);
 		drawerItems.add(appeal);
@@ -185,7 +188,16 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 3: //click on profil
+			case 2: //click on news
+				Navigator.push(
+						context,
+						NoAnimationMaterialPageRoute(
+								builder: (BuildContext context){
+									return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
+								}
+						));
+				break;
+			case 4: //click on profil
 				Navigator.push(
 						context,
 						MaterialPageRoute
@@ -195,7 +207,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 4: //click on appeal
+			case 5: //click on appeal
 				Navigator.push(
 						context,
 						MaterialPageRoute
@@ -205,7 +217,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 5: //click on login
+			case 6: //click on login
 				Navigator.pushReplacement(
 					context,
 					MaterialPageRoute
@@ -215,7 +227,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 							}
 					));
 				break;
-			case 6: //click on logout
+			case 7: //click on logout
 				Navigator.pushReplacement(
 						context,
 						MaterialPageRoute(

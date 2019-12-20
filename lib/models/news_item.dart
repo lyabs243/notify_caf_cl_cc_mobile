@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/services/notify_api.dart';
 import 'package:intl/intl.dart';
 
 class NewsItem {
@@ -17,6 +19,8 @@ class NewsItem {
   int total_views;
   int cid;
   String category_name;
+
+  static final String URL_GET_LATEST_NEWS = 'http://notifygroup.org/notifyapp/api/index.php/competition/news/';
 
   NewsItem(this.id, this.url_share, this.url_article, this.cat_id, this.url_fav,
       this.news_type, this.news_heading, this.news_description,
@@ -50,6 +54,21 @@ class NewsItem {
         category_name);
 
     return newsItem;
+  }
+
+  static Future getLatestNews(BuildContext context,int idUser, int page, {competitionType: 0}) async {
+    List<NewsItem> news = [];
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_LATEST_NEWS + idUser.toString() + '/' + competitionType.toString() + '/' + page.toString()
+        , null).then((map) {
+      if (map != null) {
+        for(int i=0;i<map['NOTIFYGROUP'].length;i++){
+          NewsItem newsItem = NewsItem.getFromMap(map['NOTIFYGROUP'][i]);
+          news.add(newsItem);
+        }
+      }
+    });
+    return news;
   }
 
 }

@@ -11,6 +11,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import './../../../components/empty_data.dart';
 import '../../matchs_list/matchs_list.dart';
 import 'trending_news_widget.dart';
+import '../../news_list/news_list.dart';
 
 class Body extends StatefulWidget{
 
@@ -188,6 +189,7 @@ class _BodyState extends State<Body>{
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
               builder: (context){
+                return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
               }
           ));
         },
