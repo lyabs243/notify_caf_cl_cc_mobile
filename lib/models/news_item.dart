@@ -21,6 +21,7 @@ class NewsItem {
   String category_name;
 
   static final String URL_GET_LATEST_NEWS = 'http://notifygroup.org/notifyapp/api/index.php/competition/news/';
+  static final String URL_VIEW_NEWS = 'http://notifygroup.org/notifyapp/api/index.php/article/view_article/';
 
   NewsItem(this.id, this.url_share, this.url_article, this.cat_id, this.url_fav,
       this.news_type, this.news_heading, this.news_description,
@@ -69,6 +70,18 @@ class NewsItem {
       }
     });
     return news;
+  }
+
+  static Future viewNews(BuildContext context, int idArticle, int idUser) async {
+    List<NewsItem> news = [];
+    bool result = false;
+    await NotifyApi(context).getJsonFromServer(URL_VIEW_NEWS + idArticle.toString() + '/' + idUser.toString()
+        , null).then((map) {
+      if (map != null) {
+        result = true;
+      }
+    });
+    return result;
   }
 
 }

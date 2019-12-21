@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
+import 'package:flutter_cafclcc/models/user.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'components/header.dart';
 import '../../models/constants.dart';
@@ -14,6 +15,9 @@ class NewsDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User.getInstance().then((user){
+      NewsItem.viewNews(context, newsItem.id, user.id);
+    });
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
