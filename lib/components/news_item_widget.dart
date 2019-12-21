@@ -19,8 +19,8 @@ class NewsItemWidget extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width * 0.28,
-                height: MediaQuery.of(context).size.height/8,
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height/7,
                 child: (this.newsItem.news_featured_image.length > 0)?
                 Image.network(
                   this.newsItem.news_featured_image,
@@ -33,8 +33,8 @@ class NewsItemWidget extends StatelessWidget {
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.7,
-                height: MediaQuery.of(context).size.height/8,
-                padding: EdgeInsets.all(4.0),
+                height: MediaQuery.of(context).size.height/7,
+                padding: EdgeInsets.only(left: 7.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
