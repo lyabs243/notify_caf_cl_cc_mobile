@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'components/header.dart';
 import '../../models/constants.dart';
 
@@ -69,6 +70,23 @@ class NewsDetails extends StatelessWidget {
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 8.0),),
+                    Container(
+                      alignment: Alignment.bottomRight,
+                      child: FlatButton(
+                        child: Text(
+                          'Read more',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor
+                          ),
+                        ),
+                        onPressed: () {
+                          launch(
+                            this.newsItem.url_article,
+                            forceWebView: true
+                          );
+                        },
+                      ),
+                    )
                   ],
                 ),
             ),
