@@ -191,7 +191,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 			case 2: //click on news
 				Navigator.push(
 						context,
-						NoAnimationMaterialPageRoute(
+						MaterialPageRoute(
 								builder: (BuildContext context){
 									return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
 								}

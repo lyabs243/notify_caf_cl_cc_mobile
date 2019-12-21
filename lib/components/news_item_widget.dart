@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/news_item.dart';
 import '../models/constants.dart';
+import '../screens/news_details/news_details.dart';
 
 class NewsItemWidget extends StatelessWidget {
 
@@ -78,7 +79,13 @@ class NewsItemWidget extends StatelessWidget {
         ),
       ),
       onTap: (){
-
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context){
+                  return NewsDetails(this.localization, newsItem);
+                }
+            ));
       },
     );
   }
