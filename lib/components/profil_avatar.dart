@@ -6,8 +6,9 @@ class ProfilAvatar extends StatelessWidget{
   User user;
   double width;
   double height;
+  Color backgroundColor;
 
-  ProfilAvatar(this.user,{this.width: 40.0,this.height: 40.0});
+  ProfilAvatar(this.user,{this.backgroundColor: Colors.transparent, this.width: 40.0,this.height: 40.0});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,11 @@ class ProfilAvatar extends StatelessWidget{
         child: ClipOval(
           child: Image.network(
             user.url_profil_pic,
+            fit: BoxFit.cover,
           ),
         ),
         backgroundImage: AssetImage('assets/icons/profile.png'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundColor,
       ):
       Image.asset('assets/icons/profile.png'),
     );
