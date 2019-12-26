@@ -93,6 +93,25 @@ class _PostWidgetState extends State<PostWidget> {
                         var list = List<PopupMenuEntry<Object>>();
                         list.add(
                           PopupMenuItem(
+                            child: Text(localization['update']),
+                            value: 1,
+                            enabled: (currentUser.id_subscriber == post.id_subscriber),
+                          ),
+                        );
+                        list.add(
+                          PopupMenuItem(
+                            child: Text(localization['delete']),
+                            value: 1,
+                            enabled: (currentUser.id_subscriber == post.id_subscriber),
+                          ),
+                        );
+                        list.add(
+                          PopupMenuDivider(
+                            height: 10,
+                          ),
+                        );
+                        list.add(
+                          PopupMenuItem(
                             child: Text(localization['report_as_abusive']),
                             value: 1,
                             enabled: (currentUser.active == 1),
