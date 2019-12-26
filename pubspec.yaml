@@ -59,6 +59,7 @@ flutter:
    - assets/
    - assets/icons/
    - assets/icons/match/
+   - assets/icons/reaction/
    - assets/i18n/
   #  - images/a_dot_ham.jpeg
 

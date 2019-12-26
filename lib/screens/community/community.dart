@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/post_widget.dart';
 
 class Community extends StatefulWidget {
 
@@ -22,15 +23,11 @@ class _CommunityState extends State<Community> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(this.localization['community']),
-      ),
-      body: DefaultTabController(
+    return DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(this.widget.localization['stages']),
+            title: Text(this.widget.localization['community']),
             bottom: TabBar(
               tabs: [
                 Tab(text: localization['all_posts'], icon: Icon(Icons.all_inclusive),),
@@ -44,11 +41,12 @@ class _CommunityState extends State<Community> {
           ),
           body: TabBarView(
               children: [
-                Center(
-                  child: Text(
-                    'Pour tout le monde',
-                    textScaleFactor: 3.0,
-                  ),
+                ListView.builder(
+                  itemCount: 10,
+                  padding: EdgeInsets.all(8.0),
+                  itemBuilder: (context, index) {
+                    return PostWidget(localization, null);
+                  }
                 ),
                 Center(
                   child: Text(
@@ -59,8 +57,7 @@ class _CommunityState extends State<Community> {
               ]
           ),
         ),
-      )
-    );
+      );
   }
 
   @override
