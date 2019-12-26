@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/post_reaction_box.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
+import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
@@ -60,22 +61,27 @@ class _PostWidgetState extends State<PostWidget> {
                 Row(
                   children: <Widget>[
                     ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                    RichText(
-                      text: new TextSpan(
-                        text: post.subscriber.full_name,
-                        style: new TextStyle(
-                            color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                            fontWeight: FontWeight.bold
+                    Column(
+                      children: <Widget>[
+                        RichText(
+                          text: new TextSpan(
+                            text: post.subscriber.full_name,
+                            style: new TextStyle(
+                                color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
+                                fontWeight: FontWeight.bold
+                            ),
+                            recognizer: new TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  User user = new User();
+                                  user.id_subscriber = post.id_subscriber;
+                                  return new UserProfile(currentUser,user,localization);
+                                }));
+                              },
+                          ),
                         ),
-                        recognizer: new TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context){
-                              User user = new User();
-                              user.id_subscriber = post.id_subscriber;
-                              return new UserProfile(currentUser,user,localization);
-                            }));
-                          },
-                      ),
+                        Text(convertDateToAbout(post.register_date, localization)),
+                      ],
                     ),
                   ],
                 ),
