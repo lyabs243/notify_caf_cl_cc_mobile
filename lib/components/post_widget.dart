@@ -91,39 +91,50 @@ class _PostWidgetState extends State<PostWidget> {
                     PopupMenuButton(
                       itemBuilder: (context) {
                         var list = List<PopupMenuEntry<Object>>();
-                        list.add(
-                          PopupMenuItem(
-                            child: Text(localization['update']),
-                            value: 1,
-                            enabled: (currentUser.id_subscriber == post.id_subscriber),
-                          ),
-                        );
-                        list.add(
-                          PopupMenuItem(
-                            child: Text(localization['delete']),
-                            value: 1,
-                            enabled: (currentUser.id_subscriber == post.id_subscriber),
-                          ),
-                        );
-                        list.add(
-                          PopupMenuDivider(
-                            height: 10,
-                          ),
-                        );
-                        list.add(
-                          PopupMenuItem(
-                            child: Text(localization['report_as_abusive']),
-                            value: 1,
-                            enabled: (currentUser.active == 1),
-                          ),
-                        );
-                        list.add(
+                        if(currentUser.id_subscriber == post.id_subscriber && currentUser.active == 1) {
+                          list.add(
                             PopupMenuItem(
-                              child: Text(localization['block_post']),
-                              value: 2,
-                              enabled: (currentUser.active == 1 && currentUser.type == User.USER_TYPE_ADMIN),
-                            )
-                        );
+                              child: Text(localization['update']),
+                              value: 1,
+                              enabled: (currentUser.id_subscriber ==
+                                  post.id_subscriber &&
+                                  currentUser.active == 1),
+                            ),
+                          );
+                          list.add(
+                            PopupMenuItem(
+                              child: Text(localization['delete']),
+                              value: 1,
+                              enabled: (currentUser.id_subscriber ==
+                                  post.id_subscriber &&
+                                  currentUser.active == 1),
+                            ),
+                          );
+                          list.add(
+                            PopupMenuDivider(
+                              height: 10,
+                            ),
+                          );
+                        }
+                        if(currentUser.active == 1) {
+                          list.add(
+                            PopupMenuItem(
+                              child: Text(localization['report_as_abusive']),
+                              value: 1,
+                              enabled: (currentUser.active == 1),
+                            ),
+                          );
+                        }
+                        if(currentUser.active == 1 && currentUser.type == User.USER_TYPE_ADMIN) {
+                          list.add(
+                              PopupMenuItem(
+                                child: Text(localization['block_post']),
+                                value: 2,
+                                enabled: (currentUser.active == 1 &&
+                                    currentUser.type == User.USER_TYPE_ADMIN),
+                              )
+                          );
+                        }
                         return list;
                       },
                     )
