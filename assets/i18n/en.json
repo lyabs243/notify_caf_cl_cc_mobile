@@ -64,6 +64,8 @@
   "logout": "Logout",
   "block_user": "Block User",
   "unblock_user": "Unblock User",
+  "block_post": "Block Post",
+  "report_as_abusive": "Report as abusive",
   "profil": "Profil",
   "kick_off": "Kick Off",
   "half_time": "Half Time",

@@ -59,30 +59,55 @@ class _PostWidgetState extends State<PostWidget> {
               crossAxisAlignment:  CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                    Column(
+                    Row(
                       children: <Widget>[
-                        RichText(
-                          text: new TextSpan(
-                            text: post.subscriber.full_name,
-                            style: new TextStyle(
-                                color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                                fontWeight: FontWeight.bold
+                        ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
+                        Column(
+                          children: <Widget>[
+                            RichText(
+                              text: new TextSpan(
+                                text: post.subscriber.full_name,
+                                style: new TextStyle(
+                                    color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
+                                    fontWeight: FontWeight.bold
+                                ),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      User user = new User();
+                                      user.id_subscriber = post.id_subscriber;
+                                      return new UserProfile(currentUser,user,localization);
+                                    }));
+                                  },
+                              ),
                             ),
-                            recognizer: new TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  User user = new User();
-                                  user.id_subscriber = post.id_subscriber;
-                                  return new UserProfile(currentUser,user,localization);
-                                }));
-                              },
-                          ),
-                        ),
-                        Text(convertDateToAbout(post.register_date, localization)),
+                            Text(convertDateToAbout(post.register_date, localization)),
+                          ],
+                        )
                       ],
                     ),
+                    PopupMenuButton(
+                      itemBuilder: (context) {
+                        var list = List<PopupMenuEntry<Object>>();
+                        list.add(
+                          PopupMenuItem(
+                            child: Text(localization['report_as_abusive']),
+                            value: 1,
+                            enabled: (currentUser.active == 1),
+                          ),
+                        );
+                        list.add(
+                            PopupMenuItem(
+                              child: Text(localization['block_post']),
+                              value: 2,
+                              enabled: (currentUser.active == 1 && currentUser.type == User.USER_TYPE_ADMIN),
+                            )
+                        );
+                        return list;
+                      },
+                    )
                   ],
                 ),
                 Container(
