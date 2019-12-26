@@ -85,5 +85,11 @@
   "goal_scored_small": "GS",
   "goal_conceded_small": "GC",
   "goal_difference_small": "GD",
+  "like": "Like",
+  "love": "Love",
+  "goal": "Goal",
+  "offside": "Offside",
+  "red_card": "Red Card",
+  "angry": "angry",
   "points_small": "Pts"
 }

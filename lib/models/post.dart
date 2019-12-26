@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/services/notify_api.dart';
 import 'package:intl/intl.dart';
 
 class Post {
@@ -14,6 +16,8 @@ class Post {
   DateTime register_date;
   PostReaction reaction;
 
+  static final String URL_GET_POSTS = 'http://notifygroup.org/notifyapp/api/index.php/post/get_posts/';
+
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
       this.type, this.active, this.register_date, this.reaction);
 
@@ -26,8 +30,8 @@ class Post {
     int type = int.parse(item['type']);
 
     User subscriber = new User();
-    subscriber.full_name = item['full_name'];
-    subscriber.url_profil_pic = item['url_profil_pic'];
+    subscriber.full_name = item['subscriber']['full_name'];
+    subscriber.url_profil_pic = item['subscriber']['url_profil_pic'];
 
     String format = 'yyyy-MM-dd H:mm:ss';
     DateFormat formater = DateFormat(format);
@@ -40,6 +44,23 @@ class Post {
     Post post = Post(id, id_subscriber, post_message, url_image, subscriber, type, active, register_date, reaction);
 
     return post;
+  }
+
+  static Future getPosts(BuildContext context,int activeSubscriber, int page, {idSubscriber: 0}) async {
+    List<Post> posts = [];
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_POSTS + activeSubscriber.toString() + '/' + idSubscriber.toString() + '/' + page.toString()
+        , null).then((map) {
+      if (map != null) {
+        if(map['NOTIFYGROUP']['data'] != null) {
+          for (int i = 0; i < map['NOTIFYGROUP']['data'].length; i++) {
+            Post post = Post.getFromMap(map['NOTIFYGROUP']['data'][i]);
+            posts.add(post);
+          }
+        }
+      }
+    });
+    return posts;
   }
 
 

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
+import 'package:flutter_cafclcc/models/post.dart';
+import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Community extends StatefulWidget {
 
@@ -17,12 +21,19 @@ class Community extends StatefulWidget {
 class _CommunityState extends State<Community> {
 
   Map localization;
+  User user;
+  int activeSubscriber;
 
   _CommunityState(this.localization);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    User.getInstance().then((user){
+      this.user = user;
+      setState((){
+        activeSubscriber = user.id_subscriber;
+      });
+    });
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -41,19 +52,10 @@ class _CommunityState extends State<Community> {
           ),
           body: TabBarView(
               children: [
-                ListView.builder(
-                  itemCount: 10,
-                  padding: EdgeInsets.all(8.0),
-                  itemBuilder: (context, index) {
-                    return PostWidget(localization, null);
-                  }
-                ),
-                Center(
-                  child: Text(
-                    'Pour toi',
-                    textScaleFactor: 3.0,
-                  ),
-                )
+                (activeSubscriber > 0)?
+                AllPosts(localization, activeSubscriber, 0): Container(),
+                (activeSubscriber > 0)?
+                AllPosts(localization, activeSubscriber, activeSubscriber): Container()
               ]
           ),
         ),
