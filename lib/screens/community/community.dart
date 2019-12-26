@@ -50,6 +50,14 @@ class _CommunityState extends State<Community> {
               ),
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            backgroundColor: Theme.of(context).primaryColor,
+            tooltip: 'Add Post',
+            onPressed: () {
+              
+            }
+          ),
           body: TabBarView(
               children: [
                 (activeSubscriber > 0)?
