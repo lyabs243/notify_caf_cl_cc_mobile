@@ -6,6 +6,7 @@ import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 
 class PostWidget extends StatefulWidget {
 
@@ -25,6 +26,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   Map localization;
   Post post;
+  User currentUser;
 
   bool showReactionBox = false;
 
@@ -41,6 +43,11 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     User user = new User();
     user.url_profil_pic = post.subscriber.url_profil_pic;
+    User.getInstance().then((_user){
+      setState(() {
+        currentUser = _user;
+      });
+    });
     return Stack(
       children: <Widget>[
         Card(
@@ -53,13 +60,23 @@ class _PostWidgetState extends State<PostWidget> {
                 Row(
                   children: <Widget>[
                     ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                    Text(
-                      post.subscriber.full_name,
-                      textScaleFactor: 1.1,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
+                    RichText(
+                      text: new TextSpan(
+                        text: post.subscriber.full_name,
+                        style: new TextStyle(
+                            color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context){
+                              User user = new User();
+                              user.id_subscriber = post.id_subscriber;
+                              return new UserProfile(currentUser,user,localization);
+                            }));
+                          },
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Container(
