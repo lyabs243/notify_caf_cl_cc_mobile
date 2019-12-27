@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/services/notify_api.dart';
 
 class PostReaction {
 
@@ -14,6 +15,7 @@ class PostReaction {
   static final int REACTION_OFFSIDE = 5;
   static final int REACTION_ANGRY = 6;
 
+  static final String URL_ADD_POSTREACTION = 'http://notifygroup.org/notifyapp/api/index.php/postReaction/add/';
 
   PostReaction(this.id_post, this.total, this.subscriber_reaction,
       this.top_reactions);
@@ -35,6 +37,21 @@ class PostReaction {
         top_reactions);
 
     return postReaction;
+  }
+
+  static Future<bool> add(int id_post, int id_subscriber, int reaction,BuildContext context) async{
+    String url = URL_ADD_POSTREACTION + id_post.toString() + "/" + id_subscriber.toString() + '/'
+        + reaction.toString();
+    bool success = true;
+    await NotifyApi(context).getJsonFromServer(url,null).then((map){
+      if(map != null && map['NOTIFYGROUP']['success'].toString() == '1') {
+        success = true;
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
   }
 
   static String getReactionIconPath(int reaction) {

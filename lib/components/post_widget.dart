@@ -200,6 +200,7 @@ class _PostWidgetState extends State<PostWidget> {
                           (
                             PostReaction.getReactionIconPath(post.reaction.subscriber_reaction)
                           ),
+                          color: PostReaction.getReactionColor(post.reaction.subscriber_reaction, context),
                           size: 20.0
                         ),
                         label: Text(
@@ -217,13 +218,25 @@ class _PostWidgetState extends State<PostWidget> {
         ),
         (showReactionBox)?
         Positioned(
-          child: PostReactionBox(localization),
+          child: PostReactionBox(localization, setReaction, post.id, currentUser.id_subscriber),
           right: 40.0,
           bottom: 60.0,
         ):
         Container()
       ],
     );
+  }
+
+  setReaction(reaction) {
+      setState(() {
+        if(reaction > -1) {
+          post.reaction.subscriber_reaction = reaction;
+          Post.getPost(context, post.id, currentUser.id_subscriber).then((nPost){
+            post = nPost;
+          });
+        }
+        showReactionBox = false;
+      });
   }
 
   getTopReactions(){

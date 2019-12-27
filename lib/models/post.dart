@@ -17,6 +17,7 @@ class Post {
   PostReaction reaction;
 
   static final String URL_GET_POSTS = 'http://notifygroup.org/notifyapp/api/index.php/post/get_posts/';
+  static final String URL_GET_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/get_post/';
 
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
       this.type, this.active, this.register_date, this.reaction);
@@ -61,6 +62,20 @@ class Post {
       }
     });
     return posts;
+  }
+
+  static Future getPost(BuildContext context,int idPost, int activeSubscriber) async {
+    Post post;
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_POST + idPost.toString() + '/' + activeSubscriber.toString()
+        , null).then((map) {
+      if (map != null) {
+        if(map['NOTIFYGROUP']['data'] != null) {
+            post = Post.getFromMap(map['NOTIFYGROUP']['data']);
+        }
+      }
+    });
+    return post;
   }
 
 
