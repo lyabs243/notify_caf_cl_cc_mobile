@@ -72,7 +72,7 @@ class PostReaction {
       return Colors.black;
     }
     else if(reaction == REACTION_OFFSIDE) {
-      return Colors.yellow;
+      return Colors.orange;
     }
     else if(reaction == REACTION_REDCARD) {
       return Colors.red;
