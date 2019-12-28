@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/community/components/add_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -53,9 +54,14 @@ class _CommunityState extends State<Community> {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             backgroundColor: Theme.of(context).primaryColor,
-            tooltip: 'Add Post',
+            tooltip: localization['add_post'],
             onPressed: () {
-              
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (BuildContext context){
+                    return PostDialog(localization, null, user);
+                  },
+                  fullscreenDialog: true
+              ));
             }
           ),
           body: TabBarView(
