@@ -42,6 +42,13 @@ class _PostReactionBoxState extends State<PostReactionBox> {
     });
   }
 
+  deleteReaction() {
+    this.setReaction(0);
+    PostReaction.delete(id_post, id_subscriber, context).then((result){
+      this.setReaction(0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     iconHeight = MediaQuery.of(context).size.width / 12;
@@ -130,7 +137,7 @@ class _PostReactionBoxState extends State<PostReactionBox> {
             IconButton(
               icon: Icon(Icons.delete, size: iconHeight/1.2, color: Colors.red,),
               onPressed: (){
-                updateReaction(0);
+                deleteReaction();
               },
             )
           ],
