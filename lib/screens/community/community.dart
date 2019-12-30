@@ -23,7 +23,7 @@ class _CommunityState extends State<Community> {
 
   Map localization;
   User user;
-  int activeSubscriber;
+  int activeSubscriber = 0;
 
   _CommunityState(this.localization);
 
