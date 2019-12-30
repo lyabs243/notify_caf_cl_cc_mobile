@@ -125,9 +125,18 @@ class _PostDialogState extends State<PostDialog>{
                       )
                     ],
                   ),
-                  _image == null
-                      ? Text('No image selected.')
-                      : Image.file(_image),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 3,
+                    width: MediaQuery.of(context).size.width,
+                    child: (_image == null)?
+                      Center(
+                        child: Text(this.widget.localization['no_image_selected']),
+                      ):
+                      Image.file(
+                        _image,
+                        fit: BoxFit.cover,
+                      ),
+                  ),
                 ],
               ),
             ),
