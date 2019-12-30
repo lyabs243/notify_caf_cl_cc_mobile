@@ -134,7 +134,7 @@ class _PostDialogState extends State<PostDialog>{
                       ):
                       Image.file(
                         _image,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.scaleDown,
                       ),
                   ),
                 ],
