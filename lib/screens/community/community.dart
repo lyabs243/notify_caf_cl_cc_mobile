@@ -61,7 +61,7 @@ class _CommunityState extends State<Community> {
                     return PostDialog(localization, null, user);
                   },
                   fullscreenDialog: true
-              ));
+              ));build(context);
             }
           ),
           body: TabBarView(

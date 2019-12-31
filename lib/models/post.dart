@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
@@ -18,6 +21,7 @@ class Post {
 
   static final String URL_GET_POSTS = 'http://notifygroup.org/notifyapp/api/index.php/post/get_posts/';
   static final String URL_GET_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/get_post/';
+  static final String URL_ADD_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/add/';
 
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
       this.type, this.active, this.register_date, this.reaction);
@@ -76,6 +80,29 @@ class Post {
       }
     });
     return post;
+  }
+
+  Future<bool> addPost(BuildContext context, File image) async{
+    bool success = true;
+    String url = URL_ADD_POST+this.id_subscriber.toString();
+    Map<String,dynamic> params = {
+      'post': this.post,
+      'type': this.type.toString(),
+    };
+    if(image != null) {
+
+      params['img_post'] = await MultipartFile.fromFile(image.path);
+      url += '/1';
+    }
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
   }
 
 

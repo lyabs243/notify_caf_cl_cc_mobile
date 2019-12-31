@@ -72,9 +72,9 @@ class _PostDialogState extends State<PostDialog>{
                       isLoading = false;
                     });
                     if(success) {
-                      Toast.show(this.widget.localization['appeal_approved'], context,duration: Toast.LENGTH_LONG,
+                      Toast.show(this.widget.localization['post_added'], context,duration: Toast.LENGTH_LONG,
                           gravity: Toast.BOTTOM);
-                      //Navigator.pop(context, this.widget.appealItem);
+                      Navigator.pop(context, this.widget.post);
                     }
                     else{
                       Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
