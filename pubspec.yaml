@@ -31,6 +31,7 @@ dependencies:
   pull_to_refresh: ^1.5.5
   flutter_html: ^0.8.2
   image_picker: ^0.6.2+3
+  dio: ^3.0.8
   intl: ^0.16.0
   flutter_localizations:
     sdk: flutter

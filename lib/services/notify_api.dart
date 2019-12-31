@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -28,11 +29,13 @@ class NotifyApi {
     }
 
     try{
-      final response = await http.post(url,body: map).timeout(Duration(seconds: 15));
+      //final response = await http.post(url,body: map).timeout(Duration(seconds: 15));
+      FormData formData = new FormData.fromMap(map);
+      final response = await Dio().post(url, data: formData);
       this.statusCode = response.statusCode;
       if (response.statusCode == 200) {
-          //print(response.body);
-          mapResult = json.decode(response.body);
+          //print(response.data.toString());
+          mapResult = response.data;
           //print(mapResult['NOTIFYGROUP']);
       }
     }
