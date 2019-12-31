@@ -35,6 +35,13 @@ class _ItemAppealState extends State<ItemAppeal>{
   RefreshController _refreshController;
 
   @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
