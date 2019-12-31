@@ -11,13 +11,13 @@ class NotifyApi {
 
   NotifyApi(this.context);
 
-  Future<Map> getJsonFromServer(String url, Map params) async {
+  Future<Map> getJsonFromServer(String url, Map<String,dynamic> params) async {
     Locale myLocale = Localizations.localeOf(context);
     String langCode = myLocale.languageCode;
     String timezone = DateTime.now().timeZoneOffset.toString().substring(0,
         DateTime.now().timeZoneOffset.toString().lastIndexOf(new RegExp(':')));
     timezone = ((timezone.startsWith(new RegExp('-')))? '' : '+') + timezone;
-    Map<String,String> map = {
+    Map<String,dynamic> map = {
       'access_api': 'sgdhrnt_234lyS__',
       'lang': langCode,
       'version': '1',

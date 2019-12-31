@@ -29,6 +29,7 @@ class _PostDialogState extends State<PostDialog>{
 
   bool isLoading = false;
   File _image;
+  String post;
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -47,8 +48,7 @@ class _PostDialogState extends State<PostDialog>{
 
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text(this.widget.localization['add_post']),
           actions: <Widget>[
@@ -60,23 +60,29 @@ class _PostDialogState extends State<PostDialog>{
                 ),
               ),
               onPressed: (){
+                if(post != null && post.length > 0) {
                 setState(() {
                   isLoading = true;
-                  /*this.widget.appealItem.approveAppeal(this.widget.currentUser.id_subscriber,context).then((success){
+                  if(this.widget.post == null) {
+                    this.widget.post = new Post(null, this.widget.currentUser.id_subscriber, post, null, null, 1, null,
+                        null, null);
+                  }
+                  this.widget.post.addPost(context, _image).then((success){
                     setState(() {
                       isLoading = false;
                     });
                     if(success) {
                       Toast.show(this.widget.localization['appeal_approved'], context,duration: Toast.LENGTH_LONG,
                           gravity: Toast.BOTTOM);
-                      Navigator.pop(context, this.widget.appealItem);
+                      //Navigator.pop(context, this.widget.appealItem);
                     }
                     else{
                       Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
                       gravity: Toast.BOTTOM);
                     }
-                  });*/
+                  });
                 });
+                }
               },
             ),
           ],
@@ -108,7 +114,9 @@ class _PostDialogState extends State<PostDialog>{
                     maxLines: 10,
                     maxLength: 1000,
                     onChanged: (val){
-                      //appealDescription = val;
+                      setState((){
+                        post = val;
+                      });
                     },
                   ),
                   Row(
@@ -142,12 +150,7 @@ class _PostDialogState extends State<PostDialog>{
             ),
           ),
         ),
-      ),
-      opacity: 0.5,
-      color: Colors.black,
-      inAsyncCall: isLoading,
-      dismissible: false,
-    );
+      );
   }
 
 }
