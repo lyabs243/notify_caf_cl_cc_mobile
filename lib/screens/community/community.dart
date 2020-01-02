@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/user.dart';
-import 'package:flutter_cafclcc/screens/community/components/add_post_dialog.dart';
+import 'package:flutter_cafclcc/screens/community/components/action_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
