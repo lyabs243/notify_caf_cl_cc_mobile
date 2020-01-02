@@ -35,6 +35,7 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    getScorers();
   }
 
   @override
@@ -44,16 +45,18 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
     }
   }
 
+  getScorers() async {
+    await Future.delayed(Duration.zero);
+    ScorerEdition.getScorers(context, competitionItem.id, 1).then((items){
+      setState(() {
+        scorerItems.addAll(items);
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if(scorerItems.length <= 0){
-      ScorerEdition.getScorers(context, competitionItem.id, 1).then((items){
-        setState(() {
-          scorerItems.addAll(items);
-            isLoading = false;
-        });
-      });
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text(

@@ -36,6 +36,7 @@ class _CompetitionPageState extends State<CompetitionPage>{
     super.initState();
     initItems();
     url_icon = this.widget.competitionItem.trophy_icon_url;
+    getCompetition();
   }
 
   @override
@@ -45,8 +46,8 @@ class _CompetitionPageState extends State<CompetitionPage>{
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  getCompetition() async{
+    await Future.delayed(Duration.zero);
     gridWidth = (MediaQuery.of(context).size.width - ((_crossAxisCount - 1) * _crossAxisSpacing)) / _crossAxisCount;
     gridHeight = gridWidth / _aspectRatio;
     if(!(url_icon != null && url_icon.length > 0)) {
@@ -58,6 +59,11 @@ class _CompetitionPageState extends State<CompetitionPage>{
         }
       });
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(this.widget.localization['competition']),

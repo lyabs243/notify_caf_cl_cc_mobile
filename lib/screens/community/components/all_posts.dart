@@ -34,13 +34,13 @@ class _AllPostsState extends State<AllPosts> {
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    if(this.posts.length == 0) {
+      initItems();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(this.posts.length == 0) {
-      initItems();
-    }
     return SmartRefresher(
         controller: refreshController,
         enablePullUp: (posts.length > 0)? true : false,
@@ -101,23 +101,17 @@ class _AllPostsState extends State<AllPosts> {
       addItems();
   }
 
-  initItems(){
+  initItems() async{
+    await Future.delayed(Duration.zero);
     page = 1;
-    Post.getPosts(context, activeSubscriber, page, idSubscriber: idSubscriber).then((result){
-      initPosts(result);
-    });
-  }
-
-  initPosts(List<Post> result){
-    if (result.length > 0) {
+    Post.getPosts(context, activeSubscriber, page, idSubscriber: idSubscriber).then((value){
       setState(() {
-        page++;
-        posts.clear();
-        posts.addAll(result);
+        posts = value;
+        if (posts.length > 0) {
+          page++;
+        }
+        isLoadPage = false;
       });
-    }
-    setState(() {
-      isLoadPage = false;
     });
   }
 

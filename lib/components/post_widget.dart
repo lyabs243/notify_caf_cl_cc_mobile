@@ -27,11 +27,23 @@ class _PostWidgetState extends State<PostWidget> {
 
   Map localization;
   Post post;
-  User currentUser;
+  User currentUser, user;
 
   bool showReactionBox = false, showAllText = false;
 
   _PostWidgetState(this.localization, this.post);
+
+  @override
+  void initState() {
+    super.initState();
+    user = new User();
+    user.url_profil_pic = post.subscriber.url_profil_pic;
+    User.getInstance().then((_user){
+      setState(() {
+        currentUser = _user;
+      });
+    });
+  }
 
   @override
   void setState(fn) {
@@ -42,13 +54,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    User user = new User();
-    user.url_profil_pic = post.subscriber.url_profil_pic;
-    User.getInstance().then((_user){
-      setState(() {
-        currentUser = _user;
-      });
-    });
+
     return Stack(
       children: <Widget>[
         Card(

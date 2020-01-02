@@ -48,17 +48,22 @@ class _BodyState extends State<Body>{
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    initData();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  initData() async {
+    await Future.delayed(Duration.zero);
     _context = context;
     if(!isDataLoaded)
       initSubscriber();
     _drawerItems = new List<DrawerItem>();
     initDrawerItems();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return ModalProgressHUD(
       child:  (isPageLoading)?
       Center(

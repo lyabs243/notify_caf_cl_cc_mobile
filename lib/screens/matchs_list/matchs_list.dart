@@ -58,12 +58,11 @@ class _MatchListState extends State<MatchsList>{
     else{
       title = this.widget.localization['last_results'];
     }
+    initItems();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(list.length <= 0)
-      initItems();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -123,7 +122,8 @@ class _MatchListState extends State<MatchsList>{
       addItems();
   }
 
-  initItems(){
+  initItems() async{
+    await Future.delayed(Duration.zero);
     page = 1;
     if(typeList == TypeList.LIVE) {
       MatchItem.getCurrentMatchs(context, idCompetition, page, competitionType: idCompetitionType).then((result) {

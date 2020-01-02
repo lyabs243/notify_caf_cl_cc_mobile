@@ -24,18 +24,26 @@ class _CompetitionStageState extends State<CompetitionStage>{
   List<stage.CompetitionStage> competitionStages = [];
   List<Tab> tabs = [];
 
+  List<Widget> tabViews = [];
   bool isLoading = true;
 
   List<int> selectedGroups = [];
   List<int> selectedButtons = [];  //to know zhich button between (result,schedule and table) is selected
+
+  initData() async {
+    await Future.delayed(Duration.zero);
+    initCompetitionStages();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
   
   @override
   Widget build(BuildContext context) {
-    if(competitionStages.length == 0){
-      initCompetitionStages();
-    }
-    List<Widget> tabViews = [];
-    initTabs(tabViews);
+
     return (isLoading || competitionStages.length <= 0)?
         Scaffold(
           appBar: AppBar(title: Text(this.widget.localization['stages']),),
@@ -76,6 +84,7 @@ class _CompetitionStageState extends State<CompetitionStage>{
           (cmpStage.groups != null && cmpStage.groups.length > 0)? selectedGroups.add(cmpStage.groups[0].id) : selectedGroups.add(0);
           selectedButtons.add(1);
         });
+        initTabs(tabViews);
         isLoading = false;
       });
     });

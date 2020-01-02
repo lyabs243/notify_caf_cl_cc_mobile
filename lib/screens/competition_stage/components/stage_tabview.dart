@@ -42,6 +42,7 @@ class _StageTabviewState extends State<StageTabview>{
     // TODO: implement initState
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    getResultMatchs();
   }
 
   @override
@@ -53,9 +54,6 @@ class _StageTabviewState extends State<StageTabview>{
 
   @override
   Widget build(BuildContext context) {
-    if(!loadingDone) {
-      getResultMatchs();
-    }
     return new Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -232,7 +230,8 @@ class _StageTabviewState extends State<StageTabview>{
     });
   }
 
-  getResultMatchs(){
+  getResultMatchs() async{
+    await Future.delayed(Duration.zero);
     int idGroup = 0;
     if(competitionStage.type == CompetitionStage.COMPETIONSTAGE_TYPE_GROUP)
       idGroup = selectedGroup;

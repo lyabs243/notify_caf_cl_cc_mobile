@@ -53,6 +53,17 @@ class _BodyState extends State<Body>{
     super.initState();
     if(this.fragment == Fragment.HOME) {
       refreshController = new RefreshController(initialRefresh: false);
+      homeInfos = new HomeInfos();
+      User.getInstance().then((user){
+        this.user = user;
+        if(!hasHomeInfos) {
+          homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
+          setState(() {
+            initData();
+          });
+          });
+        }
+      });
     }
   }
 
@@ -69,17 +80,6 @@ class _BodyState extends State<Body>{
       homeContenair = FragmentCompetitionList(this.widget.localization);
     }
     else{
-      homeInfos = new HomeInfos();
-      User.getInstance().then((user){
-        this.user = user;
-        if(!hasHomeInfos) {
-          homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
-            setState(() {
-              initData();
-            });
-          });
-        }
-      });
       homeContenair = SmartRefresher(
           controller: refreshController,
           enablePullUp: false,

@@ -35,16 +35,17 @@ class _NewsListState extends State<NewsList> {
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     User.getInstance().then((user){
       this.user = user;
       if(this.news.length == 0) {
         initItems();
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('News'),

@@ -32,6 +32,7 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
     // TODO: implement initState
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    initItems();
   }
 
   @override
@@ -43,9 +44,6 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
 
   @override
   Widget build(BuildContext context) {
-    if(list.length == 0){
-      initItems();
-    }
     return SmartRefresher(
       controller: refreshController,
       enablePullUp: false,
@@ -159,7 +157,8 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
       addItems();
   }
 
-  initItems(){
+  initItems() async{
+    await Future.delayed(Duration.zero);
     page = 1;
     CompetitionItem.getCompetitions(context, page).then((result){
       if(result.length > 0){

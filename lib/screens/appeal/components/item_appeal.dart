@@ -52,14 +52,14 @@ class _ItemAppealState extends State<ItemAppeal>{
         currentUser = _user;
       });
     });
+    _context = context;
     items = new List<AppealItem>();
+    initItems();
   }
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
-    if(items.length < 1)
-      initItems();
+
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: (items.length>0)? true : false,
@@ -187,6 +187,7 @@ class _ItemAppealState extends State<ItemAppeal>{
   }
 
   Future initItems() async{
+    await Future.delayed(Duration.zero);
     page = 1;
     List<AppealItem> appeals = await AppealItem.getAppeals(_context,page: page);
     if(appeals.length > 0){
