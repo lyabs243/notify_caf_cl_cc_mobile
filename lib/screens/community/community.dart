@@ -19,13 +19,20 @@ class Community extends StatefulWidget {
 
 }
 
-class _CommunityState extends State<Community> {
+class _CommunityState extends State<Community> with SingleTickerProviderStateMixin {
 
   Map localization;
   User user;
   int activeSubscriber = 0;
+  TabController _tabController;
 
   _CommunityState(this.localization);
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +52,7 @@ class _CommunityState extends State<Community> {
                 Tab(text: localization['all_posts'], icon: Icon(Icons.all_inclusive),),
                 Tab(text: localization['your_posts'], icon: Icon(Icons.plus_one)),
               ],
+              controller: _tabController,
               indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(width: 3.0,color: Colors.white),
                   insets: EdgeInsets.symmetric(horizontal:16.0)
@@ -61,10 +69,15 @@ class _CommunityState extends State<Community> {
                     return PostDialog(localization, null, user);
                   },
                   fullscreenDialog: true
-              ));build(context);
+              )).then((v){
+                setState((){
+                  _tabController.animateTo(1);
+                });
+              });
             }
           ),
           body: TabBarView(
+            controller: _tabController,
               children: [
                 (activeSubscriber > 0)?
                 AllPosts(localization, activeSubscriber, 0): Container(),
