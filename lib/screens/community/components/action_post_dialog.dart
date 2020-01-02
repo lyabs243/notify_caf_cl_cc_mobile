@@ -195,7 +195,6 @@ class _PostDialogState extends State<PostDialog>{
       if(success) {
         Toast.show(this.widget.localization['post_updated'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
-        Navigator.pop(context, this.widget.post);
         Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
               return PostDetails(this.widget.localization, this.widget.post);
