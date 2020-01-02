@@ -39,6 +39,13 @@ class _PostDetailsState extends State<PostDetails> {
     );;
   }
 
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
   updateView(Post _post) {
     setState(() {
       post = _post;
