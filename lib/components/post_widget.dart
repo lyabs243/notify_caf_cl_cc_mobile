@@ -7,9 +7,15 @@ import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/community/community.dart';
 import 'package:flutter_cafclcc/screens/community/components/action_post_dialog.dart';
+import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
 import 'package:flutter_cafclcc/screens/community/components/post_details.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:toast/toast.dart';
+import 'alert_dialog.dart' as alert;
 
 class PostWidget extends StatefulWidget {
 
@@ -34,6 +40,7 @@ class _PostWidgetState extends State<PostWidget> {
   Post post;
   User currentUser, user;
   Function updateView;
+  ProgressDialog progressDialog;
 
   bool showReactionBox = false, showAllText;
 
@@ -49,6 +56,8 @@ class _PostWidgetState extends State<PostWidget> {
         currentUser = _user;
       });
     });
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: localization['loading']);
   }
 
   @override
@@ -111,6 +120,18 @@ class _PostWidgetState extends State<PostWidget> {
                                   }
                               ));
                               break;
+                            case 2: //delete
+                              alert.showAlertDialog
+                              (
+                                  context,
+                                  this.widget.localization['warning'],
+                                  this.widget.localization['want_delete_post'],
+                                  this.widget.localization,
+                                  (){
+                                    deletePost();
+                                  }
+                              );
+                              break;
                           }
                         },
                         itemBuilder: (context) {
@@ -128,7 +149,7 @@ class _PostWidgetState extends State<PostWidget> {
                             list.add(
                               PopupMenuItem(
                                 child: Text(localization['delete']),
-                                value: 1,
+                                value: 2,
                                 enabled: (currentUser.id_subscriber ==
                                     post.id_subscriber &&
                                     currentUser.active == 1),
@@ -295,6 +316,26 @@ class _PostWidgetState extends State<PostWidget> {
       );
     }
     return reactionsWidget;
+  }
+
+  deletePost() {
+    progressDialog.show();
+    this.widget.post.deletePost(context).then((success){
+      if(success) {
+        progressDialog.hide();
+        Toast.show(this.widget.localization['post_deleted'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+              return Community(localization);
+            }
+        ));
+      }
+      else{
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
   }
 
 }

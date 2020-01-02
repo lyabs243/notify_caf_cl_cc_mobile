@@ -23,6 +23,7 @@ class Post {
   static final String URL_GET_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/get_post/';
   static final String URL_ADD_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/add/';
   static final String URL_UPDATE_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/update/';
+  static final String URL_DELETE_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/delete/';
 
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
       this.type, this.active, this.register_date, this.reaction);
@@ -109,6 +110,23 @@ class Post {
   Future<bool> updatePost(BuildContext context) async{
     bool success = true;
     String url = URL_UPDATE_POST+this.id.toString() + '/' + this.id_subscriber.toString();
+    Map<String,dynamic> params = {
+      'post': this.post,
+    };
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
+
+  Future<bool> deletePost(BuildContext context) async{
+    bool success = true;
+    String url = URL_DELETE_POST+this.id.toString() + '/' + this.id_subscriber.toString();
     Map<String,dynamic> params = {
       'post': this.post,
     };
