@@ -7,6 +7,7 @@ import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/community/components/action_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/community/components/post_details.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 
@@ -101,6 +102,17 @@ class _PostWidgetState extends State<PostWidget> {
                         ],
                       ),
                       PopupMenuButton(
+                        onSelected: (index) {
+                          switch(index) {
+                            case 1: //udate
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return PostDialog(localization, post, currentUser);
+                                  }
+                              ));
+                              break;
+                          }
+                        },
                         itemBuilder: (context) {
                           var list = List<PopupMenuEntry<Object>>();
                           if(currentUser.id_subscriber == post.id_subscriber && currentUser.active == 1) {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/post.dart';
+import 'package:flutter_cafclcc/screens/community/components/post_details.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../models/appeal_item.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -30,6 +31,18 @@ class _PostDialogState extends State<PostDialog>{
   bool isLoading = false;
   File _image;
   String post;
+  bool updatePost = false;
+
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    updatePost = (this.widget.post != null);
+    _controller = new TextEditingController(
+        text: (updatePost)? this.widget.post.post : ''
+    );
+  }
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -50,11 +63,17 @@ class _PostDialogState extends State<PostDialog>{
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(this.widget.localization['add_post']),
+          title: Text(
+            (updatePost)?
+              this.widget.localization['update_post']:
+              this.widget.localization['add_post']
+          ),
           actions: <Widget>[
             FlatButton(
               child: Text(
-                this.widget.localization['add'],
+                (!updatePost)?
+                this.widget.localization['add']:
+                this.widget.localization['update'],
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -63,24 +82,12 @@ class _PostDialogState extends State<PostDialog>{
                 if(post != null && post.length > 0) {
                 setState(() {
                   isLoading = true;
-                  if(this.widget.post == null) {
-                    this.widget.post = new Post(null, this.widget.currentUser.id_subscriber, post, null, null, 1, null,
-                        null, null);
+                  if(updatePost) {
+                    actionUpdate();
                   }
-                  this.widget.post.addPost(context, _image).then((success){
-                    setState(() {
-                      isLoading = false;
-                    });
-                    if(success) {
-                      Toast.show(this.widget.localization['post_added'], context,duration: Toast.LENGTH_LONG,
-                          gravity: Toast.BOTTOM);
-                      Navigator.pop(context, this.widget.post);
-                    }
-                    else{
-                      Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
-                      gravity: Toast.BOTTOM);
-                    }
-                  });
+                  else {
+                    actionAdd();
+                  }
                 });
                 }
               },
@@ -112,6 +119,7 @@ class _PostDialogState extends State<PostDialog>{
                         alignLabelWithHint: true
                     ),
                     maxLines: 10,
+                    controller: _controller,
                     maxLength: 1000,
                     onChanged: (val){
                       setState((){
@@ -119,38 +127,86 @@ class _PostDialogState extends State<PostDialog>{
                       });
                     },
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  (updatePost)?
+                  Container():
+                  Column(
                     children: <Widget>[
-                      FlatButton.icon(
-                        onPressed: () {
-                          getImage();
-                        },
-                        icon: Icon(
-                          Icons.add_a_photo
-                        ),
-                        label: Text(this.widget.localization['add_image'])
-                      )
-                    ],
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 3,
-                    width: MediaQuery.of(context).size.width,
-                    child: (_image == null)?
-                      Center(
-                        child: Text(this.widget.localization['no_image_selected']),
-                      ):
-                      Image.file(
-                        _image,
-                        fit: BoxFit.scaleDown,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          FlatButton.icon(
+                              onPressed: () {
+                                getImage();
+                              },
+                              icon: Icon(
+                                  Icons.add_a_photo
+                              ),
+                              label: Text(this.widget.localization['add_image'])
+                          )
+                        ],
                       ),
-                  ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 3,
+                        width: MediaQuery.of(context).size.width,
+                        child: (_image == null)?
+                        Center(
+                          child: Text(this.widget.localization['no_image_selected']),
+                        ):
+                        Image.file(
+                          _image,
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
           ),
         ),
       );
+  }
+
+  actionAdd() {
+    this.widget.post = new Post(null, this.widget.currentUser.id_subscriber, post, null, null, 1, null,
+          null, null);
+    this.widget.post.addPost(context, _image).then((success){
+      setState(() {
+        isLoading = false;
+      });
+      if(success) {
+        Toast.show(this.widget.localization['post_added'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        Navigator.pop(context, this.widget.post);
+      }
+      else{
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
+  }
+
+  actionUpdate() {
+    this.widget.post.post = post;
+    this.widget.post.updatePost(context).then((success){
+      setState(() {
+        isLoading = false;
+      });
+      if(success) {
+        Toast.show(this.widget.localization['post_updated'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        Navigator.pop(context, this.widget.post);
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+              return PostDetails(this.widget.localization, this.widget.post);
+            }
+        ));
+      }
+      else{
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
   }
 
 }
