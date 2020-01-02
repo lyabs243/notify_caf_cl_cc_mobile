@@ -88,7 +88,10 @@ class _AllPostsState extends State<AllPosts> {
   }
 
   void _onRefresh() async{
-    isPageRefresh = true;
+    setState(() {
+      isPageRefresh = true;
+      isLoadPage = true;
+    });
     await initItems();
     refreshController.refreshCompleted();
   }
