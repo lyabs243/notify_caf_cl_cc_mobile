@@ -29,7 +29,7 @@ class _PostWidgetState extends State<PostWidget> {
   Post post;
   User currentUser;
 
-  bool showReactionBox = false;
+  bool showReactionBox = false, showAllText = false;
 
   _PostWidgetState(this.localization, this.post);
 
@@ -146,18 +146,22 @@ class _PostWidgetState extends State<PostWidget> {
                     text: new TextSpan(
                       children: [
                         new TextSpan(
-                          text: (post.post.length > 150)?
-                          post.post.substring(0, 150):
-                          post.post,
+                          text: (showAllText)?
+                              post.post :
+                          ((post.post.length > 150)?
+                            post.post.substring(0, 150):
+                            post.post),
                           style: new TextStyle(color: Theme.of(context).textTheme.body1.color),
                         ),
-                        (post.post.length > 150)?
+                        (post.post.length > 150 && !showAllText)?
                         new TextSpan(
                           text: '...${localization['see_more']}',
                           style: new TextStyle(color: Theme.of(context).primaryColor,decoration: TextDecoration.underline,),
                           recognizer: new TapGestureRecognizer()
                             ..onTap = () {
-
+                              setState(() {
+                                showAllText = true;
+                              });
                             },
                         ):
                         TextSpan(),
