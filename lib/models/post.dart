@@ -24,6 +24,7 @@ class Post {
   static final String URL_ADD_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/add/';
   static final String URL_UPDATE_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/update/';
   static final String URL_DELETE_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/delete/';
+  static final String URL_SIGNAL_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/signal/';
 
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
       this.type, this.active, this.register_date, this.reaction);
@@ -129,6 +130,23 @@ class Post {
     String url = URL_DELETE_POST+this.id.toString() + '/' + this.id_subscriber.toString();
     Map<String,dynamic> params = {
       'post': this.post,
+    };
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
+
+  Future<bool> signalPost(BuildContext context, String message) async{
+    bool success = true;
+    String url = URL_SIGNAL_POST+this.id.toString() + '/' + this.id_subscriber.toString();
+    Map<String,dynamic> params = {
+      'message': message,
     };
     await NotifyApi(context).getJsonFromServer(url,params).then((map){
       if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {

@@ -11,6 +11,7 @@ import 'package:flutter_cafclcc/screens/community/community.dart';
 import 'package:flutter_cafclcc/screens/community/components/action_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
 import 'package:flutter_cafclcc/screens/community/components/post_details.dart';
+import 'package:flutter_cafclcc/screens/community/components/signal_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -132,6 +133,11 @@ class _PostWidgetState extends State<PostWidget> {
                                   }
                               );
                               break;
+                            case 3:
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return SignalPostDialog(localization, post, currentUser);
+                              }));
+                              break;
                           }
                         },
                         itemBuilder: (context) {
@@ -165,7 +171,7 @@ class _PostWidgetState extends State<PostWidget> {
                             list.add(
                               PopupMenuItem(
                                 child: Text(localization['report_as_abusive']),
-                                value: 1,
+                                value: 3,
                                 enabled: (currentUser.active == 1),
                               ),
                             );
