@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/admin_panel/admin_panel.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
 import '../../../models/drawer_item.dart';
 import '../../../models/user.dart';
@@ -153,7 +154,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		DrawerItem competition = new DrawerItem(4, this.widget.localization['competition'], DrawerType.expandable,
 				iconPath: 'assets/icons/profile.png',expandableItems: competitions);
 		DrawerItem profil = new DrawerItem(5, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-		DrawerItem appeal = new DrawerItem(6, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+		DrawerItem admin_panel = new DrawerItem(6, this.widget.localization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
 		DrawerItem login = new DrawerItem(7, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
 		DrawerItem logout = new DrawerItem(8, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
@@ -166,7 +167,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		else{
 			login.visible = false;
 			if(this.widget.user.type == User.USER_TYPE_ADMIN){
-				appeal.visible = true;
+				admin_panel.visible = true;
 			}
 		}
 
@@ -176,7 +177,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		drawerItems.add(community);
 		drawerItems.add(competition);
 		drawerItems.add(profil);
-		drawerItems.add(appeal);
+		drawerItems.add(admin_panel);
 		drawerItems.add(login);
 		drawerItems.add(logout);
 	}
@@ -220,13 +221,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 6: //click on appeal
+			case 6: //click on admin panel
 				Navigator.push(
 						context,
 						MaterialPageRoute
-							(
+						(
 								builder: (BuildContext context){
-									return AppealPage(this.widget.localization);
+									return AdminPanelPage(this.widget.localization);
 								}
 						));
 				break;
