@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/screens/appeal/appeal_page.dart';
+import 'package:flutter_cafclcc/screens/post_signal/post_signal.dart';
 import '../../models/drawer_item.dart';
 import '../../components/curve_painter.dart';
 
@@ -114,6 +115,17 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
                                   }
                               ));
                           break;
+                        case 2: //post report
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute
+                              (
+                                  builder: (BuildContext context){
+                                    return PostSignalPage(this.widget.localization);
+                                  }
+                              )
+                          );
+                          break;
                       }
                     },
                   );
@@ -127,8 +139,10 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
 
   initItems(){
     DrawerItem appeal = new DrawerItem(1, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem post_report = new DrawerItem(2, this.widget.localization['post_report'], DrawerType.item,iconPath: 'assets/icons/login.png');
 
     items.add(appeal);
+    items.add(post_report);
   }
 
 }
