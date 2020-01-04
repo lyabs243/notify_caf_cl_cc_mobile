@@ -114,7 +114,7 @@ class _SignalPostDialogState extends State<SignalPostDialog>{
   }
 
   signalPost() {
-    this.post.signalPost(context, signalText).then((success){
+    this.post.signalPost(context, currentUser.id_subscriber, signalText).then((success){
       setState(() {
         isLoading = false;
       });

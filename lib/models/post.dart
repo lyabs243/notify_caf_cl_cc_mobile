@@ -142,9 +142,9 @@ class Post {
     return success;
   }
 
-  Future<bool> signalPost(BuildContext context, String message) async{
+  Future<bool> signalPost(BuildContext context,int idSubscriber, String message) async{
     bool success = true;
-    String url = URL_SIGNAL_POST+this.id.toString() + '/' + this.id_subscriber.toString();
+    String url = URL_SIGNAL_POST+this.id.toString() + '/' + idSubscriber.toString();
     Map<String,dynamic> params = {
       'message': message,
     };
