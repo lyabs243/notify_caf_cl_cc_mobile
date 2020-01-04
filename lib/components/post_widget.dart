@@ -22,15 +22,16 @@ class PostWidget extends StatefulWidget {
 
   Map localization;
   Post post;
+  double elevation;
   bool clickable = true, showAllText;
 
   Function updateView;
 
-  PostWidget(this.localization, this.post, {this.clickable: true, this.updateView: null, this.showAllText: false});
+  PostWidget(this.localization, this.post, {this.clickable: true, this.updateView: null, this.showAllText: false, this.elevation: 15.0});
 
   @override
   _PostWidgetState createState() {
-    return new _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText);
+    return new _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText, this.elevation);
   }
 
 }
@@ -41,11 +42,12 @@ class _PostWidgetState extends State<PostWidget> {
   Post post;
   User currentUser, user;
   Function updateView;
+  double elevation;
   ProgressDialog progressDialog;
 
   bool showReactionBox = false, showAllText;
 
-  _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText);
+  _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText, this.elevation);
 
   @override
   void initState() {
@@ -75,7 +77,7 @@ class _PostWidgetState extends State<PostWidget> {
       children: <Widget>[
         InkWell(
           child: Card(
-            elevation: 15.0,
+            elevation: this.elevation,
             child: Container(
               padding: EdgeInsets.all(8.0),
               child: Column(
