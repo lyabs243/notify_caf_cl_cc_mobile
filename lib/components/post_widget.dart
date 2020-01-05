@@ -245,6 +245,7 @@ class _PostWidgetState extends State<PostWidget> {
                     color: Colors.grey[800],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       FlatButton.icon(
                           onPressed: () {
@@ -264,6 +265,26 @@ class _PostWidgetState extends State<PostWidget> {
                             PostReaction.getReactionText(post.reaction.subscriber_reaction, localization),
                             style: TextStyle(
                                 color: PostReaction.getReactionColor(post.reaction.subscriber_reaction, context)
+                            ),
+                          )
+                      ),
+                      FlatButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return new PostDetails(localization, post);
+                              }));
+                            });
+                          },
+                          icon: ImageIcon(
+                              AssetImage(
+                                  'assets/icons/date.png'
+                              ),
+                              size: 20.0
+                          ),
+                          label: Text(
+                            localization['comment'],
+                            style: TextStyle(
                             ),
                           )
                       )

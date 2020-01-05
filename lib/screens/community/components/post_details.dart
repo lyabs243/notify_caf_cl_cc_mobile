@@ -32,7 +32,47 @@ class _PostDetailsState extends State<PostDetails> {
       body: Container(
         child: Wrap(
           children: <Widget>[
-            PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true,)
+            PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,),
+            Container(
+              padding: EdgeInsets.all(8.0),
+              height: MediaQuery.of(context).size.height / 8,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.16,
+                    child: new TextField(
+                      decoration: new InputDecoration(
+                        border: new OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                        ),
+                        hintText: localization['type_comment'],
+                      ),
+                      maxLines: 1,
+                      maxLength: 250,
+                      onChanged: (val){
+                        setState((){
+
+                        });
+                      },
+                    ),
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context).primaryColor,
+                        size: 45.0,
+                      ),
+                      onPressed: () {
+
+                      }
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
