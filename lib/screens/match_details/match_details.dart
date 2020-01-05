@@ -41,7 +41,10 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     initTabsItems();
     initTabs();
     initTabsViews();
-    _controller = TabController(length: tabsItem.length, vsync: this);
+    _controller = TabController(
+        length: tabsItem.length,
+        vsync: this
+    );
   }
 
   @override
@@ -54,62 +57,58 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            snap: false,
-            floating: true,
-            expandedHeight: 220.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.all(25.0),),
-                  Header(localization, matchItem)
-                ],
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBexIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              pinned: true,
+              snap: false,
+              floating: true,
+              expandedHeight: 220.0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Column(
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.all(25.0),),
+                    Header(localization, matchItem)
+                  ],
+                ),
               ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.share,
-                    color: Colors.white,
-                  ),
-                  onPressed: (){
-
-                  }
-              )
-            ],
-          ),
-          SliverFillRemaining(
-            child: Column(
-              children: <Widget>[
-                new Container(
-                  decoration: new BoxDecoration(color: Colors.black),
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: new TabBar(
-                      controller: _controller,
-                      tabs: tabs,
-                      isScrollable: true,
-                      indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(width: 3.0,color: Colors.white),
-                          insets: EdgeInsets.symmetric(horizontal:16.0,vertical: 2.0)
-                      ),
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(
+                      Icons.share,
+                      color: Colors.white,
                     ),
-                  ),
-                ),
-                new Container(
-                  height: MediaQuery.of(context).size.height/2.8,
-                  child: new TabBarView(
-                    controller: _controller,
-                    children: tabViews,
-                  ),
-                ),
+                    onPressed: (){
+
+                    }
+                )
               ],
             ),
-          )
-        ],
+            SliverPersistentHeader(
+              delegate: _SliverAppBarDelegate(
+                TabBar(
+                  controller: _controller,
+                  unselectedLabelColor: Colors.grey,
+                  tabs: tabs,
+                  isScrollable: true,
+                  indicator: UnderlineTabIndicator(
+                      borderSide: BorderSide(width: 3.0,color: Colors.white),
+                      insets: EdgeInsets.symmetric(horizontal:16.0,vertical: 2.0)
+                  ),
+                ),
+              ),
+              pinned: true,
+            )
+          ];
+        },
+        body: new Container(
+          height: MediaQuery.of(context).size.height/2.8,
+          child: new TabBarView(
+            controller: _controller,
+            children: tabViews,
+          ),
+        ),
       ),
     );
   }
@@ -153,4 +152,32 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     tabViews.add(YoutubeVideo(this.localization,this.matchItem));
   }
 
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new Container(
+        decoration: new BoxDecoration(color: Colors.black),
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: _tabBar,
+        )
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
 }
