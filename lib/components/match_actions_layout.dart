@@ -28,6 +28,7 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
   @override
   void initState() {
     super.initState();
+    initActions();
   }
 
   @override
@@ -39,9 +40,6 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
 
   @override
   Widget build(BuildContext context) {
-    if(actions.length <= 0){
-      initActions();
-    }
     return Container(
       child: ListView.builder(
         itemCount: actions.length,
@@ -140,7 +138,8 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
     );
   }
 
-  initActions(){
+  initActions() async{
+    await Future.delayed(Duration.zero);
     MatchAction.getMatchActions(context, matchItem.id).then((list){
       setState(() {
         actions.addAll(list);

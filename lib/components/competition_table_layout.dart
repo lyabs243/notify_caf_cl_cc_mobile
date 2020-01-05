@@ -37,14 +37,22 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
   }
 
   @override
-  Widget build(BuildContext context) {
-    if(tableItems.length <= 0){
-      GroupTableItem.getGroupTable(context, idStageGroup, idEditionStage).then((items){
-        setState(() {
-          tableItems.addAll(items);
-        });
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  initData() async{
+    await Future.delayed(Duration.zero);
+    GroupTableItem.getGroupTable(context, idStageGroup, idEditionStage).then((items){
+      setState(() {
+        tableItems.addAll(items);
       });
-    }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return (tableItems.length <= 0)?
     EmptyData(localization) :
     SingleChildScrollView(

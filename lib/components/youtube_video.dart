@@ -31,9 +31,9 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     matchVideo = new MatchVideo(matchItem.id);
+    initData();
   }
 
   @override
@@ -43,18 +43,20 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
     }
   }
 
+  initData() async {
+    await Future.delayed(Duration.zero);
+    matchVideo.initByIdMatch(context).then((r){
+      setState(() {
+        videoPreview = matchVideo.thumbnails;
+        if(matchVideo.thumbnails.length == 0 && matchVideo.youtube_video.length > 0){
+          videoPreview = 'http://i3.ytimg.com/vi/${matchVideo.youtube_video}/hqdefault.jpg';
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if(matchVideo.youtube_video.length == 0){
-        matchVideo.initByIdMatch(context).then((r){
-          setState(() {
-            videoPreview = matchVideo.thumbnails;
-            if(matchVideo.thumbnails.length == 0 && matchVideo.youtube_video.length > 0){
-              videoPreview = 'http://i3.ytimg.com/vi/${matchVideo.youtube_video}/hqdefault.jpg';
-            }
-          });
-        });
-    }
     return Container(
       width: MediaQuery.of(context).size.width,
       child: (videoPreview.length == 0)?

@@ -32,6 +32,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
   void initState() {
     super.initState();
     idTeam = matchItem.teamAId;
+    initLineup(idTeam);
   }
 
   @override
@@ -43,9 +44,6 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
 
   @override
   Widget build(BuildContext context) {
-    if(lineups.length <= 0){
-      initLineup(idTeam);
-    }
     return Column(
       children: <Widget>[
         Row(
@@ -108,7 +106,8 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
     );
   }
 
-  initLineup(int idTeam){
+  initLineup(int idTeam) async{
+    await Future.delayed(Duration.zero);
     lineups.clear();
     MatchLineup.getMatchLineup(context, matchItem.id,idTeam).then((list){
       setState(() {
