@@ -235,10 +235,24 @@ class _PostWidgetState extends State<PostWidget> {
                   Container(),
                   Padding(padding: EdgeInsets.only(bottom: 8.0)),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(
                         children: getTopReactions(),
-                      )
+                      ),
+                      (this.widget.post.total_comments > 0)?
+                      FlatButton(
+                        child: Text(
+                          '${this.widget.post.total_comments} ${localization['comments']}'
+                        ),
+                        onPressed: () {
+                          if(this.widget.clickable) {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return new PostDetails(localization, post);
+                            }));
+                          }
+                        },
+                      ) : Container()
                     ],
                   ),
                   Divider(
@@ -270,11 +284,11 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       FlatButton.icon(
                           onPressed: () {
-                            setState(() {
+                            if(this.widget.clickable) {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return new PostDetails(localization, post);
                               }));
-                            });
+                            }
                           },
                           icon: ImageIcon(
                               AssetImage(

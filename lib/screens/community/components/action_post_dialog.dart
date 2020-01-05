@@ -169,7 +169,7 @@ class _PostDialogState extends State<PostDialog>{
 
   actionAdd() {
     this.widget.post = new Post(null, this.widget.currentUser.id_subscriber, post, null, null, 1, null,
-          null, null);
+          null, null, null);
     this.widget.post.addPost(context, _image).then((success){
       setState(() {
         isLoading = false;

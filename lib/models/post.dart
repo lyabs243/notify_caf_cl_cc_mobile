@@ -16,6 +16,7 @@ class Post {
   User subscriber;
   int active;
   int type;
+  int total_comments;
   DateTime register_date;
   PostReaction reaction;
 
@@ -27,7 +28,7 @@ class Post {
   static final String URL_SIGNAL_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/signal/';
 
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
-      this.type, this.active, this.register_date, this.reaction);
+      this.type, this.active, this.register_date, this.reaction, this.total_comments);
 
   static Post getFromMap(Map item){
     int id = int.parse(item['id']);
@@ -36,6 +37,7 @@ class Post {
     String url_image = item['url_image'];
     int active = int.parse(item['active']);
     int type = int.parse(item['type']);
+    int total_comments = int.parse(item['total_comments']);
 
     User subscriber = new User();
     subscriber.full_name = item['subscriber']['full_name'];
@@ -49,7 +51,7 @@ class Post {
 
     PostReaction reaction = PostReaction.getFromMap(item['reaction']);
 
-    Post post = Post(id, id_subscriber, post_message, url_image, subscriber, type, active, register_date, reaction);
+    Post post = Post(id, id_subscriber, post_message, url_image, subscriber, type, active, register_date, reaction, total_comments);
 
     return post;
   }
