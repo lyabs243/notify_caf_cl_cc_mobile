@@ -16,6 +16,7 @@ class PostReport {
   Post post;
 
   static final String URL_GET_POST_REPORTS = 'http://notifygroup.org/notifyapp/api/index.php/post/get_abusive_posts/';
+  static final String URL_DEACTIVATE_POST_REPORT = 'http://notifygroup.org/notifyapp/api/index.php/post/deactivate_abusive_post/';
 
   PostReport(this.id, this.id_post, this.message, this.active,
       this.id_subscriber, this.register_date, this.subscriber, this.post);
@@ -60,6 +61,21 @@ class PostReport {
       }
     });
     return postsReport;
+  }
+
+  Future<bool> deactivate_abusive_post(BuildContext context, int idPost, int idSubscriber) async{
+    bool success = true;
+    String url = URL_DEACTIVATE_POST_REPORT+this.id.toString() + '/' + idSubscriber.toString();
+    Map<String,dynamic> params;
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP'][0]['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
   }
 
 }

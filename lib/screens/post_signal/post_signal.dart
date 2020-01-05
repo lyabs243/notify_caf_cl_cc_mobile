@@ -7,7 +7,10 @@ import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post_report.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toast/toast.dart';
+import '../../components/alert_dialog.dart' as alert;
 
 class PostSignalPage extends StatefulWidget{
 
@@ -31,6 +34,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
   List<PostReport> postsReport = [];
   User currentUser;
   bool showAllText = false;
+  ProgressDialog progressDialog;
 
   _PostSignalPageState(this.localization);
 
@@ -44,6 +48,8 @@ class _PostSignalPageState extends State<PostSignalPage>{
         initItems();
       }
     });
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: localization['loading']);
   }
 
   @override
@@ -104,28 +110,65 @@ class _PostSignalPageState extends State<PostSignalPage>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          ProfilAvatar(_user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                          Column(
+                          Row(
                             children: <Widget>[
-                              RichText(
-                                text: new TextSpan(
-                                  text: postsReport[i].subscriber.full_name,
-                                  style: new TextStyle(
-                                      color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
+                              ProfilAvatar(_user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
+                              Column(
+                                children: <Widget>[
+                                  RichText(
+                                    text: new TextSpan(
+                                      text: postsReport[i].subscriber.full_name,
+                                      style: new TextStyle(
+                                          color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                      recognizer: new TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                                            return new UserProfile(currentUser,_user,localization);
+                                          }));
+                                        },
+                                    ),
                                   ),
-                                  recognizer: new TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                                        return new UserProfile(currentUser,_user,localization);
-                                      }));
-                                    },
-                                ),
-                              ),
-                              Text(convertDateToAbout(postsReport[i].register_date, localization)),
+                                  Text(convertDateToAbout(postsReport[i].register_date, localization)),
+                                ],
+                              )
                             ],
-                          )
+                          ),
+                          PopupMenuButton(
+                            onSelected: (index) {
+                              switch(index) {
+                                case 1: //deactivate
+                                  alert.showAlertDialog
+                                    (
+                                      context,
+                                      this.widget.localization['warning'],
+                                      this.widget.localization['want_deactivate_postreport'],
+                                      this.widget.localization,
+                                      (){
+                                        deactivatePostReport(postsReport[i]);
+                                      }
+                                  );
+                                  break;
+                              }
+                            },
+                            itemBuilder: (context) {
+                              var list = List<PopupMenuEntry<Object>>();
+                              if(currentUser.active == 1 && currentUser.type == User.USER_TYPE_ADMIN) {
+                                list.add(
+                                    PopupMenuItem(
+                                      child: Text(localization['deactivate']),
+                                      value: 1,
+                                      enabled: (currentUser.active == 1 &&
+                                          currentUser.type == User.USER_TYPE_ADMIN),
+                                    )
+                                );
+                              }
+                              return list;
+                            },
+                          ),
                         ],
                       ),
                       Container(
@@ -221,6 +264,26 @@ class _PostSignalPageState extends State<PostSignalPage>{
       });
     }
     refreshController.loadComplete();
+  }
+
+  deactivatePostReport(PostReport postReport) {
+    progressDialog.show();
+    postReport.deactivate_abusive_post(context, postReport.id_post, currentUser.id_subscriber).then((success){
+      if(success) {
+        progressDialog.hide();
+        Toast.show(this.widget.localization['report_deactivated'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+              return PostSignalPage(localization);
+            }
+        ));
+      }
+      else{
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
   }
 
 }
