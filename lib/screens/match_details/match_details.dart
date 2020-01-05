@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/match_comments.dart';
 import '../../models/match_item.dart';
 import '../../models/edition_stage.dart';
 import 'components/header.dart';
@@ -146,7 +147,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       tabViews.add(CompetitionTableLayout(localization,matchItem.idGroupA,matchItem.editionStage.id));
 
     //init comments
-    tabViews.add(Center(child: Text('Comments',textScaleFactor: 2.5,),));
+    tabViews.add(MatchComments(localization, matchItem));
 
     //init video
     tabViews.add(YoutubeVideo(this.localization,this.matchItem));
