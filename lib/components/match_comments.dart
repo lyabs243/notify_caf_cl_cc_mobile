@@ -93,7 +93,7 @@ class _MatchCommentsState extends State<MatchComments>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width / 1.16,
+                    width: MediaQuery.of(context).size.width * 80 / 100,
                     child: new TextField(
                       decoration: new InputDecoration(
                         border: new OutlineInputBorder(
@@ -112,15 +112,18 @@ class _MatchCommentsState extends State<MatchComments>{
                       },
                     ),
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.send,
-                        color: Theme.of(context).primaryColor,
-                        size: 45.0,
-                      ),
-                      onPressed: () {
+                  Container(
+                    width: MediaQuery.of(context).size.width * 10 / 100,
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.send,
+                          color: Theme.of(context).primaryColor,
+                          size: 45.0,
+                        ),
+                        onPressed: () {
 
-                      }
+                        }
+                    ),
                   )
                 ],
               ),
