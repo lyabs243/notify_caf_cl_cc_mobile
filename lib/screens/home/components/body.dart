@@ -139,6 +139,10 @@ class _BodyState extends State<Body>{
 
   void _onRefresh() async{
     //isPageRefresh = true;
+    homeInfos.trending_news.clear();
+    homeInfos.current_match.clear();
+    homeInfos.fixture.clear();
+    homeInfos.latest_result.clear();
     homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
       setState(() {
         initData();
