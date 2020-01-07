@@ -66,7 +66,6 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                 Wrap(
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height,
                       child: PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,)
                     )
                   ],
