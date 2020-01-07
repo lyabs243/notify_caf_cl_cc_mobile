@@ -10,9 +10,9 @@ class PostReaction {
 
   static final int REACTION_LIKE = 1;
   static final int REACTION_LOVE = 2;
-  static final int REACTION_REDCARD = 3;
+  static final int REACTION_TROPHY = 3;
   static final int REACTION_GOAL = 4;
-  static final int REACTION_OFFSIDE = 5;
+  static final int REACTION_AHAH = 5;
   static final int REACTION_ANGRY = 6;
 
   static final String URL_ADD_POSTREACTION = 'http://notifygroup.org/notifyapp/api/index.php/postReaction/add/';
@@ -79,11 +79,11 @@ class PostReaction {
     else if(reaction == REACTION_GOAL) {
       return 'assets/icons/reaction/goal.png';
     }
-    else if(reaction == REACTION_OFFSIDE) {
-      return 'assets/icons/reaction/offside.jpg';
+    else if(reaction == REACTION_AHAH) {
+      return 'assets/icons/reaction/ah_ah.png';
     }
-    else if(reaction == REACTION_REDCARD) {
-      return 'assets/icons/reaction/red_card.png';
+    else if(reaction == REACTION_TROPHY) {
+      return 'assets/icons/reaction/trophy.png';
     }
     else if(reaction == REACTION_ANGRY) {
       return 'assets/icons/reaction/angry.png';
@@ -95,7 +95,7 @@ class PostReaction {
 
   static Color getReactionColor(int reaction, BuildContext context) {
     if(reaction == REACTION_LIKE) {
-      return Colors.blue;
+      return Colors.blue[900];
     }
     else if(reaction == REACTION_LOVE) {
       return Colors.red;
@@ -103,11 +103,11 @@ class PostReaction {
     else if(reaction == REACTION_GOAL) {
       return Colors.black;
     }
-    else if(reaction == REACTION_OFFSIDE) {
-      return Colors.orange;
+    else if(reaction == REACTION_AHAH) {
+      return Colors.orange[400];
     }
-    else if(reaction == REACTION_REDCARD) {
-      return Colors.red;
+    else if(reaction == REACTION_TROPHY) {
+      return Colors.orange;
     }
     else if(reaction == REACTION_ANGRY) {
       return Colors.red[900];
@@ -127,11 +127,11 @@ class PostReaction {
     else if(reaction == REACTION_GOAL) {
       return localization['goal'];
     }
-    else if(reaction == REACTION_OFFSIDE) {
-      return localization['offside'];
+    else if(reaction == REACTION_AHAH) {
+      return localization['ah_ah'];
     }
-    else if(reaction == REACTION_REDCARD) {
-      return localization['red_card'];
+    else if(reaction == REACTION_TROPHY) {
+      return localization['trophy'];
     }
     else if(reaction == REACTION_ANGRY) {
       return localization['angry'];

@@ -101,25 +101,25 @@ class _PostReactionBoxState extends State<PostReactionBox> {
             InkWell(
               child: Container(
                 child: Image.asset(
-                  'assets/icons/reaction/offside.jpg',
+                  'assets/icons/reaction/ah_ah.png',
                   height: iconHeight,
                 ),
                 margin: EdgeInsets.only(right: iconMargin),
               ),
               onTap: () {
-                updateReaction(PostReaction.REACTION_OFFSIDE);
+                updateReaction(PostReaction.REACTION_AHAH);
               },
             ),
             InkWell(
               child: Container(
                 child: Image.asset(
-                  'assets/icons/reaction/red_card.png',
+                  'assets/icons/reaction/trophy.png',
                   height: iconHeight,
                 ),
                 margin: EdgeInsets.only(right: iconMargin),
               ),
               onTap: () {
-                updateReaction(PostReaction.REACTION_REDCARD);
+                updateReaction(PostReaction.REACTION_TROPHY);
               },
             ),
             InkWell(
