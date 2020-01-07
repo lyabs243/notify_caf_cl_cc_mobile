@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/post.dart';
-import 'package:flutter_cafclcc/screens/community/components/post_details.dart';
+import 'package:flutter_cafclcc/screens/post_details/post_details.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../models/appeal_item.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';

@@ -10,7 +10,7 @@ import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
 import 'package:flutter_cafclcc/screens/community/components/action_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
-import 'package:flutter_cafclcc/screens/community/components/post_details.dart';
+import 'package:flutter_cafclcc/screens/post_details/post_details.dart';
 import 'package:flutter_cafclcc/screens/community/components/signal_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';

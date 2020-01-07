@@ -9,7 +9,7 @@ import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../../../components/alert_dialog.dart' as alert;
+import '../../components/alert_dialog.dart' as alert;
 
 class PostDetails extends StatefulWidget {
 
