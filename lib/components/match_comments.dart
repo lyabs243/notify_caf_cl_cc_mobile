@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
+import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/user.dart';
@@ -136,6 +137,8 @@ class _MatchCommentsState extends State<MatchComments>{
                   itemBuilder: (context, index) {
                     User user = new User();
                     user.url_profil_pic = comments[index].subscriber.url_profil_pic;
+                    user.id_subscriber = comments[index].subscriber.id_subscriber;
+                    user.full_name = comments[index].subscriber.full_name;
                     return Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,32 +146,7 @@ class _MatchCommentsState extends State<MatchComments>{
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                                  Column(
-                                    children: <Widget>[
-                                      RichText(
-                                        text: new TextSpan(
-                                          text: comments[index].subscriber.full_name,
-                                          style: new TextStyle(
-                                              color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                                              fontWeight: FontWeight.bold
-                                          ),
-                                          recognizer: new TapGestureRecognizer()
-                                            ..onTap = () {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                user.id_subscriber = comments[index].subscriber.id_subscriber;
-                                                return new UserProfile(currentUser,user,localization);
-                                              }));
-                                            },
-                                        ),
-                                      ),
-                                      Text(convertDateToAbout(comments[index].register_date, localization)),
-                                    ],
-                                  )
-                                ],
-                              ),
+                              UserPostHeaderInfos(localization, user, currentUser, comments[index].register_date),
                               PopupMenuButton(
                                 onSelected: (index) {
                                   switch(index) {

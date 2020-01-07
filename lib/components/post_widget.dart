@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/post_reaction_box.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
+import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
@@ -47,16 +48,21 @@ class _PostWidgetState extends State<PostWidget> {
 
   bool showReactionBox = false, showAllText;
 
+  UserPostHeaderInfos userPostHeaderInfos;
+
   _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText, this.elevation);
 
   @override
   void initState() {
     super.initState();
     user = new User();
+    user.id_subscriber = post.id_subscriber;
+    user.full_name = post.subscriber.full_name;
     user.url_profil_pic = post.subscriber.url_profil_pic;
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;
+        userPostHeaderInfos = UserPostHeaderInfos(localization, user, currentUser, post.register_date);
       });
     });
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
@@ -86,33 +92,7 @@ class _PostWidgetState extends State<PostWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                          Column(
-                            children: <Widget>[
-                              RichText(
-                                text: new TextSpan(
-                                  text: post.subscriber.full_name,
-                                  style: new TextStyle(
-                                      color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                  recognizer: new TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                                        User user = new User();
-                                        user.id_subscriber = post.id_subscriber;
-                                        return new UserProfile(currentUser,user,localization);
-                                      }));
-                                    },
-                                ),
-                              ),
-                              Text(convertDateToAbout(post.register_date, localization)),
-                            ],
-                          )
-                        ],
-                      ),
+                      (userPostHeaderInfos != null)? userPostHeaderInfos : Container(),
                       PopupMenuButton(
                         onSelected: (index) {
                           switch(index) {

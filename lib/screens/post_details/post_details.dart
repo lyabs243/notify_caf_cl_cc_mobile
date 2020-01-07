@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
+import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
@@ -147,6 +148,8 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                       padding: EdgeInsets.all(8.0),
                       itemBuilder: (context, index) {
                         User user = new User();
+                        user.id_subscriber = comments[index].subscriber.id_subscriber;
+                        user.full_name = comments[index].subscriber.full_name;
                         user.url_profil_pic = comments[index].subscriber.url_profil_pic;
                         return Container(
                           child: Column(
@@ -155,32 +158,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                                      Column(
-                                        children: <Widget>[
-                                          RichText(
-                                            text: new TextSpan(
-                                              text: comments[index].subscriber.full_name,
-                                              style: new TextStyle(
-                                                  color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                              recognizer: new TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                    user.id_subscriber = comments[index].subscriber.id_subscriber;
-                                                    return new UserProfile(currentUser,user,localization);
-                                                  }));
-                                                },
-                                            ),
-                                          ),
-                                          Text(convertDateToAbout(comments[index].register_date, localization)),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                  UserPostHeaderInfos(localization, user, currentUser, comments[index].register_date),
                                   PopupMenuButton(
                                     onSelected: (index) {
                                       switch(index) {

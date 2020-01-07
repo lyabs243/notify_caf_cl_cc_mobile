@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
+import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post_report.dart';
 import 'package:flutter_cafclcc/models/user.dart';
@@ -101,6 +102,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
               itemBuilder: (context, i) {
                 User _user = new User();
                 _user.id_subscriber = postsReport[i].id_subscriber;
+                _user.full_name = postsReport[i].subscriber.full_name;
                 _user.url_profil_pic = postsReport[i].subscriber.url_profil_pic;
                 return Card(
                     elevation: 15.0,
@@ -112,31 +114,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              ProfilAvatar(_user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
-                              Column(
-                                children: <Widget>[
-                                  RichText(
-                                    text: new TextSpan(
-                                      text: postsReport[i].subscriber.full_name,
-                                      style: new TextStyle(
-                                          color: Theme.of(context).textTheme.body1.color,fontSize: 16.0,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                      recognizer: new TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                                            return new UserProfile(currentUser,_user,localization);
-                                          }));
-                                        },
-                                    ),
-                                  ),
-                                  Text(convertDateToAbout(postsReport[i].register_date, localization)),
-                                ],
-                              )
-                            ],
-                          ),
+                          UserPostHeaderInfos(localization, _user, currentUser, postsReport[i].register_date),
                           PopupMenuButton(
                             onSelected: (index) {
                               switch(index) {

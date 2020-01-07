@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import '../../../models/appeal_item.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
@@ -11,8 +12,9 @@ class AppealDialog extends StatefulWidget{
   Map localization;
   AppealItem appealItem;
   User currentUser;
+  User user;
 
-  AppealDialog(this.localization,this.appealItem,this.currentUser);
+  AppealDialog(this.localization,this.appealItem,this.currentUser, this.user);
 
   @override
   _AppealDialogState createState() {
@@ -97,19 +99,8 @@ class _AppealDialogState extends State<AppealDialog>{
             InkWell(
               child: Card(
                 elevation: 15.0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.08,
-                  child: Center(
-                    child: Text(
-                      this.widget.appealItem.full_name,
-                      textScaleFactor: 2.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                ),
+                child: UserPostHeaderInfos(this.widget.localization, this.widget.user, this.widget.currentUser,
+                    this.widget.appealItem.register_date),
               ),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){

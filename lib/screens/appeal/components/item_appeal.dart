@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'appeal_dialog.dart';
 import '.././../../models/appeal_item.dart';
 import '../../../components/empty_data.dart';
@@ -95,6 +96,9 @@ class _ItemAppealState extends State<ItemAppeal>{
       ListView.builder(
           itemCount: items.length,
           itemBuilder: ((context,i){
+            User _user = new User();
+            _user.full_name = items[i].full_name;
+            _user.id_subscriber = items[i].id_subscriber;
             return InkWell(
               child: Card(
                 child: Container(
@@ -103,23 +107,7 @@ class _ItemAppealState extends State<ItemAppeal>{
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          RichText(
-                            text: new TextSpan(
-                              text: items[i].full_name,
-                              style: new TextStyle(
-                                  color: Theme.of(context).textTheme.body1.color,fontSize: 20.0,
-                                  fontWeight: FontWeight.bold
-                              ),
-                              recognizer: new TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    User user = new User();
-                                    user.id_subscriber = items[i].id_subscriber;
-                                    return new UserProfile(currentUser,user,localization);
-                                  }));
-                                },
-                            ),
-                          ),
+                          UserPostHeaderInfos(localization, _user, currentUser, items[i].register_date),
                           Container(
                             width: 20.0,
                             height: 20.0,
@@ -156,7 +144,7 @@ class _ItemAppealState extends State<ItemAppeal>{
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context){
-                      return new AppealDialog(this.localization,items[i],currentUser);
+                      return new AppealDialog(this.localization,items[i],currentUser, _user);
                     },
                     fullscreenDialog: true
                 )).then((appeal){
