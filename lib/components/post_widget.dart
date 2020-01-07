@@ -247,13 +247,9 @@ class _PostWidgetState extends State<PostWidget> {
                               showReactionBox = !showReactionBox;
                             });
                           },
-                          icon: ImageIcon(
-                              AssetImage
-                                (
-                                  PostReaction.getReactionIconPath(post.reaction.subscriber_reaction)
-                              ),
-                              color: PostReaction.getReactionColor(post.reaction.subscriber_reaction, context),
-                              size: 20.0
+                          icon: Image.asset(
+                            PostReaction.getReactionIconPath(post.reaction.subscriber_reaction),
+                            height: 20.0,
                           ),
                           label: Text(
                             PostReaction.getReactionText(post.reaction.subscriber_reaction, localization),
