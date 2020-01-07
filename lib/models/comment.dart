@@ -14,6 +14,7 @@ class Comment {
   DateTime register_date;
 
   static final String URL_GET_MATCH_COMMENTS = 'http://notifygroup.org/notifyapp/api/index.php/match/comments/';
+  static final String URL_GET_POST_COMMENTS = 'http://notifygroup.org/notifyapp/api/index.php/post/comments/';
 
   Comment(this.id, this.id_match, this.id_post, this.id_user, this.comment, this.subscriber,
       this.register_date);
@@ -50,6 +51,23 @@ class Comment {
     List<Comment> comments = [];
     await NotifyApi(context).getJsonFromServer(
         URL_GET_MATCH_COMMENTS + id_match.toString() + '/' + page.toString()
+        , null).then((map) {
+      if (map != null) {
+        if(map['NOTIFYGROUP']['data'] != null) {
+          for (int i = 0; i < map['NOTIFYGROUP']['data'].length; i++) {
+            Comment comment = Comment.getFromMap(map['NOTIFYGROUP']['data'][i]);
+            comments.add(comment);
+          }
+        }
+      }
+    });
+    return comments;
+  }
+
+  static Future getPostComments(BuildContext context, int id_post, int page) async {
+    List<Comment> comments = [];
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_POST_COMMENTS + id_post.toString() + '/' + page.toString()
         , null).then((map) {
       if (map != null) {
         if(map['NOTIFYGROUP']['data'] != null) {
