@@ -34,9 +34,6 @@ class _BodyState extends State<Body>{
   bool isPageLoading = true;
   bool isLoading = false;
 
-  //verifie si les donnees du subscriber ot deja ete mis a jour
-  bool isDataLoaded = false;
-
   bool isCurrentUser = false;
 
   @override
@@ -55,10 +52,8 @@ class _BodyState extends State<Body>{
   initData() async {
     await Future.delayed(Duration.zero);
     _context = context;
-    if(!isDataLoaded)
-      initSubscriber();
+    initSubscriber();
     _drawerItems = new List<DrawerItem>();
-    initDrawerItems();
   }
 
   @override
@@ -185,37 +180,36 @@ class _BodyState extends State<Body>{
     );
   }
 
-  initSubscriber(){
+  initSubscriber() async{
+    await Future.delayed(Duration.zero);
+    this.widget._user.getSubscriber(_context).then((success){
+      setState(() {
+        isPageLoading = false;
+      });
+      initDrawerItems();
+      if(success){
+          this.widget._currentUser.getFieldsFromServer(_context).then((value) {
+            setState(() {
+              isCurrentUser = (this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber);
+              isPageLoading = false;
+            });
+          });
+      }
+    });
     if(this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber) {
       this.widget._currentUser.getFieldsFromServer(_context).then((value) {
         setState(() {
+          widget._user = null;
           widget._user = widget._currentUser;
           isCurrentUser = true;
           isPageLoading = false;
-          isDataLoaded = true;
         });
-      });
-    }
-    else{
-      this.widget._user.getSubscriber(_context).then((success){
-        setState(() {
-          isPageLoading = false;
-        });
-        if(success){
-          setState(() {
-            isDataLoaded = true;
-          });
-        }
-        else{
-          //Toast.show(this.widget._localization['error_occured'], _context, duration: Toast.LENGTH_LONG,
-            //  gravity: Toast.BOTTOM);
-        }
       });
     }
   }
 
   initDrawerItems(){
-
+    _drawerItems.clear();
     DrawerItem header = new DrawerItem(0, this.widget._user.full_name, DrawerType.header);
     DrawerItem privacy = new DrawerItem(1, this.widget._localization['term_use'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
     DrawerItem blockUser = new DrawerItem(2, this.widget._localization['block_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
@@ -234,6 +228,9 @@ class _BodyState extends State<Body>{
     else{
       unblockUser.visible = false;
       blockUser.visible = false;
+    }
+    if(this.widget._user.id_subscriber != this.widget._currentUser.id_subscriber) {
+      logout.visible = false;
     }
 
     _drawerItems.add(header);
@@ -288,6 +285,7 @@ class _BodyState extends State<Body>{
 
   void setBlockingState(bool isLoading){
     setState(() {
+      initDrawerItems();
       this.isLoading = isLoading;
     });
   }
