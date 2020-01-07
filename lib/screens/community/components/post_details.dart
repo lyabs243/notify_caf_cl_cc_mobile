@@ -94,11 +94,6 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                       width: MediaQuery.of(context).size.width * 80 / 100,
                       child: new TextField(
                         decoration: new InputDecoration(
-                          border: new OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(10.0),
-                            ),
-                          ),
                           hintText: localization['type_comment'],
                         ),
                         maxLines: 1,
