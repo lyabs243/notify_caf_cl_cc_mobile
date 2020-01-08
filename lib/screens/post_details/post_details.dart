@@ -9,7 +9,9 @@ import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toast/toast.dart';
 import '../../components/alert_dialog.dart' as alert;
 
 class PostDetails extends StatefulWidget {
@@ -30,13 +32,16 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
 
   Map localization;
   Post post;
+  String commentText;
 
   List<Comment> comments = [];
   RefreshController refreshController;
+  ProgressDialog progressDialog;
   bool isPageRefresh = false, isLoadPage = true;
   int page = 1;
 
   User currentUser;
+  TextEditingController _controller;
 
   _PostDetailsState(this.localization, this.post);
 
@@ -44,6 +49,9 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    _controller = new TextEditingController();
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: localization['loading']);
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;
@@ -96,11 +104,12 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                         decoration: new InputDecoration(
                           hintText: localization['type_comment'],
                         ),
+                        controller: _controller,
                         maxLines: 1,
                         maxLength: 250,
                         onChanged: (val){
                           setState((){
-
+                            commentText = val;
                           });
                         },
                       ),
@@ -114,7 +123,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                             size: 45.0,
                           ),
                           onPressed: () {
-
+                            addComment();
                           }
                       ),
                     )
@@ -279,6 +288,24 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       });
     }
     refreshController.loadComplete();
+  }
+
+  Future addComment() async{
+    Comment comment = new Comment(0, null, this.post.id, currentUser.id, commentText, null, null);
+    progressDialog.show();
+    await comment.addPostComment(context).then((_comment) {
+      if(_comment != null) {
+        _controller.clear();
+        setState(() {
+          comments.insert(0, _comment);
+        });
+      }
+      else {
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
+    progressDialog.hide();
   }
 }
 
