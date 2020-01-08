@@ -7,7 +7,9 @@ import 'package:flutter_cafclcc/models/comment.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toast/toast.dart';
 import '../models/match_item.dart';
 import 'empty_data.dart';
 import 'alert_dialog.dart' as alert;
@@ -36,6 +38,10 @@ class _MatchCommentsState extends State<MatchComments>{
   bool isPageRefresh = false, isLoadPage = true;
   int page = 1;
 
+  ProgressDialog progressDialog;
+  TextEditingController _controller;
+  String commentText;
+
   User currentUser;
 
   _MatchCommentsState(this.localization, this.matchItem);
@@ -44,6 +50,9 @@ class _MatchCommentsState extends State<MatchComments>{
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    _controller = new TextEditingController();
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: localization['loading']);
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;
@@ -100,10 +109,11 @@ class _MatchCommentsState extends State<MatchComments>{
                         hintText: localization['type_comment'],
                       ),
                       maxLines: 1,
+                      controller: _controller,
                       maxLength: 250,
                       onChanged: (val){
                         setState((){
-
+                          commentText = val;
                         });
                       },
                     ),
@@ -117,7 +127,7 @@ class _MatchCommentsState extends State<MatchComments>{
                           size: 45.0,
                         ),
                         onPressed: () {
-
+                          addComment();
                         }
                     ),
                   )
@@ -261,6 +271,24 @@ class _MatchCommentsState extends State<MatchComments>{
       });
     }
     refreshController.loadComplete();
+  }
+
+  Future addComment() async{
+    Comment comment = new Comment(0, this.matchItem.id, null, currentUser.id, commentText, null, null);
+    progressDialog.show();
+    await comment.addMatchComment(context).then((_comment) {
+      if(_comment != null) {
+        _controller.clear();
+        setState(() {
+          comments.insert(0, _comment);
+        });
+      }
+      else {
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
+    progressDialog.hide();
   }
 
 }
