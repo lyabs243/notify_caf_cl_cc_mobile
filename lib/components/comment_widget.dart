@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:toast/toast.dart';
 import 'alert_dialog.dart' as alert;
 
 import 'action_comment_dialog.dart';
@@ -11,14 +13,15 @@ class CommentWidget extends StatefulWidget {
   Comment comment;
   User user, currentUser;
   Map localization;
+  Function updateDeleleteState;
 
   CommentWidget(this.comment, this.user, this.currentUser,
-      this.localization);
+      this.localization, this.updateDeleleteState);
 
   @override
   _CommentWidgetState createState() {
     return _CommentWidgetState(this.comment, this.user, this.currentUser,
-        this.localization);;
+        this.localization, this.updateDeleleteState);
   }
 
 }
@@ -29,9 +32,19 @@ class _CommentWidgetState extends State<CommentWidget> {
   User user, currentUser;
   Map localization;
 
+  ProgressDialog progressDialog;
+
+  Function updateDeleleteState;
 
   _CommentWidgetState(this.comment, this.user, this.currentUser,
-      this.localization);
+      this.localization, this.updateDeleleteState);
+
+  @override
+  void initState() {
+    super.initState();
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: localization['loading']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +77,10 @@ class _CommentWidgetState extends State<CommentWidget> {
                         (
                           context,
                           this.localization['warning'],
-                          this.localization['want_delete_post'],
+                          this.localization['want_delete_comment'],
                           this.localization,
-                              (){
-                            //deletePost();
+                          (){
+                            deleteComment();
                           }
                       );
                       break;
@@ -117,6 +130,22 @@ class _CommentWidgetState extends State<CommentWidget> {
         ],
       ),
     );
+  }
+
+  deleteComment() {
+    progressDialog.show();
+    this.comment.deleteComment(context).then((success){
+      progressDialog.hide();
+      if(success) {
+        Toast.show(this.widget.localization['comment_deleted'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        updateDeleleteState();
+      }
+      else{
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
   }
 
 }

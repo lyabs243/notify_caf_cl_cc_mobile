@@ -18,6 +18,7 @@ class Comment {
   static final String URL_ADD_POST_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/post/add_comment/';
   static final String URL_ADD_MATCH_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/match/add_comment/';
   static final String URL_UPDATE_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/comment/update/';
+  static final String URL_DELETE_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/comment/delete/';
 
   Comment(this.id, this.id_match, this.id_post, this.id_user, this.comment, this.subscriber,
       this.register_date);
@@ -117,6 +118,22 @@ class Comment {
     String url = URL_UPDATE_COMMENT+this.id.toString() + '/' + this.id_user.toString();
     Map<String,dynamic> params = {
       'comment': this.comment,
+    };
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
+
+  Future<bool> deleteComment(BuildContext context) async{
+    bool success = true;
+    String url = URL_DELETE_COMMENT+this.id.toString() + '/' + this.id_user.toString();
+    Map<String,dynamic> params = {
     };
     await NotifyApi(context).getJsonFromServer(url,params).then((map){
       if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {

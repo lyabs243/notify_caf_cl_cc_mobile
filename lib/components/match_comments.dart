@@ -150,7 +150,7 @@ class _MatchCommentsState extends State<MatchComments>{
                     user.url_profil_pic = comments[index].subscriber.url_profil_pic;
                     user.id_subscriber = comments[index].subscriber.id_subscriber;
                     user.full_name = comments[index].subscriber.full_name;
-                    return CommentWidget(comments[index], user, currentUser, localization);
+                    return CommentWidget(comments[index], user, currentUser, localization, deleteComment);
                   }
               ),
             )
@@ -215,6 +215,15 @@ class _MatchCommentsState extends State<MatchComments>{
       }
     });
     progressDialog.hide();
+  }
+
+  deleteComment() {
+    setState(() {
+      isPageRefresh = true;
+      isLoadPage = true;
+      comments.clear();
+      initItems();
+    });
   }
 
 }

@@ -139,7 +139,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                             ],
                           ),
                         ):
-                        CommentWidget(comments[index-2], user, currentUser, localization)
+                        CommentWidget(comments[index-2], user, currentUser, localization, deleteComment)
                         );
                       }
                   ),
@@ -209,5 +209,14 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       }
     });
     progressDialog.hide();
+  }
+
+  deleteComment() {
+    setState(() {
+      isPageRefresh = true;
+      isLoadPage = true;
+      comments.clear();
+      initItems();
+    });
   }
 }
