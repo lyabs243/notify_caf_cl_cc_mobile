@@ -198,7 +198,9 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       if(_comment != null) {
         _controller.clear();
         setState(() {
-          comments.insert(0, _comment);
+          comments.clear();
+          isLoadPage = true;
+          initItems();
         });
       }
       else {
