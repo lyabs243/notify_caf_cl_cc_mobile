@@ -206,7 +206,10 @@ class _MatchCommentsState extends State<MatchComments>{
       if(_comment != null) {
         _controller.clear();
         setState(() {
-          comments.insert(0, _comment);
+          isLoadPage = true;
+          isPageRefresh = true;
+          comments.clear();
+          initItems();
         });
       }
       else {
