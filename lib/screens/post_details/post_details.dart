@@ -1,14 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
-import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
-import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/user.dart';
-import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:toast/toast.dart';
@@ -66,72 +61,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       appBar: AppBar(
         title: Text(localization['post']),
       ),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBexIsScrolled) {
-          return <Widget>[
-            SliverPersistentHeader(
-              delegate: _SliverAppBarDelegate(
-                Wrap(
-                  children: <Widget>[
-                    Container(
-                      child: PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,)
-                    )
-                  ],
-                ),
-                context,
-                (post.url_image != null && post.url_image.length > 0)
-              ),
-              pinned: true,
-            )
-          ];
-        },
-        body: new Container(
-          height: MediaQuery.of(context).size.height/2.8,
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(8.0),
-                margin: EdgeInsets.only(left: 3.0, right: 3.0),
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height / 8,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * 80 / 100,
-                      child: new TextField(
-                        decoration: new InputDecoration(
-                          hintText: localization['type_comment'],
-                        ),
-                        controller: _controller,
-                        maxLines: 1,
-                        maxLength: 250,
-                        onChanged: (val){
-                          setState((){
-                            commentText = val;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 10 / 100,
-                      child: IconButton(
-                          icon: Icon(
-                            Icons.send,
-                            color: Theme.of(context).primaryColor,
-                            size: 45.0,
-                          ),
-                          onPressed: () {
-                            addComment();
-                          }
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SmartRefresher(
+      body: SmartRefresher(
                   controller: refreshController,
                   enablePullUp: (comments.length > 0)? true : false,
                   enablePullDown: false,
@@ -152,21 +82,70 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                     },
                   ),
                   child: ListView.builder(
-                      itemCount: comments.length,
+                      itemCount: comments.length + 2,
                       padding: EdgeInsets.all(8.0),
                       itemBuilder: (context, index) {
                         User user = new User();
-                        user.id_subscriber = comments[index].subscriber.id_subscriber;
-                        user.full_name = comments[index].subscriber.full_name;
-                        user.url_profil_pic = comments[index].subscriber.url_profil_pic;
-                        return Container(
+                        if(index > 1) {
+                          user.id_subscriber =
+                              comments[index - 2].subscriber.id_subscriber;
+                          user.full_name =
+                              comments[index - 2].subscriber.full_name;
+                          user.url_profil_pic =
+                              comments[index - 2].subscriber.url_profil_pic;
+                        }
+                        return (index == 0)?
+                        PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,) :
+                        ((index == 1)?
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          margin: EdgeInsets.only(left: 3.0, right: 3.0),
+                          color: Colors.white,
+                          height: MediaQuery.of(context).size.height / 8,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                width: MediaQuery.of(context).size.width * 80 / 100,
+                                child: new TextField(
+                                  decoration: new InputDecoration(
+                                    hintText: localization['type_comment'],
+                                  ),
+                                  controller: _controller,
+                                  maxLines: 1,
+                                  maxLength: 250,
+                                  onChanged: (val){
+                                    setState((){
+                                      commentText = val;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 10 / 100,
+                                child: IconButton(
+                                    icon: Icon(
+                                      Icons.send,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 45.0,
+                                    ),
+                                    onPressed: () {
+                                      addComment();
+                                    }
+                                ),
+                              )
+                            ],
+                          ),
+                        ):
+                        Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  UserPostHeaderInfos(localization, user, currentUser, comments[index].register_date),
+                                  UserPostHeaderInfos(localization, user, currentUser, comments[index - 2].register_date),
                                   PopupMenuButton(
                                     onSelected: (index) {
                                       switch(index) {
@@ -193,13 +172,13 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                                     },
                                     itemBuilder: (context) {
                                       var list = List<PopupMenuEntry<Object>>();
-                                      if(currentUser.id_subscriber == comments[index].subscriber.id_subscriber && currentUser.active == 1) {
+                                      if(currentUser.id_subscriber == comments[index - 2].subscriber.id_subscriber && currentUser.active == 1) {
                                         list.add(
                                           PopupMenuItem(
                                             child: Text(localization['update']),
                                             value: 1,
                                             enabled: (currentUser.id_subscriber ==
-                                                comments[index].subscriber.id_subscriber &&
+                                                comments[index - 2].subscriber.id_subscriber &&
                                                 currentUser.active == 1),
                                           ),
                                         );
@@ -208,7 +187,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                                             child: Text(localization['delete']),
                                             value: 2,
                                             enabled: (currentUser.id_subscriber ==
-                                                comments[index].subscriber.id_subscriber &&
+                                                comments[index - 2].subscriber.id_subscriber &&
                                                 currentUser.active == 1),
                                           ),
                                         );
@@ -225,7 +204,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                                   text: new TextSpan(
                                     children: [
                                       new TextSpan(
-                                        text: comments[index].comment,
+                                        text: comments[index - 2].comment,
                                         style: new TextStyle(color: Theme.of(context).textTheme.body1.color),
                                       ),
                                     ],
@@ -234,16 +213,12 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                               )
                             ],
                           ),
+                        )
                         );
                       }
                   ),
-              )
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+      )
+              );
   }
 
   @override
@@ -306,35 +281,5 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       }
     });
     progressDialog.hide();
-  }
-}
-
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate(this._wrap, this._context, this._isContainImage);
-
-  final Wrap _wrap;
-  BuildContext _context;
-  bool _isContainImage = false;
-
-  @override
-  double get minExtent => 100.0;
-  @override
-  double get maxExtent => (_isContainImage)?
-  MediaQuery.of(_context).size.height / 1.6
-      : MediaQuery.of(_context).size.height / 3.5;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new Container(
-        color: Colors.white,
-        width: MediaQuery.of(context).size.width,
-        child: _wrap,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return false;
   }
 }
