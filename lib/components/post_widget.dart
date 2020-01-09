@@ -340,8 +340,8 @@ class _PostWidgetState extends State<PostWidget> {
   deletePost() {
     progressDialog.show();
     this.widget.post.deletePost(context).then((success){
+      progressDialog.hide();
       if(success) {
-        progressDialog.hide();
         Toast.show(this.widget.localization['post_deleted'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pushReplacement(context, MaterialPageRoute(
