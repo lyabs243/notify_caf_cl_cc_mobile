@@ -181,7 +181,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
 
   Future addItems() async{
     List<Comment> postItems = [];
-    postItems = await Comment.getMatchComments(context, post.id, page);
+    postItems = await Comment.getPostComments(context, post.id, page);
     if(postItems.length > 0){
       setState(() {
         comments.addAll(postItems);
