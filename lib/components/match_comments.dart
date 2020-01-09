@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/action_comment_dialog.dart';
+import 'package:flutter_cafclcc/components/comment_widget.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
@@ -12,7 +14,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:toast/toast.dart';
 import '../models/match_item.dart';
 import 'empty_data.dart';
-import 'alert_dialog.dart' as alert;
 
 class MatchComments extends StatefulWidget{
 
@@ -149,82 +150,7 @@ class _MatchCommentsState extends State<MatchComments>{
                     user.url_profil_pic = comments[index].subscriber.url_profil_pic;
                     user.id_subscriber = comments[index].subscriber.id_subscriber;
                     user.full_name = comments[index].subscriber.full_name;
-                    return Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              UserPostHeaderInfos(localization, user, currentUser, comments[index].register_date),
-                              PopupMenuButton(
-                                onSelected: (index) {
-                                  switch(index) {
-                                    case 1: //udate
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) {
-                                            //return PostDialog(localization, post, currentUser);
-                                          }
-                                      ));
-                                      break;
-                                    case 2: //delete
-                                      alert.showAlertDialog
-                                        (
-                                          context,
-                                          this.widget.localization['warning'],
-                                          this.widget.localization['want_delete_post'],
-                                          this.widget.localization,
-                                              (){
-                                            //deletePost();
-                                          }
-                                      );
-                                      break;
-                                  }
-                                },
-                                itemBuilder: (context) {
-                                  var list = List<PopupMenuEntry<Object>>();
-                                  if(currentUser.id_subscriber == comments[index].subscriber.id_subscriber && currentUser.active == 1) {
-                                    list.add(
-                                      PopupMenuItem(
-                                        child: Text(localization['update']),
-                                        value: 1,
-                                        enabled: (currentUser.id_subscriber ==
-                                            comments[index].subscriber.id_subscriber &&
-                                            currentUser.active == 1),
-                                      ),
-                                    );
-                                    list.add(
-                                      PopupMenuItem(
-                                        child: Text(localization['delete']),
-                                        value: 2,
-                                        enabled: (currentUser.id_subscriber ==
-                                            comments[index].subscriber.id_subscriber &&
-                                            currentUser.active == 1),
-                                      ),
-                                    );
-                                  }
-                                  return list;
-                                },
-                              )
-                            ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 50.0),
-                            child: RichText(
-                              textAlign: TextAlign.start,
-                              text: new TextSpan(
-                                children: [
-                                  new TextSpan(
-                                    text: comments[index].comment,
-                                    style: new TextStyle(color: Theme.of(context).textTheme.body1.color),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    return CommentWidget(comments[index], user, currentUser, localization);
                   }
               ),
             )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/comment_widget.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
@@ -138,82 +139,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                             ],
                           ),
                         ):
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  UserPostHeaderInfos(localization, user, currentUser, comments[index - 2].register_date),
-                                  PopupMenuButton(
-                                    onSelected: (index) {
-                                      switch(index) {
-                                        case 1: //udate
-                                          Navigator.push(context, MaterialPageRoute(
-                                              builder: (context) {
-                                                //return PostDialog(localization, post, currentUser);
-                                              }
-                                          ));
-                                          break;
-                                        case 2: //delete
-                                          alert.showAlertDialog
-                                            (
-                                              context,
-                                              this.widget.localization['warning'],
-                                              this.widget.localization['want_delete_post'],
-                                              this.widget.localization,
-                                                  (){
-                                                //deletePost();
-                                              }
-                                          );
-                                          break;
-                                      }
-                                    },
-                                    itemBuilder: (context) {
-                                      var list = List<PopupMenuEntry<Object>>();
-                                      if(currentUser.id_subscriber == comments[index - 2].subscriber.id_subscriber && currentUser.active == 1) {
-                                        list.add(
-                                          PopupMenuItem(
-                                            child: Text(localization['update']),
-                                            value: 1,
-                                            enabled: (currentUser.id_subscriber ==
-                                                comments[index - 2].subscriber.id_subscriber &&
-                                                currentUser.active == 1),
-                                          ),
-                                        );
-                                        list.add(
-                                          PopupMenuItem(
-                                            child: Text(localization['delete']),
-                                            value: 2,
-                                            enabled: (currentUser.id_subscriber ==
-                                                comments[index - 2].subscriber.id_subscriber &&
-                                                currentUser.active == 1),
-                                          ),
-                                        );
-                                      }
-                                      return list;
-                                    },
-                                  )
-                                ],
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 50.0),
-                                child: RichText(
-                                  textAlign: TextAlign.start,
-                                  text: new TextSpan(
-                                    children: [
-                                      new TextSpan(
-                                        text: comments[index - 2].comment,
-                                        style: new TextStyle(color: Theme.of(context).textTheme.body1.color),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
+                        CommentWidget(comments[index-2], user, currentUser, localization)
                         );
                       }
                   ),
