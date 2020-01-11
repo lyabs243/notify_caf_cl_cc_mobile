@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_introduction.dart';
 import '../../../components/icons/login_icons.dart';
 import '../../../models/user.dart';
 import '../../home/home.dart';
@@ -54,9 +55,18 @@ class _LoginButton extends State<LoginButton>{
     bool isLog = await user.login(widget.type,this.widget.seLoginState,context);
     if(isLog){
       User.currentUser = null;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
-        return HomePage(this.widget.localization);
-      }));
+      //suggest to get a badge
+      if(this.widget.type == LoginType.Facebook || this.widget.type == LoginType.Google) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
+          return FanBadgeIntroduction(this.widget.localization);
+        }));
+      }
+      else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (BuildContext context) {
+          return HomePage(this.widget.localization);
+        }));
+      }
     }
     else{
       Toast.show(this.widget.localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
