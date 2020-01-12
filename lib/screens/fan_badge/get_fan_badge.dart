@@ -4,6 +4,7 @@ import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/models/Country.dart';
 import 'package:flutter_cafclcc/models/competition_item.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
+import 'package:flutter_cafclcc/models/fan_club.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -29,9 +30,9 @@ class _GetFanBadgeState extends State<GetFanBadge> {
 
   User currentUser;
 
-  List<Widget> allBadges = [];
+  List<Widget> allClubs = [];
 
-  List<FanBadge> badges = [];
+  List<FanClub> clubs = [];
   RefreshController refreshController;
   bool isPageRefresh = false, isLoadPage = true;
 
@@ -46,7 +47,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
     User.getInstance().then((_user) {
       setState(() {
         currentUser = _user;
-        if(this.badges.length == 0) {
+        if(this.clubs.length == 0) {
           initItems();
         }
       });
@@ -93,7 +94,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
           Center(
             child: CircularProgressIndicator(),
           ):
-          (badges.length <= 0)?
+          (clubs.length <= 0)?
           EmptyData(this.widget.localization):
           Container(
             padding: EdgeInsets.all(8.0),
@@ -119,7 +120,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
                 Padding(padding: EdgeInsets.only(bottom: 8.0),),
                 Expanded(
                   child: Wrap(
-                    children: allBadges,
+                    children: allClubs,
                   ),
                 )
               ],
@@ -131,12 +132,14 @@ class _GetFanBadgeState extends State<GetFanBadge> {
 
   initItems() async{
     await Future.delayed(Duration.zero);
-    FanBadge.getBadges(context, country.country_code, CompetitionItem.COMPETITION_TYPE).then((value){
+    FanClub.getClubs(context, country.country_code, CompetitionItem.COMPETITION_TYPE).then((value){
       setState(() {
-        badges = value;
-        allBadges.clear();
-        badges.forEach((badge) {
-          allBadges.add(
+        clubs = value;
+        allClubs.clear();
+        clubs.forEach((club) {
+          FanBadge badge = new FanBadge(currentUser.id_subscriber, club.id, club.category, club.title, club.country_code,
+              club.url_logo, club.top_club, club.color);
+          allClubs.add(
             InkWell(
               child: Container(
                 child: BadgeLayout(localization, badge),

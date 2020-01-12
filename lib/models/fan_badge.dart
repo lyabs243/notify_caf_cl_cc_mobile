@@ -4,61 +4,33 @@ import 'package:intl/intl.dart';
 
 class FanBadge {
 
-  int id;
+  int id_subscriber;
+  int id_team;
+  int category;
   String title;
-  String title_small;
-  int is_national_team;
   String country_code;
   String url_logo;
-  int category;
   int top_club;
   String color;
-  DateTime register_date;
 
-  static final String URL_GET_BADGES = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/get_country_clubs/';
-
-  FanBadge(this.id, this.title, this.title_small, this.is_national_team,
-      this.country_code, this.url_logo, this.category, this.top_club,
-      this.color, this.register_date);
+  FanBadge(this.id_subscriber, this.id_team, this.category, this.title,
+      this.country_code, this.url_logo, this.top_club, this.color);
 
   static FanBadge getFromMap(Map item){
 
-    int id = int.parse(item['id']);
+    int id_subscriber = int.parse(item['id_subscriber']);
+    int id_team = int.parse(item['id_team']);
     String title = item['title'];
-    String title_small = item['title_small'];
-    int is_national_team = int.parse(item['is_national_team']);
     String country_code = item['country_code'];
     String url_logo = item['url_logo'];
     String color = item['color'];
     int category = int.parse(item['category']);
     int top_club = int.parse(item['top_club']);
 
-    String format = 'yyyy-MM-dd H:mm:ss';
-    DateFormat formater = DateFormat(format);
-
-    DateTime register_date = formater.parse(
-        item['register_date']);
-
-    FanBadge fanBadge = FanBadge(id, title, title_small, is_national_team, country_code, url_logo, category, top_club, color, register_date);
+    FanBadge fanBadge = FanBadge(id_subscriber, id_team, category, title, country_code, url_logo, top_club, color);
 
     return fanBadge;
   }
 
-  static Future getBadges(BuildContext context, String countryCode, int competitionType) async {
-    List<FanBadge> badges = [];
-    await NotifyApi(context).getJsonFromServer(
-        URL_GET_BADGES + countryCode + '/' + competitionType.toString()
-        , null).then((map) {
-      if (map != null) {
-        if(map['NOTIFYGROUP']['data'] != null) {
-          for (int i = 0; i < map['NOTIFYGROUP']['data'].length; i++) {
-            FanBadge badge = FanBadge.getFromMap(map['NOTIFYGROUP']['data'][i]);
-            badges.add(badge);
-          }
-        }
-      }
-    });
-    return badges;
-  }
 
 }
