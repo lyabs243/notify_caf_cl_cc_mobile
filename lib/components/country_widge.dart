@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/Country.dart';
+import 'package:flutter_cafclcc/screens/fan_badge/get_fan_badge.dart';
 
 class CountryWidget extends StatelessWidget {
 
@@ -16,7 +17,11 @@ class CountryWidget extends StatelessWidget {
     return Container(
       child: InkWell(
         onTap: () {
-
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+            return GetFanBadge(localization, country);
+          })
+          );
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
