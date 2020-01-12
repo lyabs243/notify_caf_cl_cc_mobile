@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 
 class FanBadgeIntroduction extends StatelessWidget {
@@ -44,6 +45,10 @@ class FanBadgeIntroduction extends StatelessWidget {
                   width: buttonWidth,
                   child: RaisedButton.icon(
                     onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return FanBadgeCountries(localization);
+                          }));
                     },
                     label: new Text(localization['get_badge'],textScaleFactor: 1.2,),
                     icon: new Icon(
