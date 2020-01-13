@@ -46,6 +46,7 @@ class _UserBadgeState extends State<UserBadge> {
                 color: Colors.white
             ),
           ),
+          (this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber)?
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -68,7 +69,7 @@ class _UserBadgeState extends State<UserBadge> {
                   }
               )
             ],
-          )
+          ) : Container()
         ],
         mainAxisAlignment: MainAxisAlignment.spaceAround,
       ),
