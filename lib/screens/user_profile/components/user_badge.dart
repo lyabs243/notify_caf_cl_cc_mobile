@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
 import '../../../models/constants.dart' as constants;
+import '../user_profile.dart';
 
 class UserBadge extends StatefulWidget {
 
@@ -18,6 +20,13 @@ class UserBadge extends StatefulWidget {
 }
 
 class _UserBadgeState extends State<UserBadge> {
+
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +65,13 @@ class _UserBadgeState extends State<UserBadge> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
+                      return FanBadgeCountries(this.widget.localization, MaterialPageRoute(
+                          builder: (context) {
+                            return UserProfile(this.widget._currentUser, this.widget._currentUser,
+                                this.widget.localization);
+                          }));
+                    }));
                   }
               ),
               IconButton(
@@ -106,7 +121,13 @@ class _UserBadgeState extends State<UserBadge> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
+                      return FanBadgeCountries(this.widget.localization, MaterialPageRoute(
+                          builder: (context) {
+                            return UserProfile(this.widget._currentUser, this.widget._currentUser,
+                                this.widget.localization);
+                          }));
+                    }));
                   }
               ),
             ],

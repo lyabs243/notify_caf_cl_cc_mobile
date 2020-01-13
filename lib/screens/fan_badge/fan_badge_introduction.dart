@@ -47,7 +47,10 @@ class FanBadgeIntroduction extends StatelessWidget {
                     onPressed: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context) {
-                            return FanBadgeCountries(localization);
+                            return FanBadgeCountries(localization, MaterialPageRoute(
+                                builder: (context) {
+                                  return HomePage(localization);
+                                }));
                           }));
                     },
                     label: new Text(localization['get_badge'],textScaleFactor: 1.2,),

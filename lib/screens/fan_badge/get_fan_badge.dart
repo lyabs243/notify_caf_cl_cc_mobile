@@ -6,6 +6,7 @@ import 'package:flutter_cafclcc/models/competition_item.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/fan_club.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,7 +17,9 @@ class GetFanBadge extends StatefulWidget {
   Map localization;
   Country country;
 
-  GetFanBadge(this.localization, this.country);
+  MaterialPageRoute materialPageRoute;
+
+  GetFanBadge(this.localization, this.country, this.materialPageRoute);
 
   @override
   _GetFanBadgeState createState() {
@@ -71,6 +74,20 @@ class _GetFanBadgeState extends State<GetFanBadge> {
     return Scaffold(
         appBar: AppBar(
           title: Text(country.nicename),
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pushReplacement(context, MaterialPageRoute
+                (
+                    builder: (context) {
+                      return FanBadgeCountries(localization, this.widget.materialPageRoute);
+                    }
+                ));
+              }
+          ),
           actions: <Widget>[
             IconButton(
                 icon: Icon(
@@ -78,11 +95,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) {
-                        return HomePage(localization);
-                      })
-                  );
+                  Navigator.pushReplacement(context, this.widget.materialPageRoute);
                 }
             )
           ],
@@ -178,11 +191,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
         currentUser.toMap();
         Toast.show(this.widget.localization['badge_added'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
-        Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) {
-              return HomePage(localization);
-            })
-        );
+        Navigator.pushReplacement(context, this.widget.materialPageRoute);
       }
       else {
         Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,

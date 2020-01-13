@@ -6,10 +6,11 @@ class CountryWidget extends StatelessWidget {
 
   Map localization;
   Country country;
+  MaterialPageRoute materialPageRoute;
 
   double iconSize;
 
-  CountryWidget(this.localization, this.country);
+  CountryWidget(this.localization, this.country, this.materialPageRoute);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,9 @@ class CountryWidget extends StatelessWidget {
     return Container(
       child: InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(
+          Navigator.pushReplacement(context, MaterialPageRoute(
               builder: (context) {
-            return GetFanBadge(localization, country);
+            return GetFanBadge(localization, country, materialPageRoute);
           })
           );
         },

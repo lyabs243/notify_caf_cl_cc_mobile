@@ -10,8 +10,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class FanBadgeCountries extends StatefulWidget {
 
   Map localization;
+  MaterialPageRoute materialPageRoute;
 
-  FanBadgeCountries(this.localization);
+  FanBadgeCountries(this.localization, this.materialPageRoute);
 
   @override
   _FanBadgeCountriesState createState() {
@@ -60,11 +61,7 @@ class _FanBadgeCountriesState extends State<FanBadgeCountries> {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) {
-                    return HomePage(localization);
-                  })
-              );
+              Navigator.pushReplacement(context, this.widget.materialPageRoute);
             }
           )
         ],
@@ -104,7 +101,7 @@ class _FanBadgeCountriesState extends State<FanBadgeCountries> {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index){
-                  return CountryWidget(localization, countries[index]);
+                  return CountryWidget(localization, countries[index], this.widget.materialPageRoute);
                 },
                 itemCount: countries.length,
               ),
