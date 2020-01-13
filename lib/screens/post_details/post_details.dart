@@ -102,7 +102,6 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                         ((index == 1)?
                         Container(
                           padding: EdgeInsets.all(8.0),
-                          margin: EdgeInsets.only(left: 3.0, right: 3.0),
                           color: Colors.white,
                           height: MediaQuery.of(context).size.height / 8,
                           child: Row(

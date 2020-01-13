@@ -58,9 +58,12 @@ class _CommentWidgetState extends State<CommentWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
           Container(
-            width: MediaQuery.of(context).size.width/1.38,
+            width: MediaQuery.of(context).size.width * 15 / 100,
+            child: ProfilAvatar(user,width: 45.0,height: 45.0, backgroundColor: Theme.of(context).primaryColor,),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 70 / 100,
             child: Bubble(
               margin: BubbleEdges.only(top: 10),
               nip: BubbleNip.leftTop,
@@ -149,60 +152,63 @@ class _CommentWidgetState extends State<CommentWidget> {
               ),
             ),
           ),
-          PopupMenuButton(
-            onSelected: (index) {
-              switch(index) {
-                case 1: //udate
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return CommentDialog(localization, comment, currentUser);
+          Container(
+            width: MediaQuery.of(context).size.width * 10/100,
+            child: PopupMenuButton(
+              onSelected: (index) {
+                switch(index) {
+                  case 1: //udate
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return CommentDialog(localization, comment, currentUser);
+                        }
+                    )).then((_comment){
+                      if(_comment != null && _comment.toString().length > 0) {
+                        setState(() {
+                          comment.comment = _comment.toString();
+                        });
                       }
-                  )).then((_comment){
-                    if(_comment != null && _comment.toString().length > 0) {
-                      setState(() {
-                        comment.comment = _comment.toString();
-                      });
-                    }
-                  });
-                  break;
-                case 2: //delete
-                  alert.showAlertDialog
-                    (
-                      context,
-                      this.localization['warning'],
-                      this.localization['want_delete_comment'],
-                      this.localization,
-                          (){
-                        deleteComment();
-                      }
+                    });
+                    break;
+                  case 2: //delete
+                    alert.showAlertDialog
+                      (
+                        context,
+                        this.localization['warning'],
+                        this.localization['want_delete_comment'],
+                        this.localization,
+                            (){
+                          deleteComment();
+                        }
+                    );
+                    break;
+                }
+              },
+              itemBuilder: (context) {
+                var list = List<PopupMenuEntry<Object>>();
+                if(currentUser.id_subscriber == comment.subscriber.id_subscriber && currentUser.active == 1) {
+                  list.add(
+                    PopupMenuItem(
+                      child: Text(localization['update']),
+                      value: 1,
+                      enabled: (currentUser.id_subscriber ==
+                          comment.subscriber.id_subscriber &&
+                          currentUser.active == 1),
+                    ),
                   );
-                  break;
-              }
-            },
-            itemBuilder: (context) {
-              var list = List<PopupMenuEntry<Object>>();
-              if(currentUser.id_subscriber == comment.subscriber.id_subscriber && currentUser.active == 1) {
-                list.add(
-                  PopupMenuItem(
-                    child: Text(localization['update']),
-                    value: 1,
-                    enabled: (currentUser.id_subscriber ==
-                        comment.subscriber.id_subscriber &&
-                        currentUser.active == 1),
-                  ),
-                );
-                list.add(
-                  PopupMenuItem(
-                    child: Text(localization['delete']),
-                    value: 2,
-                    enabled: (currentUser.id_subscriber ==
-                        comment.subscriber.id_subscriber &&
-                        currentUser.active == 1),
-                  ),
-                );
-              }
-              return list;
-            },
+                  list.add(
+                    PopupMenuItem(
+                      child: Text(localization['delete']),
+                      value: 2,
+                      enabled: (currentUser.id_subscriber ==
+                          comment.subscriber.id_subscriber &&
+                          currentUser.active == 1),
+                    ),
+                  );
+                }
+                return list;
+              },
+            ),
           )
         ],
       ),
