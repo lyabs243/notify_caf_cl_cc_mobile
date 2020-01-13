@@ -14,6 +14,7 @@ class FanBadge {
   String color;
 
   static final String URL_ADD_BADGE = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/add/';
+  static final String URL_DELETE_BADGE = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/delete/';
 
   FanBadge(this.id_subscriber, this.id_team, this.category, this.title,
       this.country_code, this.url_logo, this.top_club, this.color);
@@ -52,6 +53,22 @@ class FanBadge {
   Future<bool> add(BuildContext context) async{
     bool success = true;
     String url = URL_ADD_BADGE+this.id_subscriber.toString() + '/' + id_team.toString() + '/' + this.category.toString();
+    Map<String,dynamic> params = {
+    };
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
+
+  Future<bool> delete(BuildContext context) async{
+    bool success = true;
+    String url = URL_DELETE_BADGE+this.id_subscriber.toString() + '/' + this.category.toString();
     Map<String,dynamic> params = {
     };
     await NotifyApi(context).getJsonFromServer(url,params).then((map){

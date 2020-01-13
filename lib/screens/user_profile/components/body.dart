@@ -148,7 +148,7 @@ class _BodyState extends State<Body>{
                     ],
                   ),
                 ),
-                UserBadge(this.widget._localization, this.widget._user, this.widget._currentUser)
+                UserBadge(this.widget._localization, this.widget._user, this.widget._currentUser, deleteBadge)
               ],
             );
           }
@@ -283,6 +283,13 @@ class _BodyState extends State<Body>{
             ));
         break;
     }
+  }
+
+  deleteBadge() {
+    setState(() {
+      this.widget._currentUser.fanBadge = null;
+      this.widget._currentUser.toMap();
+    });
   }
 
   void setBlockingState(bool isLoading){

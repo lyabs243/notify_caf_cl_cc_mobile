@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:toast/toast.dart';
 import '../../../models/constants.dart' as constants;
 import '../user_profile.dart';
+import '.././../../components/alert_dialog.dart' as alert;
 
 class UserBadge extends StatefulWidget {
 
   Map localization;
   User _user, _currentUser;
+  Function onBadgeDeleted;
 
-  UserBadge(this.localization, this._user, this._currentUser);
+  UserBadge(this.localization, this._user, this._currentUser, this.onBadgeDeleted);
 
   @override
   _UserBadgeState createState() {
@@ -20,6 +24,15 @@ class UserBadge extends StatefulWidget {
 }
 
 class _UserBadgeState extends State<UserBadge> {
+
+  ProgressDialog progressDialog;
+
+  @override
+  void initState() {
+    super.initState();
+    progressDialog = new ProgressDialog(context, isDismissible: false);
+    progressDialog.style(message: this.widget.localization['loading']);
+  }
 
   @override
   void setState(fn) {
@@ -80,7 +93,7 @@ class _UserBadgeState extends State<UserBadge> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-
+                    deleteBadge();
                   }
               )
             ],
@@ -136,6 +149,19 @@ class _UserBadgeState extends State<UserBadge> {
         ],
       ),
     );
+  }
+
+  deleteBadge() async {
+    alert.showAlertDialog(context, this.widget.localization['warning'], this.widget.localization['want_delete_badge'],
+        this.widget.localization, (){
+          progressDialog.show();
+        this.widget._user.fanBadge.delete(context).then((result){
+          progressDialog.hide();
+          Toast.show(this.widget.localization['badge_deleted'], context, gravity: Toast.BOTTOM,
+              duration: Toast.LENGTH_LONG);
+          this.widget.onBadgeDeleted();
+        });
+    });
   }
 
 }
