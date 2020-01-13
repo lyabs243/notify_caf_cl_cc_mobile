@@ -94,6 +94,8 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                               comments[index - 2].subscriber.full_name;
                           user.url_profil_pic =
                               comments[index - 2].subscriber.url_profil_pic;
+                          user.fanBadge =
+                              comments[index - 2].subscriber.fanBadge;
                         }
                         return (index == 0)?
                         PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,) :

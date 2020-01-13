@@ -59,6 +59,7 @@ class _PostWidgetState extends State<PostWidget> {
     user.id_subscriber = post.id_subscriber;
     user.full_name = post.subscriber.full_name;
     user.url_profil_pic = post.subscriber.url_profil_pic;
+    user.fanBadge = post.subscriber.fanBadge;
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;

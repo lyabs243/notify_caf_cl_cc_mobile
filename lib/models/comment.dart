@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/services/notify_api.dart';
 import 'package:intl/intl.dart';
@@ -39,6 +40,10 @@ class Comment {
     subscriber.full_name = item['subscriber']['full_name'];
     subscriber.id_subscriber = int.parse(item['subscriber']['id_subscriber']);
     subscriber.url_profil_pic = item['subscriber']['url_profil_pic'];
+    try {
+      subscriber.fanBadge = FanBadge.getFromMap(item['subscriber']['badge']);
+    }
+    catch(e) {}
 
     String format = 'yyyy-MM-dd H:mm:ss';
     DateFormat formater = DateFormat(format);
