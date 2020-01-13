@@ -1,3 +1,5 @@
+import 'package:flutter_cafclcc/models/fan_badge.dart';
+
 import '../services/notify_api.dart';
 import 'dart:async';
 import '../screens/login/components/login_button.dart';
@@ -19,6 +21,7 @@ class User{
   int active=0;
   int type=0;
   String url_profil_pic=null;
+  FanBadge fanBadge;
 
   Function setLoginState;
 
@@ -127,6 +130,10 @@ class User{
         this.id_subscriber = int.parse(map['NOTIFYGROUP'][0]['id_subscriber']);
         this.active = int.parse(map['NOTIFYGROUP'][0]['active']);
         this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
+        //get badge
+        if(map['NOTIFYGROUP'][0]['badge'] != null) {
+          this.fanBadge = FanBadge.getFromMap(map['NOTIFYGROUP'][0]['badge']);
+        }
         this.toMap();
       }
       else{
@@ -148,6 +155,11 @@ class User{
         this.url_profil_pic = map['NOTIFYGROUP'][0]['url_profil_pic'];
         this.id_accout_type = int.parse(map['NOTIFYGROUP'][0]['id_account_type']);
         this.id_account_user = map['NOTIFYGROUP'][0]['id_account_user'];
+
+        //get badge
+        if(map['NOTIFYGROUP'][0]['badge'] != null) {
+          this.fanBadge = FanBadge.getFromMap(map['NOTIFYGROUP'][0]['badge']);
+        }
       }
       else{
         success = false;
@@ -206,7 +218,17 @@ class User{
       "id_account_user": "${this.id_account_user}",
       "url_profil_pic": "${this.url_profil_pic}",
       "active": ${this.active},
-      "type": ${this.type}
+      "type": ${this.type},
+      "badge": {
+        "id_subscriber": "${this.fanBadge.id_subscriber}",
+        "id_team": "${this.fanBadge.id_team}",
+        "category": "${this.fanBadge.category}",
+        "title": "${this.fanBadge.title}",
+        "country_code": "${this.fanBadge.country_code}",
+        "url_logo": "${this.fanBadge.url_logo}",
+        "top_club": "${this.fanBadge.top_club}",
+        "color": "${this.fanBadge.color}"
+      }
     }""";
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('user', map);
@@ -254,6 +276,9 @@ class User{
         currentUser.url_profil_pic = userMap['url_profil_pic'];
         currentUser.active = userMap['active'];
         currentUser.type = userMap['type'];
+        if(userMap['badge'] != null) {
+          currentUser.fanBadge = FanBadge.getFromMap(userMap['badge']);
+        }
       }
     }
     return currentUser;

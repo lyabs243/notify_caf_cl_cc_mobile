@@ -13,6 +13,8 @@ class FanBadge {
   int top_club;
   String color;
 
+  static final String URL_ADD_BADGE = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/add/';
+
   FanBadge(this.id_subscriber, this.id_team, this.category, this.title,
       this.country_code, this.url_logo, this.top_club, this.color);
 
@@ -32,5 +34,35 @@ class FanBadge {
     return fanBadge;
   }
 
+  Future toMap() async{
+    String map = """{
+      "id_subscriber": ${this.id_subscriber},
+      "id_team": ${this.id_team},
+      "category": ${this.category},
+      "title": "${this.title}",
+      "country_code": "${this.country_code}",
+      "url_logo": "${this.url_logo}",
+      "top_club": ${this.top_club},
+      "color": "${this.color}"
+    }""";
+
+    return map;
+  }
+
+  Future<bool> add(BuildContext context) async{
+    bool success = true;
+    String url = URL_ADD_BADGE+this.id_subscriber.toString() + '/' + id_team.toString() + '/' + this.category.toString();
+    Map<String,dynamic> params = {
+    };
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {
+
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
+  }
 
 }

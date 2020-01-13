@@ -7,7 +7,9 @@ import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/fan_club.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toast/toast.dart';
 
 class GetFanBadge extends StatefulWidget {
 
@@ -34,6 +36,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
 
   List<FanClub> clubs = [];
   RefreshController refreshController;
+  ProgressDialog progressDialog;
   bool isPageRefresh = false, isLoadPage = true;
 
   double iconSize;
@@ -44,6 +47,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
   void initState() {
     super.initState();
     refreshController = new RefreshController(initialRefresh: false);
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
     User.getInstance().then((_user) {
       setState(() {
         currentUser = _user;
@@ -146,7 +150,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
                 padding: EdgeInsets.only(left: 4.0, right: 4.0),
               ),
               onTap: () {
-
+                addBadge(badge);
               },
             )
           );
@@ -163,6 +167,28 @@ class _GetFanBadgeState extends State<GetFanBadge> {
     });
     await initItems();
     refreshController.refreshCompleted();
+  }
+
+  Future addBadge(FanBadge fanBadge) async{
+    progressDialog.show();
+    await fanBadge.add(context).then((result) {
+      progressDialog.hide();
+      if(result) {
+        currentUser.fanBadge = fanBadge;
+        currentUser.toMap();
+        Toast.show(this.widget.localization['badge_added'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+              return HomePage(localization);
+            })
+        );
+      }
+      else {
+        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
   }
 
 }
