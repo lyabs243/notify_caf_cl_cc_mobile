@@ -90,6 +90,8 @@
   "countries": "Countries",
   "update_it": "Update It",
   "keep_it": "Keep It",
+  "you_dont_have_badge": "You don't have any fan badge, add it now by clicking on +",
+  "user_dont_have_badge": "This user doesn't any fan badge",
   "select_club_country": "Select the country where your favorite club is located",
   "get_badge_introduction_title": "Are you a fan of any particular club? Get your fan badge now!",
   "update_badge_introduction_title": "You have {{value}} fan badge, do you want to update it?",

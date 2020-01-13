@@ -132,7 +132,10 @@ class User{
         this.type = int.parse(map['NOTIFYGROUP'][0]['type']);
         //get badge
         if(map['NOTIFYGROUP'][0]['badge'] != null) {
-          this.fanBadge = FanBadge.getFromMap(map['NOTIFYGROUP'][0]['badge']);
+          try {
+            this.fanBadge = FanBadge.getFromMap(map['NOTIFYGROUP'][0]['badge']);
+          }
+          catch(e){}
         }
         this.toMap();
       }
@@ -158,7 +161,10 @@ class User{
 
         //get badge
         if(map['NOTIFYGROUP'][0]['badge'] != null) {
-          this.fanBadge = FanBadge.getFromMap(map['NOTIFYGROUP'][0]['badge']);
+          try {
+            this.fanBadge = FanBadge.getFromMap(map['NOTIFYGROUP'][0]['badge']);
+          }
+          catch(e){}
         }
       }
       else{
@@ -209,6 +215,21 @@ class User{
   }
 
   Future toMap() async{
+    String mapBadge = "{}";
+    if(this.fanBadge != null) {
+       mapBadge = """
+    {
+        "id_subscriber": "${this.fanBadge.id_subscriber}",
+        "id_team": "${this.fanBadge.id_team}",
+        "category": "${this.fanBadge.category}",
+        "title": "${this.fanBadge.title}",
+        "country_code": "${this.fanBadge.country_code}",
+        "url_logo": "${this.fanBadge.url_logo}",
+        "top_club": "${this.fanBadge.top_club}",
+        "color": "${this.fanBadge.color}"
+      }
+    """;
+    }
     String map = """{
       "id": ${this.id},
       "id_subscriber": ${this.id_subscriber},
@@ -219,16 +240,7 @@ class User{
       "url_profil_pic": "${this.url_profil_pic}",
       "active": ${this.active},
       "type": ${this.type},
-      "badge": {
-        "id_subscriber": "${this.fanBadge.id_subscriber}",
-        "id_team": "${this.fanBadge.id_team}",
-        "category": "${this.fanBadge.category}",
-        "title": "${this.fanBadge.title}",
-        "country_code": "${this.fanBadge.country_code}",
-        "url_logo": "${this.fanBadge.url_logo}",
-        "top_club": "${this.fanBadge.top_club}",
-        "color": "${this.fanBadge.color}"
-      }
+      "badge": $mapBadge
     }""";
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('user', map);
@@ -277,7 +289,10 @@ class User{
         currentUser.active = userMap['active'];
         currentUser.type = userMap['type'];
         if(userMap['badge'] != null) {
-          currentUser.fanBadge = FanBadge.getFromMap(userMap['badge']);
+          try {
+            currentUser.fanBadge = FanBadge.getFromMap(userMap['badge']);
+          }
+          catch(e){}
         }
       }
     }

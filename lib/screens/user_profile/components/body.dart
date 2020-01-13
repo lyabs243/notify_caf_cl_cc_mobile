@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/user_profile/components/user_badge.dart';
 import '../../../models/user.dart';
 import '../../../components/profil_avatar.dart';
 import '../../../models/drawer_item.dart';
@@ -146,7 +147,8 @@ class _BodyState extends State<Body>{
                       )
                     ],
                   ),
-                )
+                ),
+                UserBadge(this.widget._localization, this.widget._user, this.widget._currentUser)
               ],
             );
           }
