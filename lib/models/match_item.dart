@@ -10,6 +10,21 @@ class MatchItem{
   static final String URL_GET_FIXTURE_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/fixture/';
   static final String URL_GET_LATEST_RESULTS = 'http://notifygroup.org/notifyapp/api/index.php/competition/latest_results/';
 
+  static final String MATCH_STATUS_TYPE_PENDING = "0";
+  static final String MATCH_STATUS_TYPE_IN_PROGRESS = "1";
+  static final String MATCH_STATUS_TYPE_HALFTIME = "2";
+  static final String MATCH_STATUS_TYPE_FULLTIME = "3";
+  static final String MATCH_STATUS_TYPE_EXTRATIME = "4";
+  static final String MATCH_STATUS_TYPE_PENALTYKICK = "5";
+  static final String MATCH_STATUS_TYPE_REPORT = "6";
+  static final String MATCH_STATUS_TYPE_START_SECONDHALF = "7";
+  static final String MATCH_STATUS_TYPE_START_EXTRATIME = "8";
+  static final String MATCH_STATUS_TYPE_HALF_EXTRATIME = "9";
+  static final String MATCH_STATUS_TYPE_START_SECONDEXTRA = "10";
+  static final String MATCH_STATUS_TYPE_ENDEXTRATIME = "11";
+  static final String MATCH_STATUS_TYPE_LINEUP_AVAILABLE = "-10";
+  static final String MATCH_STATUS_TYPE_VIDEO_AVAILABLE = "-11";
+
   int id, teamAId, teamBId, teamA_goal, teamB_goal, team_a_penalty, team_b_penalty, idGroupA, idGroupB;
   String teamA_small, teamB_small, teamA, teamB, teamA_logo, teamB_logo, match_date, status;
   CompetitionItem competition;

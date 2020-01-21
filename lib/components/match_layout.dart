@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cafclcc/components/curve_painter.dart';
 import 'package:flutter_cafclcc/components/match_competition_painter.dart';
 import '../models/match_item.dart';
 import '../screens/match_details/match_details.dart';
@@ -100,7 +99,9 @@ class MatchLayoutState extends State<MatchLayout>{
                     ),
                     Container(
                       child: Text(
-                        matchItem.teamA_goal.toString()+' - '+matchItem.teamB_goal.toString(),
+                        (matchItem.status == MatchItem.MATCH_STATUS_TYPE_PENDING)?
+                        ' - ':
+                        (matchItem.teamA_goal.toString()+' - '+matchItem.teamB_goal.toString()),
                         textAlign: TextAlign.center,
                       ),
                     ),
