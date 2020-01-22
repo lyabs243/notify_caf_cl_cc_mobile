@@ -23,6 +23,7 @@
   "your_posts": "Your Posts",
   "news": "News",
   "add": "Add",
+  "cancel": "Cancel",
   "post": "Post",
   "add_post": "Add Post",
   "update_post": "Update Post",
@@ -142,5 +143,7 @@
   "points_small": "Pts",
   "today": "Today",
   "yesterday": "Yesterday",
-  "tomorrow": "Tomorrow"
+  "tomorrow": "Tomorrow",
+  "add_match_video": "Add match video",
+  "add_youtube_video_id": "Add a YouTube video id for this match"
 }
