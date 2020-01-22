@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
+import 'package:flutter_cafclcc/screens/competition/competition.dart';
 import '../../models/match_item.dart';
 import '../../models/edition_stage.dart';
 import 'components/header.dart';
@@ -75,6 +76,17 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                 ),
               ),
               actions: <Widget>[
+                IconButton(
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.white,
+                    ),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return new CompetitionPage(matchItem.competition, localization);
+                      }));
+                    }
+                ),
                 IconButton(
                     icon: Icon(
                       Icons.share,
