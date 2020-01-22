@@ -94,7 +94,7 @@ class _BodyState extends State<Body>{
           EmptyData(this.widget.localization):
           SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(5.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
