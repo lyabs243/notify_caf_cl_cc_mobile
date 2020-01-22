@@ -66,6 +66,7 @@ class _HeaderState extends State<Header>{
                           width: 100,
                           height: 80,
                         ),
+                        color: Colors.transparent,
                       ),
                       Padding(padding: EdgeInsets.all(4.0),),
                       Container(
@@ -98,6 +99,7 @@ class _HeaderState extends State<Header>{
                     children: <Widget>[
                       Card(
                         elevation: 10.0,
+                        color: Colors.transparent,
                         child: Container(
                           child: (matchItem.teamB_logo != null && matchItem.teamB_logo.length > 0)?
                           Image.network(matchItem.teamB_logo,fit: BoxFit.cover,):
