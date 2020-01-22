@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 List<String> languages = ['en', 'fr'];
 const LINK_TERMS_USE = 'http://www.notifygroup.org';
@@ -47,4 +48,19 @@ String convertDateToAbout(DateTime dateTime,Map localization){
     }
   }
   return result;
+}
+
+String formatDateTime(Map localization, DateTime dateTime, bool allDetails) {
+
+  if(DateTime.now().difference(dateTime).inDays == 0) {
+    return DateFormat("'${localization['today']},' h:mm a").format(dateTime);
+  }
+  else if(DateTime.now().difference(dateTime).inDays == 1) {
+    return DateFormat("'${localization['yesterday']},' h:mm a").format(dateTime);
+  }
+  else if(DateTime.now().difference(dateTime).inDays == -1) {
+    return DateFormat("'${localization['tomorrow']},' h:mm a").format(dateTime);
+  }
+
+  return new DateFormat('E MMM dd, yyyy ${(allDetails)? 'h:mm a' : ''}').format(dateTime);
 }

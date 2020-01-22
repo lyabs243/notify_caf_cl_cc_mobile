@@ -139,5 +139,8 @@
   "trophy": "Trophy",
   "red_card": "Red Card",
   "angry": "angry",
-  "points_small": "Pts"
+  "points_small": "Pts",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "tomorrow": "Tomorrow"
 }

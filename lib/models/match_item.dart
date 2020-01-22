@@ -26,7 +26,8 @@ class MatchItem{
   static final String MATCH_STATUS_TYPE_VIDEO_AVAILABLE = "-11";
 
   int id, teamAId, teamBId, teamA_goal, teamB_goal, team_a_penalty, team_b_penalty, idGroupA, idGroupB;
-  String teamA_small, teamB_small, teamA, teamB, teamA_logo, teamB_logo, match_date, status;
+  String teamA_small, teamB_small, teamA, teamB, teamA_logo, teamB_logo, match_status, status;
+  DateTime match_date;
   CompetitionItem competition;
   EditionStage editionStage;
 
@@ -34,7 +35,7 @@ class MatchItem{
       this.teamA_goal, this.teamB_goal, this.team_a_penalty,
       this.team_b_penalty, this.idGroupA, this.idGroupB, this.teamA_small,
       this.teamB_small, this.teamA, this.teamB, this.teamA_logo,
-      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage);
+      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage, this.match_status);
 
   static Future getCurrentMatchs(BuildContext context,int idCompetition, int page, {competitionType: 0}) async {
     List<MatchItem> matchs = [];
@@ -97,8 +98,14 @@ class MatchItem{
     String teamB = item['teamB'];
     String teamA_logo = item['teamA_logo'];
     String teamB_logo = item['teamB_logo'];
-    String match_date = item['match_date'];
+    String match_status = item['match_status'];
     String status = item['status'];
+
+    String format = 'yyyy-MM-dd H:mm:ss';
+    DateFormat formater = DateFormat(format);
+
+    DateTime match_date = formater.parse(
+        item['match_date']);
 
     EditionStage editionStage;
     int esId = int.parse(item['edition_stage']['id']);
@@ -113,9 +120,6 @@ class MatchItem{
     String cTrophy_icon_url = item['competition']['trophy_icon_url'];
     int cCategory = item['competition']['category'];
     String cDescription = item['competition']['description'];
-
-    String format = 'yyyy-MM-dd H:mm:ss';
-    DateFormat formater = DateFormat(format);
 
     DateTime cRegister_date = formater.parse(
         item['competition']['register_date']);
@@ -158,7 +162,8 @@ class MatchItem{
         match_date,
         status,
         competition,
-        editionStage);
+        editionStage,
+        match_status);
 
     return matchItem;
   }

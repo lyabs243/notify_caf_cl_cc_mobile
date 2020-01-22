@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/match_competition_painter.dart';
+import '../models/constants.dart' as constant;
 import '../models/match_item.dart';
 import '../screens/match_details/match_details.dart';
 
@@ -94,7 +95,7 @@ class MatchLayoutState extends State<MatchLayout>{
                 child: Column(
                   children: <Widget>[
                     Text(
-                      matchItem.match_date,
+                      constant.formatDateTime(localization, matchItem.match_date, false),
                       textScaleFactor: 0.8,
                     ),
                     Container(

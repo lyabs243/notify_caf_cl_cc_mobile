@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../models/constants.dart' as constant;
 import '../../../models/match_item.dart';
 
 class Header extends StatefulWidget{
@@ -41,7 +42,9 @@ class _HeaderState extends State<Header>{
           child: Column(
             children: <Widget>[
               Text(
-                matchItem.match_date,
+                (matchItem.status != MatchItem.MATCH_STATUS_TYPE_PENDING)?
+                matchItem.match_status:
+                constant.formatDateTime(localization, matchItem.match_date, true),
                 style: TextStyle(
                     color: Colors.white
                 ),
