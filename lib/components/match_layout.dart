@@ -97,6 +97,7 @@ class MatchLayoutState extends State<MatchLayout>{
                     Text(
                       constant.formatDateTime(localization, matchItem.match_date, false),
                       textScaleFactor: 0.8,
+                      textAlign: TextAlign.center,
                     ),
                     Container(
                       child: Text(

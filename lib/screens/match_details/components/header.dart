@@ -72,7 +72,6 @@ class _HeaderState extends State<Header>{
                         child: Text(
                           matchItem.teamA,
                           textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
                           textScaleFactor: 1.5,
                           style: TextStyle(
                               color: Colors.white
@@ -84,7 +83,9 @@ class _HeaderState extends State<Header>{
                   ),
                   Container(
                     child: Text(
-                      matchItem.teamA_goal.toString()+' - '+matchItem.teamB_goal.toString(),
+                      (matchItem.status == MatchItem.MATCH_STATUS_TYPE_PENDING)?
+                      ' - ':
+                      (matchItem.teamA_goal.toString()+' - '+matchItem.teamB_goal.toString()),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white
@@ -112,7 +113,6 @@ class _HeaderState extends State<Header>{
                         child: Text(
                           matchItem.teamB,
                           textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
                           textScaleFactor: 1.5,
                           style: TextStyle(
                               color: Colors.white
