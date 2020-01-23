@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player/youtube_player.dart';
 import '../models/match_item.dart';
 import '../models/match_video.dart';
@@ -154,7 +155,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
           YoutubePlayer(
             context: context,
             source: matchVideo.youtube_video,
-            autoPlay: true,
+            autoPlay: false,
             controlsColor: ControlsColor(
               progressBarPlayedColor: Theme.of(context).primaryColor,
               seekBarPlayedColor: Theme.of(context).primaryColor,
@@ -174,9 +175,10 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
               child: InkWell(
                 child: Image.asset('assets/play_video.png'),
                 onTap: (){
-                  setState(() {
+                  /*setState(() {
                     play = true;
-                  });
+                  });*/
+                  launch('https://www.youtube.com/embed/${matchVideo.youtube_video}');
                 },
               ),
             ),
