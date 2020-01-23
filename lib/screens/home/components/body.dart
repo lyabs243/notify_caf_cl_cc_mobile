@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
@@ -191,11 +192,13 @@ class _BodyState extends State<Body>{
           ),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context){
-                return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
-              }
-          ));
+          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context){
+                  return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
+                }
+            ));
+          });
         },
       ));
     }
@@ -234,11 +237,13 @@ class _BodyState extends State<Body>{
               ),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context){
-                    return MatchsList(this.widget.localization,null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
-                  }
-              ));
+              PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return MatchsList(this.widget.localization,null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
+                    }
+                ));
+              });
             },
           )
         ],

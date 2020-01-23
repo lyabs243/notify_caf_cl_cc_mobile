@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/competition_stage.dart';
 import '../../../models/match_item.dart';
 import '../../../components/empty_data.dart';
@@ -104,10 +105,12 @@ class _StageTabviewState extends State<StageTabview>{
                       ),
                       color: (selectedButton == 1)? Colors.white : Theme.of(context).primaryColor,
                       onPressed: (){
-                        setState(() {
-                          selectedButton = 1;
-                          isLoading = true;
-                          initMatchs();
+                        PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                          setState(() {
+                            selectedButton = 1;
+                            isLoading = true;
+                            initMatchs();
+                          });
                         });
                       },
                     ),
@@ -123,10 +126,12 @@ class _StageTabviewState extends State<StageTabview>{
                       ),
                       color: (selectedButton == 2)? Colors.white : Theme.of(context).primaryColor,
                       onPressed: (){
-                        setState(() {
-                          selectedButton = 2;
-                          isLoading = true;
-                          initMatchs();
+                        PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                          setState(() {
+                            selectedButton = 2;
+                            isLoading = true;
+                            initMatchs();
+                          });
                         });
                       },
                     ),
@@ -145,8 +150,10 @@ class _StageTabviewState extends State<StageTabview>{
                   ),
                   color: (selectedButton == 3)? Colors.white : Theme.of(context).primaryColor,
                   onPressed: (){
-                    setState(() {
-                      selectedButton = 3;
+                    PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                      setState(() {
+                        selectedButton = 3;
+                      });
                     });
                   },
                 ),

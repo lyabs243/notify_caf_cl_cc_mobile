@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/screens/news_details/news_details.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/news_item.dart';
 import '../../../models/constants.dart';
 
@@ -66,13 +67,15 @@ class TrendingNewsWidget extends StatelessWidget{
         ),
       ),
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context){
-                  return NewsDetails(this.localization, newsItem);
-                }
-            ));
+        PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context){
+                    return NewsDetails(this.localization, newsItem);
+                  }
+              ));
+        });
       },
     );
   }

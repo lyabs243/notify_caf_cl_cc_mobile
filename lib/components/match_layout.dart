@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/match_competition_painter.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../models/constants.dart' as constant;
 import '../models/match_item.dart';
 import '../screens/match_details/match_details.dart';
@@ -154,11 +155,13 @@ class MatchLayoutState extends State<MatchLayout>{
         ],
       ),
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context){
-              return MatchDetails(localization,matchItem);
-            }
-        ));
+        PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context){
+                return MatchDetails(localization,matchItem);
+              }
+          ));
+        });
       },
     );
   }

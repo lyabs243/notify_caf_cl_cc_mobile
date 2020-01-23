@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/screens/admin_panel/admin_panel.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/drawer_item.dart';
 import '../../../models/user.dart';
 import '../../../screens/login/login.dart';
@@ -129,8 +130,10 @@ class _HomeDrawerState extends State<HomeDrawer>{
 									),
 								),
 								onTap: (){
-									Navigator.pop(context);
-									onDrawerItemSelected(i);
+									PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+										Navigator.pop(context);
+										onDrawerItemSelected(i);
+									});
 								},
 								leading: (drawerItems[i].iconPath != null) ?
 									ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
@@ -213,19 +216,19 @@ class _HomeDrawerState extends State<HomeDrawer>{
 				break;
 			case 5: //click on profil
 				Navigator.push(
-						context,
-						MaterialPageRoute
-							(
-								builder: (BuildContext context){
-									return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
-								}
-						));
+							context,
+							MaterialPageRoute
+								(
+									builder: (BuildContext context){
+										return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
+									}
+				));
 				break;
 			case 6: //click on admin panel
 				Navigator.push(
 						context,
 						MaterialPageRoute
-						(
+							(
 								builder: (BuildContext context){
 									return AdminPanelPage(this.widget.localization);
 								}
@@ -233,13 +236,13 @@ class _HomeDrawerState extends State<HomeDrawer>{
 				break;
 			case 7: //click on login
 				Navigator.pushReplacement(
-					context,
-					MaterialPageRoute
-					(
-							builder: (BuildContext context){
-								return Login();
-							}
-					));
+						context,
+						MaterialPageRoute
+							(
+								builder: (BuildContext context){
+									return Login();
+								}
+						));
 				break;
 			case 8: //click on logout
 				Navigator.pushReplacement(
@@ -294,22 +297,26 @@ class _HomeDrawerState extends State<HomeDrawer>{
 					  switch(item.id){
 						  case 0://champoions league
 							case 1://confederation cup
-							  Navigator.push(
-								  context,
-                  MaterialPageRoute(
-									  builder: (BuildContext context){
-										  return CompetitionPage(competitions[item.id],this.widget.localization);
-										}
-									));
+							  PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value){
+									Navigator.push(
+											context,
+											MaterialPageRoute(
+													builder: (BuildContext context){
+														return CompetitionPage(competitions[item.id],this.widget.localization);
+													}
+											));
+								});
 							  break;
 							case 2://more
-							  Navigator.pushReplacement(
-								  context,
-									NoAnimationMaterialPageRoute(
-									  builder: (BuildContext context){
-										  return HomePage(this.widget.localization,fragment: Fragment.COMPETITION_LIST,);
-										}
-									));
+								PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value){
+									Navigator.pushReplacement(
+											context,
+											NoAnimationMaterialPageRoute(
+													builder: (BuildContext context){
+														return HomePage(this.widget.localization,fragment: Fragment.COMPETITION_LIST,);
+													}
+											));
+								});
 								break;
 							}
 						}

@@ -14,6 +14,7 @@ import 'package:flutter_cafclcc/screens/community/components/all_posts.dart';
 import 'package:flutter_cafclcc/screens/post_details/post_details.dart';
 import 'package:flutter_cafclcc/screens/community/components/signal_post_dialog.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
@@ -287,9 +288,11 @@ class _PostWidgetState extends State<PostWidget> {
           ),
           onTap: () {
             if(this.widget.clickable) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return new PostDetails(localization, post);
-              }));
+              PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return new PostDetails(localization, post);
+                }));
+              });
             }
           },
         ),

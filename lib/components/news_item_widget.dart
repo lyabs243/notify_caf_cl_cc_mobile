@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../models/news_item.dart';
 import '../models/constants.dart';
 import '../screens/news_details/news_details.dart';
@@ -79,13 +80,15 @@ class NewsItemWidget extends StatelessWidget {
         ),
       ),
       onTap: (){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context){
-                  return NewsDetails(this.localization, newsItem);
-                }
-            ));
+        PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context){
+                    return NewsDetails(this.localization, newsItem);
+                  }
+              ));
+        });
       },
     );
   }

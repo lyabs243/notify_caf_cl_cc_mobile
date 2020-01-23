@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/user.dart';
 import '../../login/login.dart';
 import '../../user_profile/user_profile.dart';
@@ -43,27 +44,31 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
           ),
           tooltip: localization['community'],
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context){
-                      return Community(this.localization);
-                    }
-                ));
+            PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context){
+                        return Community(this.localization);
+                      }
+                  ));
+            });
           },
         ),
         Padding(padding: EdgeInsets.only(right: 5.0, left: 5.0),),
         new InkWell(
           child: ProfilAvatar(user,width: 40.0,height: 40.0),
           onTap: (){
-            Navigator.push(
-                context,
-                MaterialPageRoute
-                  (
-                    builder: (BuildContext context){
-                      return UserProfile(this.user,this.user,localization);
-                    }
-                ));
+            PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute
+                    (
+                      builder: (BuildContext context){
+                        return UserProfile(this.user,this.user,localization);
+                      }
+                  ));
+            });
           },
         ),
         Padding(padding: EdgeInsets.only(right: 8.0),),

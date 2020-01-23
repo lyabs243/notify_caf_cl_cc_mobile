@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../models/competition_item.dart';
 import '../../models/drawer_item.dart';
 import '../../components/curve_painter.dart';
@@ -131,40 +132,50 @@ class _CompetitionPageState extends State<CompetitionPage>{
                     onTap: (){
                       switch(items[i].id){
                         case 1: //live
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context){
-                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.LIVE,);
-                              }
-                          ));
+                          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context){
+                                  return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.LIVE,);
+                                }
+                            ));
+                          });
                           break;
                         case 2: //last result
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context){
-                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.RESULT,);
-                              }
-                          ));
+                          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context){
+                                  return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.RESULT,);
+                                }
+                            ));
+                          });
                           break;
                         case 3: //fixture
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context){
-                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.FIXTURE,);
-                              }
-                          ));
+                          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context){
+                                  return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.FIXTURE,);
+                                }
+                            ));
+                          });
                           break;
                         case 4: //stages
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context){
-                              return new CompetitionStage(this.widget.localization,this.widget.competitionItem);
-                            },
-                            fullscreenDialog: true,
-                          ));
+                          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context){
+                                return new CompetitionStage(this.widget.localization,this.widget.competitionItem);
+                              },
+                              fullscreenDialog: true,
+                            ));
+                          });
                           break;
                         case 5: //scorers
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context){
-                              return new CompetitionScorers(this.widget.localization, this.widget.competitionItem);
-                            },
-                          ));
+                          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context){
+                                return new CompetitionScorers(this.widget.localization, this.widget.competitionItem);
+                              },
+                            ));
+                          });
                           break;
                       }
                     },
