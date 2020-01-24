@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 List<String> languages = ['en', 'fr'];
 const LINK_TERMS_USE = 'http://www.notifygroup.org';
+const APP_PACKAGE = 'org.notifygroup.afrofoot';
 
 /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
 Color fromHex(String hexString) {

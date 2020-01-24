@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/user_suggest.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../models/constants.dart' as constant;
 
 class SuggestUserDialog extends StatelessWidget {
 
@@ -87,7 +90,18 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
+                      if(this.suggestType == SuggestType.SUGGEST_RATE_APP) {
+                        launch(
+                            'https://play.google.com/store/apps/details?id=${constant
+                                .APP_PACKAGE}');
+                        this.userSuggest.canSuggestRate = false;
+                      }
+                      else { //suggest share app
+                        Share.share(localization['text_share_app']);
+                        this.userSuggest.canSuggestShare = false;
+                      }
                       updateSuggestValue();
+                      Navigator.pop(context);
                     },
                   ),
                   RaisedButton(
@@ -100,6 +114,7 @@ class SuggestUserDialog extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
                       updateSuggestValue();
+                      Navigator.pop(context);
                     },
                   ),
                   RaisedButton(
@@ -111,6 +126,12 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
+                      if(this.suggestType == SuggestType.SUGGEST_RATE_APP) {
+                        this.userSuggest.canSuggestRate = false;
+                      }
+                      else {
+                        this.userSuggest.canSuggestShare = false;
+                      }
                       updateSuggestValue();
                       Navigator.pop(context);
                     },
