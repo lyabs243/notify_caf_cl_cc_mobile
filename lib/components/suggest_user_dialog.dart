@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/user_suggest.dart';
 
 class SuggestUserDialog extends StatelessWidget {
 
   Map localization;
   SuggestType suggestType;
+  UserSuggest userSuggest;
 
-  SuggestUserDialog(this.localization, this.suggestType);
+  SuggestUserDialog(this.localization, this.suggestType, this.userSuggest);
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +87,7 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
+                      updateSuggestValue();
                     },
                   ),
                   RaisedButton(
@@ -96,6 +99,7 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
+                      updateSuggestValue();
                     },
                   ),
                   RaisedButton(
@@ -107,6 +111,7 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
+                      updateSuggestValue();
                       Navigator.pop(context);
                     },
                   )
@@ -116,6 +121,13 @@ class SuggestUserDialog extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  updateSuggestValue() {
+    userSuggest.lastSuggestion = (this.suggestType == SuggestType.SUGGEST_RATE_APP)?
+    UserSuggest.SUGGESTION_RATE : UserSuggest.SUGGESTION_SHARE;
+
+    UserSuggest.setSuggestUserDetails(userSuggest);
   }
 
 }
