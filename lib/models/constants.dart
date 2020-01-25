@@ -53,13 +53,17 @@ String convertDateToAbout(DateTime dateTime,Map localization){
 
 String formatDateTime(Map localization, DateTime dateTime, bool allDetails) {
 
-  if(DateTime.now().difference(dateTime).inDays == 0) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final yesterday = DateTime(now.year, now.month, now.day - 1);
+  final tomorrow = DateTime(now.year, now.month, now.day + 1);
+
+  final aDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
+  if(aDate == today) {
     return DateFormat("'${localization['today']},' h:mm a").format(dateTime);
-  }
-  else if(DateTime.now().difference(dateTime).inDays == 1) {
+  } else if (aDate == yesterday) {
     return DateFormat("'${localization['yesterday']},' h:mm a").format(dateTime);
-  }
-  else if(DateTime.now().difference(dateTime).inDays == -1) {
+  } else if (aDate == tomorrow) {
     return DateFormat("'${localization['tomorrow']},' h:mm a").format(dateTime);
   }
 
