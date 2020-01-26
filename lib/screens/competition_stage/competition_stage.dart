@@ -1,8 +1,10 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'components/stage_tabview.dart';
 import '../../components/empty_data.dart';
 import '../../models/competition_item.dart';
 import '../../models/competition_stage.dart' as stage;
+import '../../models/constants.dart' as constant;
 
 class CompetitionStage extends StatefulWidget{
 
@@ -27,6 +29,8 @@ class _CompetitionStageState extends State<CompetitionStage>{
   List<Widget> tabViews = [];
   bool isLoading = true;
 
+  AdmobBanner admobBanner;
+
   List<int> selectedGroups = [];
   List<int> selectedButtons = [];  //to know zhich button between (result,schedule and table) is selected
 
@@ -38,6 +42,13 @@ class _CompetitionStageState extends State<CompetitionStage>{
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constant.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     initData();
   }
   
@@ -63,7 +74,18 @@ class _CompetitionStageState extends State<CompetitionStage>{
             ),
           ),
         ),
-        body: TabBarView(children: tabViews),
+        body: Column(
+          children: <Widget>[
+            (constant.canShowAds)?
+            Container(
+              child: admobBanner,
+            ): Container(),
+            Container(
+              height: MediaQuery.of(context).size.height/1.37,
+              child: TabBarView(children: tabViews),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
@@ -10,8 +11,17 @@ class NewsDetails extends StatelessWidget {
 
   Map localization;
   NewsItem newsItem;
+  AdmobBanner admobBanner;
 
-  NewsDetails(this.localization, this.newsItem);
+  NewsDetails(this.localization, this.newsItem) {
+    Admob.initialize(ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +49,11 @@ class NewsDetails extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(top: 8.0),),
+                (canShowAds)?
+                Container(
+                  margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                  child: admobBanner,
+                ): Container(),
                 Container(
                   alignment: Alignment.bottomLeft,
                   child: Row(

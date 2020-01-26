@@ -1,8 +1,10 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../models/competition_item.dart';
 import '../../models/scorer_edition.dart';
 import '../../components/empty_data.dart';
+import '../../models/constants.dart' as constant;
 
 class CompetitionScorers extends StatefulWidget{
 
@@ -24,6 +26,7 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
   CompetitionItem competitionItem;
 
   List<ScorerEdition> scorerItems = [];
+  AdmobBanner admobBanner;
 
   bool isLoading = true;
   int page = 1;
@@ -34,6 +37,13 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constant.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     refreshController = new RefreshController(initialRefresh: false);
     getScorers();
   }
@@ -138,6 +148,12 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
 
   List<Widget> getScorersRows(BuildContext context){
     List<Widget> scorerRows = [];
+    //add ads
+    scorerRows.add((constant.canShowAds)?
+    Container(
+      margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+      child: admobBanner,
+    ): Container());
     //add header
     scorerRows.add(Container(
       color: Theme.of(context).primaryColor,

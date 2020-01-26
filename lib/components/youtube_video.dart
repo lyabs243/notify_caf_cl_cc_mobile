@@ -67,91 +67,92 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: <Widget>[
-          (currentUser != null && currentUser.type == User.USER_TYPE_ADMIN)?
-          RaisedButton(
-            child: Text(
-              localization['add_match_video'],
-              style: TextStyle(
-                  color: Colors.white
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: <Widget>[
+            (currentUser != null && currentUser.type == User.USER_TYPE_ADMIN)?
+            RaisedButton(
+              child: Text(
+                localization['add_match_video'],
+                style: TextStyle(
+                    color: Colors.white
+                ),
               ),
-            ),
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(20.0)), //this right here
-                      child: Container(
-                        height: 150,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width * 80 / 100,
-                              child: new TextField(
-                                decoration: new InputDecoration(
-                                  hintText: localization['add_youtube_video_id'],
-                                ),
-                                maxLines: 1,
-                                controller: _controller,
-                                maxLength: 100,
-                                onChanged: (val){
-                                  setState((){
-                                    youtubeVideoId = val;
-                                  });
-                                },
-                              ),
-                            ),
-                            Row(
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(20.0)), //this right here
+                        child: Container(
+                          height: 150,
+                          child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
-                                RaisedButton(
-                                  child: Text(
-                                    localization['add'],
-                                    style: TextStyle(
-                                      color: Colors.white
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 80 / 100,
+                                  child: new TextField(
+                                    decoration: new InputDecoration(
+                                      hintText: localization['add_youtube_video_id'],
                                     ),
+                                    maxLines: 1,
+                                    controller: _controller,
+                                    maxLength: 100,
+                                    onChanged: (val){
+                                      setState((){
+                                        youtubeVideoId = val;
+                                      });
+                                    },
                                   ),
-                                  color: Theme.of(context).primaryColor,
-                                  onPressed: () {
-                                    if(youtubeVideoId.length > 0) {
-                                      addVideo();
-                                    }
-                                  },
                                 ),
-                                RaisedButton(
-                                  child: Text(
-                                    localization['cancel'],
-                                    style: TextStyle(
-                                        color: Colors.white
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    RaisedButton(
+                                      child: Text(
+                                        localization['add'],
+                                        style: TextStyle(
+                                            color: Colors.white
+                                        ),
+                                      ),
+                                      color: Theme.of(context).primaryColor,
+                                      onPressed: () {
+                                        if(youtubeVideoId.length > 0) {
+                                          addVideo();
+                                        }
+                                      },
                                     ),
-                                  ),
-                                  color: Theme.of(context).primaryColor,
-                                  onPressed: () {
-                                    _controller.clear();
-                                    youtubeVideoId = '';
-                                    Navigator.pop(context);
-                                  },
+                                    RaisedButton(
+                                      child: Text(
+                                        localization['cancel'],
+                                        style: TextStyle(
+                                            color: Colors.white
+                                        ),
+                                      ),
+                                      color: Theme.of(context).primaryColor,
+                                      onPressed: () {
+                                        _controller.clear();
+                                        youtubeVideoId = '';
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
                                 )
-                              ],
-                            )
-                            ]
+                              ]
                           ),
-                      ),
-                    );
-                  });
-            },
-          ): Container(),
-          (videoPreview.length == 0)?
-          EmptyData(localization) :
-          (/*(play && matchVideo.youtube_video.length > 0)?
+                        ),
+                      );
+                    });
+              },
+            ): Container(),
+            (videoPreview.length == 0)?
+            EmptyData(localization) :
+            (/*(play && matchVideo.youtube_video.length > 0)?
           YoutubePlayer(
             context: context,
             source: matchVideo.youtube_video,
@@ -162,28 +163,29 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
             ),
             quality: YoutubeQuality.LOW,
           ) :*/
-          new Container(
-            alignment: Alignment.center,
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new NetworkImage(videoPreview),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              height: MediaQuery.of(context).size.height /3,
-              child: InkWell(
-                child: Image.asset('assets/play_video.png'),
-                onTap: (){
-                  /*setState(() {
+                new Container(
+                  alignment: Alignment.center,
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new NetworkImage(videoPreview),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height /3,
+                    child: InkWell(
+                      child: Image.asset('assets/play_video.png'),
+                      onTap: (){
+                        /*setState(() {
                     play = true;
                   });*/
-                  launch('https://www.youtube.com/embed/${matchVideo.youtube_video}');
-                },
-              ),
-            ),
-          )),
-        ],
+                        launch('https://www.youtube.com/embed/${matchVideo.youtube_video}');
+                      },
+                    ),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }

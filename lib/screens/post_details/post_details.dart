@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/comment_widget.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
@@ -9,6 +10,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:toast/toast.dart';
 import '../../components/alert_dialog.dart' as alert;
+import '../../models/constants.dart' as constant;
 
 class PostDetails extends StatefulWidget {
 
@@ -39,11 +41,20 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
   User currentUser;
   TextEditingController _controller;
 
+  AdmobBanner admobBanner;
+
   _PostDetailsState(this.localization, this.post);
 
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constant.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     refreshController = new RefreshController(initialRefresh: false);
     _controller = new TextEditingController();
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
@@ -98,7 +109,16 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                               comments[index - 2].subscriber.fanBadge;
                         }
                         return (index == 0)?
-                        PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,) :
+                        Column(
+                          children: <Widget>[
+                            PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,),
+                            (constant.canShowAds)?
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                              child: admobBanner,
+                            ): Container()
+                          ],
+                        ) :
                         ((index == 1)?
                         Container(
                           padding: EdgeInsets.all(8.0),

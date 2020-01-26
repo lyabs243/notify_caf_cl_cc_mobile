@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/screens/user_profile/components/user_badge.dart';
 import '../../../models/user.dart';
@@ -37,6 +38,8 @@ class _BodyState extends State<Body>{
 
   bool isCurrentUser = false;
 
+  AdmobBanner admobBanner;
+
   @override
   void setState(fn) {
     if(mounted){
@@ -47,6 +50,13 @@ class _BodyState extends State<Body>{
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constants.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constants.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     initData();
   }
 
@@ -148,7 +158,12 @@ class _BodyState extends State<Body>{
                     ],
                   ),
                 ),
-                UserBadge(this.widget._localization, this.widget._user, this.widget._currentUser, deleteBadge)
+                UserBadge(this.widget._localization, this.widget._user, this.widget._currentUser, deleteBadge),
+                (constants.canShowAds)?
+                Container(
+                  margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                  child: admobBanner,
+                ): Container()
               ],
             );
           }

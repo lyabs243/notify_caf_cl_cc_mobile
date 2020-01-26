@@ -1,8 +1,10 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../../models/constants.dart' as constant;
 
 class AllPosts extends StatefulWidget {
 
@@ -27,12 +29,20 @@ class _AllPostsState extends State<AllPosts> {
   RefreshController refreshController;
   bool isPageRefresh = false, isLoadPage = true;
   int page = 1;
+  AdmobBanner admobBanner;
 
   _AllPostsState(this.localization, this.activeSubscriber, this.idSubscriber);
 
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constant.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.LARGE_BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     refreshController = new RefreshController(initialRefresh: false);
     if(this.posts.length == 0) {
       initItems();
@@ -75,7 +85,16 @@ class _AllPostsState extends State<AllPosts> {
           itemCount: posts.length,
           padding: EdgeInsets.all(8.0),
           itemBuilder: (context, index) {
-            return PostWidget(localization, posts[index]);
+            return Column(
+              children: <Widget>[
+                (constant.canShowAds && (index - 1 == 0 || (index - 1) % 10 == 0))?
+                Container(
+                  margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                  child: admobBanner,
+                ): Container(),
+                PostWidget(localization, posts[index]),
+              ],
+            );
           }
       ));
   }
@@ -119,6 +138,12 @@ class _AllPostsState extends State<AllPosts> {
     List<Post> postItems = [];
     postItems = await Post.getPosts(context, activeSubscriber, page, idSubscriber: idSubscriber);
     if(postItems.length > 0){
+      admobBanner = AdmobBanner(
+        adUnitId: constant.getAdmobBannerId(),
+        adSize: AdmobBannerSize.LARGE_BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+        },
+      );
       setState(() {
         posts.addAll(postItems);
         page++;

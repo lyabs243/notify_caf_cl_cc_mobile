@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
@@ -9,6 +10,7 @@ import '../../components/match_actions_layout.dart';
 import '../../components/match_lineup_layout.dart';
 import '../../components/youtube_video.dart';
 import '../../components/competition_table_layout.dart';
+import '../../models/constants.dart' as constant;
 
 class MatchDetails extends StatefulWidget{
 
@@ -32,6 +34,8 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
   List<Widget> tabViews = [];
   List<Tab> tabs = [];
+
+  AdmobBanner admobBanner;
   
   TabController _controller;
 
@@ -40,6 +44,13 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constant.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     initTabsItems();
     initTabs();
     initTabsViews();
@@ -115,12 +126,21 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
             )
           ];
         },
-        body: new Container(
-          height: MediaQuery.of(context).size.height/2.8,
-          child: new TabBarView(
-            controller: _controller,
-            children: tabViews,
-          ),
+        body: Column(
+          children: <Widget>[
+            (constant.canShowAds)?
+            Container(
+              margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+              child: admobBanner,
+            ): Container(),
+            new Container(
+              height: MediaQuery.of(context).size.height/2.8,
+              child: new TabBarView(
+                controller: _controller,
+                children: tabViews,
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -1,9 +1,11 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../models/competition_item.dart';
 import '../../models/match_item.dart';
 import '../../components/match_layout.dart';
 import '../../components/empty_data.dart';
+import '../../models/constants.dart' as constants;
 
 class MatchsList extends StatefulWidget{
 
@@ -32,6 +34,7 @@ class _MatchListState extends State<MatchsList>{
   TypeList typeList;
   int idCompetition = 0;
   String title = '';
+  AdmobBanner admobBanner;
 
   _MatchListState(this.competitionItem,this.idCompetitionType,this.typeList);
 
@@ -45,6 +48,13 @@ class _MatchListState extends State<MatchsList>{
   @override
   void initState() {
     super.initState();
+    Admob.initialize(constants.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constants.getAdmobBannerId(),
+      adSize: AdmobBannerSize.LARGE_BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     refreshController = new RefreshController(initialRefresh: false);
     if(competitionItem != null){
       idCompetition = competitionItem.id;
@@ -101,9 +111,18 @@ class _MatchListState extends State<MatchsList>{
               itemCount: list.length,
               padding: EdgeInsets.all(4.0),
               itemBuilder: (context,i){
-                return Card(
-                  child: MatchLayout(this.widget.localization, list[i]),
-                  elevation: 8.0,
+                return Column(
+                  children: <Widget>[
+                    (constants.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                      child: admobBanner,
+                    ): Container(),
+                    Card(
+                      child: MatchLayout(this.widget.localization, list[i]),
+                      elevation: 8.0,
+                    )
+                  ],
                 );
               }
           ),
@@ -164,6 +183,12 @@ class _MatchListState extends State<MatchsList>{
     else
       matchItems = await MatchItem.getLatestResults(context, idCompetition, page, competitionType: idCompetitionType);
     if(matchItems.length > 0){
+      admobBanner = AdmobBanner(
+        adUnitId: constants.getAdmobBannerId(),
+        adSize: AdmobBannerSize.LARGE_BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+        },
+      );
       setState(() {
         list.addAll(matchItems);
         page++;

@@ -48,6 +48,8 @@ class _BodyState extends State<Body>{
   List<Widget> resultWidgets = [];
   List<Widget> trendingNews = [];
 
+  AdmobBanner admobBanner;
+
   _BodyState(this.fragment,this.competitionItem);
 
   @override
@@ -55,6 +57,12 @@ class _BodyState extends State<Body>{
     // TODO: implement initState
     super.initState();
     Admob.initialize(constant.ADMOB_APP_ID);
+    admobBanner = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.LARGE_BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
     if(this.fragment == Fragment.HOME) {
       refreshController = new RefreshController(initialRefresh: false);
       homeInfos = new HomeInfos();
@@ -123,13 +131,7 @@ class _BodyState extends State<Body>{
                   (constant.canShowAds)?
                   Container(
                     margin: EdgeInsets.only(bottom: 20.0),
-                    child: AdmobBanner(
-                      adUnitId: constant.getAdmobBannerId(),
-                      adSize: AdmobBannerSize.LARGE_BANNER,
-                      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-                            print('New Admob BANNER Ad loaded!');
-                      },
-                    ),
+                    child: admobBanner,
                   ) : Container(),
                   Card(
                     elevation: 10.0,
