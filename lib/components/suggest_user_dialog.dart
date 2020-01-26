@@ -18,7 +18,7 @@ class SuggestUserDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(
           borderRadius:
-          BorderRadius.circular(20.0)),
+          BorderRadius.circular(10.0)),
       child: Container(
         padding: EdgeInsets.all(4.0),
         height: 200,
@@ -79,62 +79,74 @@ class SuggestUserDialog extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  RaisedButton(
-                    child: Text(
-                      (this.suggestType == SuggestType.SUGGEST_RATE_APP)?
-                      localization['rate']:
-                      localization['share'],
-                      style: TextStyle(
-                          color: Colors.white
+                  Container(
+                    width: MediaQuery.of(context).size.width /4,
+                    child: RaisedButton(
+                      child: Text(
+                        (this.suggestType == SuggestType.SUGGEST_RATE_APP)?
+                        localization['rate']:
+                        localization['share'],
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
                       ),
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        if(this.suggestType == SuggestType.SUGGEST_RATE_APP) {
+                          launch(
+                              'https://play.google.com/store/apps/details?id=${constant
+                                  .APP_PACKAGE}');
+                          this.userSuggest.canSuggestRate = false;
+                        }
+                        else { //suggest share app
+                          Share.share(localization['text_share_app']);
+                          this.userSuggest.canSuggestShare = false;
+                        }
+                        updateSuggestValue();
+                        Navigator.pop(context);
+                      },
                     ),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      if(this.suggestType == SuggestType.SUGGEST_RATE_APP) {
-                        launch(
-                            'https://play.google.com/store/apps/details?id=${constant
-                                .APP_PACKAGE}');
-                        this.userSuggest.canSuggestRate = false;
-                      }
-                      else { //suggest share app
-                        Share.share(localization['text_share_app']);
-                        this.userSuggest.canSuggestShare = false;
-                      }
-                      updateSuggestValue();
-                      Navigator.pop(context);
-                    },
                   ),
-                  RaisedButton(
-                    child: Text(
-                      localization['remind_later'],
-                      style: TextStyle(
-                          color: Colors.white
+                  Container(
+                    width: MediaQuery.of(context).size.width /4,
+                    child: RaisedButton(
+                      child: Text(
+                        localization['remind_later'],
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
                       ),
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        updateSuggestValue();
+                        Navigator.pop(context);
+                      },
                     ),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      updateSuggestValue();
-                      Navigator.pop(context);
-                    },
                   ),
-                  RaisedButton(
-                    child: Text(
-                      localization['not_show_again'],
-                      style: TextStyle(
-                          color: Colors.white
+                  Container(
+                    width: MediaQuery.of(context).size.width /4,
+                    child: RaisedButton(
+                      child: Text(
+                        localization['not_show_again'],
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
                       ),
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        if(this.suggestType == SuggestType.SUGGEST_RATE_APP) {
+                          this.userSuggest.canSuggestRate = false;
+                        }
+                        else {
+                          this.userSuggest.canSuggestShare = false;
+                        }
+                        updateSuggestValue();
+                        Navigator.pop(context);
+                      },
                     ),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      if(this.suggestType == SuggestType.SUGGEST_RATE_APP) {
-                        this.userSuggest.canSuggestRate = false;
-                      }
-                      else {
-                        this.userSuggest.canSuggestShare = false;
-                      }
-                      updateSuggestValue();
-                      Navigator.pop(context);
-                    },
                   )
                 ],
               )
