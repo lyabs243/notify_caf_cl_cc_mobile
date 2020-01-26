@@ -50,81 +50,89 @@ class _HeaderState extends State<Header>{
                 ),
               ),
               Padding(padding: EdgeInsets.all(4.0),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Card(
-                        elevation: 10.0,
-                        child: Container(
-                          child: (matchItem.teamA_logo != null && matchItem.teamA_logo.length > 0)?
-                          Image.network(matchItem.teamA_logo,fit: BoxFit.cover,):
-                          Image.asset(
-                              'assets/icons/privacy.png'
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Card(
+                          elevation: 10.0,
+                          child: Container(
+                            child: (matchItem.teamA_logo != null && matchItem.teamA_logo.length > 0)?
+                            Image.network(matchItem.teamA_logo,fit: BoxFit.cover,):
+                            Image.asset(
+                                'assets/icons/privacy.png'
+                            ),
+                            width: 100,
+                            height: 80,
                           ),
-                          width: 100,
-                          height: 80,
+                          color: Colors.transparent,
                         ),
-                        color: Colors.transparent,
-                      ),
-                      Padding(padding: EdgeInsets.all(4.0),),
-                      Container(
-                        child: Text(
-                          matchItem.teamA,
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.5,
-                          style: TextStyle(
-                              color: Colors.white
+                        Padding(padding: EdgeInsets.all(4.0),),
+                        Container(
+                          child: Text(
+                            matchItem.teamA,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            textScaleFactor: 1.5,
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
                           ),
+                          width: MediaQuery.of(context).size.width/3,
                         ),
-                        width: MediaQuery.of(context).size.width/3,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    child: Text(
-                      (matchItem.status == MatchItem.MATCH_STATUS_TYPE_PENDING)?
-                      ' - ':
-                      (matchItem.teamA_goal.toString()+' - '+matchItem.teamB_goal.toString()),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white
-                      ),
-                      textScaleFactor: 2,
+                      ],
                     ),
-                    width: MediaQuery.of(context).size.width/6,
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Card(
-                        elevation: 10.0,
-                        color: Colors.transparent,
-                        child: Container(
-                          child: (matchItem.teamB_logo != null && matchItem.teamB_logo.length > 0)?
-                          Image.network(matchItem.teamB_logo,fit: BoxFit.cover,):
-                          Image.asset(
-                              'assets/icons/privacy.png'
-                          ),
-                          width: 100,
-                          height: 80,
+                    Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.of(context).size.height/5,
+                      child: Text(
+                        (matchItem.status == MatchItem.MATCH_STATUS_TYPE_PENDING)?
+                        ' - ':
+                        (matchItem.teamA_goal.toString()+' - '+matchItem.teamB_goal.toString()),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white
                         ),
+                        textScaleFactor: 2,
                       ),
-                      Padding(padding: EdgeInsets.all(4.0),),
-                      Container(
-                        child: Text(
-                          matchItem.teamB,
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.5,
-                          style: TextStyle(
-                              color: Colors.white
+                      width: MediaQuery.of(context).size.width/6,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Card(
+                          elevation: 10.0,
+                          color: Colors.transparent,
+                          child: Container(
+                            child: (matchItem.teamB_logo != null && matchItem.teamB_logo.length > 0)?
+                            Image.network(matchItem.teamB_logo,fit: BoxFit.cover,):
+                            Image.asset(
+                                'assets/icons/privacy.png'
+                            ),
+                            width: 100,
+                            height: 80,
                           ),
                         ),
-                        width: MediaQuery.of(context).size.width/3,
-                      ),
-                    ],
-                  ),
-                ],
+                        Padding(padding: EdgeInsets.all(4.0),),
+                        Container(
+                          child: Text(
+                            matchItem.teamB,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            textScaleFactor: 1.5,
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                          ),
+                          width: MediaQuery.of(context).size.width/3,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               (matchItem.team_a_penalty > 0 || matchItem.team_b_penalty > 0)?
               Container(

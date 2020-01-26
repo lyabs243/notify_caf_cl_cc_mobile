@@ -66,7 +66,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
               pinned: true,
               snap: false,
               floating: true,
-              expandedHeight: 220.0,
+              expandedHeight: MediaQuery.of(context).size.height / 2.8,
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
                   children: <Widget>[
