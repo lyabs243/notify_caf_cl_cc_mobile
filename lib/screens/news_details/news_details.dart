@@ -28,11 +28,7 @@ class NewsDetails extends StatelessWidget {
               floating: true,
               expandedHeight: MediaQuery.of(context).size.height / 3.45,
               flexibleSpace: FlexibleSpaceBar(
-                background: Column(
-                  children: <Widget>[
-                    Header(localization, newsItem)
-                  ],
-                ),
+                background: Header(localization, newsItem)
               ),
             ),
           ];
