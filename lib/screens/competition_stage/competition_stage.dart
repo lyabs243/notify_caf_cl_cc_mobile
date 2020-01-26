@@ -74,18 +74,12 @@ class _CompetitionStageState extends State<CompetitionStage>{
             ),
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            (constant.canShowAds)?
-            Container(
-              child: admobBanner,
-            ): Container(),
-            Container(
-              height: MediaQuery.of(context).size.height/1.37,
-              child: TabBarView(children: tabViews),
-            )
-          ],
-        ),
+        body: TabBarView(children: tabViews),
+        bottomSheet: (constant.canShowAds)?
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: admobBanner,
+        ): Container(),
       ),
     );
   }

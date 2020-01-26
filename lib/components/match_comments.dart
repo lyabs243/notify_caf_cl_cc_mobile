@@ -151,7 +151,11 @@ class _MatchCommentsState extends State<MatchComments>{
                     user.id_subscriber = comments[index].subscriber.id_subscriber;
                     user.full_name = comments[index].subscriber.full_name;
                     user.fanBadge = comments[index].subscriber.fanBadge;
-                    return CommentWidget(comments[index], user, currentUser, localization, deleteComment);
+                    return Container(
+                      child: CommentWidget(comments[index], user, currentUser, localization, deleteComment),
+                      margin: EdgeInsets.only(bottom: (index == comments.length-1)?
+                      MediaQuery.of(context).size.height / 12 : 0.0),
+                    );
                   }
               ),
             )

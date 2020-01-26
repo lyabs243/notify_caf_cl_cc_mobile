@@ -126,23 +126,16 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
             )
           ];
         },
-        body: Column(
-          children: <Widget>[
-            (constant.canShowAds)?
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-              child: admobBanner,
-            ): Container(),
-            new Container(
-              height: MediaQuery.of(context).size.height/2.8,
-              child: new TabBarView(
+        body: new TabBarView(
                 controller: _controller,
                 children: tabViews,
               ),
-            )
-          ],
-        ),
       ),
+      bottomSheet: (constant.canShowAds)?
+      Container(
+        width: MediaQuery.of(context).size.width,
+        child: admobBanner,
+      ): Container(),
     );
   }
 
