@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'models/localizations.dart';
 import 'theme/style.dart';
@@ -6,8 +7,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'models/user.dart';
 import 'screens/home/home.dart';
 import 'package:flutter/services.dart';
+//import 'package:admob_flutter/admob_flutter.dart' as adMob;
+import 'models/constants.dart' as constant;
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
 
@@ -19,6 +24,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    Admob.initialize(constant.ADMOB_APP_ID);
     return MaterialApp(
       localizationsDelegates: [
         MyLocalizationsDelegate(),

@@ -36,6 +36,7 @@ dependencies:
   intl: ^0.16.0
   bubble: ^1.1.9+1
   share: ^0.6.3+5
+  admob_flutter: ^0.3.4
   flutter_localizations:
     sdk: flutter
 

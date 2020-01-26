@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
@@ -13,6 +14,7 @@ import './../../../components/empty_data.dart';
 import '../../matchs_list/matchs_list.dart';
 import 'trending_news_widget.dart';
 import '../../news_list/news_list.dart';
+import '../../../models/constants.dart' as constant;
 
 class Body extends StatefulWidget{
 
@@ -52,6 +54,7 @@ class _BodyState extends State<Body>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    Admob.initialize(constant.ADMOB_APP_ID);
     if(this.fragment == Fragment.HOME) {
       refreshController = new RefreshController(initialRefresh: false);
       homeInfos = new HomeInfos();
@@ -117,6 +120,17 @@ class _BodyState extends State<Body>{
                       children: liveWidgets,
                     ),
                   ),
+                  (constant.canShowAds)?
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20.0),
+                    child: AdmobBanner(
+                      adUnitId: constant.getAdmobBannerId(),
+                      adSize: AdmobBannerSize.LARGE_BANNER,
+                      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+                            print('New Admob BANNER Ad loaded!');
+                      },
+                    ),
+                  ) : Container(),
                   Card(
                     elevation: 10.0,
                     child: Column(

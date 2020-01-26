@@ -5,12 +5,22 @@ List<String> languages = ['en', 'fr'];
 const LINK_TERMS_USE = 'http://www.notifygroup.org';
 const APP_PACKAGE = 'org.notifygroup.afrofoot';
 
+const ADMOB_APP_ID = 'ca-app-pub-4011752044861705~2244034479';
+const ADMOB_BANNER_ID = 'ca-app-pub-4011752044861705/8854987935';
+const ADMOB_TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
+
+bool canShowAds = true;
+
 /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
 Color fromHex(String hexString) {
   final buffer = StringBuffer();
   if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
   buffer.write(hexString.replaceFirst('#', ''));
   return Color(int.parse(buffer.toString(), radix: 16));
+}
+
+String getAdmobBannerId() {
+  return ADMOB_TEST_BANNER_ID;
 }
 
 String convertDateToAbout(DateTime dateTime,Map localization){
