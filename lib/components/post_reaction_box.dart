@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
-import 'package:youtube_player/controls.dart';
 
 class PostReactionBox extends StatefulWidget {
 

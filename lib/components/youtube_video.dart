@@ -3,7 +3,7 @@ import 'package:flutter_cafclcc/models/user.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:youtube_player/youtube_player.dart';
+//import 'package:youtube_player/youtube_player.dart';
 import '../models/match_item.dart';
 import '../models/match_video.dart';
 import 'empty_data.dart';
@@ -151,7 +151,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
           ): Container(),
           (videoPreview.length == 0)?
           EmptyData(localization) :
-          ((play && matchVideo.youtube_video.length > 0)?
+          (/*(play && matchVideo.youtube_video.length > 0)?
           YoutubePlayer(
             context: context,
             source: matchVideo.youtube_video,
@@ -161,7 +161,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
               seekBarPlayedColor: Theme.of(context).primaryColor,
             ),
             quality: YoutubeQuality.LOW,
-          ) :
+          ) :*/
           new Container(
             alignment: Alignment.center,
             decoration: new BoxDecoration(
