@@ -105,13 +105,11 @@ class _StageTabviewState extends State<StageTabview>{
                       ),
                       color: (selectedButton == 1)? Colors.white : Theme.of(context).primaryColor,
                       onPressed: (){
-                        PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
-                          setState(() {
+                        setState(() {
                             selectedButton = 1;
                             isLoading = true;
                             initMatchs();
                           });
-                        });
                       },
                     ),
                   ),
@@ -126,13 +124,11 @@ class _StageTabviewState extends State<StageTabview>{
                       ),
                       color: (selectedButton == 2)? Colors.white : Theme.of(context).primaryColor,
                       onPressed: (){
-                        PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
-                          setState(() {
+                        setState(() {
                             selectedButton = 2;
                             isLoading = true;
                             initMatchs();
                           });
-                        });
                       },
                     ),
                   )
@@ -150,11 +146,9 @@ class _StageTabviewState extends State<StageTabview>{
                   ),
                   color: (selectedButton == 3)? Colors.white : Theme.of(context).primaryColor,
                   onPressed: (){
-                    PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
-                      setState(() {
+                    setState(() {
                         selectedButton = 3;
                       });
-                    });
                   },
                 ),
               ) : Container(),

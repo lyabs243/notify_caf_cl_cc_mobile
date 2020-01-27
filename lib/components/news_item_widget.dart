@@ -80,15 +80,11 @@ class NewsItemWidget extends StatelessWidget {
         ),
       ),
       onTap: (){
-        PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context){
-                    return NewsDetails(this.localization, newsItem);
-                  }
-              ));
-        });
+        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+            builder: (BuildContext context){
+              return NewsDetails(this.localization, newsItem);
+            });
+        PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
       },
     );
   }

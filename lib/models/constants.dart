@@ -6,8 +6,12 @@ const LINK_TERMS_USE = 'http://www.notifygroup.org';
 const APP_PACKAGE = 'org.notifygroup.afrofoot';
 
 const ADMOB_APP_ID = 'ca-app-pub-4011752044861705~2244034479';
+
 const ADMOB_BANNER_ID = 'ca-app-pub-4011752044861705/8854987935';
+const ADMOB_INTERSTITIAL_ID = 'ca-app-pub-4011752044861705/3317157580';
+
 const ADMOB_TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
+const ADMOB_TEST_INTERSTITIAL_ID = 'ca-app-pub-3940256099942544/1033173712';
 
 bool canShowAds = true;
 
@@ -21,6 +25,10 @@ Color fromHex(String hexString) {
 
 String getAdmobBannerId() {
   return ADMOB_TEST_BANNER_ID;
+}
+
+String getAdmobInterstitialId() {
+  return ADMOB_TEST_INTERSTITIAL_ID;
 }
 
 String convertDateToAbout(DateTime dateTime,Map localization){

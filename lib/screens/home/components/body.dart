@@ -208,13 +208,12 @@ class _BodyState extends State<Body>{
           ),
         ),
         onPressed: () {
-          PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context){
-                  return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
-                }
-            ));
-          });
+          MaterialPageRoute materialPageRoute = MaterialPageRoute(
+              builder: (context){
+                return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
+              }
+          );
+          PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
         },
       ));
     }
@@ -253,13 +252,12 @@ class _BodyState extends State<Body>{
               ),
             ),
             onPressed: () {
-              PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context){
-                      return MatchsList(this.widget.localization,null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
-                    }
-                ));
-              });
+              MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                  builder: (context){
+                    return MatchsList(this.widget.localization,null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
+                  }
+              );
+              PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
             },
           )
         ],

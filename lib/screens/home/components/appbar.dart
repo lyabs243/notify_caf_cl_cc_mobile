@@ -44,31 +44,25 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
           ),
           tooltip: localization['community'],
           onPressed: () {
-            PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context){
-                        return Community(this.localization);
-                      }
-                  ));
-            });
+            MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                builder: (BuildContext context){
+                  return Community(this.localization);
+                }
+            );
+            PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
           },
         ),
         Padding(padding: EdgeInsets.only(right: 5.0, left: 5.0),),
         new InkWell(
           child: ProfilAvatar(user,width: 40.0,height: 40.0),
           onTap: (){
-            PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute
-                    (
-                      builder: (BuildContext context){
-                        return UserProfile(this.user,this.user,localization);
-                      }
-                  ));
-            });
+            MaterialPageRoute materialPageRoute = MaterialPageRoute
+              (
+                builder: (BuildContext context){
+                  return UserProfile(this.user,this.user,localization);
+                }
+            );
+            PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
           },
         ),
         Padding(padding: EdgeInsets.only(right: 8.0),),

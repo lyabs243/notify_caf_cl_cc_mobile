@@ -130,10 +130,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 									),
 								),
 								onTap: (){
-									PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value) {
-										Navigator.pop(context);
-										onDrawerItemSelected(i);
-									});
+									onDrawerItemSelected(i);
 								},
 								leading: (drawerItems[i].iconPath != null) ?
 									ImageIcon(AssetImage(drawerItems[i].iconPath),color: Colors.white) :
@@ -186,8 +183,11 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	}
 
 	onDrawerItemSelected(int id){
+		bool pushReplacement = false, transition = true;
+		MaterialPageRoute materialPageRoute;
 		switch(id){
 			case 1: //click on home
+				transition = false;
 				Navigator.pushReplacement(
 						context,
 						NoAnimationMaterialPageRoute(
@@ -197,34 +197,29 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						));
 				break;
 			case 2: //click on news
-				Navigator.push(
-						context,
-						MaterialPageRoute(
-								builder: (BuildContext context){
-									return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
-								}
-						));
+				materialPageRoute = MaterialPageRoute(
+						builder: (BuildContext context){
+							return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
+						}
+				);
 				break;
 			case 3: //click on community
-				Navigator.push(
-						context,
-						MaterialPageRoute(
-								builder: (BuildContext context){
-									return Community(this.widget.localization);
-								}
-						));
+				materialPageRoute = MaterialPageRoute(
+						builder: (BuildContext context){
+							return Community(this.widget.localization);
+						}
+				);
 				break;
 			case 5: //click on profil
-				Navigator.push(
-							context,
-							MaterialPageRoute
-								(
-									builder: (BuildContext context){
-										return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
-									}
-				));
+				materialPageRoute = MaterialPageRoute
+					(
+						builder: (BuildContext context){
+							return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
+						}
+				);
 				break;
 			case 6: //click on admin panel
+				transition = false;
 				Navigator.push(
 						context,
 						MaterialPageRoute
@@ -235,6 +230,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						));
 				break;
 			case 7: //click on login
+				transition = false;
 				Navigator.pushReplacement(
 						context,
 						MaterialPageRoute
@@ -245,6 +241,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						));
 				break;
 			case 8: //click on logout
+				transition = false;
 				Navigator.pushReplacement(
 						context,
 						MaterialPageRoute(
@@ -254,6 +251,10 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
+		}
+		if(transition) {
+			PageTransition(context, this.widget.localization, materialPageRoute, pushReplacement)
+					.checkForRateAndShareSuggestion();
 		}
 	}
 
@@ -297,26 +298,21 @@ class _HomeDrawerState extends State<HomeDrawer>{
 					  switch(item.id){
 						  case 0://champoions league
 							case 1://confederation cup
-							  PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value){
-									Navigator.push(
-											context,
-											MaterialPageRoute(
-													builder: (BuildContext context){
-														return CompetitionPage(competitions[item.id],this.widget.localization);
-													}
-											));
-								});
+								MaterialPageRoute materialPageRoute = MaterialPageRoute(
+										builder: (BuildContext context){
+											return CompetitionPage(competitions[item.id],this.widget.localization);
+										}
+								);
+							  PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
 							  break;
 							case 2://more
-								PageTransition(context, this.widget.localization).checkForRateAndShareSuggestion().then((value){
-									Navigator.pushReplacement(
+								Navigator.pushReplacement(
 											context,
 											NoAnimationMaterialPageRoute(
 													builder: (BuildContext context){
 														return HomePage(this.widget.localization,fragment: Fragment.COMPETITION_LIST,);
 													}
 											));
-								});
 								break;
 							}
 						}

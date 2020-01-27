@@ -288,11 +288,10 @@ class _PostWidgetState extends State<PostWidget> {
           ),
           onTap: () {
             if(this.widget.clickable) {
-              PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return new PostDetails(localization, post);
-                }));
+              MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (context) {
+                return new PostDetails(localization, post);
               });
+              PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
             }
           },
         ),

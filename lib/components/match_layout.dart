@@ -155,13 +155,12 @@ class MatchLayoutState extends State<MatchLayout>{
         ],
       ),
       onTap: (){
-        PageTransition(context, localization).checkForRateAndShareSuggestion().then((value) {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context){
-                return MatchDetails(localization,matchItem);
-              }
-          ));
-        });
+        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+            builder: (context){
+              return MatchDetails(localization,matchItem);
+            }
+        );
+        PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
       },
     );
   }

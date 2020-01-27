@@ -1,23 +1,58 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/suggest_user_dialog.dart';
+import 'package:flutter_cafclcc/models/match_item.dart';
 import 'package:flutter_cafclcc/models/user_suggest.dart';
+import 'package:flutter_cafclcc/screens/match_details/match_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/constants.dart' as constants;
 
 class PageTransition {
 
   Map localization;
   BuildContext context;
 
-  PageTransition (this.context, this.localization);
+  AdmobInterstitial interstitialAd;
+  MaterialPageRoute materialPageRoute;
+  bool pushReplacement = false;
+
+  PageTransition (this.context, this.localization, this.materialPageRoute, this.pushReplacement);
 
   //check if app can suggest user to share or rate application
   Future checkForRateAndShareSuggestion() async {
+    Admob.initialize(constants.ADMOB_APP_ID);
+    interstitialAd = AdmobInterstitial(
+      adUnitId: constants.getAdmobInterstitialId(),
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) async {
+        if(event == AdmobAdEvent.loaded) {
+          interstitialAd.show();
+        }
+        else if(event == AdmobAdEvent.closed) {
+          if(!pushReplacement) {
+            Navigator.push(context, materialPageRoute);
+          }
+          else {
+            Navigator.pushReplacement(context, materialPageRoute);
+          }
+        }
+      },
+    );
 
     int pageNumber = await getTransitionNumber();
     if(pageNumber == null) {
       pageNumber = 0;
     }
-    if(pageNumber > 0 && pageNumber % 7 == 0) {
+    int newPageNumber = pageNumber + 1;
+    if(newPageNumber > 10) {
+      newPageNumber = 0;
+    }
+    setTransitionNumber(newPageNumber);
+    if(pageNumber > 0 && pageNumber % 6 == 0) {
+      if(constants.canShowAds) {
+        await interstitialAd.load();
+      }
+    }
+    else if(pageNumber > 0 && pageNumber % 10 == 0) {
       UserSuggest userSuggest = await UserSuggest.getSuggestUserDetails();
       bool canSuggest = false;
       SuggestType sType;
@@ -45,23 +80,31 @@ class PageTransition {
           canSuggest = false;
         }
       }
-
       if (canSuggest) {
         await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return SuggestUserDialog(
-                  localization, sType, userSuggest);
-            });
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return SuggestUserDialog(
+                    localization, sType, userSuggest);
+              }).then((value) {
+          if(!pushReplacement) {
+            Navigator.push(context, materialPageRoute);
+          }
+          else {
+            Navigator.pushReplacement(context, materialPageRoute);
+          }
+        });
       }
     }
-
-    pageNumber += 1;
-    if(pageNumber > 7) {
-      pageNumber = 0;
+    else {
+      if(!pushReplacement) {
+        Navigator.push(context, materialPageRoute);
+      }
+      else {
+        Navigator.pushReplacement(context, materialPageRoute);
+      }
     }
-    setTransitionNumber(pageNumber);
   }
 
   Future<int> getTransitionNumber() async {
