@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -7,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/match_item.dart';
 import '../models/match_video.dart';
 import 'empty_data.dart';
+import '../models/constants.dart' as constants;
 
 class YoutubeVideo extends StatefulWidget{
 
@@ -31,6 +33,8 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   User currentUser;
   TextEditingController _controller;
 
+  AdmobReward rewardAd;
+
   String videoPreview = '', youtubeVideoId = '';
 
   _YoutubeVideoState(this.localization, this.matchItem);
@@ -38,6 +42,16 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   @override
   void initState() {
     super.initState();
+    rewardAd = AdmobReward(
+        adUnitId: constants.getAdmobRewardId(),
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+          if (event == AdmobAdEvent.loaded) {
+             rewardAd.show();
+          }
+          else if (event == AdmobAdEvent.closed) {
+            launch('https://www.youtube.com/embed/${matchVideo.youtube_video}');
+          }
+        });
     _controller = new TextEditingController();
     matchVideo = new MatchVideo(matchItem.id);
     User.getInstance().then((_currentUser) {
@@ -152,17 +166,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
             ): Container(),
             (videoPreview.length == 0)?
             EmptyData(localization) :
-            (/*(play && matchVideo.youtube_video.length > 0)?
-          YoutubePlayer(
-            context: context,
-            source: matchVideo.youtube_video,
-            autoPlay: false,
-            controlsColor: ControlsColor(
-              progressBarPlayedColor: Theme.of(context).primaryColor,
-              seekBarPlayedColor: Theme.of(context).primaryColor,
-            ),
-            quality: YoutubeQuality.LOW,
-          ) :*/
+            (
                 new Container(
                   alignment: Alignment.center,
                   decoration: new BoxDecoration(
@@ -175,11 +179,14 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
                     height: MediaQuery.of(context).size.height /3,
                     child: InkWell(
                       child: Image.asset('assets/play_video.png'),
-                      onTap: (){
-                        /*setState(() {
-                    play = true;
-                  });*/
-                        launch('https://www.youtube.com/embed/${matchVideo.youtube_video}');
+                      onTap: () async {
+                        if(constants.canShowAds) {
+                          await rewardAd.load();
+                        }
+                        else {
+                          launch('https://www.youtube.com/embed/${matchVideo
+                              .youtube_video}');
+                        }
                       },
                     ),
                   ),
