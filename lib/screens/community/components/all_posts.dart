@@ -39,7 +39,7 @@ class _AllPostsState extends State<AllPosts> {
     Admob.initialize(constant.ADMOB_APP_ID);
     admobBanner = AdmobBanner(
       adUnitId: constant.getAdmobBannerId(),
-      adSize: AdmobBannerSize.LARGE_BANNER,
+      adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
       },
     );
@@ -140,7 +140,7 @@ class _AllPostsState extends State<AllPosts> {
     if(postItems.length > 0){
       admobBanner = AdmobBanner(
         adUnitId: constant.getAdmobBannerId(),
-        adSize: AdmobBannerSize.LARGE_BANNER,
+        adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
         listener: (AdmobAdEvent event, Map<String, dynamic> args) {
         },
       );
