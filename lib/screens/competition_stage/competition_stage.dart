@@ -79,7 +79,7 @@ class _CompetitionStageState extends State<CompetitionStage>{
         Container(
           width: MediaQuery.of(context).size.width,
           child: admobBanner,
-        ): Container(),
+        ): Container(height: 1.0,),
       ),
     );
   }
