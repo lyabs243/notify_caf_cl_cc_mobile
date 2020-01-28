@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/match_competition_painter.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
@@ -32,6 +34,25 @@ class MatchLayoutState extends State<MatchLayout>{
     if(mounted){
       super.setState(fn);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(new Duration(seconds: 30), (timer) {
+      if(matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME &&
+          matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT) {
+        //get matchs details only when it has to begin or when it is in progress
+        int diffInMinutes = DateTime.now().difference(matchItem.match_date).inMinutes;
+        if(diffInMinutes >= -10) {
+          MatchItem.get(context, matchItem.id).then((value) {
+            setState(() {
+              matchItem = value;
+            });
+          });
+        }
+      }
+    });
   }
 
   @override

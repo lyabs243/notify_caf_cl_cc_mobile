@@ -9,6 +9,7 @@ class MatchItem{
   static final String URL_GET_CURRENT_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/current_matchs/';
   static final String URL_GET_FIXTURE_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/fixture/';
   static final String URL_GET_LATEST_RESULTS = 'http://notifygroup.org/notifyapp/api/index.php/competition/latest_results/';
+  static final String URL_GET_MATCH = 'http://notifygroup.org/notifyapp/api/index.php/match/get/';
 
   static final String MATCH_STATUS_TYPE_PENDING = "0";
   static final String MATCH_STATUS_TYPE_IN_PROGRESS = "1";
@@ -50,6 +51,20 @@ class MatchItem{
       }
     });
     return matchs;
+  }
+
+  static Future get(BuildContext context,int idMatch) async {
+    MatchItem match;
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_MATCH + idMatch.toString()
+        , null).then((map) {
+      if (map != null) {
+        for(int i=0;i<map['NOTIFYGROUP']['data'].length;i++){
+          match = MatchItem.getFromMap(map['NOTIFYGROUP']['data'][i]);
+        }
+      }
+    });
+    return match;
   }
 
   static Future getFixtureMatchs(BuildContext context,int idCompetition, int page, {competitionType: 0}) async {
