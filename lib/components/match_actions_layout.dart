@@ -31,10 +31,11 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
   void initState() {
     super.initState();
     Timer.periodic(new Duration(seconds: 30), (timer) {
-      if(matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME &&
-          matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT) {
-        actions.clear();
-        initActions();
+      if(matchItem != null) {
+        if (matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME &&
+            matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT) {
+          initActions();
+        }
       }
     });
     initActions();
@@ -151,6 +152,7 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
     await Future.delayed(Duration.zero);
     MatchAction.getMatchActions(context, matchItem.id).then((list){
       setState(() {
+        actions.clear();
         actions.addAll(list);
       });
     });

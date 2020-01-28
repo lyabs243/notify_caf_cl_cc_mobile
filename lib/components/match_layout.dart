@@ -40,16 +40,23 @@ class MatchLayoutState extends State<MatchLayout>{
   void initState() {
     super.initState();
     Timer.periodic(new Duration(seconds: 30), (timer) {
-      if(matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME &&
-          matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT) {
-        //get matchs details only when it has to begin or when it is in progress
-        int diffInMinutes = DateTime.now().difference(matchItem.match_date).inMinutes;
-        if(diffInMinutes >= -10) {
-          MatchItem.get(context, matchItem.id).then((value) {
-            setState(() {
-              matchItem = value;
+      if(matchItem != null) {
+        if (matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME &&
+            matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT) {
+          //get matchs details only when it has to begin or when it is in progress
+          int diffInMinutes = DateTime
+              .now()
+              .difference(matchItem.match_date)
+              .inMinutes;
+          if (diffInMinutes >= -10) {
+            MatchItem.get(context, matchItem.id).then((value) {
+              if(value != null) {
+                setState(() {
+                  matchItem = value;
+                });
+              }
             });
-          });
+          }
         }
       }
     });
