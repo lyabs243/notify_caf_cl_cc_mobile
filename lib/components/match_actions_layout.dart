@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../models/match_item.dart';
 import '../models/match_action.dart';
@@ -28,6 +30,13 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
   @override
   void initState() {
     super.initState();
+    Timer.periodic(new Duration(seconds: 30), (timer) {
+      if(matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME &&
+          matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT) {
+        actions.clear();
+        initActions();
+      }
+    });
     initActions();
   }
 

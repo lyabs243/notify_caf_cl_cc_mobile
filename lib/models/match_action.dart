@@ -46,24 +46,29 @@ class MatchAction{
       if(map != null && map['NOTIFYGROUP']['success'].toString() == 1.toString()) {
         List result = map['NOTIFYGROUP']['data'];
         result.forEach((item){
-          int id = int.parse(item['id']);
-          int id_match = int.parse(item['id_match']);
-          int type = int.parse(item['type']);
-          String detail_a = item['detail_a'];
-          String detail_b = item['detail_b'];
-          String detail_c = item['detail_c'];
-          String detail_d = item['detail_d'];
-          int teamA_goal = int.parse(item['teamA_goal']);
-          int teamB_goal = int.parse(item['teamB_goal']);
-          int minute = int.parse(item['minute']);
-          int id_team = int.parse(item['id_team']);
-          int position = item['position'];
-
-          list.add(new MatchAction(id, id_match, type, detail_a, detail_b, detail_c, detail_d, teamA_goal, teamB_goal, minute, id_team, position));
+          list.add(getFromMap(item));
         });
       }
     });
     return list;
+  }
+
+  static MatchAction getFromMap(Map item) {
+
+    int id = int.parse(item['id']);
+    int id_match = int.parse(item['id_match']);
+    int type = int.parse(item['type']);
+    String detail_a = item['detail_a'];
+    String detail_b = item['detail_b'];
+    String detail_c = item['detail_c'];
+    String detail_d = item['detail_d'];
+    int teamA_goal = int.parse(item['teamA_goal']);
+    int teamB_goal = int.parse(item['teamB_goal']);
+    int minute = int.parse(item['minute']);
+    int id_team = int.parse(item['id_team']);
+    int position = item['position'];
+
+    return MatchAction(id, id_match, type, detail_a, detail_b, detail_c, detail_d, teamA_goal, teamB_goal, minute, id_team, position);
   }
 
   static getActionIconPath(int type){

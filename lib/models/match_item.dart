@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/match_action.dart';
 import 'competition_item.dart';
 import 'edition_stage.dart';
 import 'package:intl/intl.dart';
@@ -31,12 +32,13 @@ class MatchItem{
   DateTime match_date;
   CompetitionItem competition;
   EditionStage editionStage;
+  List<MatchAction> actions = [];
 
   MatchItem(this.id, this.teamAId, this.teamBId,
       this.teamA_goal, this.teamB_goal, this.team_a_penalty,
       this.team_b_penalty, this.idGroupA, this.idGroupB, this.teamA_small,
       this.teamB_small, this.teamA, this.teamB, this.teamA_logo,
-      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage, this.match_status);
+      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage, this.match_status, this.actions);
 
   static Future getCurrentMatchs(BuildContext context,int idCompetition, int page, {competitionType: 0}) async {
     List<MatchItem> matchs = [];
@@ -115,6 +117,15 @@ class MatchItem{
     String teamB_logo = item['teamB_logo'];
     String match_status = item['match_status'];
     String status = item['status'];
+    List<MatchAction> matchActions = [];
+
+    if(item['actions'] != null) {
+      List actions = item['actions'];
+      actions.forEach((action){
+        MatchAction mAction = MatchAction.getFromMap(action);
+        matchActions.add(mAction);
+      });
+    }
 
     String format = 'yyyy-MM-dd H:mm:ss';
     DateFormat formater = DateFormat(format);
@@ -178,7 +189,8 @@ class MatchItem{
         status,
         competition,
         editionStage,
-        match_status);
+        match_status,
+        matchActions);
 
     return matchItem;
   }
