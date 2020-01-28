@@ -9,7 +9,7 @@ class MatchLineup{
   String name;
   String num_player;
 
-  static final String URL_GET_MATCH_LINEUP = 'http://notifygroup.org/notifyapp/api/index.php/match/lineup/';
+  static final String URL_GET_MATCH_LINEUP = 'http://notifysport.org/api/v1/index.php/match/lineup/';
 
   MatchLineup(this.id_player, this.id_team, this.description, this.name,
       this.num_player);

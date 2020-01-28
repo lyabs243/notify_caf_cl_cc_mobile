@@ -14,12 +14,12 @@ class Comment {
   User subscriber;
   DateTime register_date;
 
-  static final String URL_GET_MATCH_COMMENTS = 'http://notifygroup.org/notifyapp/api/index.php/match/comments/';
-  static final String URL_GET_POST_COMMENTS = 'http://notifygroup.org/notifyapp/api/index.php/post/comments/';
-  static final String URL_ADD_POST_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/post/add_comment/';
-  static final String URL_ADD_MATCH_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/match/add_comment/';
-  static final String URL_UPDATE_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/comment/update/';
-  static final String URL_DELETE_COMMENT = 'http://notifygroup.org/notifyapp/api/index.php/comment/delete/';
+  static final String URL_GET_MATCH_COMMENTS = 'http://notifysport.org/api/v1/index.php/match/comments/';
+  static final String URL_GET_POST_COMMENTS = 'http://notifysport.org/api/v1/index.php/post/comments/';
+  static final String URL_ADD_POST_COMMENT = 'http://notifysport.org/api/v1/index.php/post/add_comment/';
+  static final String URL_ADD_MATCH_COMMENT = 'http://notifysport.org/api/v1/index.php/match/add_comment/';
+  static final String URL_UPDATE_COMMENT = 'http://notifysport.org/api/v1/index.php/comment/update/';
+  static final String URL_DELETE_COMMENT = 'http://notifysport.org/api/v1/index.php/comment/delete/';
 
   Comment(this.id, this.id_match, this.id_post, this.id_user, this.comment, this.subscriber,
       this.register_date);

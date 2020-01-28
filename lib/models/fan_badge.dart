@@ -13,8 +13,8 @@ class FanBadge {
   int top_club;
   String color;
 
-  static final String URL_ADD_BADGE = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/add/';
-  static final String URL_DELETE_BADGE = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/delete/';
+  static final String URL_ADD_BADGE = 'http://notifysport.org/api/v1/index.php/fanClub/add/';
+  static final String URL_DELETE_BADGE = 'http://notifysport.org/api/v1/index.php/fanClub/delete/';
 
   FanBadge(this.id_subscriber, this.id_team, this.category, this.title,
       this.country_code, this.url_logo, this.top_club, this.color);

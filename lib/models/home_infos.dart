@@ -7,7 +7,7 @@ import 'news_item.dart';
 
 class HomeInfos{
 
-  static final String URL_GET_HOME_INFOS = 'http://notifygroup.org/notifyapp/api/index.php/competition/home_infos/';
+  static final String URL_GET_HOME_INFOS = 'http://notifysport.org/api/v1/index.php/competition/home_infos/';
 
   List<NewsItem> trending_news = [];
   List<MatchItem> current_match = [];

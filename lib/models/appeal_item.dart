@@ -14,10 +14,10 @@ class AppealItem{
   DateTime register_date;
   bool active;
 
-  static final String URL_ADD_APPEAL = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/add/';
-  static final String URL_GET_APPEALS = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/get_appeals/';
-  static final String URL_APPROVE_APPEAL = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/approve_appeal/';
-  static final String URL_DEACTIVATE_APPEAL = 'http://notifygroup.org/notifyapp/api/index.php/subscriberAppeal/desactivate_appeal/';
+  static final String URL_ADD_APPEAL = 'http://notifysport.org/api/v1/index.php/subscriberAppeal/add/';
+  static final String URL_GET_APPEALS = 'http://notifysport.org/api/v1/index.php/subscriberAppeal/get_appeals/';
+  static final String URL_APPROVE_APPEAL = 'http://notifysport.org/api/v1/index.php/subscriberAppeal/approve_appeal/';
+  static final String URL_DEACTIVATE_APPEAL = 'http://notifysport.org/api/v1/index.php/subscriberAppeal/desactivate_appeal/';
 
   AppealItem(this.id, this.id_subscriber, this.is_policie_violate,
       this.is_policie_respect_after_activation, this.full_name,

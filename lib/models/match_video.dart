@@ -9,8 +9,8 @@ class MatchVideo{
   String channelTitle;
   String thumbnails;
 
-  static final String URL_GET_MATCH_VIDEO = 'http://notifygroup.org/notifyapp/api/index.php/match/video/';
-  static final String URL_ADD_MATCH_VIDEO = 'http://notifygroup.org/notifyapp/api/index.php/match/add_video/';
+  static final String URL_GET_MATCH_VIDEO = 'http://notifysport.org/api/v1/index.php/match/video/';
+  static final String URL_ADD_MATCH_VIDEO = 'http://notifysport.org/api/v1/index.php/match/add_video/';
 
 
   MatchVideo(this.id_match,{this.youtube_video: '', this.title: '', this.channelTitle: '',

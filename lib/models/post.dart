@@ -21,12 +21,12 @@ class Post {
   DateTime register_date;
   PostReaction reaction;
 
-  static final String URL_GET_POSTS = 'http://notifygroup.org/notifyapp/api/index.php/post/get_posts/';
-  static final String URL_GET_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/get_post/';
-  static final String URL_ADD_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/add/';
-  static final String URL_UPDATE_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/update/';
-  static final String URL_DELETE_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/delete/';
-  static final String URL_SIGNAL_POST = 'http://notifygroup.org/notifyapp/api/index.php/post/signal/';
+  static final String URL_GET_POSTS = 'http://notifysport.org/api/v1/index.php/post/get_posts/';
+  static final String URL_GET_POST = 'http://notifysport.org/api/v1/index.php/post/get_post/';
+  static final String URL_ADD_POST = 'http://notifysport.org/api/v1/index.php/post/add/';
+  static final String URL_UPDATE_POST = 'http://notifysport.org/api/v1/index.php/post/update/';
+  static final String URL_DELETE_POST = 'http://notifysport.org/api/v1/index.php/post/delete/';
+  static final String URL_SIGNAL_POST = 'http://notifysport.org/api/v1/index.php/post/signal/';
 
   Post(this.id, this.id_subscriber, this.post, this.url_image, this.subscriber,
       this.type, this.active, this.register_date, this.reaction, this.total_comments);

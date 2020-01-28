@@ -14,9 +14,9 @@ class CompetitionStage{
   static final int COMPETIONSTAGE_TYPE_GROUP = 1;
   static final int COMPETIONSTAGE_TYPE_NORMAL = 2;
 
-  static final String URL_GET_STAGES = 'http://notifygroup.org/notifyapp/api/index.php/competition/stages_edition/';
-  static final String URL_GET_STAGE_RESULTS = 'http://notifygroup.org/notifyapp/api/index.php/competition/stage_result/';
-  static final String URL_GET_STAGE_FIXTURE = 'http://notifygroup.org/notifyapp/api/index.php/competition/stage_fixture/';
+  static final String URL_GET_STAGES = 'http://notifysport.org/api/v1/index.php/competition/stages_edition/';
+  static final String URL_GET_STAGE_RESULTS = 'http://notifysport.org/api/v1/index.php/competition/stage_result/';
+  static final String URL_GET_STAGE_FIXTURE = 'http://notifysport.org/api/v1/index.php/competition/stage_fixture/';
 
   CompetitionStage(this.id, this.id_edition, this.title, this.type,
       this.groups);

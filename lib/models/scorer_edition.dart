@@ -12,7 +12,7 @@ class ScorerEdition{
   int goals;
   int goalsPenalty;
 
-  static final String URL_GET_SCORERS_EDITION = 'http://notifygroup.org/notifyapp/api/index.php/competition/scorers_edition/';
+  static final String URL_GET_SCORERS_EDITION = 'http://notifysport.org/api/v1/index.php/competition/scorers_edition/';
 
   ScorerEdition(this.id_player, this.id_team, this.name, this.url_flag,
       this.team_name, this.team_name_small, this.goals, this.goalsPenalty);

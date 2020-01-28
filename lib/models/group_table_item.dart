@@ -18,7 +18,7 @@ class GroupTableItem{
   int conceded;
   int goal_difference;
 
-  static final String URL_GET_GROUP_TABLE = 'http://notifygroup.org/notifyapp/api/index.php/competition/group_details/';
+  static final String URL_GET_GROUP_TABLE = 'http://notifysport.org/api/v1/index.php/competition/group_details/';
 
 
   GroupTableItem(this.id, this.id_stage_group, this.id_team, this.title,

@@ -7,7 +7,7 @@ class Country {
   String url_flag;
   String country_code;
 
-  static final String URL_GET_COUNTRIES_CLUB = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/get_countries/';
+  static final String URL_GET_COUNTRIES_CLUB = 'http://notifysport.org/api/v1/index.php/fanClub/get_countries/';
 
   Country(this.nicename, this.url_flag, this.country_code);
 

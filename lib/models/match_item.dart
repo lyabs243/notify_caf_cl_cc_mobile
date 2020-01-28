@@ -7,10 +7,10 @@ import '../services/notify_api.dart';
 
 class MatchItem{
 
-  static final String URL_GET_CURRENT_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/current_matchs/';
-  static final String URL_GET_FIXTURE_MATCHS = 'http://notifygroup.org/notifyapp/api/index.php/competition/fixture/';
-  static final String URL_GET_LATEST_RESULTS = 'http://notifygroup.org/notifyapp/api/index.php/competition/latest_results/';
-  static final String URL_GET_MATCH = 'http://notifygroup.org/notifyapp/api/index.php/match/get/';
+  static final String URL_GET_CURRENT_MATCHS = 'http://notifysport.org/api/v1/index.php/competition/current_matchs/';
+  static final String URL_GET_FIXTURE_MATCHS = 'http://notifysport.org/api/v1/index.php/competition/fixture/';
+  static final String URL_GET_LATEST_RESULTS = 'http://notifysport.org/api/v1/index.php/competition/latest_results/';
+  static final String URL_GET_MATCH = 'http://notifysport.org/api/v1/index.php/match/get/';
 
   static final String MATCH_STATUS_TYPE_PENDING = "0";
   static final String MATCH_STATUS_TYPE_IN_PROGRESS = "1";

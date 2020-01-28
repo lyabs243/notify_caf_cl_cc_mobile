@@ -20,8 +20,8 @@ class NewsItem {
   int cid;
   String category_name;
 
-  static final String URL_GET_LATEST_NEWS = 'http://notifygroup.org/notifyapp/api/index.php/competition/news/';
-  static final String URL_VIEW_NEWS = 'http://notifygroup.org/notifyapp/api/index.php/article/view_article/';
+  static final String URL_GET_LATEST_NEWS = 'http://notifysport.org/api/v1/index.php/competition/news/';
+  static final String URL_VIEW_NEWS = 'http://notifysport.org/api/v1/index.php/article/view_article/';
 
   NewsItem(this.id, this.url_share, this.url_article, this.cat_id, this.url_fav,
       this.news_type, this.news_heading, this.news_description,

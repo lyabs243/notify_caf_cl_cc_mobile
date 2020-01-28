@@ -15,8 +15,8 @@ class PostReaction {
   static final int REACTION_AHAH = 5;
   static final int REACTION_ANGRY = 6;
 
-  static final String URL_ADD_POSTREACTION = 'http://notifygroup.org/notifyapp/api/index.php/postReaction/add/';
-  static final String URL_DELETE_POSTREACTION = 'http://notifygroup.org/notifyapp/api/index.php/postReaction/delete/';
+  static final String URL_ADD_POSTREACTION = 'http://notifysport.org/api/v1/index.php/postReaction/add/';
+  static final String URL_DELETE_POSTREACTION = 'http://notifysport.org/api/v1/index.php/postReaction/delete/';
 
   PostReaction(this.id_post, this.total, this.subscriber_reaction,
       this.top_reactions);

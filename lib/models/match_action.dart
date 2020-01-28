@@ -16,7 +16,7 @@ class MatchAction{
   int id_team;
   int position;
 
-  static final String URL_GET_MATCH_ACTIONS = 'http://notifygroup.org/notifyapp/api/index.php/match/actions/';
+  static final String URL_GET_MATCH_ACTIONS = 'http://notifysport.org/api/v1/index.php/match/actions/';
 
   static final int ACTION_POSITION_LEFT = 0;
   static final int ACTION_POSITION_RIGHT = 1;

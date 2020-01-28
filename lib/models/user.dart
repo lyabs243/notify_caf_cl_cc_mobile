@@ -31,11 +31,11 @@ class User{
   static final int FACEBOOK_ACCOUNT_ID = 2;
   static final int NOT_CONNECTED_ACCOUNT_ID = -1;
 
-  static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifygroup.org/notifyapp/api/index.php/user/add';
-  static final String URL_ADD_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/add';
-  static final String URL_GET_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/get/';
-  static final String URL_BLOCK_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/block/';
-  static final String URL_UNBLOCK_SUBSCRIBER = 'http://notifygroup.org/notifyapp/api/index.php/subscriber/unblock/';
+  static final String URL_CONTINUE_WITHOUT_LOGIN = 'http://notifysport.org/api/v1/index.php/user/add';
+  static final String URL_ADD_SUBSCRIBER = 'http://notifysport.org/api/v1/index.php/subscriber/add';
+  static final String URL_GET_SUBSCRIBER = 'http://notifysport.org/api/v1/index.php/subscriber/get/';
+  static final String URL_BLOCK_SUBSCRIBER = 'http://notifysport.org/api/v1/index.php/subscriber/block/';
+  static final String URL_UNBLOCK_SUBSCRIBER = 'http://notifysport.org/api/v1/index.php/subscriber/unblock/';
 
   static final int USER_TYPE_ADMIN = 2;
   static final int USER_TYPE_SIMPLE = 1;

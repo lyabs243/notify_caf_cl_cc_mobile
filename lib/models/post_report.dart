@@ -15,8 +15,8 @@ class PostReport {
   User subscriber;
   Post post;
 
-  static final String URL_GET_POST_REPORTS = 'http://notifygroup.org/notifyapp/api/index.php/post/get_abusive_posts/';
-  static final String URL_DEACTIVATE_POST_REPORT = 'http://notifygroup.org/notifyapp/api/index.php/post/deactivate_abusive_post/';
+  static final String URL_GET_POST_REPORTS = 'http://notifysport.org/api/v1/index.php/post/get_abusive_posts/';
+  static final String URL_DEACTIVATE_POST_REPORT = 'http://notifysport.org/api/v1/index.php/post/deactivate_abusive_post/';
 
   PostReport(this.id, this.id_post, this.message, this.active,
       this.id_subscriber, this.register_date, this.subscriber, this.post);

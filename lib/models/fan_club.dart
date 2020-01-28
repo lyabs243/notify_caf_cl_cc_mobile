@@ -15,7 +15,7 @@ class FanClub {
   String color;
   DateTime register_date;
 
-  static final String URL_GET_BADGES = 'http://notifygroup.org/notifyapp/api/index.php/fanClub/get_country_clubs/';
+  static final String URL_GET_BADGES = 'http://notifysport.org/api/v1/index.php/fanClub/get_country_clubs/';
 
   FanClub(this.id, this.title, this.title_small, this.is_national_team,
       this.country_code, this.url_logo, this.category, this.top_club,
