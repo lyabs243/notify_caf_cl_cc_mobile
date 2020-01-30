@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'models/user.dart';
 import 'screens/home/home.dart';
 import 'package:flutter/services.dart';
+import 'package:onesignal/onesignal.dart';
 //import 'package:admob_flutter/admob_flutter.dart' as adMob;
 import 'models/constants.dart' as constant;
 
@@ -20,6 +21,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OneSignal.shared.init('11010fc6-b149-46a0-89f6-1ec83193e7ff');
+    OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
+      print('Eza awa!!!');
+    });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
