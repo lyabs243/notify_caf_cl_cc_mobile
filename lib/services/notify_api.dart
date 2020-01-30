@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotifyApi {
 
@@ -12,8 +13,11 @@ class NotifyApi {
   NotifyApi(this.context);
 
   Future<Map> getJsonFromServer(String url, Map<String,dynamic> params) async {
-    Locale myLocale = Localizations.localeOf(context);
-    String langCode = myLocale.languageCode;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String langCode = await sharedPreferences.getString('lang');
+    if(langCode == null) {
+      langCode = 'en';
+    }
     String timezone = DateTime.now().timeZoneOffset.toString().substring(0,
         DateTime.now().timeZoneOffset.toString().lastIndexOf(new RegExp(':')));
     timezone = ((timezone.startsWith(new RegExp('-')))? '' : '+') + timezone;
