@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/match_details/match_details.dart';
 import 'models/localizations.dart';
 import 'theme/style.dart';
 import 'screens/login/login.dart';
@@ -15,23 +18,44 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+  @override
+  _MyAppState createState() {
+    return new _MyAppState();
+  }
+
+}
+
+class _MyAppState extends State<MyApp> {
 
   User user;
+  BuildContext _context;
+  int matchId, type;
+  bool notification = false;
 
   @override
   Widget build(BuildContext context) {
 
+    _context = context;
+
     OneSignal.shared.init('11010fc6-b149-46a0-89f6-1ec83193e7ff');
     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-      print('Eza awa!!!');
     });
-    OneSignal.shared
-        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-
+    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      Map params = result.notification.payload.additionalData;
+      matchId = int.parse(params['match_id']);
+      type = int.parse(params['type']);
+      notification = true;
+      try {
+        setState(() {
+          notification = true;
+        });
+      }
+      catch(e){}
     });
-    SystemChrome.setPreferredOrientations([ 
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
@@ -53,12 +77,31 @@ class MyApp extends StatelessWidget {
           this.user = user;
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
-          if (user != null && user.id_accout_type != null && user.id_accout_type != null){
+          if(notification) {
+            Future.delayed(Duration.zero, () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (_context){
+                    return MatchDetails(MyLocalizations.of(_context).localization, null, fromNotification: true,
+                      matchId: matchId, pageType: type,);
+                  }
+              ));
+              setState(() {
+                notification = false;
+              });
+            });
+          }
+          else if (user != null && user.id_accout_type != null && user.id_accout_type != null){
             /// is because there is user already logged
             return HomePage(MyLocalizations.of(context).localization);
           }
-          /// other way there is no user logged.
-          return Login();
+          else {
+            /// other way there is no user logged.
+            return Login();
+          }
+
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       ),
     );

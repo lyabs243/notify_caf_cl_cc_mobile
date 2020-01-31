@@ -1,7 +1,9 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
+import 'package:flutter_cafclcc/screens/home/home.dart';
 import '../../models/match_item.dart';
 import '../../models/edition_stage.dart';
 import 'components/header.dart';
@@ -16,8 +18,15 @@ class MatchDetails extends StatefulWidget{
 
   Map localization;
   MatchItem match;
+  bool fromNotification;
+  int matchId;
+  int pageType;
 
-  MatchDetails(this.localization,this.match);
+  final int MOVE_TO_ACTION_TAB = 0;
+  final int MOVE_TO_LINEUP_TAB = 1;
+  final int MOVE_TO_VIDEO_TAB = 2;
+
+  MatchDetails(this.localization,this.match, {this.fromNotification: false, this.matchId: 0, this.pageType: 0});
 
   @override
   _MatchDetailsState createState() {
@@ -34,6 +43,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
   List<Widget> tabViews = [];
   List<Tab> tabs = [];
+  bool isLoad = true;
 
   AdmobBanner admobBanner;
   
@@ -51,6 +61,23 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
       },
     );
+    //if is from notification, init match item
+    if(this.widget.fromNotification) {
+      initMatch();
+    }
+    if(matchItem != null) {
+      initTabsDetails();
+    }
+  }
+
+  initMatch() async {
+    MatchItem.get(context, this.widget.matchId).then((value) {
+      this.matchItem = value;
+      initTabsDetails();
+    });
+  }
+
+  initTabsDetails () {
     initTabsItems();
     initTabs();
     initTabsViews();
@@ -58,6 +85,20 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
         length: tabsItem.length,
         vsync: this
     );
+    
+    if(this.widget.pageType == this.widget.MOVE_TO_LINEUP_TAB) {
+      _controller.animateTo(1);
+    }
+    else if(this.widget.pageType == this.widget.MOVE_TO_VIDEO_TAB) {
+      _controller.animateTo(tabsItem.length - 1);
+    }
+    else {
+      _controller.animateTo(0);
+    }
+    
+    setState(() {
+      isLoad = false;
+    });
   }
 
   @override
@@ -70,7 +111,12 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
+      body: (isLoad)?
+          Center(
+            child: CircularProgressIndicator(),
+          ):
+      ((this.matchItem != null)?
+      NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBexIsScrolled) {
           return <Widget>[
             SliverAppBar(
@@ -130,6 +176,10 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                 controller: _controller,
                 children: tabViews,
               ),
+      ) : EmptyData(localization)),
+      appBar: (this.matchItem != null)? null :
+      AppBar(
+        title: Text(''),
       ),
       bottomSheet: (constant.canShowAds)?
       Container(
@@ -153,6 +203,21 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     tabsItem.add(comments);
     tabsItem.add(video);
   }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) {
+        /*Navigator.push(context, MaterialPageRoute(
+            builder: (_context){
+              return HomePage(localization);
+            }
+        ));*/
+        return HomePage(localization);
+      },
+    )) ?? false;
+  }
+
 
   initTabs(){
     tabsItem.forEach((item){
