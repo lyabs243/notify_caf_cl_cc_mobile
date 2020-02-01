@@ -56,7 +56,6 @@ class _BodyState extends State<Body>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    Admob.initialize(constant.ADMOB_APP_ID);
     admobBanner = AdmobBanner(
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.LARGE_BANNER,

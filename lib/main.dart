@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     _context = context;
-
+    Admob.initialize(constant.ADMOB_APP_ID);
     OneSignal.shared.init('11010fc6-b149-46a0-89f6-1ec83193e7ff');
     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
@@ -59,7 +59,6 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    Admob.initialize(constant.ADMOB_APP_ID);
     return MaterialApp(
       localizationsDelegates: [
         MyLocalizationsDelegate(),

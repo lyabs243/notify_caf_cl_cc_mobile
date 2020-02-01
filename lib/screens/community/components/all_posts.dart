@@ -36,7 +36,6 @@ class _AllPostsState extends State<AllPosts> {
   @override
   void initState() {
     super.initState();
-    Admob.initialize(constant.ADMOB_APP_ID);
     admobBanner = AdmobBanner(
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.MEDIUM_RECTANGLE,

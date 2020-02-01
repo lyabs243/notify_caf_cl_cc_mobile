@@ -48,7 +48,6 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    Admob.initialize(constant.ADMOB_APP_ID);
     admobBanner = AdmobBanner(
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.BANNER,
