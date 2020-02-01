@@ -20,14 +20,13 @@ class PageTransition {
 
   //check if app can suggest user to share or rate application
   Future checkForRateAndShareSuggestion() async {
-    Admob.initialize(constants.ADMOB_APP_ID);
     interstitialAd = AdmobInterstitial(
       adUnitId: constants.getAdmobInterstitialId(),
       listener: (AdmobAdEvent event, Map<String, dynamic> args) async {
         if(event == AdmobAdEvent.loaded) {
           interstitialAd.show();
         }
-        else if(event == AdmobAdEvent.closed) {
+        else if(event == AdmobAdEvent.closed || event == AdmobAdEvent.failedToLoad) {
           if(!pushReplacement) {
             Navigator.push(context, materialPageRoute);
           }
