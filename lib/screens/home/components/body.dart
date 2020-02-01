@@ -129,7 +129,7 @@ class _BodyState extends State<Body>{
                   ),
                   (constant.canShowAds)?
                   Container(
-                    margin: EdgeInsets.only(bottom: 20.0),
+                    margin: EdgeInsets.only(bottom: 10.0, right: 10.0),
                     child: admobBanner,
                   ) : Container(),
                   Card(
