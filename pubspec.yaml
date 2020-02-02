@@ -38,6 +38,7 @@ dependencies:
   share: ^0.6.3+5
   admob_flutter: ^0.3.4
   onesignal: ^1.1.0
+  carousel_slider: ^1.4.1
   flutter_localizations:
     sdk: flutter
 
@@ -65,6 +66,7 @@ flutter:
   assets:
    - assets/
    - assets/icons/
+   - assets/screenshots/
    - assets/icons/match/
    - assets/icons/reaction/
    - assets/i18n/

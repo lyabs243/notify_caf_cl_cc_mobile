@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/first_launch/first_launch.dart';
 import 'package:flutter_cafclcc/screens/match_details/match_details.dart';
 import 'models/localizations.dart';
 import 'theme/style.dart';
@@ -33,6 +34,17 @@ class _MyAppState extends State<MyApp> {
   BuildContext _context;
   int matchId, type;
   bool notification = false;
+  bool firstLaunch = true;
+
+  @override
+  void initState() {
+    super.initState();
+    FirstLaunchPage.isFirstLaunch().then((value) {
+      setState(() {
+        firstLaunch = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +88,10 @@ class _MyAppState extends State<MyApp> {
           this.user = user;
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
-          if(notification) {
+          if(firstLaunch) {
+            return FirstLaunchPage(MyLocalizations.of(context).localization, user);
+          }
+          else if(notification) {
             Future.delayed(Duration.zero, () {
               Navigator.push(context, MaterialPageRoute(
                   builder: (_context){
