@@ -52,6 +52,7 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
+        padding: EdgeInsets.only(bottom: 50.0, top: 5.0),
         itemCount: actions.length,
         itemBuilder: (buildContext,i){
           return Container(

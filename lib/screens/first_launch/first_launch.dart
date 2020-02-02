@@ -100,7 +100,6 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
             color: Color.fromRGBO(255, 255, 255, 0.4),
             height: 4.0,
           ),
-          Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height/50),),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -262,7 +261,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                 Container(
                   child: Text(
                     description,
-                    textScaleFactor: 1.2,
+                    textScaleFactor: 1.1,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.clip,
                     style: TextStyle(
@@ -274,7 +273,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                 Padding(padding: EdgeInsets.only(top: 8.0, bottom: 8.0),),
                 Container(
                   width: MediaQuery.of(context).size.width/1.5,
-                  height: MediaQuery.of(context).size.height / 1.6,
+                  height: MediaQuery.of(context).size.height / 1.7,
                   child: Card(
                     elevation: 80.0,
                     child: Image.asset(
