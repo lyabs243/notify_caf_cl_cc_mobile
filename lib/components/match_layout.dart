@@ -124,7 +124,9 @@ class MatchLayoutState extends State<MatchLayout>{
                 child: Column(
                   children: <Widget>[
                     Text(
-                      (matchItem.status == MatchItem.MATCH_STATUS_TYPE_IN_PROGRESS)?
+                      (matchItem.status != MatchItem.MATCH_STATUS_TYPE_PENDING
+                      && matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME
+                      && matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT)?
                       matchItem.match_status:
                       constant.formatDateTime(localization, matchItem.match_date, false),
                       textScaleFactor: 0.8,
