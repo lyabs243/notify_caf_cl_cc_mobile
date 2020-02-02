@@ -21,8 +21,14 @@ class MatchLineup{
       if(map != null && map['NOTIFYGROUP']['success'].toString() == 1.toString()) {
         List result = map['NOTIFYGROUP']['data'];
         result.forEach((item){
-          int id_player = int.parse(item['id_player']);
-          int id_team = int.parse(item['id_team']);
+          int id_player = 0;
+          if(item['id_player'] != null) {
+            id_player = int.parse(item['id_player']);
+          }
+          int id_team = 0;
+          if(item['id_team'] != null) {
+            id_team = int.parse(item['id_team']);
+          }
           String description = item['description'];
           String name = item['name'];
           String num_player = item['num_player'];
