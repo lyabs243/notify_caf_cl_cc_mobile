@@ -92,12 +92,25 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
             child: ListView.builder(
                 itemCount: lineups.length,
                 itemBuilder: (context, i){
-                  return Container(
-                    padding: EdgeInsets.only(left: 14.0,bottom: 5.0),
-                    child: Text(
-                      '${lineups[i].num_player}   ${lineups[i].name}',
-                      textScaleFactor: 1.8,
-                    ),
+                  return Row(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(bottom: 5.0),
+                        width: MediaQuery.of(context).size.width / 10,
+                        child: Text(
+                          '${lineups[i].num_player}',
+                          textScaleFactor: 1.5,
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 14.0,bottom: 5.0),
+                        child: Text(
+                          '${lineups[i].name}',
+                          textScaleFactor: 1.5,
+                        ),
+                      )
+                    ],
                   );
                 }
             )
