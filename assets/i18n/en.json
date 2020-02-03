@@ -167,5 +167,11 @@
   "first_launch_description_5": "Connect and join the large community, you can publish, comment on posts or matches.",
   "first_launch_title_6": "Let Start",
   "first_launch_description_6": "Do not hesitate to rate and share the application, this will allow us to work regularly on it in order to improve it.",
-  "add_youtube_video_id": "Add a YouTube video id for this match"
+  "add_youtube_video_id": "Add a YouTube video id for this match",
+  "Language": "Language",
+  "english": "English",
+  "french": "French",
+  "language_english_code": "en",
+  "language_french_code": "fr",
+  "selet_language": "Select language"
 }

@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/Select_language_widget.dart';
 import 'package:flutter_cafclcc/screens/first_launch/first_launch.dart';
 import 'package:flutter_cafclcc/screens/match_details/match_details.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'models/localizations.dart';
 import 'theme/style.dart';
 import 'screens/login/login.dart';
@@ -35,6 +37,7 @@ class _MyAppState extends State<MyApp> {
   int matchId, type;
   bool notification = false;
   bool firstLaunch = true;
+  String langCode = 'en';
 
   @override
   void initState() {
@@ -67,6 +70,14 @@ class _MyAppState extends State<MyApp> {
       }
       catch(e){}
     });
+    SharedPreferences.getInstance().then((sharePreference) {
+      setState(() {
+        langCode = sharePreference.getString('lang');
+        if(langCode == null) {
+          langCode = 'en';
+        }
+      });
+    });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -77,7 +88,7 @@ class _MyAppState extends State<MyApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      locale: Locale('en'),
+      locale: Locale(langCode),
       onGenerateTitle: (BuildContext context) =>
       MyLocalizations.of(context).localization['app_title'],
       supportedLocales: [Locale("en"), Locale("fr")],
@@ -89,7 +100,7 @@ class _MyAppState extends State<MyApp> {
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
           if(firstLaunch) {
-            return FirstLaunchPage(MyLocalizations.of(context).localization, user);
+            return SelectLanguageWidget(MyLocalizations.of(context).localization, user);
           }
           else if(notification) {
             Future.delayed(Duration.zero, () {
@@ -113,8 +124,19 @@ class _MyAppState extends State<MyApp> {
             return Login();
           }
 
-          return Center(
-            child: CircularProgressIndicator(),
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                  Text(
+                    MyLocalizations.of(context).localization['loading'],
+                    textScaleFactor: 2.5,
+                  )
+                ],
+              ),
+            ),
           );
         }
       ),
