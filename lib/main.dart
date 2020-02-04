@@ -47,6 +47,14 @@ class _MyAppState extends State<MyApp> {
         firstLaunch = value;
       });
     });
+    SharedPreferences.getInstance().then((sharePreference) {
+      setState(() {
+        langCode = sharePreference.getString('lang');
+        if(langCode == null) {
+          langCode = 'en';
+        }
+      });
+    });
   }
 
   @override
@@ -69,14 +77,6 @@ class _MyAppState extends State<MyApp> {
         });
       }
       catch(e){}
-    });
-    SharedPreferences.getInstance().then((sharePreference) {
-      setState(() {
-        langCode = sharePreference.getString('lang');
-        if(langCode == null) {
-          langCode = 'en';
-        }
-      });
     });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
