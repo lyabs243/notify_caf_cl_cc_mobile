@@ -100,13 +100,13 @@ class _MyAppState extends State<MyApp> {
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
           if(firstLaunch) {
-            return SelectLanguageWidget(MyLocalizations.of(context).localization, user);
+            return SelectLanguageWidget(user);
           }
           else if(notification) {
             Future.delayed(Duration.zero, () {
               Navigator.push(context, MaterialPageRoute(
                   builder: (_context){
-                    return MatchDetails(MyLocalizations.of(_context).localization, null, fromNotification: true,
+                    return MatchDetails(null, fromNotification: true,
                       matchId: matchId, pageType: type,);
                   }
               ));
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
           }
           else if (user != null && user.id_accout_type != null && user.id_accout_type != null){
             /// is because there is user already logged
-            return HomePage(MyLocalizations.of(context).localization);
+            return HomePage();
           }
           else {
             /// other way there is no user logged.

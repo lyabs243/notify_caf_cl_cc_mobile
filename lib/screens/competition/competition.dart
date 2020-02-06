@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../models/competition_item.dart';
 import '../../models/drawer_item.dart';
@@ -10,9 +11,8 @@ import '../competition_scorers/competition_scorers.dart';
 class CompetitionPage extends StatefulWidget{
 
   CompetitionItem competitionItem;
-  Map localization;
 
-  CompetitionPage(this.competitionItem,this.localization);
+  CompetitionPage(this.competitionItem);
 
   @override
   _CompetitionPageState createState() {
@@ -67,7 +67,7 @@ class _CompetitionPageState extends State<CompetitionPage>{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.widget.localization['competition']),
+        title: Text(MyLocalizations.instanceLocalization['competition']),
       ),
       body: Column(
         children: <Widget>[
@@ -134,43 +134,43 @@ class _CompetitionPageState extends State<CompetitionPage>{
                         case 1: //live
                           MaterialPageRoute materialPageRoute = MaterialPageRoute(
                               builder: (context){
-                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.LIVE,);
+                                return MatchsList(this.widget.competitionItem,TypeList.LIVE,);
                               }
                           );
-                          PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+                          PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
                           break;
                         case 2: //last result
                           MaterialPageRoute materialPageRoute = MaterialPageRoute(
                               builder: (context){
-                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.RESULT,);
+                                return MatchsList(this.widget.competitionItem,TypeList.RESULT,);
                               }
                           );
-                          PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+                          PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
                           break;
                         case 3: //fixture
                           MaterialPageRoute materialPageRoute = MaterialPageRoute(
                               builder: (context){
-                                return MatchsList(this.widget.localization,this.widget.competitionItem,TypeList.FIXTURE,);
+                                return MatchsList(this.widget.competitionItem,TypeList.FIXTURE,);
                               }
                           );
-                          PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+                          PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
                           break;
                         case 4: //stages
                           MaterialPageRoute materialPageroute = MaterialPageRoute(
                             builder: (context){
-                              return new CompetitionStage(this.widget.localization,this.widget.competitionItem);
+                              return new CompetitionStage(this.widget.competitionItem);
                             },
                             fullscreenDialog: true,
                           );
-                          PageTransition(context, this.widget.localization, materialPageroute, false).checkForRateAndShareSuggestion();
+                          PageTransition(context, materialPageroute, false).checkForRateAndShareSuggestion();
                           break;
                         case 5: //scorers
                           MaterialPageRoute materialPageRoute = MaterialPageRoute(
                             builder: (context){
-                              return new CompetitionScorers(this.widget.localization, this.widget.competitionItem);
+                              return new CompetitionScorers(this.widget.competitionItem);
                             },
                           );
-                          PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+                          PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
                           break;
                       }
                     },
@@ -185,11 +185,11 @@ class _CompetitionPageState extends State<CompetitionPage>{
 
   initItems(){
 
-    DrawerItem live = new DrawerItem(1, this.widget.localization['live'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem last_results = new DrawerItem(2, this.widget.localization['last_results'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem fixture = new DrawerItem(3, this.widget.localization['fixture'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-    DrawerItem stages = new DrawerItem(4, this.widget.localization['stages'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem scorers = new DrawerItem(5, this.widget.localization['scorers'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+    DrawerItem live = new DrawerItem(1, MyLocalizations.instanceLocalization['live'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem last_results = new DrawerItem(2, MyLocalizations.instanceLocalization['last_results'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+    DrawerItem fixture = new DrawerItem(3, MyLocalizations.instanceLocalization['fixture'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+    DrawerItem stages = new DrawerItem(4, MyLocalizations.instanceLocalization['stages'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem scorers = new DrawerItem(5, MyLocalizations.instanceLocalization['scorers'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
     items.add(live);
     items.add(last_results);

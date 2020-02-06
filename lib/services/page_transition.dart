@@ -9,14 +9,13 @@ import '../models/constants.dart' as constants;
 
 class PageTransition {
 
-  Map localization;
   BuildContext context;
 
   AdmobInterstitial interstitialAd;
   MaterialPageRoute materialPageRoute;
   bool pushReplacement = false;
 
-  PageTransition (this.context, this.localization, this.materialPageRoute, this.pushReplacement);
+  PageTransition (this.context, this.materialPageRoute, this.pushReplacement);
 
   //check if app can suggest user to share or rate application
   Future checkForRateAndShareSuggestion() async {
@@ -84,8 +83,7 @@ class PageTransition {
               context: context,
               barrierDismissible: false,
               builder: (BuildContext context) {
-                return SuggestUserDialog(
-                    localization, sType, userSuggest);
+                return SuggestUserDialog(sType, userSuggest);
               }).then((value) {
           if(!pushReplacement) {
             Navigator.push(context, materialPageRoute);

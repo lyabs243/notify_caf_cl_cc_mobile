@@ -9,11 +9,10 @@ import '../../models/constants.dart';
 
 class NewsDetails extends StatelessWidget {
 
-  Map localization;
   NewsItem newsItem;
   AdmobBanner admobBanner;
 
-  NewsDetails(this.localization, this.newsItem) {
+  NewsDetails(this.newsItem) {
     Admob.initialize(ADMOB_APP_ID);
     admobBanner = AdmobBanner(
       adUnitId: getAdmobBannerId(),
@@ -38,7 +37,7 @@ class NewsDetails extends StatelessWidget {
               floating: true,
               expandedHeight: MediaQuery.of(context).size.height / 3.45,
               flexibleSpace: FlexibleSpaceBar(
-                background: Header(localization, newsItem)
+                background: Header(newsItem)
               ),
             ),
           ];
@@ -61,7 +60,7 @@ class NewsDetails extends StatelessWidget {
                       ImageIcon(AssetImage('assets/icons/date.png'),size: 15.0, color: Colors.grey[600],),
                       Padding(padding: EdgeInsets.only(left: 2.0,right: 2.0),),
                       new Text(
-                        convertDateToAbout(this.newsItem.news_date, localization),
+                        convertDateToAbout(this.newsItem.news_date),
                         style: new TextStyle(
                             color: Colors.grey[600],
                             fontStyle: FontStyle.italic

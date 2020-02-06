@@ -4,11 +4,10 @@ import '../models/constants.dart' as constant;
 
 class BadgeLayout extends StatelessWidget {
 
-  Map localization;
   FanBadge fanBadge;
   double scale;
 
-  BadgeLayout(this.localization, this.fanBadge, {this.scale: 1.0});
+  BadgeLayout(this.fanBadge, {this.scale: 1.0});
 
   @override
   Widget build(BuildContext context) {

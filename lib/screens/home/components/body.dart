@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -20,9 +21,8 @@ class Body extends StatefulWidget{
 
   Fragment fragment;
   CompetitionItem competitionItem;
-  Map localization;
 
-  Body(this.localization,{this.fragment: Fragment.HOME,this.competitionItem});
+  Body({this.fragment: Fragment.HOME,this.competitionItem});
 
   @override
   _BodyState createState() {
@@ -88,7 +88,7 @@ class _BodyState extends State<Body>{
   @override
   Widget build(BuildContext context) {
     if(this.fragment == Fragment.COMPETITION_LIST){
-      homeContenair = FragmentCompetitionList(this.widget.localization);
+      homeContenair = FragmentCompetitionList();
     }
     else{
       homeContenair = SmartRefresher(
@@ -102,7 +102,7 @@ class _BodyState extends State<Body>{
           child:(loadData)?
           Center(child: CircularProgressIndicator(),):
           (!hasHomeInfos)?
-          EmptyData(this.widget.localization):
+          EmptyData():
           SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.all(5.0),
@@ -178,28 +178,28 @@ class _BodyState extends State<Body>{
     initNewsWidgets();
 
     //init live widgets
-    initSpecificWidget(TypeList.LIVE, homeInfos.current_match, liveWidgets, this.widget.localization['live']);
+    initSpecificWidget(TypeList.LIVE, homeInfos.current_match, liveWidgets, MyLocalizations.instanceLocalization['live']);
 
     //init fixture widgets
-    initSpecificWidget(TypeList.FIXTURE, homeInfos.fixture, fixtureWidgets, this.widget.localization['fixture']);
+    initSpecificWidget(TypeList.FIXTURE, homeInfos.fixture, fixtureWidgets, MyLocalizations.instanceLocalization['fixture']);
 
     //init fixture widgets
-    initSpecificWidget(TypeList.RESULT, homeInfos.latest_result, resultWidgets, this.widget.localization['last_results']);
+    initSpecificWidget(TypeList.RESULT, homeInfos.latest_result, resultWidgets, MyLocalizations.instanceLocalization['last_results']);
   }
 
   initNewsWidgets() {
     trendingNews.clear();
     homeInfos.trending_news.forEach((news){
       trendingNews.add(
-          TrendingNewsWidget(this.widget.localization,news)
+          TrendingNewsWidget(news)
       );
     });
     if(trendingNews.length == 0) {
-      trendingNews.add(EmptyData(this.widget.localization));
+      trendingNews.add(EmptyData());
     } else {
       trendingNews.add(FlatButton(
         child: Text(
-          this.widget.localization['see_more'],
+          MyLocalizations.instanceLocalization['see_more'],
           style: TextStyle(
               color: Theme
                   .of(context)
@@ -209,10 +209,10 @@ class _BodyState extends State<Body>{
         onPressed: () {
           MaterialPageRoute materialPageRoute = MaterialPageRoute(
               builder: (context){
-                return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
+                return NewsList(CompetitionItem.COMPETITION_TYPE);
               }
           );
-          PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+          PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
         },
       ));
     }
@@ -243,7 +243,7 @@ class _BodyState extends State<Body>{
           ),
           FlatButton(
             child: Text(
-              this.widget.localization['see_more'],
+              MyLocalizations.instanceLocalization['see_more'],
               style: TextStyle(
                   color: Theme
                       .of(context)
@@ -253,17 +253,17 @@ class _BodyState extends State<Body>{
             onPressed: () {
               MaterialPageRoute materialPageRoute = MaterialPageRoute(
                   builder: (context){
-                    return MatchsList(this.widget.localization,null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
+                    return MatchsList(null,typeList,idCompetitionType: CompetitionItem.COMPETITION_TYPE,);
                   }
               );
-              PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+              PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
             },
           )
         ],
       ));
     }
     for(int i=0;i<matchList.length;i++){
-      widgets.add(MatchLayout(this.widget.localization, matchList[i]));
+      widgets.add(MatchLayout(matchList[i]));
     }
   }
 }

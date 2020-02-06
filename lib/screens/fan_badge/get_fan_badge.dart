@@ -5,6 +5,7 @@ import 'package:flutter_cafclcc/models/Country.dart';
 import 'package:flutter_cafclcc/models/competition_item.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/fan_club.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
@@ -14,23 +15,21 @@ import 'package:toast/toast.dart';
 
 class GetFanBadge extends StatefulWidget {
 
-  Map localization;
   Country country;
 
   MaterialPageRoute materialPageRoute;
 
-  GetFanBadge(this.localization, this.country, this.materialPageRoute);
+  GetFanBadge(this.country, this.materialPageRoute);
 
   @override
   _GetFanBadgeState createState() {
-    return _GetFanBadgeState(this.localization, this.country);
+    return _GetFanBadgeState(this.country);
   }
 
 }
 
 class _GetFanBadgeState extends State<GetFanBadge> {
 
-  Map localization;
   Country country;
 
   User currentUser;
@@ -44,7 +43,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
 
   double iconSize;
 
-  _GetFanBadgeState(this.localization, this.country);
+  _GetFanBadgeState(this.country);
 
   @override
   void initState() {
@@ -83,7 +82,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
                 Navigator.pushReplacement(context, MaterialPageRoute
                 (
                     builder: (context) {
-                      return FanBadgeCountries(localization, this.widget.materialPageRoute);
+                      return FanBadgeCountries(this.widget.materialPageRoute);
                     }
                 ));
               }
@@ -112,7 +111,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
             child: CircularProgressIndicator(),
           ):
           (clubs.length <= 0)?
-          EmptyData(this.widget.localization):
+          EmptyData():
           Container(
             padding: EdgeInsets.all(8.0),
             child: Column(
@@ -130,7 +129,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 8.0),),
                 Text(
-                  localization['get_badge_now'],
+                  MyLocalizations.instanceLocalization['get_badge_now'],
                   textAlign: TextAlign.center,
                   textScaleFactor: 2.5,
                 ),
@@ -159,7 +158,7 @@ class _GetFanBadgeState extends State<GetFanBadge> {
           allClubs.add(
             InkWell(
               child: Container(
-                child: BadgeLayout(localization, badge),
+                child: BadgeLayout(badge),
                 padding: EdgeInsets.only(left: 4.0, right: 4.0),
               ),
               onTap: () {
@@ -189,12 +188,12 @@ class _GetFanBadgeState extends State<GetFanBadge> {
       if(result) {
         currentUser.fanBadge = fanBadge;
         currentUser.toMap();
-        Toast.show(this.widget.localization['badge_added'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['badge_added'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pushReplacement(context, this.widget.materialPageRoute);
       }
       else {
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

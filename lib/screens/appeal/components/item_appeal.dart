@@ -10,9 +10,7 @@ import '../../user_profile/user_profile.dart';
 
 class ItemAppeal extends StatefulWidget{
 
-  Map localization;
-
-  ItemAppeal(this.localization);
+  ItemAppeal();
 
   @override
   _ItemAppealState createState() {
@@ -24,7 +22,6 @@ class ItemAppeal extends StatefulWidget{
 
 class _ItemAppealState extends State<ItemAppeal>{
 
-  Map localization;
   List<AppealItem> items;
   bool isPageLoading = true;
   bool isPageRefresh = false;
@@ -46,7 +43,6 @@ class _ItemAppealState extends State<ItemAppeal>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    localization = this.widget.localization;
     _refreshController = RefreshController(initialRefresh: false);
     User.getInstance().then((_user){
       setState(() {
@@ -92,7 +88,7 @@ class _ItemAppealState extends State<ItemAppeal>{
       (isPageRefresh)?
       Center():
       (items.length<=0)?
-      EmptyData(localization):
+      EmptyData():
       ListView.builder(
           itemCount: items.length,
           itemBuilder: ((context,i){
@@ -107,7 +103,7 @@ class _ItemAppealState extends State<ItemAppeal>{
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          UserPostHeaderInfos(localization, _user, currentUser, items[i].register_date),
+                          UserPostHeaderInfos(_user, currentUser, items[i].register_date),
                           Container(
                             width: 20.0,
                             height: 20.0,
@@ -144,7 +140,7 @@ class _ItemAppealState extends State<ItemAppeal>{
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context){
-                      return new AppealDialog(this.localization,items[i],currentUser, _user);
+                      return new AppealDialog(items[i],currentUser, _user);
                     },
                     fullscreenDialog: true
                 )).then((appeal){

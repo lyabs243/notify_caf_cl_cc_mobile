@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/services/notify_api.dart';
 
+import 'localizations.dart';
+
 class PostReaction {
 
   int id_post;
@@ -117,27 +119,27 @@ class PostReaction {
     }
   }
 
-  static String getReactionText(int reaction, Map localization) {
+  static String getReactionText(int reaction) {
     if(reaction == REACTION_LIKE) {
-      return localization['like'];
+      return MyLocalizations.instanceLocalization['like'];
     }
     else if(reaction == REACTION_LOVE) {
-      return localization['love'];
+      return MyLocalizations.instanceLocalization['love'];
     }
     else if(reaction == REACTION_GOAL) {
-      return localization['goal'];
+      return MyLocalizations.instanceLocalization['goal'];
     }
     else if(reaction == REACTION_AHAH) {
-      return localization['ah_ah'];
+      return MyLocalizations.instanceLocalization['ah_ah'];
     }
     else if(reaction == REACTION_TROPHY) {
-      return localization['trophy'];
+      return MyLocalizations.instanceLocalization['trophy'];
     }
     else if(reaction == REACTION_ANGRY) {
-      return localization['angry'];
+      return MyLocalizations.instanceLocalization['angry'];
     }
     else {
-      return localization['like'];
+      return MyLocalizations.instanceLocalization['like'];
     }
   }
 

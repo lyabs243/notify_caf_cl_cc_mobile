@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -17,16 +18,13 @@ class CommentWidget extends StatefulWidget {
 
   Comment comment;
   User user, currentUser;
-  Map localization;
   Function updateDeleleteState;
 
-  CommentWidget(this.comment, this.user, this.currentUser,
-      this.localization, this.updateDeleleteState);
+  CommentWidget(this.comment, this.user, this.currentUser, this.updateDeleleteState);
 
   @override
   _CommentWidgetState createState() {
-    return _CommentWidgetState(this.comment, this.user, this.currentUser,
-        this.localization, this.updateDeleleteState);
+    return _CommentWidgetState(this.comment, this.user, this.currentUser, this.updateDeleleteState);
   }
 
 }
@@ -35,20 +33,18 @@ class _CommentWidgetState extends State<CommentWidget> {
 
   Comment comment;
   User user, currentUser;
-  Map localization;
 
   ProgressDialog progressDialog;
 
   Function updateDeleleteState;
 
-  _CommentWidgetState(this.comment, this.user, this.currentUser,
-      this.localization, this.updateDeleleteState);
+  _CommentWidgetState(this.comment, this.user, this.currentUser, this.updateDeleleteState);
 
   @override
   void initState() {
     super.initState();
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: localization['loading']);
+    progressDialog.style(message: MyLocalizations.instanceLocalization['loading']);
   }
 
   @override
@@ -114,7 +110,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                               recognizer: new TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return new UserProfile(currentUser,user,localization);
+                                    return new UserProfile(currentUser,user);
                                   }));
                                 },
                             ),
@@ -141,7 +137,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                   Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      constants.convertDateToAbout(this.comment.register_date, localization),
+                      constants.convertDateToAbout(this.comment.register_date),
                       textScaleFactor: 0.8,
                       style: TextStyle(
                       ),
@@ -160,7 +156,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                   case 1: //udate
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return CommentDialog(localization, comment, currentUser);
+                          return CommentDialog(comment, currentUser);
                         }
                     )).then((_comment){
                       if(_comment != null && _comment.toString().length > 0) {
@@ -174,9 +170,8 @@ class _CommentWidgetState extends State<CommentWidget> {
                     alert.showAlertDialog
                       (
                         context,
-                        this.localization['warning'],
-                        this.localization['want_delete_comment'],
-                        this.localization,
+                        MyLocalizations.instanceLocalization['warning'],
+                        MyLocalizations.instanceLocalization['want_delete_comment'],
                             (){
                           deleteComment();
                         }
@@ -189,7 +184,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                 if(currentUser.id_subscriber == comment.subscriber.id_subscriber && currentUser.active == 1) {
                   list.add(
                     PopupMenuItem(
-                      child: Text(localization['update']),
+                      child: Text(MyLocalizations.instanceLocalization['update']),
                       value: 1,
                       enabled: (currentUser.id_subscriber ==
                           comment.subscriber.id_subscriber &&
@@ -198,7 +193,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                   );
                   list.add(
                     PopupMenuItem(
-                      child: Text(localization['delete']),
+                      child: Text(MyLocalizations.instanceLocalization['delete']),
                       value: 2,
                       enabled: (currentUser.id_subscriber ==
                           comment.subscriber.id_subscriber &&
@@ -220,12 +215,12 @@ class _CommentWidgetState extends State<CommentWidget> {
     this.comment.deleteComment(context).then((success){
       progressDialog.hide();
       if(success) {
-        Toast.show(this.widget.localization['comment_deleted'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['comment_deleted'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         updateDeleleteState();
       }
       else{
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

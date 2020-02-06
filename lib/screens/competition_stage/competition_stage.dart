@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'components/stage_tabview.dart';
 import '../../components/empty_data.dart';
 import '../../models/competition_item.dart';
@@ -8,10 +9,9 @@ import '../../models/constants.dart' as constant;
 
 class CompetitionStage extends StatefulWidget{
 
-  Map localization;
   CompetitionItem competitionItem;
 
-  CompetitionStage(this.localization,this.competitionItem);
+  CompetitionStage(this.competitionItem);
 
   @override
   _CompetitionStageState createState() {
@@ -56,14 +56,14 @@ class _CompetitionStageState extends State<CompetitionStage>{
 
     return (isLoading || competitionStages.length <= 0)?
         Scaffold(
-          appBar: AppBar(title: Text(this.widget.localization['stages']),),
-          body: (isLoading)? Center(child: CircularProgressIndicator(),) : EmptyData(this.widget.localization),
+          appBar: AppBar(title: Text(MyLocalizations.instanceLocalization['stages']),),
+          body: (isLoading)? Center(child: CircularProgressIndicator(),) : EmptyData(),
         ):
     DefaultTabController(
       length: competitionStages.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(this.widget.localization['stages']),
+          title: Text(MyLocalizations.instanceLocalization['stages']),
           bottom: TabBar(
             tabs: tabs,
             isScrollable: true,
@@ -108,7 +108,7 @@ class _CompetitionStageState extends State<CompetitionStage>{
   initTabs(List<Widget> tabViews){
     for(int i=0;i< competitionStages.length;i++){
       tabViews.add(
-        StageTabview(this.widget.localization, competitionStages[i], selectedGroups[i], selectedButtons[i]),
+        StageTabview(competitionStages[i], selectedGroups[i], selectedButtons[i]),
       );
     }
   }

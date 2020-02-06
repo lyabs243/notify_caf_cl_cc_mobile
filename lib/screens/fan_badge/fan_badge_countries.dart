@@ -4,33 +4,32 @@ import 'package:flutter_cafclcc/components/country_widge.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/models/Country.dart';
 import 'package:flutter_cafclcc/models/competition_item.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FanBadgeCountries extends StatefulWidget {
 
-  Map localization;
   MaterialPageRoute materialPageRoute;
 
-  FanBadgeCountries(this.localization, this.materialPageRoute);
+  FanBadgeCountries(this.materialPageRoute);
 
   @override
   _FanBadgeCountriesState createState() {
-    return _FanBadgeCountriesState(this.localization);
+    return _FanBadgeCountriesState();
   }
 
 }
 
 class _FanBadgeCountriesState extends State<FanBadgeCountries> {
 
-  Map localization;
   double iconSize;
 
   List<Country> countries = [];
   RefreshController refreshController;
   bool isPageRefresh = false, isLoadPage = true;
 
-  _FanBadgeCountriesState(this.localization);
+  _FanBadgeCountriesState();
 
   @override
   void initState() {
@@ -53,7 +52,7 @@ class _FanBadgeCountriesState extends State<FanBadgeCountries> {
     iconSize = MediaQuery.of(context).size.width/3.5;
     return Scaffold(
       appBar: AppBar(
-        title: Text(localization['countries']),
+        title: Text(MyLocalizations.instanceLocalization['countries']),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -78,7 +77,7 @@ class _FanBadgeCountriesState extends State<FanBadgeCountries> {
           child: CircularProgressIndicator(),
         ):
         (countries.length <= 0)?
-        EmptyData(this.widget.localization):
+        EmptyData():
         Container(
         padding: EdgeInsets.all(8.0),
         child: Column(
@@ -93,7 +92,7 @@ class _FanBadgeCountriesState extends State<FanBadgeCountries> {
             ),
             Padding(padding: EdgeInsets.only(bottom: 8.0),),
             Text(
-              localization['select_club_country'],
+              MyLocalizations.instanceLocalization['select_club_country'],
               textAlign: TextAlign.center,
               textScaleFactor: 2.5,
             ),
@@ -101,7 +100,7 @@ class _FanBadgeCountriesState extends State<FanBadgeCountries> {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index){
-                  return CountryWidget(localization, countries[index], this.widget.materialPageRoute);
+                  return CountryWidget(countries[index], this.widget.materialPageRoute);
                 },
                 itemCount: countries.length,
               ),

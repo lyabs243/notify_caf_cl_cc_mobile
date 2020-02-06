@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import '../../../models/appeal_item.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
@@ -9,12 +10,11 @@ import '../../../models/constants.dart' as constant;
 
 class AppealDialog extends StatefulWidget{
 
-  Map localization;
   AppealItem appealItem;
   User currentUser;
   User user;
 
-  AppealDialog(this.localization,this.appealItem,this.currentUser, this.user);
+  AppealDialog(this.appealItem,this.currentUser, this.user);
 
   @override
   _AppealDialogState createState() {
@@ -34,11 +34,11 @@ class _AppealDialogState extends State<AppealDialog>{
     return ModalProgressHUD(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(this.widget.localization['appeal']),
+          title: Text(MyLocalizations.instanceLocalization['appeal']),
           actions: <Widget>[
             FlatButton(
               child: Text(
-                this.widget.localization['approve'],
+                MyLocalizations.instanceLocalization['approve'],
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -51,12 +51,12 @@ class _AppealDialogState extends State<AppealDialog>{
                       isLoading = false;
                     });
                     if(success) {
-                      Toast.show(this.widget.localization['appeal_approved'], context,duration: Toast.LENGTH_LONG,
+                      Toast.show(MyLocalizations.instanceLocalization['appeal_approved'], context,duration: Toast.LENGTH_LONG,
                           gravity: Toast.BOTTOM);
                       Navigator.pop(context, this.widget.appealItem);
                     }
                     else{
-                      Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+                      Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
                       gravity: Toast.BOTTOM);
                     }
                   });
@@ -65,7 +65,7 @@ class _AppealDialogState extends State<AppealDialog>{
             ),
             FlatButton(
               child: Text(
-                this.widget.localization['deactivate'],
+                MyLocalizations.instanceLocalization['deactivate'],
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -78,12 +78,12 @@ class _AppealDialogState extends State<AppealDialog>{
                       isLoading = false;
                     });
                     if(success) {
-                      Toast.show(this.widget.localization['appeal_deactivated'], context,duration: Toast.LENGTH_LONG,
+                      Toast.show(MyLocalizations.instanceLocalization['appeal_deactivated'], context,duration: Toast.LENGTH_LONG,
                           gravity: Toast.BOTTOM);
                       Navigator.pop(context, this.widget.appealItem);
                     }
                     else{
-                      Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+                      Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
                           gravity: Toast.BOTTOM);
                     }
                   });
@@ -99,14 +99,14 @@ class _AppealDialogState extends State<AppealDialog>{
             InkWell(
               child: Card(
                 elevation: 15.0,
-                child: UserPostHeaderInfos(this.widget.localization, this.widget.user, this.widget.currentUser,
+                child: UserPostHeaderInfos(this.widget.user, this.widget.currentUser,
                     this.widget.appealItem.register_date),
               ),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
                   User user = new User();
                   user.id_subscriber = this.widget.appealItem.id_subscriber;
-                  return new UserProfile(this.widget.currentUser,user,this.widget.localization);
+                  return new UserProfile(this.widget.currentUser,user);
                 }));
               },
             ),
@@ -120,7 +120,7 @@ class _AppealDialogState extends State<AppealDialog>{
                   color: Theme.of(context).primaryColor
               ),
               child: Text(
-                constant.convertDateToAbout(this.widget.appealItem.register_date,this.widget.localization),
+                constant.convertDateToAbout(this.widget.appealItem.register_date),
                 style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: Colors.white
@@ -138,8 +138,8 @@ class _AppealDialogState extends State<AppealDialog>{
                     color: (this.widget.appealItem.is_policie_violate)? Colors.green : Colors.red,
                     child: Text(
                       (this.widget.appealItem.is_policie_violate)?
-                      this.widget.localization['appeal_recognize_violated_true'] :
-                      this.widget.localization['appeal_recognize_violated_false'],
+                      MyLocalizations.instanceLocalization['appeal_recognize_violated_true'] :
+                      MyLocalizations.instanceLocalization['appeal_recognize_violated_false'],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -154,8 +154,8 @@ class _AppealDialogState extends State<AppealDialog>{
                     color: (this.widget.appealItem.is_policie_respect_after_activation)? Colors.green : Colors.red,
                     child: Text(
                       (this.widget.appealItem.is_policie_respect_after_activation)?
-                      this.widget.localization['appeal_promise_not_violated_true']:
-                      this.widget.localization['appeal_promise_not_violated_false'],
+                      MyLocalizations.instanceLocalization['appeal_promise_not_violated_true']:
+                      MyLocalizations.instanceLocalization['appeal_promise_not_violated_false'],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,

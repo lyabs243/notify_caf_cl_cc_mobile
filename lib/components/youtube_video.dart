@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:toast/toast.dart';
@@ -12,14 +13,13 @@ import '../models/constants.dart' as constants;
 
 class YoutubeVideo extends StatefulWidget{
 
-  Map localization;
   MatchItem matchItem;
 
-  YoutubeVideo(this.localization, this.matchItem);
+  YoutubeVideo(this.matchItem);
 
   @override
   _YoutubeVideoState createState() {
-    return _YoutubeVideoState(this.localization, this.matchItem);
+    return _YoutubeVideoState(this.matchItem);
   }
 
 }
@@ -27,7 +27,6 @@ class YoutubeVideo extends StatefulWidget{
 class _YoutubeVideoState extends State<YoutubeVideo>{
 
   bool play = false;
-  Map localization;
   MatchItem matchItem;
   MatchVideo matchVideo;
   User currentUser;
@@ -37,7 +36,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
 
   String videoPreview = '', youtubeVideoId = '';
 
-  _YoutubeVideoState(this.localization, this.matchItem);
+  _YoutubeVideoState(this.matchItem);
 
   @override
   void initState() {
@@ -89,7 +88,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
             (currentUser != null && currentUser.type == User.USER_TYPE_ADMIN)?
             RaisedButton(
               child: Text(
-                localization['add_match_video'],
+                MyLocalizations.instanceLocalization['add_match_video'],
                 style: TextStyle(
                     color: Colors.white
                 ),
@@ -112,7 +111,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
                                   width: MediaQuery.of(context).size.width * 80 / 100,
                                   child: new TextField(
                                     decoration: new InputDecoration(
-                                      hintText: localization['add_youtube_video_id'],
+                                      hintText: MyLocalizations.instanceLocalization['add_youtube_video_id'],
                                     ),
                                     maxLines: 1,
                                     controller: _controller,
@@ -129,7 +128,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
                                   children: <Widget>[
                                     RaisedButton(
                                       child: Text(
-                                        localization['add'],
+                                        MyLocalizations.instanceLocalization['add'],
                                         style: TextStyle(
                                             color: Colors.white
                                         ),
@@ -143,7 +142,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
                                     ),
                                     RaisedButton(
                                       child: Text(
-                                        localization['cancel'],
+                                        MyLocalizations.instanceLocalization['cancel'],
                                         style: TextStyle(
                                             color: Colors.white
                                         ),
@@ -165,7 +164,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
               },
             ): Container(),
             (videoPreview.length == 0)?
-            EmptyData(localization) :
+            EmptyData() :
             (
                 new Container(
                   alignment: Alignment.center,
@@ -200,7 +199,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   Future addVideo() async{
     ProgressDialog progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
     progressDialog.style(
-      message: localization['loading'],
+      message: MyLocalizations.instanceLocalization['loading'],
     );
     progressDialog.show();
     await this.matchVideo.addVideo(context, youtubeVideoId).then((success) {
@@ -214,7 +213,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
         Navigator.pop(context);
       }
       else {
-        Toast.show(localization['error_occured'], context, duration: Toast.LENGTH_LONG);
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context, duration: Toast.LENGTH_LONG);
       }
     });
   }

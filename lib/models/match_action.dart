@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/notify_api.dart';
+import 'localizations.dart';
 
 class MatchAction{
 
@@ -117,23 +118,23 @@ class MatchAction{
     return path;
   }
 
-  static String getActionLable(int type, Map localization){
+  static String getActionLable(int type){
     String label = '';
 
     if(type == MATCH_ACTION_TYPE_KICKOFF){
-      label = localization['kick_off'];
+      label = MyLocalizations.instanceLocalization['kick_off'];
     }
     else if(type == MATCH_ACTION_TYPE_HALF_TIME){
-      label = localization['half_time'];
+      label = MyLocalizations.instanceLocalization['half_time'];
     }
     else if(type == MATCH_ACTION_TYPE_FULL_TIME){
-      label = localization['full_time'];
+      label = MyLocalizations.instanceLocalization['full_time'];
     }
     else if(type == MATCH_ACTION_TYPE_EXTRA_TIME){
-      label = localization['extra_time'];
+      label = MyLocalizations.instanceLocalization['extra_time'];
     }
     else if(type == MATCH_ACTION_TYPE_PENALTY_KICK){
-      label = localization['penalty_kick'];
+      label = MyLocalizations.instanceLocalization['penalty_kick'];
     }
 
     return label;

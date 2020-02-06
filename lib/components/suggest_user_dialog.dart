@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user_suggest.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,11 +8,10 @@ import '../models/constants.dart' as constant;
 
 class SuggestUserDialog extends StatelessWidget {
 
-  Map localization;
   SuggestType suggestType;
   UserSuggest userSuggest;
 
-  SuggestUserDialog(this.localization, this.suggestType, this.userSuggest);
+  SuggestUserDialog(this.suggestType, this.userSuggest);
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class SuggestUserDialog extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 80 / 100,
                 child: new Text(
                   (this.suggestType == SuggestType.SUGGEST_RATE_APP)?
-                  localization['text_suggest_rate_app']:
-                  localization['text_suggest_share_app'],
+                  MyLocalizations.instanceLocalization['text_suggest_rate_app']:
+                  MyLocalizations.instanceLocalization['text_suggest_share_app'],
                   textScaleFactor: 1.3,
                   textAlign: TextAlign.center,
                 ),
@@ -84,8 +84,8 @@ class SuggestUserDialog extends StatelessWidget {
                     child: RaisedButton(
                       child: Text(
                         (this.suggestType == SuggestType.SUGGEST_RATE_APP)?
-                        localization['rate']:
-                        localization['share'],
+                        MyLocalizations.instanceLocalization['rate']:
+                        MyLocalizations.instanceLocalization['share'],
                         maxLines: 2,
                         style: TextStyle(
                             color: Colors.white
@@ -100,7 +100,7 @@ class SuggestUserDialog extends StatelessWidget {
                           this.userSuggest.canSuggestRate = false;
                         }
                         else { //suggest share app
-                          Share.share(localization['text_share_app']);
+                          Share.share(MyLocalizations.instanceLocalization['text_share_app']);
                           this.userSuggest.canSuggestShare = false;
                         }
                         updateSuggestValue();
@@ -112,7 +112,7 @@ class SuggestUserDialog extends StatelessWidget {
                     width: MediaQuery.of(context).size.width /4,
                     child: RaisedButton(
                       child: Text(
-                        localization['remind_later'],
+                        MyLocalizations.instanceLocalization['remind_later'],
                         maxLines: 2,
                         style: TextStyle(
                             color: Colors.white
@@ -129,7 +129,7 @@ class SuggestUserDialog extends StatelessWidget {
                     width: MediaQuery.of(context).size.width /4,
                     child: RaisedButton(
                       child: Text(
-                        localization['not_show_again'],
+                        MyLocalizations.instanceLocalization['not_show_again'],
                         maxLines: 2,
                         style: TextStyle(
                             color: Colors.white

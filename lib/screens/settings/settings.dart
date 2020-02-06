@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/Select_language_widget.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
 
-  Map localization;
-
-  Settings(this.localization);
+  Settings();
 
   @override
   State<StatefulWidget> createState() {
-    return _SettingsState(localization);
+    return _SettingsState();
   }
 
 }
 
 class _SettingsState extends State<Settings> {
 
-  Map localization;
   String langCode;
   bool isLoading = true;
 
-  _SettingsState(this.localization);
+  _SettingsState();
 
   @override
   void initState() {
@@ -41,7 +39,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(localization['settings']),
+        title: Text(MyLocalizations.instanceLocalization['settings']),
       ),
       body: (isLoading == true)?
       Center(
@@ -52,7 +50,7 @@ class _SettingsState extends State<Settings> {
           children: <Widget>[
             ListTile(
               title: Text(
-                localization['Language'],
+                MyLocalizations.instanceLocalization['Language'],
                 textScaleFactor: 1.2,
                 style: TextStyle(
                     color: Theme.of(context).textTheme.body1.color
@@ -60,7 +58,7 @@ class _SettingsState extends State<Settings> {
               ),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SelectLanguageWidget(localization, null, goToHomePage: true,);
+                  return SelectLanguageWidget(null, goToHomePage: true,);
                 })).then((lang) {
                   if(lang != null) {
                     setState(() {
@@ -72,8 +70,8 @@ class _SettingsState extends State<Settings> {
               leading: ImageIcon(AssetImage('assets/icons/date.png'),color: Theme.of(context).primaryColor),
               trailing: Text(
                   (langCode == 'fr')?
-                  localization['french']:
-                  localization['english'],
+                  MyLocalizations.instanceLocalization['french']:
+                  MyLocalizations.instanceLocalization['english'],
                 style: TextStyle(
                   color: Theme.of(context).primaryColor
                 ),

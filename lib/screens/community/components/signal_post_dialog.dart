@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/screens/post_details/post_details.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,15 +11,14 @@ import '../../../models/user.dart';
 
 class SignalPostDialog extends StatefulWidget{
 
-  Map localization;
   User currentUser;
   Post post;
 
-  SignalPostDialog(this.localization,this.post,this.currentUser);
+  SignalPostDialog(this.post,this.currentUser);
 
   @override
   _SignalPostDialogState createState() {
-    return new _SignalPostDialogState(this.localization,this.post,this.currentUser);
+    return new _SignalPostDialogState(this.post,this.currentUser);
   }
 
 }
@@ -29,11 +29,10 @@ class _SignalPostDialogState extends State<SignalPostDialog>{
   User currentUser;
   Post post;
   String signalText;
-  Map localization;
 
   TextEditingController _controller;
 
-  _SignalPostDialogState(this.localization,this.post,this.currentUser);
+  _SignalPostDialogState(this.post,this.currentUser);
 
   @override
   void initState() {
@@ -52,11 +51,11 @@ class _SignalPostDialogState extends State<SignalPostDialog>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.localization['signal_post']),
+        title: Text(MyLocalizations.instanceLocalization['signal_post']),
         actions: <Widget>[
           FlatButton(
             child: Text(
-              this.widget.localization['signal'],
+              MyLocalizations.instanceLocalization['signal'],
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -85,7 +84,7 @@ class _SignalPostDialogState extends State<SignalPostDialog>{
                 Padding(padding: EdgeInsets.only(bottom: 30.0),),
                 TextField(
                   decoration: new InputDecoration(
-                      labelText: this.widget.localization['why_signal_post'],
+                      labelText: MyLocalizations.instanceLocalization['why_signal_post'],
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.white, //Color of the border
@@ -119,12 +118,12 @@ class _SignalPostDialogState extends State<SignalPostDialog>{
         isLoading = false;
       });
       if(success) {
-        Toast.show(this.widget.localization['post_signaled'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['post_signaled'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pop(context, this.widget.post);
       }
       else{
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

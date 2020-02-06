@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -10,11 +11,10 @@ import '.././../../components/alert_dialog.dart' as alert;
 
 class UserBadge extends StatefulWidget {
 
-  Map localization;
   User _user, _currentUser;
   Function onBadgeDeleted;
 
-  UserBadge(this.localization, this._user, this._currentUser, this.onBadgeDeleted);
+  UserBadge(this._user, this._currentUser, this.onBadgeDeleted);
 
   @override
   _UserBadgeState createState() {
@@ -31,7 +31,7 @@ class _UserBadgeState extends State<UserBadge> {
   void initState() {
     super.initState();
     progressDialog = new ProgressDialog(context, isDismissible: false);
-    progressDialog.style(message: this.widget.localization['loading']);
+    progressDialog.style(message: MyLocalizations.instanceLocalization['loading']);
   }
 
   @override
@@ -79,10 +79,9 @@ class _UserBadgeState extends State<UserBadge> {
                   ),
                   onPressed: () {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
-                      return FanBadgeCountries(this.widget.localization, MaterialPageRoute(
+                      return FanBadgeCountries(MaterialPageRoute(
                           builder: (context) {
-                            return UserProfile(this.widget._currentUser, this.widget._currentUser,
-                                this.widget.localization);
+                            return UserProfile(this.widget._currentUser, this.widget._currentUser);
                           }));
                     }));
                   }
@@ -115,8 +114,8 @@ class _UserBadgeState extends State<UserBadge> {
             width: MediaQuery.of(context).size.width / 1.2,
             child: Text(
               (this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber)?
-              this.widget.localization['you_dont_have_badge']:
-              this.widget.localization['user_dont_have_badge'],
+              MyLocalizations.instanceLocalization['you_dont_have_badge']:
+              MyLocalizations.instanceLocalization['user_dont_have_badge'],
               textAlign: TextAlign.center,
               textScaleFactor: 1.5,
               style: TextStyle(
@@ -135,10 +134,9 @@ class _UserBadgeState extends State<UserBadge> {
                   ),
                   onPressed: () {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
-                      return FanBadgeCountries(this.widget.localization, MaterialPageRoute(
+                      return FanBadgeCountries(MaterialPageRoute(
                           builder: (context) {
-                            return UserProfile(this.widget._currentUser, this.widget._currentUser,
-                                this.widget.localization);
+                            return UserProfile(this.widget._currentUser, this.widget._currentUser);
                           }));
                     }));
                   }
@@ -152,12 +150,11 @@ class _UserBadgeState extends State<UserBadge> {
   }
 
   deleteBadge() async {
-    alert.showAlertDialog(context, this.widget.localization['warning'], this.widget.localization['want_delete_badge'],
-        this.widget.localization, (){
+    alert.showAlertDialog(context, MyLocalizations.instanceLocalization['warning'], MyLocalizations.instanceLocalization['want_delete_badge'], (){
           progressDialog.show();
         this.widget._user.fanBadge.delete(context).then((result){
           progressDialog.hide();
-          Toast.show(this.widget.localization['badge_deleted'], context, gravity: Toast.BOTTOM,
+          Toast.show(MyLocalizations.instanceLocalization['badge_deleted'], context, gravity: Toast.BOTTOM,
               duration: Toast.LENGTH_LONG);
           this.widget.onBadgeDeleted();
         });

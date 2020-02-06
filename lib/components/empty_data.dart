@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 
 class EmptyData extends StatelessWidget{
 
-  Map localization;
-
-  EmptyData(this.localization);
+  EmptyData();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class EmptyData extends StatelessWidget{
               ),
             ),
             Text(
-              localization['no_data_found'],
+              MyLocalizations.instanceLocalization['no_data_found'],
               textScaleFactor: 2.0,
             )
           ],

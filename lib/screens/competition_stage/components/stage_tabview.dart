@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/competition_stage.dart';
 import '../../../models/match_item.dart';
@@ -13,9 +14,7 @@ class StageTabview extends StatefulWidget{
   int selectedButton;
   int selectedGroup;
 
-  Map localization;
-
-  StageTabview(this.localization,this.competitionStage,this.selectedGroup,this.selectedButton);
+  StageTabview(this.competitionStage,this.selectedGroup,this.selectedButton);
 
   @override
   _StageTabviewState createState() {
@@ -98,7 +97,7 @@ class _StageTabviewState extends State<StageTabview>{
                     width: MediaQuery.of(context).size.width/2.05,
                     child: RaisedButton(
                       child: Text(
-                        this.widget.localization['last_results'],
+                        MyLocalizations.instanceLocalization['last_results'],
                         style: TextStyle(
                           color: (selectedButton == 1)? Theme.of(context).primaryColor : Colors.white,
                         ),
@@ -117,7 +116,7 @@ class _StageTabviewState extends State<StageTabview>{
                     width: MediaQuery.of(context).size.width/2.05,
                     child: RaisedButton(
                       child: Text(
-                        this.widget.localization['fixture'],
+                        MyLocalizations.instanceLocalization['fixture'],
                         style: TextStyle(
                           color: (selectedButton == 2)? Theme.of(context).primaryColor : Colors.white,
                         ),
@@ -139,7 +138,7 @@ class _StageTabviewState extends State<StageTabview>{
                 width: MediaQuery.of(context).size.width/2.05*2,
                 child: RaisedButton(
                   child: Text(
-                    this.widget.localization['table'],
+                    MyLocalizations.instanceLocalization['table'],
                     style: TextStyle(
                       color: (selectedButton == 3)? Theme.of(context).primaryColor : Colors.white,
                     ),
@@ -157,9 +156,9 @@ class _StageTabviewState extends State<StageTabview>{
                     child: CircularProgressIndicator(),
                   ):
               (selectedButton == 3)?
-                CompetitionTableLayout(this.widget.localization, selectedGroup, competitionStage.id)  :
+                CompetitionTableLayout(selectedGroup, competitionStage.id)  :
               (listMatch.length <= 0)?
-              EmptyData(this.widget.localization):
+              EmptyData():
               Expanded(
                 child: SmartRefresher(
                     controller: refreshController,
@@ -186,7 +185,7 @@ class _StageTabviewState extends State<StageTabview>{
                     padding: EdgeInsets.all(4.0),
                     itemBuilder: (context,i){
                       return Card(
-                        child: MatchLayout(this.widget.localization, listMatch[i]),
+                        child: MatchLayout(listMatch[i]),
                         elevation: 8.0,
                       );
                     }

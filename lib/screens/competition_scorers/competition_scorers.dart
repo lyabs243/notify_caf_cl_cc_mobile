@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../models/competition_item.dart';
 import '../../models/scorer_edition.dart';
@@ -8,21 +9,19 @@ import '../../models/constants.dart' as constant;
 
 class CompetitionScorers extends StatefulWidget{
 
-  Map localization;
   CompetitionItem competitionItem;
 
-  CompetitionScorers(this.localization, this.competitionItem);
+  CompetitionScorers(this.competitionItem);
 
   @override
   _CompetitionScorersState createState() {
-    return _CompetitionScorersState(this.localization, this.competitionItem);
+    return _CompetitionScorersState(this.competitionItem);
   }
 
 }
 
 class _CompetitionScorersState extends State<CompetitionScorers>{
 
-  Map localization;
   CompetitionItem competitionItem;
 
   List<ScorerEdition> scorerItems = [];
@@ -32,7 +31,7 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
   int page = 1;
   RefreshController refreshController;
 
-  _CompetitionScorersState(this.localization, this.competitionItem);
+  _CompetitionScorersState(this.competitionItem);
 
   @override
   void initState() {
@@ -69,7 +68,7 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${competitionItem.title_small} ${localization['scorers']}',
+          '${competitionItem.title_small} ${MyLocalizations.instanceLocalization['scorers']}',
           overflow: TextOverflow.fade,
         ),
       ),
@@ -99,7 +98,7 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
           child: CircularProgressIndicator(),
          ) :
         ((scorerItems.length <= 0)?
-        EmptyData(localization) :
+        EmptyData() :
         SingleChildScrollView(
           child: Container(
             child: Column(

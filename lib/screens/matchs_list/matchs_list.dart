@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../models/competition_item.dart';
 import '../../models/match_item.dart';
@@ -9,12 +10,11 @@ import '../../models/constants.dart' as constants;
 
 class MatchsList extends StatefulWidget{
 
-  Map localization;
   CompetitionItem competitionItem;
   int idCompetitionType;
   TypeList typeList;
 
-  MatchsList(this.localization,this.competitionItem,this.typeList,{this.idCompetitionType: 0});
+  MatchsList(this.competitionItem,this.typeList,{this.idCompetitionType: 0});
 
   @override
   _MatchListState createState() {
@@ -60,13 +60,13 @@ class _MatchListState extends State<MatchsList>{
       idCompetition = competitionItem.id;
     }
     if(typeList == TypeList.LIVE){
-      title = this.widget.localization['live'];
+      title = MyLocalizations.instanceLocalization['live'];
     }
     else if(typeList == TypeList.FIXTURE){
-    title = this.widget.localization['fixture'];
+    title = MyLocalizations.instanceLocalization['fixture'];
     }
     else{
-      title = this.widget.localization['last_results'];
+      title = MyLocalizations.instanceLocalization['last_results'];
     }
     initItems();
   }
@@ -106,7 +106,7 @@ class _MatchListState extends State<MatchsList>{
             child: CircularProgressIndicator(),
           ):
           (list.length <= 0)?
-          EmptyData(this.widget.localization):
+          EmptyData():
           ListView.builder(
               itemCount: list.length,
               padding: EdgeInsets.all(4.0),
@@ -119,7 +119,7 @@ class _MatchListState extends State<MatchsList>{
                       child: admobBanner,
                     ): Container(),
                     Card(
-                      child: MatchLayout(this.widget.localization, list[i]),
+                      child: MatchLayout(list[i]),
                       elevation: 8.0,
                     )
                   ],

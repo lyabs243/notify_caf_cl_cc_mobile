@@ -3,24 +3,22 @@ import '../../../models/news_item.dart';
 
 class Header extends StatefulWidget{
 
-  Map localization;
   NewsItem newsItem;
 
-  Header(this.localization,this.newsItem);
+  Header(this.newsItem);
 
   @override
   _HeaderState createState() {
-    return new _HeaderState(localization, newsItem);
+    return new _HeaderState(newsItem);
   }
 
 }
 
 class _HeaderState extends State<Header>{
 
-  Map localization;
   NewsItem newsItem;
 
-  _HeaderState(this.localization,this.newsItem);
+  _HeaderState(this.newsItem);
 
   @override
   void setState(fn) {

@@ -10,6 +10,7 @@ class MyLocalizations {
 
   final Locale locale;
   Map map;
+  static Map instanceLocalization;
 
   static MyLocalizations of(BuildContext context) {
     return Localizations.of<MyLocalizations>(context, MyLocalizations);
@@ -32,6 +33,7 @@ class MyLocalizationsDelegate extends LocalizationsDelegate<MyLocalizations> {
     String value = await rootBundle.loadString(
         'assets/i18n/' + locale.languageCode + '.json');
     Map map = json.decode(value);
+    MyLocalizations.instanceLocalization = map;
     return SynchronousFuture<MyLocalizations>(
         MyLocalizations(locale,map));
   }

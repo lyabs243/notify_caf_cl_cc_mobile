@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/settings/settings.dart';
 import 'package:flutter_cafclcc/screens/user_profile/components/user_badge.dart';
 import '../../../models/user.dart';
@@ -18,9 +19,8 @@ class Body extends StatefulWidget{
 
   User _user;
   User _currentUser;
-  Map _localization;
 
-  Body(this._currentUser,this._user,this._localization);
+  Body(this._currentUser,this._user);
 
   @override
   State<StatefulWidget> createState() {
@@ -77,7 +77,7 @@ class _BodyState extends State<Body>{
         child: CircularProgressIndicator(),
       ):
       (widget._user.full_name == null)?
-      EmptyData(widget._localization):
+      EmptyData():
       ListView.builder(
         itemBuilder: ((context,i){
           if(i == 0){
@@ -99,8 +99,8 @@ class _BodyState extends State<Body>{
                       (isCurrentUser)?
                       new Text(
                         (this.widget._user.id_accout_type == User.FACEBOOK_ACCOUNT_ID)?
-                        this.widget._localization['connected_with_facebook']:
-                        this.widget._localization['connected_with_google'],
+                        MyLocalizations.instanceLocalization['connected_with_facebook']:
+                        MyLocalizations.instanceLocalization['connected_with_google'],
                         textScaleFactor: 1.2,
                         style: TextStyle(
                             color: Colors.white,
@@ -128,7 +128,7 @@ class _BodyState extends State<Body>{
                     children: <Widget>[
                       Container(
                         child: Text(
-                            this.widget._localization['account_been_blocked'],
+                          MyLocalizations.instanceLocalization['account_been_blocked'],
                           style: TextStyle(
                             color: Colors.white
                           ),
@@ -137,7 +137,7 @@ class _BodyState extends State<Body>{
                       ),
                       OutlineButton(
                         child: Text(
-                            this.widget._localization['appeal'],
+                          MyLocalizations.instanceLocalization['appeal'],
                           style: TextStyle(
                               color: Colors.white
                           ),
@@ -145,7 +145,7 @@ class _BodyState extends State<Body>{
                         onPressed: (){
                           Navigator.push(context, MaterialPageRoute(
                               builder: (BuildContext context){
-                                return Appeal(this.widget._localization);
+                                return Appeal();
                               },
                           fullscreenDialog: true
                           ));
@@ -159,7 +159,7 @@ class _BodyState extends State<Body>{
                     ],
                   ),
                 ),
-                UserBadge(this.widget._localization, this.widget._user, this.widget._currentUser, deleteBadge),
+                UserBadge(this.widget._user, this.widget._currentUser, deleteBadge),
                 (constants.canShowAds)?
                 Container(
                   margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
@@ -229,11 +229,11 @@ class _BodyState extends State<Body>{
   initDrawerItems(){
     _drawerItems.clear();
     DrawerItem header = new DrawerItem(0, this.widget._user.full_name, DrawerType.header);
-    DrawerItem privacy = new DrawerItem(1, this.widget._localization['term_use'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem blockUser = new DrawerItem(2, this.widget._localization['block_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem unblockUser = new DrawerItem(3, this.widget._localization['unblock_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem settings = new DrawerItem(4, this.widget._localization['settings'], DrawerType.item, iconPath: 'assets/icons/date.png');
-    DrawerItem logout = new DrawerItem(5, this.widget._localization['logout'], DrawerType.item, iconPath: 'assets/icons/logout.png');
+    DrawerItem privacy = new DrawerItem(1, MyLocalizations.instanceLocalization['term_use'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
+    DrawerItem blockUser = new DrawerItem(2, MyLocalizations.instanceLocalization['block_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
+    DrawerItem unblockUser = new DrawerItem(3, MyLocalizations.instanceLocalization['unblock_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
+    DrawerItem settings = new DrawerItem(4, MyLocalizations.instanceLocalization['settings'], DrawerType.item, iconPath: 'assets/icons/date.png');
+    DrawerItem logout = new DrawerItem(5, MyLocalizations.instanceLocalization['logout'], DrawerType.item, iconPath: 'assets/icons/logout.png');
 
     //set visibility of block/unblock item
     if(this.widget._currentUser.type == User.USER_TYPE_ADMIN) {
@@ -270,9 +270,8 @@ class _BodyState extends State<Body>{
         alert.showAlertDialog
         (
             _context,
-            this.widget._localization['warning'],
-            this.widget._localization['want_block_user'],
-            this.widget._localization,
+            MyLocalizations.instanceLocalization['warning'],
+            MyLocalizations.instanceLocalization['want_block_user'],
             (){
               blockSubscriber();
             }
@@ -282,9 +281,8 @@ class _BodyState extends State<Body>{
         alert.showAlertDialog
         (
             _context,
-            this.widget._localization['warning'],
-            this.widget._localization['want_unblock_user'],
-            this.widget._localization,
+            MyLocalizations.instanceLocalization['warning'],
+            MyLocalizations.instanceLocalization['want_unblock_user'],
             (){
               unblockSubscriber();
             }
@@ -295,7 +293,7 @@ class _BodyState extends State<Body>{
             _context,
             MaterialPageRoute(
                 builder: (BuildContext context){
-                  return Settings(this.widget._localization);
+                  return Settings();
                 }
             ));
         break;
@@ -329,20 +327,20 @@ class _BodyState extends State<Body>{
   blockSubscriber() async{
     bool isBlock = await this.widget._currentUser.block(this.widget._user, setBlockingState,context);
     if(isBlock){
-      Toast.show(this.widget._localization['user_blocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+      Toast.show(MyLocalizations.instanceLocalization['user_blocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
     else{
-      Toast.show(this.widget._localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+      Toast.show(MyLocalizations.instanceLocalization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
   }
 
   unblockSubscriber() async{
     bool isUnblock = await this.widget._currentUser.unblock(this.widget._user, setBlockingState,context);
     if(isUnblock){
-      Toast.show(this.widget._localization['user_unblocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+      Toast.show(MyLocalizations.instanceLocalization['user_unblocked'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
     else{
-      Toast.show(this.widget._localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+      Toast.show(MyLocalizations.instanceLocalization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/screens/post_details/post_details.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,11 +14,10 @@ import '../../../models/constants.dart' as constant;
 
 class PostDialog extends StatefulWidget{
 
-  Map localization;
   User currentUser;
   Post post;
 
-  PostDialog(this.localization,this.post,this.currentUser);
+  PostDialog(this.post,this.currentUser);
 
   @override
   _PostDialogState createState() {
@@ -65,15 +65,15 @@ class _PostDialogState extends State<PostDialog>{
         appBar: AppBar(
           title: Text(
             (updatePost)?
-              this.widget.localization['update_post']:
-              this.widget.localization['add_post']
+            MyLocalizations.instanceLocalization['update_post']:
+            MyLocalizations.instanceLocalization['add_post']
           ),
           actions: <Widget>[
             FlatButton(
               child: Text(
                 (!updatePost)?
-                this.widget.localization['add']:
-                this.widget.localization['update'],
+                MyLocalizations.instanceLocalization['add']:
+                MyLocalizations.instanceLocalization['update'],
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -107,7 +107,7 @@ class _PostDialogState extends State<PostDialog>{
                   Padding(padding: EdgeInsets.only(bottom: 30.0),),
                   TextField(
                     decoration: new InputDecoration(
-                        labelText: this.widget.localization['post_description'],
+                        labelText: MyLocalizations.instanceLocalization['post_description'],
                         border: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.white, //Color of the border
@@ -141,7 +141,7 @@ class _PostDialogState extends State<PostDialog>{
                               icon: Icon(
                                   Icons.add_a_photo
                               ),
-                              label: Text(this.widget.localization['add_image'])
+                              label: Text(MyLocalizations.instanceLocalization['add_image'])
                           )
                         ],
                       ),
@@ -150,7 +150,7 @@ class _PostDialogState extends State<PostDialog>{
                         width: MediaQuery.of(context).size.width,
                         child: (_image == null)?
                         Center(
-                          child: Text(this.widget.localization['no_image_selected']),
+                          child: Text(MyLocalizations.instanceLocalization['no_image_selected']),
                         ):
                         Image.file(
                           _image,
@@ -175,12 +175,12 @@ class _PostDialogState extends State<PostDialog>{
         isLoading = false;
       });
       if(success) {
-        Toast.show(this.widget.localization['post_added'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['post_added'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pop(context, this.widget.post);
       }
       else{
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });
@@ -193,16 +193,16 @@ class _PostDialogState extends State<PostDialog>{
         isLoading = false;
       });
       if(success) {
-        Toast.show(this.widget.localization['post_updated'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['post_updated'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return PostDetails(this.widget.localization, this.widget.post);
+              return PostDetails(this.widget.post);
             }
         ));
       }
       else{
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

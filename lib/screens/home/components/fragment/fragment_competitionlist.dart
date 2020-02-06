@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import '../../../../models/competition_item.dart';
 import '../../../../components/curve_painter.dart';
 import '../../../../components/empty_data.dart';
@@ -7,9 +8,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FragmentCompetitionList extends StatefulWidget{
 
-  Map localization;
-
-  FragmentCompetitionList(this.localization);
+  FragmentCompetitionList();
 
   @override
   _FragmentCompetitionListState createState() {
@@ -70,7 +69,7 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
                     alignment: Alignment(0, -0.37),
                     width: MediaQuery.of(context).size.width/1.4,
                     child: Text(
-                      this.widget.localization['all_competitions'],
+                      MyLocalizations.instanceLocalization['all_competitions'],
                       textAlign: TextAlign.center,
                       textScaleFactor: 2.1,
                       style: TextStyle(color: Colors.white),
@@ -81,7 +80,7 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
             ),
           ),
           (list.length <= 0)?
-          EmptyData(this.widget.localization):
+          EmptyData():
           Expanded(
             child: SmartRefresher(
               controller: refreshController,
@@ -132,7 +131,7 @@ class _FragmentCompetitionListState extends State<FragmentCompetitionList>{
                         Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context){
-                              return CompetitionPage(list[i],this.widget.localization);
+                              return CompetitionPage(list[i]);
                             })
                         );
                       },

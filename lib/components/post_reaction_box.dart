@@ -3,29 +3,27 @@ import 'package:flutter_cafclcc/models/post_reaction.dart';
 
 class PostReactionBox extends StatefulWidget {
 
-  Map localization;
   Function setReaction;
   int id_post, id_subscriber;
 
-  PostReactionBox(this.localization, this.setReaction, this.id_post, this.id_subscriber);
+  PostReactionBox(this.setReaction, this.id_post, this.id_subscriber);
 
   @override
   _PostReactionBoxState createState() {
-    return new _PostReactionBoxState(localization, this.setReaction, this.id_post, this.id_subscriber);
+    return new _PostReactionBoxState(this.setReaction, this.id_post, this.id_subscriber);
   }
 
 }
 
 class _PostReactionBoxState extends State<PostReactionBox> {
 
-  Map localization;
   int currentIconFocus;
   Function setReaction;
   int id_post, id_subscriber;
 
   double iconHeight, iconMargin = 4.0, boxWidth;
 
-  _PostReactionBoxState(this.localization, this.setReaction, this.id_post, this.id_subscriber);
+  _PostReactionBoxState(this.setReaction, this.id_post, this.id_subscriber);
 
   @override
   void setState(fn) {

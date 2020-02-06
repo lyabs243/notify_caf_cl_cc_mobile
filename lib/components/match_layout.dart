@@ -9,25 +9,23 @@ import '../screens/match_details/match_details.dart';
 
 class MatchLayout extends StatefulWidget{
 
-  Map localization;
   MatchItem matchItem;
 
-  MatchLayout(this.localization,this.matchItem);
+  MatchLayout(this.matchItem);
 
   @override
   MatchLayoutState createState() {
     // TODO: implement createState
-    return new MatchLayoutState(this.localization,this.matchItem);
+    return new MatchLayoutState(this.matchItem);
   }
 
 }
 
 class MatchLayoutState extends State<MatchLayout>{
 
-  Map localization;
   MatchItem matchItem;
 
-  MatchLayoutState(this.localization,this.matchItem);
+  MatchLayoutState(this.matchItem);
 
   @override
   void setState(fn) {
@@ -128,7 +126,7 @@ class MatchLayoutState extends State<MatchLayout>{
                       && matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME
                       && matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT)?
                       matchItem.match_status:
-                      constant.formatDateTime(localization, matchItem.match_date, false),
+                      constant.formatDateTime(matchItem.match_date, false),
                       textScaleFactor: 0.8,
                       textAlign: TextAlign.center,
                     ),
@@ -189,10 +187,10 @@ class MatchLayoutState extends State<MatchLayout>{
       onTap: (){
         MaterialPageRoute materialPageRoute = MaterialPageRoute(
             builder: (context){
-              return MatchDetails(localization,matchItem);
+              return MatchDetails(matchItem);
             }
         );
-        PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+        PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
       },
     );
   }

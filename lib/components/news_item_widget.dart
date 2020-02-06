@@ -7,9 +7,8 @@ import '../screens/news_details/news_details.dart';
 class NewsItemWidget extends StatelessWidget {
 
   NewsItem newsItem;
-  Map localization;
 
-  NewsItemWidget(this.localization, this.newsItem);
+  NewsItemWidget(this.newsItem);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class NewsItemWidget extends StatelessWidget {
                           ImageIcon(AssetImage('assets/icons/date.png'),size: 15.0, color: Colors.grey[600],),
                           Padding(padding: EdgeInsets.only(left: 2.0,right: 2.0),),
                           new Text(
-                            convertDateToAbout(this.newsItem.news_date, localization),
+                            convertDateToAbout(this.newsItem.news_date),
                             maxLines: 1,
                             style: new TextStyle(
                                 color: Colors.grey[600],
@@ -82,9 +81,9 @@ class NewsItemWidget extends StatelessWidget {
       onTap: (){
         MaterialPageRoute materialPageRoute = MaterialPageRoute(
             builder: (BuildContext context){
-              return NewsDetails(this.localization, newsItem);
+              return NewsDetails(newsItem);
             });
-        PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+        PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
       },
     );
   }

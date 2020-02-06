@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'components/item_appeal.dart';
 
 class AppealPage extends StatefulWidget{
 
-  Map localization;
-
-  AppealPage(this.localization);
+  AppealPage();
 
   @override
   _AppealPageState createState() {
@@ -22,9 +21,9 @@ class _AppealPageState extends State<AppealPage>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.widget.localization['subscriber_appeal'])
+        title: Text(MyLocalizations.instanceLocalization['subscriber_appeal'])
       ),
-      body: ItemAppeal(this.widget.localization),
+      body: ItemAppeal(),
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'localizations.dart';
+
 List<String> languages = ['en', 'fr'];
 const LINK_TERMS_USE = 'http://www.notifygroup.org';
 const APP_PACKAGE = 'org.notifygroup.afrofoot';
@@ -37,45 +39,45 @@ String getAdmobRewardId() {
   return ADMOB_TEST_REWARD_ID;
 }
 
-String convertDateToAbout(DateTime dateTime,Map localization){
+String convertDateToAbout(DateTime dateTime){
 
   int sec=0,min=0,hour=0,days=0,months=0,years=0;
 
   sec = DateTime.now().difference(dateTime).inSeconds;
   String result = '?';
   if(sec >= 0){
-    result = localization['about_sec'].toString().replaceAll(new RegExp('{{value}}'), sec.toString()) +
+    result = MyLocalizations.instanceLocalization['about_sec'].toString().replaceAll(new RegExp('{{value}}'), sec.toString()) +
         ((sec > 1)? 's' : '');
     if(sec > 59){
       min = (sec/60).floor();
-      result = localization['about_min'].toString().replaceAll(new RegExp('{{value}}'), min.toString()) +
+      result = MyLocalizations.instanceLocalization['about_min'].toString().replaceAll(new RegExp('{{value}}'), min.toString()) +
           ((min > 1)? 's' : '');
     }
     if(min > 59){
       hour = (min/60).floor();
-      result = localization['about_hour'].toString().replaceAll(new RegExp('{{value}}'), hour.toString()) +
+      result = MyLocalizations.instanceLocalization['about_hour'].toString().replaceAll(new RegExp('{{value}}'), hour.toString()) +
           ((hour > 1)? 's' : '');
     }
     if(hour > 23){
       days = (hour/24).floor();
-      result = localization['about_day'].toString().replaceAll(new RegExp('{{value}}'), days.toString()) +
+      result = MyLocalizations.instanceLocalization['about_day'].toString().replaceAll(new RegExp('{{value}}'), days.toString()) +
           ((days > 1)? 's' : '');
     }
     if(days > 29){
       months = (days/30).floor();
-      result = localization['about_month'].toString().replaceAll(new RegExp('{{value}}'), months.toString()) +
+      result = MyLocalizations.instanceLocalization['about_month'].toString().replaceAll(new RegExp('{{value}}'), months.toString()) +
           ((months > 1)? 's' : '');
     }
     if(days>364){
       years = (days/365).floor();
-      result = localization['about_year'].toString().replaceAll(new RegExp('{{value}}'), years.toString()) +
+      result = MyLocalizations.instanceLocalization['about_year'].toString().replaceAll(new RegExp('{{value}}'), years.toString()) +
           ((years > 1)? 's' : '');
     }
   }
   return result;
 }
 
-String formatDateTime(Map localization, DateTime dateTime, bool allDetails) {
+String formatDateTime(DateTime dateTime, bool allDetails) {
 
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
@@ -84,11 +86,11 @@ String formatDateTime(Map localization, DateTime dateTime, bool allDetails) {
 
   final aDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
   if(aDate == today) {
-    return DateFormat("'${localization['today']},' h:mm a").format(dateTime);
+    return DateFormat("'${MyLocalizations.instanceLocalization['today']},' h:mm a").format(dateTime);
   } else if (aDate == yesterday) {
-    return DateFormat("'${localization['yesterday']},' h:mm a").format(dateTime);
+    return DateFormat("'${MyLocalizations.instanceLocalization['yesterday']},' h:mm a").format(dateTime);
   } else if (aDate == tomorrow) {
-    return DateFormat("'${localization['tomorrow']},' h:mm a").format(dateTime);
+    return DateFormat("'${MyLocalizations.instanceLocalization['tomorrow']},' h:mm a").format(dateTime);
   }
 
   return new DateFormat('E MMM dd, yyyy ${(allDetails)? 'h:mm a' : ''}').format(dateTime);

@@ -6,24 +6,22 @@ import '../../../models/match_item.dart';
 
 class Header extends StatefulWidget{
 
-  Map localization;
   MatchItem matchItem;
 
-  Header(this.localization,this.matchItem);
+  Header(this.matchItem);
 
   @override
   _HeaderState createState() {
-    return new _HeaderState(localization, matchItem);
+    return new _HeaderState(matchItem);
   }
 
 }
 
 class _HeaderState extends State<Header>{
 
-  Map localization;
   MatchItem matchItem;
 
-  _HeaderState(this.localization,this.matchItem);
+  _HeaderState(this.matchItem);
 
   @override
   void initState() {
@@ -73,7 +71,7 @@ class _HeaderState extends State<Header>{
                 Text(
                   (matchItem.status != MatchItem.MATCH_STATUS_TYPE_PENDING)?
                   matchItem.match_status:
-                  constant.formatDateTime(localization, matchItem.match_date, true),
+                  constant.formatDateTime(matchItem.match_date, true),
                   style: TextStyle(
                       color: Colors.white
                   ),

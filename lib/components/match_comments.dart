@@ -7,6 +7,7 @@ import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -17,21 +18,19 @@ import 'empty_data.dart';
 
 class MatchComments extends StatefulWidget{
 
-  Map localization;
   MatchItem matchItem;
 
-  MatchComments(this.localization, this.matchItem);
+  MatchComments(this.matchItem);
 
   @override
   _MatchCommentsState createState() {
-    return _MatchCommentsState(this.localization, this.matchItem);
+    return _MatchCommentsState(this.matchItem);
   }
 
 }
 
 class _MatchCommentsState extends State<MatchComments>{
 
-  Map localization;
   MatchItem matchItem;
 
   List<Comment> comments = [];
@@ -45,7 +44,7 @@ class _MatchCommentsState extends State<MatchComments>{
 
   User currentUser;
 
-  _MatchCommentsState(this.localization, this.matchItem);
+  _MatchCommentsState(this.matchItem);
 
   @override
   void initState() {
@@ -53,7 +52,7 @@ class _MatchCommentsState extends State<MatchComments>{
     refreshController = new RefreshController(initialRefresh: false);
     _controller = new TextEditingController();
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: localization['loading']);
+    progressDialog.style(message: MyLocalizations.instanceLocalization['loading']);
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;
@@ -107,7 +106,7 @@ class _MatchCommentsState extends State<MatchComments>{
                     width: MediaQuery.of(context).size.width * 80 / 100,
                     child: new TextField(
                       decoration: new InputDecoration(
-                        hintText: localization['type_comment'],
+                        hintText: MyLocalizations.instanceLocalization['type_comment'],
                       ),
                       maxLines: 1,
                       controller: _controller,
@@ -141,7 +140,7 @@ class _MatchCommentsState extends State<MatchComments>{
                 child: CircularProgressIndicator(),
               ):
               (comments.length <= 0)?
-              EmptyData(this.widget.localization):
+              EmptyData():
               ListView.builder(
                   itemCount: comments.length,
                   padding: EdgeInsets.all(8.0),
@@ -152,7 +151,7 @@ class _MatchCommentsState extends State<MatchComments>{
                     user.full_name = comments[index].subscriber.full_name;
                     user.fanBadge = comments[index].subscriber.fanBadge;
                     return Container(
-                      child: CommentWidget(comments[index], user, currentUser, localization, deleteComment),
+                      child: CommentWidget(comments[index], user, currentUser, deleteComment),
                       margin: EdgeInsets.only(bottom: (index == comments.length-1)?
                       MediaQuery.of(context).size.height / 12 : 0.0),
                     );
@@ -218,7 +217,7 @@ class _MatchCommentsState extends State<MatchComments>{
         });
       }
       else {
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

@@ -6,26 +6,24 @@ import '../models/match_action.dart';
 
 class MatchActionsLayout extends StatefulWidget{
 
-  Map localization;
   MatchItem matchItem;
 
-  MatchActionsLayout(this.localization,this.matchItem);
+  MatchActionsLayout(this.matchItem);
 
   @override
   _MatchActionsLayoutState createState() {
-    return new _MatchActionsLayoutState(localization, matchItem);
+    return new _MatchActionsLayoutState(matchItem);
   }
 
 }
 
 class _MatchActionsLayoutState extends State<MatchActionsLayout>{
 
-  Map localization;
   MatchItem matchItem;
 
   List<MatchAction> actions = [];
 
-  _MatchActionsLayoutState(this.localization,this.matchItem);
+  _MatchActionsLayoutState(this.matchItem);
 
   @override
   void initState() {
@@ -106,7 +104,7 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
                         ),
                       ),
                       Text(
-                        MatchAction.getActionLable(actions[i].type, localization),
+                        MatchAction.getActionLable(actions[i].type),
                         style: TextStyle(
                           color: Theme.of(context).primaryColor
                         ),

@@ -4,6 +4,7 @@ import 'package:flutter_cafclcc/components/comment_widget.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -14,21 +15,19 @@ import '../../models/constants.dart' as constant;
 
 class PostDetails extends StatefulWidget {
 
-  Map localization;
   Post post;
 
-  PostDetails(this.localization, this.post);
+  PostDetails(this.post);
 
   @override
   _PostDetailsState createState() {
-    return _PostDetailsState(this.localization, this.post);
+    return _PostDetailsState(this.post);
   }
 
 }
 
 class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStateMixin {
 
-  Map localization;
   Post post;
   String commentText;
 
@@ -43,7 +42,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
 
   AdmobBanner admobBanner;
 
-  _PostDetailsState(this.localization, this.post);
+  _PostDetailsState(this.post);
 
   @override
   void initState() {
@@ -57,7 +56,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
     refreshController = new RefreshController(initialRefresh: false);
     _controller = new TextEditingController();
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: localization['loading']);
+    progressDialog.style(message: MyLocalizations.instanceLocalization['loading']);
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;
@@ -70,7 +69,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(localization['post']),
+        title: Text(MyLocalizations.instanceLocalization['post']),
       ),
       body: SmartRefresher(
                   controller: refreshController,
@@ -110,7 +109,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                         return (index == 0)?
                         Column(
                           children: <Widget>[
-                            PostWidget(localization, post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,),
+                            PostWidget(post, clickable: false, updateView: updateView, showAllText: true, elevation: 0.0,),
                             (constant.canShowAds)?
                             Container(
                               margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
@@ -131,7 +130,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                                 width: MediaQuery.of(context).size.width * 80 / 100,
                                 child: new TextField(
                                   decoration: new InputDecoration(
-                                    hintText: localization['type_comment'],
+                                    hintText: MyLocalizations.instanceLocalization['type_comment'],
                                   ),
                                   controller: _controller,
                                   maxLines: 1,
@@ -159,7 +158,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                             ],
                           ),
                         ):
-                        CommentWidget(comments[index-2], user, currentUser, localization, deleteComment)
+                        CommentWidget(comments[index-2], user, currentUser, deleteComment)
                         );
                       }
                   ),
@@ -224,7 +223,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
         });
       }
       else {
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

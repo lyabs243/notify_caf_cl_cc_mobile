@@ -11,19 +11,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectLanguageWidget extends StatelessWidget {
 
-  Map localization;
   User user;
   double iconSize;
   bool goToHomePage;
 
-  SelectLanguageWidget(this.localization, this.user, {this.goToHomePage: false});
+  SelectLanguageWidget(this.user, {this.goToHomePage: false});
 
   @override
   Widget build(BuildContext context) {
     iconSize = MediaQuery.of(context).size.width/3.5;
     return Scaffold(
         appBar: AppBar(
-          title: Text(localization['Language']),
+          title: Text(MyLocalizations.instanceLocalization['Language']),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -40,16 +39,16 @@ class SelectLanguageWidget extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 8.0),),
                 Text(
-                  localization['selet_language'],
+                  MyLocalizations.instanceLocalization['selet_language'],
                   textAlign: TextAlign.center,
                   textScaleFactor: 2.5,
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 80.0),),
                 Column(
                   children: <Widget>[
-                    buildLangItem(context, localization['english'], localization['language_english_code']),
+                    buildLangItem(context, MyLocalizations.instanceLocalization['english'], MyLocalizations.instanceLocalization['language_english_code']),
                     Padding(padding: EdgeInsets.only(bottom: 20.0),),
-                    buildLangItem(context, localization['french'], localization['language_french_code'])
+                    buildLangItem(context, MyLocalizations.instanceLocalization['french'], MyLocalizations.instanceLocalization['language_french_code'])
                   ],
                 )
               ],
@@ -69,16 +68,14 @@ class SelectLanguageWidget extends StatelessWidget {
               MyLocalizationsDelegate().load(Locale(code)).then((value) {
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) {
-                  return HomePage(value.localization);
+                  return HomePage();
                 }));
               });
             }
             else {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) {
-                return FirstLaunchPage(MyLocalizations
-                    .of(context)
-                    .localization, user);
+                return FirstLaunchPage(user);
               }));
             }
           });

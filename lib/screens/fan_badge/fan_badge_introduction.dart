@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_countries.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 
 class FanBadgeIntroduction extends StatelessWidget {
 
-  Map localization;
   double iconSize;
   double buttonWidth;
 
-  FanBadgeIntroduction(this.localization);
+  FanBadgeIntroduction();
 
   @override
   StatelessElement createElement() {
@@ -21,7 +21,7 @@ class FanBadgeIntroduction extends StatelessWidget {
     buttonWidth = MediaQuery.of(context).size.width/1.2;
     return Scaffold(
       appBar: AppBar(
-        title: Text(localization['fan_badge']),
+        title: Text(MyLocalizations.instanceLocalization['fan_badge']),
       ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +34,7 @@ class FanBadgeIntroduction extends StatelessWidget {
               height: iconSize,
             ),
             Text(
-              localization['get_badge_introduction_title'],
+              MyLocalizations.instanceLocalization['get_badge_introduction_title'],
               textScaleFactor: 2,
               textAlign: TextAlign.center,
             ),
@@ -47,13 +47,13 @@ class FanBadgeIntroduction extends StatelessWidget {
                     onPressed: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context) {
-                            return FanBadgeCountries(localization, MaterialPageRoute(
+                            return FanBadgeCountries(MaterialPageRoute(
                                 builder: (context) {
-                                  return HomePage(localization);
+                                  return HomePage();
                                 }));
                           }));
                     },
-                    label: new Text(localization['get_badge'],textScaleFactor: 1.2,),
+                    label: new Text(MyLocalizations.instanceLocalization['get_badge'],textScaleFactor: 1.2,),
                     icon: new Icon(
                         Icons.stars
                     ),
@@ -69,10 +69,10 @@ class FanBadgeIntroduction extends StatelessWidget {
                     onPressed: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context) {
-                            return HomePage(localization);
+                            return HomePage();
                           }));
                     },
-                    label: new Text(localization['later'],textScaleFactor: 1.2,),
+                    label: new Text(MyLocalizations.instanceLocalization['later'],textScaleFactor: 1.2,),
                     icon: new Icon(
                         Icons.watch_later
                     ),

@@ -10,14 +10,13 @@ import '../../models/constants.dart' as constant;
 
 class NewsList extends StatefulWidget{
 
-  Map localization;
   int idCompetitionType;
 
-  NewsList(this.localization, this.idCompetitionType);
+  NewsList(this.idCompetitionType);
 
   @override
   _NewsListState createState() {
-    return new _NewsListState(this.localization, this.idCompetitionType);
+    return new _NewsListState(this.idCompetitionType);
   }
 
 }
@@ -25,14 +24,13 @@ class NewsList extends StatefulWidget{
 class _NewsListState extends State<NewsList> {
 
   RefreshController refreshController;
-  Map localization;
   bool isPageRefresh = false, isLoadPage = true;
   int page = 1, idCompetitionType;
   List<NewsItem> news = [];
   User user;
   AdmobBanner admobBanner;
 
-  _NewsListState(this.localization, this.idCompetitionType);
+  _NewsListState(this.idCompetitionType);
 
   @override
   void initState() {
@@ -95,7 +93,7 @@ class _NewsListState extends State<NewsList> {
             child: CircularProgressIndicator(),
           ):
           (news.length <= 0)?
-          EmptyData(this.widget.localization):
+          EmptyData():
           ListView.builder(
               itemCount: news.length,
               itemBuilder: (context, i) {
@@ -106,7 +104,7 @@ class _NewsListState extends State<NewsList> {
                       margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
                       child: admobBanner,
                     ): Container(),
-                    NewsItemWidget(this.widget.localization, news[i])
+                    NewsItemWidget(news[i])
                   ],
                 );
               }

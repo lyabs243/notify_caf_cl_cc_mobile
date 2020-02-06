@@ -10,10 +10,8 @@ class HomePage extends StatefulWidget{
 
   Fragment fragment;
   CompetitionItem competitionItem;
-  Map localization;
 
-
-  HomePage(this.localization,{Key key, this.title,this.fragment: Fragment.HOME,this.competitionItem}) : super(key: key);
+  HomePage({Key key, this.title,this.fragment: Fragment.HOME,this.competitionItem}) : super(key: key);
 
   final String title;
 
@@ -60,9 +58,9 @@ class _HomePageState extends State<HomePage>{
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
           return Scaffold(
-            appBar: HomeAppBar(user,localization),
-            body: Body(this.widget.localization,fragment: this.fragment,competitionItem: this.competitionItem,),
-            drawer: HomeDrawer(user, localization),
+            appBar: HomeAppBar(user),
+            body: Body(fragment: this.fragment,competitionItem: this.competitionItem,),
+            drawer: HomeDrawer(user),
           );
         }
     );

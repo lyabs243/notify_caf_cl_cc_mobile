@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import '../../models/user.dart';
 import 'components/body.dart';
 
@@ -6,18 +7,17 @@ class UserProfile extends StatelessWidget{
 
   User _currentUser;
   User _user;
-  Map _localization;
 
-  UserProfile(this._currentUser,this._user,this._localization);
+  UserProfile(this._currentUser,this._user);
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: new Text(_localization['profil']),
+        title: new Text(MyLocalizations.instanceLocalization['profil']),
       ),
-      body: Body(this._currentUser, _user, _localization),
+      body: Body(this._currentUser, _user),
     );
   }
 

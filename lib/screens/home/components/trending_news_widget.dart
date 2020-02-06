@@ -7,10 +7,9 @@ import '../../../models/constants.dart';
 
 class TrendingNewsWidget extends StatelessWidget{
 
-  Map localization;
   NewsItem newsItem;
 
-  TrendingNewsWidget(this.localization,this.newsItem);
+  TrendingNewsWidget(this.newsItem);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class TrendingNewsWidget extends StatelessWidget{
                     ImageIcon(AssetImage('assets/icons/date.png'),size: 15.0, color: Colors.white,),
                     Padding(padding: EdgeInsets.only(left: 2.0,right: 2.0),),
                     new Text(
-                      convertDateToAbout(newsItem.news_date, localization),
+                      convertDateToAbout(newsItem.news_date),
                       maxLines: 1,
                       style: new TextStyle(
                           color: Colors.white,
@@ -69,10 +68,10 @@ class TrendingNewsWidget extends StatelessWidget{
       onTap: () {
         MaterialPageRoute materialPageRoute = MaterialPageRoute(
             builder: (BuildContext context){
-              return NewsDetails(this.localization, newsItem);
+              return NewsDetails(newsItem);
             }
         );
-        PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+        PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
       },
     );
   }

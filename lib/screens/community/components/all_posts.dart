@@ -8,21 +8,19 @@ import '../../../models/constants.dart' as constant;
 
 class AllPosts extends StatefulWidget {
 
-  Map localization;
   int activeSubscriber, idSubscriber;
 
-  AllPosts(this.localization, this.activeSubscriber, this.idSubscriber);
+  AllPosts(this.activeSubscriber, this.idSubscriber);
 
   @override
   _AllPostsState createState() {
-    return _AllPostsState(this.localization, this.activeSubscriber, this.idSubscriber);
+    return _AllPostsState(this.activeSubscriber, this.idSubscriber);
   }
 
 }
 
 class _AllPostsState extends State<AllPosts> {
 
-  Map localization;
   int activeSubscriber, idSubscriber;
 
   List<Post> posts = [];
@@ -31,7 +29,7 @@ class _AllPostsState extends State<AllPosts> {
   int page = 1;
   AdmobBanner admobBanner;
 
-  _AllPostsState(this.localization, this.activeSubscriber, this.idSubscriber);
+  _AllPostsState(this.activeSubscriber, this.idSubscriber);
 
   @override
   void initState() {
@@ -79,7 +77,7 @@ class _AllPostsState extends State<AllPosts> {
           child: CircularProgressIndicator(),
         ):
         (posts.length <= 0)?
-        EmptyData(this.widget.localization):
+        EmptyData():
         ListView.builder(
           itemCount: posts.length,
           padding: EdgeInsets.all(8.0),
@@ -91,7 +89,7 @@ class _AllPostsState extends State<AllPosts> {
                   margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
                   child: admobBanner,
                 ): Container(),
-                PostWidget(localization, posts[index]),
+                PostWidget(posts[index]),
               ],
             );
           }

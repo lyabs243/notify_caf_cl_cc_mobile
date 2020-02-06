@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/appeal/appeal_page.dart';
 import 'package:flutter_cafclcc/screens/post_signal/post_signal.dart';
 import '../../models/drawer_item.dart';
@@ -6,9 +7,7 @@ import '../../components/curve_painter.dart';
 
 class AdminPanelPage extends StatefulWidget{
 
-  Map localization;
-
-  AdminPanelPage(this.localization);
+  AdminPanelPage();
 
   @override
   _AdminPanelPageState createState() {
@@ -43,7 +42,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.widget.localization['admin_panel']),
+        title: Text(MyLocalizations.instanceLocalization['admin_panel']),
       ),
       body: Column(
         children: <Widget>[
@@ -60,7 +59,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
                     alignment: Alignment(0, -0.37),
                     width: MediaQuery.of(context).size.width/1.4,
                     child: Text(
-                      this.widget.localization['admin_panel'],
+                      MyLocalizations.instanceLocalization['admin_panel'],
                       textAlign: TextAlign.center,
                       textScaleFactor: 2.1,
                       style: TextStyle(color: Colors.white),
@@ -111,7 +110,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
                               MaterialPageRoute
                                 (
                                   builder: (BuildContext context){
-                                    return AppealPage(this.widget.localization);
+                                    return AppealPage();
                                   }
                               ));
                           break;
@@ -121,7 +120,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
                               MaterialPageRoute
                               (
                                   builder: (BuildContext context){
-                                    return PostSignalPage(this.widget.localization);
+                                    return PostSignalPage();
                                   }
                               )
                           );
@@ -138,8 +137,8 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
   }
 
   initItems(){
-    DrawerItem appeal = new DrawerItem(1, this.widget.localization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem post_report = new DrawerItem(2, this.widget.localization['post_report'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem appeal = new DrawerItem(1, MyLocalizations.instanceLocalization['subscriber_appeal'], DrawerType.item,iconPath: 'assets/icons/login.png');
+    DrawerItem post_report = new DrawerItem(2, MyLocalizations.instanceLocalization['post_report'], DrawerType.item,iconPath: 'assets/icons/login.png');
 
     items.add(appeal);
     items.add(post_report);

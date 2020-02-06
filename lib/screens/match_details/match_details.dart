@@ -2,6 +2,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 import '../../models/match_item.dart';
@@ -16,7 +17,6 @@ import '../../models/constants.dart' as constant;
 
 class MatchDetails extends StatefulWidget{
 
-  Map localization;
   MatchItem match;
   bool fromNotification;
   int matchId;
@@ -26,18 +26,17 @@ class MatchDetails extends StatefulWidget{
   final int MOVE_TO_LINEUP_TAB = 1;
   final int MOVE_TO_VIDEO_TAB = 2;
 
-  MatchDetails(this.localization,this.match, {this.fromNotification: false, this.matchId: 0, this.pageType: 0});
+  MatchDetails(this.match, {this.fromNotification: false, this.matchId: 0, this.pageType: 0});
 
   @override
   _MatchDetailsState createState() {
-    return new _MatchDetailsState(this.localization,this.match);
+    return new _MatchDetailsState(this.match);
   }
 
 }
 
 class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderStateMixin{
 
-  Map localization;
   MatchItem matchItem;
   List<DrawerItem> tabsItem = [];
 
@@ -49,7 +48,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   
   TabController _controller;
 
-  _MatchDetailsState(this.localization,this.matchItem);
+  _MatchDetailsState(this.matchItem);
 
   @override
   void initState() {
@@ -127,7 +126,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                 background: Column(
                   children: <Widget>[
                     Padding(padding: EdgeInsets.all(25.0),),
-                    Header(localization, matchItem)
+                    Header(matchItem)
                   ],
                 ),
               ),
@@ -139,7 +138,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                     ),
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return new CompetitionPage(matchItem.competition, localization);
+                        return new CompetitionPage(matchItem.competition);
                       }));
                     }
                 ),
@@ -175,7 +174,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                 controller: _controller,
                 children: tabViews,
               ),
-      ) : EmptyData(localization)),
+      ) : EmptyData()),
       appBar: (this.matchItem != null)? null :
       AppBar(
         title: Text(''),
@@ -189,11 +188,11 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   }
 
   initTabsItems(){
-    DrawerItem actions = new DrawerItem(0, localization['actions'], DrawerType.item);
-    DrawerItem line_up = new DrawerItem(1, localization['line_up'], DrawerType.item);
-    DrawerItem table = new DrawerItem(2, localization['table'], DrawerType.item);
-    DrawerItem comments = new DrawerItem(3, localization['comments'], DrawerType.item);
-    DrawerItem video = new DrawerItem(4, localization['video'], DrawerType.item);
+    DrawerItem actions = new DrawerItem(0, MyLocalizations.instanceLocalization['actions'], DrawerType.item);
+    DrawerItem line_up = new DrawerItem(1, MyLocalizations.instanceLocalization['line_up'], DrawerType.item);
+    DrawerItem table = new DrawerItem(2, MyLocalizations.instanceLocalization['table'], DrawerType.item);
+    DrawerItem comments = new DrawerItem(3, MyLocalizations.instanceLocalization['comments'], DrawerType.item);
+    DrawerItem video = new DrawerItem(4, MyLocalizations.instanceLocalization['video'], DrawerType.item);
 
     tabsItem.add(actions);
     tabsItem.add(line_up);
@@ -212,7 +211,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
               return HomePage(localization);
             }
         ));*/
-        return HomePage(localization);
+        return HomePage();
       },
     )) ?? false;
   }
@@ -226,20 +225,20 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
   initTabsViews(){
     //init actions
-    tabViews.add(MatchActionsLayout(localization, matchItem));
+    tabViews.add(MatchActionsLayout(matchItem));
 
     //init line up
-    tabViews.add(MatchLineupLayout(localization, matchItem));
+    tabViews.add(MatchLineupLayout(matchItem));
 
     //init table
     if(this.matchItem.editionStage.type == EditionStage.TYPE_GROUP)
-      tabViews.add(CompetitionTableLayout(localization,matchItem.idGroupA,matchItem.editionStage.id));
+      tabViews.add(CompetitionTableLayout(matchItem.idGroupA,matchItem.editionStage.id));
 
     //init comments
-    tabViews.add(MatchComments(localization, matchItem));
+    tabViews.add(MatchComments(matchItem));
 
     //init video
-    tabViews.add(YoutubeVideo(this.localization,this.matchItem));
+    tabViews.add(YoutubeVideo(this.matchItem));
   }
 
 }

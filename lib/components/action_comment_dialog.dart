@@ -2,17 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/comment.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
 class CommentDialog extends StatefulWidget{
 
-  Map localization;
   User currentUser;
   Comment comment;
 
-  CommentDialog(this.localization,this.comment,this.currentUser);
+  CommentDialog(this.comment,this.currentUser);
 
   @override
   _CommentDialogState createState() {
@@ -52,12 +52,12 @@ class _CommentDialogState extends State<CommentDialog>{
     return Scaffold(
         appBar: AppBar(
           title: Text(
-              this.widget.localization['update_comment']
+              MyLocalizations.instanceLocalization['update_comment']
           ),
           actions: <Widget>[
             FlatButton(
               child: Text(
-                this.widget.localization['update'],
+                MyLocalizations.instanceLocalization['update'],
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -86,7 +86,7 @@ class _CommentDialogState extends State<CommentDialog>{
                   Padding(padding: EdgeInsets.only(bottom: 30.0),),
                   TextField(
                     decoration: new InputDecoration(
-                        labelText: this.widget.localization['comment_description'],
+                        labelText: MyLocalizations.instanceLocalization['comment_description'],
                         border: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.white, //Color of the border
@@ -122,12 +122,12 @@ class _CommentDialogState extends State<CommentDialog>{
         itUpdate = success;
       });
       if(success) {
-        Toast.show(this.widget.localization['comment_updated'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['comment_updated'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pop(context, commentText);
       }
       else {
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

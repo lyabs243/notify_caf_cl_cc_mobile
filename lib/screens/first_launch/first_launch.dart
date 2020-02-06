@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 import 'package:flutter_cafclcc/screens/login/login.dart';
@@ -10,10 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstLaunchPage extends StatefulWidget {
 
-  Map localization;
   User user;
 
-  FirstLaunchPage(this.localization, this.user);
+  FirstLaunchPage(this.user);
 
   @override
   _FirstLaunchPageState createState() => _FirstLaunchPageState();
@@ -113,7 +113,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                       color: Colors.white,
                     ),
                     Text(
-                      this.widget.localization['previous'],
+                      MyLocalizations.instanceLocalization['previous'],
                       textScaleFactor: 1.2,
                       style: TextStyle(
                           color: Colors.white
@@ -130,8 +130,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                   children: [
                     Text(
                       (_current == childs.length - 1)?
-                      this.widget.localization['finish']:
-                      this.widget.localization['next'],
+                      MyLocalizations.instanceLocalization['finish']:
+                      MyLocalizations.instanceLocalization['next'],
                       textScaleFactor: 1.2,
                       style: TextStyle(
                           color: Colors.white
@@ -150,7 +150,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                         this.widget.user.id_accout_type != null){
                       Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (_context){
-                            return HomePage(this.widget.localization);
+                            return HomePage();
                           }
                       ));
                     }
@@ -180,8 +180,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
     slideChilds.add(
         buildSlideItem
         (
-          this.widget.localization['first_launch_title_1'],
-          this.widget.localization['first_launch_description_1'],
+            MyLocalizations.instanceLocalization['first_launch_title_1'],
+            MyLocalizations.instanceLocalization['first_launch_description_1'],
           'assets/screenshots/home.PNG'
         )
       );
@@ -189,8 +189,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
     slideChilds.add(
         buildSlideItem
           (
-            this.widget.localization['first_launch_title_2'],
-            this.widget.localization['first_launch_description_2'],
+            MyLocalizations.instanceLocalization['first_launch_title_2'],
+            MyLocalizations.instanceLocalization['first_launch_description_2'],
             'assets/screenshots/score.PNG'
         )
     );
@@ -198,8 +198,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
     slideChilds.add(
         buildSlideItem
           (
-            this.widget.localization['first_launch_title_3'],
-            this.widget.localization['first_launch_description_3'],
+            MyLocalizations.instanceLocalization['first_launch_title_3'],
+            MyLocalizations.instanceLocalization['first_launch_description_3'],
             'assets/screenshots/competition_details.PNG'
         )
     );
@@ -207,8 +207,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
     slideChilds.add(
         buildSlideItem
           (
-            this.widget.localization['first_launch_title_4'],
-            this.widget.localization['first_launch_description_4'],
+            MyLocalizations.instanceLocalization['first_launch_title_4'],
+            MyLocalizations.instanceLocalization['first_launch_description_4'],
             'assets/screenshots/badge.PNG'
         )
     );
@@ -216,8 +216,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
     slideChilds.add(
         buildSlideItem
           (
-            this.widget.localization['first_launch_title_5'],
-            this.widget.localization['first_launch_description_5'],
+            MyLocalizations.instanceLocalization['first_launch_title_5'],
+            MyLocalizations.instanceLocalization['first_launch_description_5'],
             'assets/screenshots/community.PNG'
         )
     );
@@ -225,8 +225,8 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
     slideChilds.add(
         buildSlideItem
           (
-            this.widget.localization['first_launch_title_6'],
-            this.widget.localization['first_launch_description_6'],
+            MyLocalizations.instanceLocalization['first_launch_title_6'],
+            MyLocalizations.instanceLocalization['first_launch_description_6'],
             'assets/icons/let_start.png'
         )
     );

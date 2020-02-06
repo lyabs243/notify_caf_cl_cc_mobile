@@ -5,6 +5,7 @@ import 'package:flutter_cafclcc/components/post_widget.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/post_report.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
@@ -15,13 +16,11 @@ import '../../components/alert_dialog.dart' as alert;
 
 class PostSignalPage extends StatefulWidget{
 
-  Map localization;
-
-  PostSignalPage(this.localization);
+  PostSignalPage();
 
   @override
   _PostSignalPageState createState() {
-    return new _PostSignalPageState(this.localization);
+    return new _PostSignalPageState();
   }
 
 }
@@ -29,7 +28,6 @@ class PostSignalPage extends StatefulWidget{
 class _PostSignalPageState extends State<PostSignalPage>{
 
   RefreshController refreshController;
-  Map localization;
   bool isPageRefresh = false, isLoadPage = true;
   int page = 1;
   List<PostReport> postsReport = [];
@@ -37,7 +35,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
   bool showAllText = false;
   ProgressDialog progressDialog;
 
-  _PostSignalPageState(this.localization);
+  _PostSignalPageState();
 
   @override
   void initState() {
@@ -50,7 +48,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
       }
     });
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: localization['loading']);
+    progressDialog.style(message: MyLocalizations.instanceLocalization['loading']);
   }
 
   @override
@@ -64,7 +62,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(localization['post_report']),
+        title: Text(MyLocalizations.instanceLocalization['post_report']),
       ),
       body: SmartRefresher(
           controller: refreshController,
@@ -95,7 +93,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
             child: CircularProgressIndicator(),
           ):
           (postsReport.length <= 0)?
-          EmptyData(this.widget.localization):
+          EmptyData():
           ListView.builder(
               itemCount: postsReport.length,
               padding: EdgeInsets.all(8.0),
@@ -114,7 +112,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          UserPostHeaderInfos(localization, _user, currentUser, postsReport[i].register_date),
+                          UserPostHeaderInfos(_user, currentUser, postsReport[i].register_date),
                           PopupMenuButton(
                             onSelected: (index) {
                               switch(index) {
@@ -122,9 +120,8 @@ class _PostSignalPageState extends State<PostSignalPage>{
                                   alert.showAlertDialog
                                     (
                                       context,
-                                      this.widget.localization['warning'],
-                                      this.widget.localization['want_deactivate_postreport'],
-                                      this.widget.localization,
+                                      MyLocalizations.instanceLocalization['warning'],
+                                      MyLocalizations.instanceLocalization['want_deactivate_postreport'],
                                       (){
                                         deactivatePostReport(postsReport[i]);
                                       }
@@ -137,7 +134,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
                               if(currentUser.active == 1 && currentUser.type == User.USER_TYPE_ADMIN) {
                                 list.add(
                                     PopupMenuItem(
-                                      child: Text(localization['deactivate']),
+                                      child: Text(MyLocalizations.instanceLocalization['deactivate']),
                                       value: 1,
                                       enabled: (currentUser.active == 1 &&
                                           currentUser.type == User.USER_TYPE_ADMIN),
@@ -165,7 +162,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
                               ),
                               (postsReport[i].message.length > 150 && !showAllText)?
                               new TextSpan(
-                                text: '...${localization['see_more']}',
+                                text: '...${MyLocalizations.instanceLocalization['see_more']}',
                                 style: new TextStyle(color: Theme.of(context).primaryColor,decoration: TextDecoration.underline,),
                                 recognizer: new TapGestureRecognizer()
                                   ..onTap = () {
@@ -180,7 +177,7 @@ class _PostSignalPageState extends State<PostSignalPage>{
                         ),
                       ),
                       Container(
-                        child: PostWidget(localization, postsReport[i].post, clickable: false, elevation: 0.0,),
+                        child: PostWidget(postsReport[i].post, clickable: false, elevation: 0.0,),
                         margin: EdgeInsets.only(left: 16.0),
                         decoration: BoxDecoration(
                             border: Border(
@@ -249,16 +246,16 @@ class _PostSignalPageState extends State<PostSignalPage>{
     postReport.deactivate_abusive_post(context, postReport.id_post, currentUser.id_subscriber).then((success){
       if(success) {
         progressDialog.hide();
-        Toast.show(this.widget.localization['report_deactivated'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['report_deactivated'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return PostSignalPage(localization);
+              return PostSignalPage();
             }
         ));
       }
       else{
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 
-bool showAlertDialog(BuildContext context,String title,String content,Map localization,Function onValidate) {
+bool showAlertDialog(BuildContext context,String title,String content,Function onValidate) {
   // flutter defined function
   showDialog(
     context: context,
@@ -17,14 +18,14 @@ bool showAlertDialog(BuildContext context,String title,String content,Map locali
         actions: <Widget>[
           // usually buttons at the bottom of the dialog
           new FlatButton(
-            child: new Text(localization['no']),
+            child: new Text(MyLocalizations.instanceLocalization['no']),
             onPressed: () {
               Navigator.of(context).pop();
               return false;
             },
           ),
           new FlatButton(
-            child: new Text(localization['yes']),
+            child: new Text(MyLocalizations.instanceLocalization['yes']),
             onPressed: () {
               Navigator.of(context).pop();
               onValidate();

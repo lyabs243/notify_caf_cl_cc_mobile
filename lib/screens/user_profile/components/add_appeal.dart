@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import '../../../models/appeal_item.dart';
 import '../../../models/user.dart';
 import 'package:toast/toast.dart';
@@ -6,9 +7,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Appeal extends StatefulWidget{
 
-  Map localization;
 
-  Appeal(this.localization);
+  Appeal();
 
   @override
   _AppealState createState() {
@@ -50,7 +50,7 @@ class _AppealState extends State<Appeal>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.widget.localization['appeal']),
+        title: Text(MyLocalizations.instanceLocalization['appeal']),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -70,12 +70,12 @@ class _AppealState extends State<Appeal>{
                   isLoading = false;
                 });
                 if(result){
-                  Toast.show(this.widget.localization['appeal_sended'], context, duration: Toast.LENGTH_LONG,
+                  Toast.show(MyLocalizations.instanceLocalization['appeal_sended'], context, duration: Toast.LENGTH_LONG,
                       gravity:  Toast.BOTTOM);
                   Navigator.of(context).pop();
                 }
                 else{
-                  Toast.show(this.widget.localization['error_occured'], context, duration: Toast.LENGTH_LONG,
+                  Toast.show(MyLocalizations.instanceLocalization['error_occured'], context, duration: Toast.LENGTH_LONG,
                       gravity:  Toast.BOTTOM);
                 }
               });
@@ -96,7 +96,7 @@ class _AppealState extends State<Appeal>{
                 Padding(padding: EdgeInsets.only(bottom: 20.0),),
                 Center(
                   child: Text(
-                    this.widget.localization['answer_questionnaire_appeal'],
+                    MyLocalizations.instanceLocalization['answer_questionnaire_appeal'],
                     textScaleFactor: 1.5,
                     style: TextStyle(
                         fontWeight: FontWeight.bold
@@ -110,7 +110,7 @@ class _AppealState extends State<Appeal>{
                     Container(
                       width: MediaQuery.of(context).size.width / 1.2,
                       child: Text(
-                        this.widget.localization['is_recognize_violated_terms'],
+                        MyLocalizations.instanceLocalization['is_recognize_violated_terms'],
                         textScaleFactor: 1.4,
                       ),
                     ),
@@ -131,7 +131,7 @@ class _AppealState extends State<Appeal>{
                     Container(
                       width: MediaQuery.of(context).size.width / 1.2,
                       child: Text(
-                        this.widget.localization['is_recognize_not_violated_terms_after_activate'],
+                        MyLocalizations.instanceLocalization['is_recognize_not_violated_terms_after_activate'],
                         textScaleFactor: 1.4,
                       ),
                     ),
@@ -148,7 +148,7 @@ class _AppealState extends State<Appeal>{
                 Padding(padding: EdgeInsets.only(bottom: 30.0),),
                 TextField(
                   decoration: new InputDecoration(
-                      labelText: this.widget.localization['appeal_description'],
+                      labelText: MyLocalizations.instanceLocalization['appeal_description'],
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.white, //Color of the border

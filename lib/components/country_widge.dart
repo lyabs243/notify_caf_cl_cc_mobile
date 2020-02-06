@@ -4,13 +4,12 @@ import 'package:flutter_cafclcc/screens/fan_badge/get_fan_badge.dart';
 
 class CountryWidget extends StatelessWidget {
 
-  Map localization;
   Country country;
   MaterialPageRoute materialPageRoute;
 
   double iconSize;
 
-  CountryWidget(this.localization, this.country, this.materialPageRoute);
+  CountryWidget(this.country, this.materialPageRoute);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class CountryWidget extends StatelessWidget {
         onTap: () {
           Navigator.pushReplacement(context, MaterialPageRoute(
               builder: (context) {
-            return GetFanBadge(localization, country, materialPageRoute);
+            return GetFanBadge(country, materialPageRoute);
           })
           );
         },

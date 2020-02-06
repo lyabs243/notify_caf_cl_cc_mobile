@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/fan_badge/fan_badge_introduction.dart';
 import '../../../components/icons/login_icons.dart';
 import '../../../models/user.dart';
@@ -10,9 +11,8 @@ class LoginButton extends StatefulWidget{
   String title;
   LoginType type;
   Function seLoginState;
-  Map localization;
 
-  LoginButton(this.title,this.type,this.seLoginState,this.localization);
+  LoginButton(this.title,this.type,this.seLoginState);
 
   @override
   _LoginButton createState() {
@@ -58,18 +58,18 @@ class _LoginButton extends State<LoginButton>{
       //suggest to get a badge
       if(this.widget.type == LoginType.Facebook || this.widget.type == LoginType.Google) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
-          return FanBadgeIntroduction(this.widget.localization);
+          return FanBadgeIntroduction();
         }));
       }
       else {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (BuildContext context) {
-          return HomePage(this.widget.localization);
+          return HomePage();
         }));
       }
     }
     else{
-      Toast.show(this.widget.localization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+      Toast.show(MyLocalizations.instanceLocalization['error_occured'], context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
   }
 

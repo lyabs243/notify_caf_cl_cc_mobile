@@ -10,10 +10,9 @@ import '../models/constants.dart' as constants;
 class UserPostHeaderInfos extends StatelessWidget {
 
   User user, currentUser;
-  Map localization;
   DateTime registerDate;
 
-  UserPostHeaderInfos(this.localization, this.user, this.currentUser, this.registerDate);
+  UserPostHeaderInfos(this.user, this.currentUser, this.registerDate);
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +59,12 @@ class UserPostHeaderInfos extends StatelessWidget {
                 recognizer: new TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return new UserProfile(currentUser,user,localization);
+                      return new UserProfile(currentUser,user);
                     }));
                   },
               ),
             ),
-            Text(convertDateToAbout(registerDate, localization)),
+            Text(convertDateToAbout(registerDate)),
           ],
         )
       ],

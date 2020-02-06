@@ -25,8 +25,6 @@ class _Login extends State<Login>{
     double buttonWidth = MediaQuery.of(context).size.width/1.2;
     double iconSize = MediaQuery.of(context).size.width/2.5;
 
-    Map localization = MyLocalizations.of(context).localization;
-
     // TODO: implement build
     return ModalProgressHUD(
       child: new Container(
@@ -47,23 +45,23 @@ class _Login extends State<Login>{
                 children: <Widget>[
                   new SizedBox(
                     width: buttonWidth,
-                    child: LoginButton(localization['login_with_google'], LoginType.Google,this.setLoginState,localization),
+                    child: LoginButton(MyLocalizations.instanceLocalization['login_with_google'], LoginType.Google,this.setLoginState),
                   ),
                   new Padding(padding: EdgeInsets.only(bottom: 18.0)),
                   new SizedBox(
                     width: buttonWidth,
-                    child: LoginButton(localization['login_with_facebook'], LoginType.Facebook,this.setLoginState,localization),
+                    child: LoginButton(MyLocalizations.instanceLocalization['login_with_facebook'], LoginType.Facebook,this.setLoginState),
                   ),
                   new Padding(padding: EdgeInsets.only(bottom: 18.0)),
                   new SizedBox(
                     width: buttonWidth,
-                    child: LoginButton(localization['continue_without_login'], LoginType.Nope,this.setLoginState,localization),
+                    child: LoginButton(MyLocalizations.instanceLocalization['continue_without_login'], LoginType.Nope,this.setLoginState),
                   ),
                 ],
               ),
               new SizedBox(
                 width: buttonWidth,
-                child: new TextTermofuse(localization['term_use_text'], localization['term_use']),
+                child: new TextTermofuse(MyLocalizations.instanceLocalization['term_use_text'], MyLocalizations.instanceLocalization['term_use']),
               ),
             ],
           ),

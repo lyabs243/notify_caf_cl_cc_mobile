@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/admin_panel/admin_panel.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
 import 'package:flutter_cafclcc/screens/settings/settings.dart';
@@ -17,10 +18,9 @@ import '../../news_list/news_list.dart';
 
 class HomeDrawer extends StatefulWidget{
 
-	Map localization;
 	User user;
 
-	HomeDrawer(this.user,this.localization);
+	HomeDrawer(this.user);
 
 	@override
 	_HomeDrawerState createState() {
@@ -73,7 +73,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 											child: Image.asset('assets/app_icon_white.png'),
 										),
 										new Text(
-											this.widget.localization['app_title'],
+											MyLocalizations.instanceLocalization['app_title'],
 											textScaleFactor: 1.8,
 											style: TextStyle(
 												color: Colors.white,
@@ -147,18 +147,18 @@ class _HomeDrawerState extends State<HomeDrawer>{
 
 	initDrawerItems(){
 
-		DrawerItem header = new DrawerItem(0, this.widget.localization['app_title'], DrawerType.header);
+		DrawerItem header = new DrawerItem(0, MyLocalizations.instanceLocalization['app_title'], DrawerType.header);
 		List competitions = initCompetitions();
-		DrawerItem home = new DrawerItem(1, this.widget.localization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem news = new DrawerItem(2, this.widget.localization['news'], DrawerType.item,iconPath: 'assets/icons/latest.png');
-		DrawerItem community = new DrawerItem(3, this.widget.localization['community'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem competition = new DrawerItem(4, this.widget.localization['competition'], DrawerType.expandable,
+		DrawerItem home = new DrawerItem(1, MyLocalizations.instanceLocalization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem news = new DrawerItem(2, MyLocalizations.instanceLocalization['news'], DrawerType.item,iconPath: 'assets/icons/latest.png');
+		DrawerItem community = new DrawerItem(3, MyLocalizations.instanceLocalization['community'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem competition = new DrawerItem(4, MyLocalizations.instanceLocalization['competition'], DrawerType.expandable,
 				iconPath: 'assets/icons/profile.png',expandableItems: competitions);
-		DrawerItem profil = new DrawerItem(5, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-		DrawerItem admin_panel = new DrawerItem(6, this.widget.localization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-		DrawerItem settings = new DrawerItem(7, this.widget.localization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
-		DrawerItem login = new DrawerItem(8, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem logout = new DrawerItem(9, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+		DrawerItem profil = new DrawerItem(5, MyLocalizations.instanceLocalization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+		DrawerItem admin_panel = new DrawerItem(6, MyLocalizations.instanceLocalization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+		DrawerItem settings = new DrawerItem(7, MyLocalizations.instanceLocalization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
+		DrawerItem login = new DrawerItem(8, MyLocalizations.instanceLocalization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem logout = new DrawerItem(9, MyLocalizations.instanceLocalization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
 		//set visibility
 		if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -195,21 +195,21 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						context,
 						NoAnimationMaterialPageRoute(
 								builder: (BuildContext context){
-									return HomePage(this.widget.localization,fragment: Fragment.HOME,);
+									return HomePage(fragment: Fragment.HOME,);
 								}
 						));
 				break;
 			case 2: //click on news
 				materialPageRoute = MaterialPageRoute(
 						builder: (BuildContext context){
-							return NewsList(this.widget.localization, CompetitionItem.COMPETITION_TYPE);
+							return NewsList(CompetitionItem.COMPETITION_TYPE);
 						}
 				);
 				break;
 			case 3: //click on community
 				materialPageRoute = MaterialPageRoute(
 						builder: (BuildContext context){
-							return Community(this.widget.localization);
+							return Community();
 						}
 				);
 				break;
@@ -217,7 +217,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 				materialPageRoute = MaterialPageRoute
 					(
 						builder: (BuildContext context){
-							return UserProfile(this.widget.user,this.widget.user,this.widget.localization);
+							return UserProfile(this.widget.user,this.widget.user);
 						}
 				);
 				break;
@@ -228,7 +228,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						MaterialPageRoute
 							(
 								builder: (BuildContext context){
-									return AdminPanelPage(this.widget.localization);
+									return AdminPanelPage();
 								}
 						));
 				break;
@@ -236,7 +236,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 				materialPageRoute = MaterialPageRoute
 							(
 								builder: (BuildContext context){
-									return Settings(this.widget.localization);
+									return Settings();
 								}
 						);
 				break;
@@ -264,7 +264,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 				break;
 		}
 		if(transition) {
-			PageTransition(context, this.widget.localization, materialPageRoute, pushReplacement)
+			PageTransition(context, materialPageRoute, pushReplacement)
 					.checkForRateAndShareSuggestion();
 		}
 	}
@@ -272,16 +272,16 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	//init competion list
 	List<Widget> initCompetitions(){
 
-		CompetitionItem champions_league = new CompetitionItem(2, this.widget.localization['champions_league'],
+		CompetitionItem champions_league = new CompetitionItem(2, MyLocalizations.instanceLocalization['champions_league'],
         null, '','',1,null);
-		CompetitionItem confederation_cup = new CompetitionItem(3, this.widget.localization['confederation_cup'],
+		CompetitionItem confederation_cup = new CompetitionItem(3, MyLocalizations.instanceLocalization['confederation_cup'],
         null, '','',1,null);
 
 		List<CompetitionItem> competitions = [champions_league,confederation_cup];
 
 		DrawerItem drawerCL = new DrawerItem(0, competitions[0].title, DrawerType.item);
 		DrawerItem drawerCC = new DrawerItem(1, competitions[1].title, DrawerType.item);
-		DrawerItem drawerMore = new DrawerItem(2, this.widget.localization['more'], DrawerType.item);
+		DrawerItem drawerMore = new DrawerItem(2, MyLocalizations.instanceLocalization['more'], DrawerType.item);
 
 		List competitionDrawerItems = [];
 		competitionDrawerItems.add(drawerCL);
@@ -311,17 +311,17 @@ class _HomeDrawerState extends State<HomeDrawer>{
 							case 1://confederation cup
 								MaterialPageRoute materialPageRoute = MaterialPageRoute(
 										builder: (BuildContext context){
-											return CompetitionPage(competitions[item.id],this.widget.localization);
+											return CompetitionPage(competitions[item.id]);
 										}
 								);
-							  PageTransition(context, this.widget.localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+							  PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
 							  break;
 							case 2://more
 								Navigator.pushReplacement(
 											context,
 											NoAnimationMaterialPageRoute(
 													builder: (BuildContext context){
-														return HomePage(this.widget.localization,fragment: Fragment.COMPETITION_LIST,);
+														return HomePage(fragment: Fragment.COMPETITION_LIST,);
 													}
 											));
 								break;

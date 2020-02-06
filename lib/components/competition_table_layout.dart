@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'empty_data.dart';
 import '../models/group_table_item.dart';
 
 class CompetitionTableLayout extends StatefulWidget{
 
-  Map localization;
   int idStageGroup, idEditionStage;
 
-
-  CompetitionTableLayout(this.localization, this.idStageGroup,
-      this.idEditionStage);
+  CompetitionTableLayout(this.idStageGroup, this.idEditionStage);
 
   @override
   _CompetitionTableLayoutState createState() {
-    return _CompetitionTableLayoutState(this.localization, this.idStageGroup,
+    return _CompetitionTableLayoutState(this.idStageGroup,
         this.idEditionStage);
   }
 
@@ -21,12 +19,11 @@ class CompetitionTableLayout extends StatefulWidget{
 
 class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
 
-  Map localization;
   int idStageGroup, idEditionStage;
 
   List<GroupTableItem> tableItems = [];
 
-  _CompetitionTableLayoutState(this.localization, this.idStageGroup,
+  _CompetitionTableLayoutState(this.idStageGroup,
       this.idEditionStage);
 
   @override
@@ -54,7 +51,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
   @override
   Widget build(BuildContext context) {
     return (tableItems.length <= 0)?
-    EmptyData(localization) :
+    EmptyData() :
     SingleChildScrollView(
       child: Container(
         child: Column(
@@ -95,7 +92,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                localization['match_played_small'],
+                MyLocalizations.instanceLocalization['match_played_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -107,7 +104,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                localization['match_win_small'],
+                MyLocalizations.instanceLocalization['match_win_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -119,7 +116,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                localization['match_draw_small'],
+                MyLocalizations.instanceLocalization['match_draw_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -131,7 +128,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 8/100,
             child: Center(
               child: Text(
-                localization['match_lose_small'],
+                MyLocalizations.instanceLocalization['match_lose_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -143,7 +140,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                localization['goal_scored_small'],
+                MyLocalizations.instanceLocalization['goal_scored_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -155,7 +152,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                localization['goal_conceded_small'],
+                MyLocalizations.instanceLocalization['goal_conceded_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -167,7 +164,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                localization['goal_difference_small'],
+                MyLocalizations.instanceLocalization['goal_difference_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -179,7 +176,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
             width: MediaQuery.of(context).size.width * 9/100,
             child: Center(
               child: Text(
-                localization['points_small'],
+                MyLocalizations.instanceLocalization['points_small'],
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -353,34 +350,14 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    '${localization['match_played_small']}: ${localization['match_played']}',
+                    '${MyLocalizations.instanceLocalization['match_played_small']}: ${MyLocalizations.instanceLocalization['match_played']}',
                     textScaleFactor: 1.2,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
                   Text(
-                    '${localization['match_win_small']}: ${localization['match_win']}',
-                    textScaleFactor: 1.2,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(padding: EdgeInsets.only(bottom: 8.0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    '${localization['match_draw_small']}: ${localization['match_draw']}',
-                    textScaleFactor: 1.2,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  Text(
-                    '${localization['match_lose_small']}: ${localization['match_lose']}',
+                    '${MyLocalizations.instanceLocalization['match_win_small']}: ${MyLocalizations.instanceLocalization['match_win']}',
                     textScaleFactor: 1.2,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
@@ -393,14 +370,14 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    '${localization['goal_scored_small']}: ${localization['goal_scored']}',
+                    '${MyLocalizations.instanceLocalization['match_draw_small']}: ${MyLocalizations.instanceLocalization['match_draw']}',
                     textScaleFactor: 1.2,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
                   Text(
-                    '${localization['goal_conceded_small']}: ${localization['goal_conceded']}',
+                    '${MyLocalizations.instanceLocalization['match_lose_small']}: ${MyLocalizations.instanceLocalization['match_lose']}',
                     textScaleFactor: 1.2,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
@@ -413,14 +390,34 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    '${localization['goal_difference_small']}: ${localization['goal_difference']}',
+                    '${MyLocalizations.instanceLocalization['goal_scored_small']}: ${MyLocalizations.instanceLocalization['goal_scored']}',
                     textScaleFactor: 1.2,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
                   Text(
-                    '${localization['points_small']}: ${localization['points']}',
+                    '${MyLocalizations.instanceLocalization['goal_conceded_small']}: ${MyLocalizations.instanceLocalization['goal_conceded']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 8.0)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '${MyLocalizations.instanceLocalization['goal_difference_small']}: ${MyLocalizations.instanceLocalization['goal_difference']}',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    '${MyLocalizations.instanceLocalization['points_small']}: ${MyLocalizations.instanceLocalization['points']}',
                     textScaleFactor: 1.2,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,

@@ -5,6 +5,7 @@ import 'package:flutter_cafclcc/components/post_reaction_box.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/post.dart';
 import 'package:flutter_cafclcc/models/post_reaction.dart';
 import 'package:flutter_cafclcc/models/user.dart';
@@ -22,25 +23,23 @@ import 'alert_dialog.dart' as alert;
 
 class PostWidget extends StatefulWidget {
 
-  Map localization;
   Post post;
   double elevation;
   bool clickable = true, showAllText;
 
   Function updateView;
 
-  PostWidget(this.localization, this.post, {this.clickable: true, this.updateView: null, this.showAllText: false, this.elevation: 15.0});
+  PostWidget(this.post, {this.clickable: true, this.updateView: null, this.showAllText: false, this.elevation: 15.0});
 
   @override
   _PostWidgetState createState() {
-    return new _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText, this.elevation);
+    return new _PostWidgetState(this.post, this.updateView, this.showAllText, this.elevation);
   }
 
 }
 
 class _PostWidgetState extends State<PostWidget> {
 
-  Map localization;
   Post post;
   User currentUser, user;
   Function updateView;
@@ -51,7 +50,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   UserPostHeaderInfos userPostHeaderInfos;
 
-  _PostWidgetState(this.localization, this.post, this.updateView, this.showAllText, this.elevation);
+  _PostWidgetState(this.post, this.updateView, this.showAllText, this.elevation);
 
   @override
   void initState() {
@@ -64,11 +63,11 @@ class _PostWidgetState extends State<PostWidget> {
     User.getInstance().then((_user){
       setState(() {
         currentUser = _user;
-        userPostHeaderInfos = UserPostHeaderInfos(localization, user, currentUser, post.register_date);
+        userPostHeaderInfos = UserPostHeaderInfos(user, currentUser, post.register_date);
       });
     });
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: localization['loading']);
+    progressDialog.style(message: MyLocalizations.instanceLocalization['loading']);
   }
 
   @override
@@ -101,7 +100,7 @@ class _PostWidgetState extends State<PostWidget> {
                             case 1: //udate
                               Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return PostDialog(localization, post, currentUser);
+                                    return PostDialog(post, currentUser);
                                   }
                               ));
                               break;
@@ -109,9 +108,8 @@ class _PostWidgetState extends State<PostWidget> {
                               alert.showAlertDialog
                               (
                                   context,
-                                  this.widget.localization['warning'],
-                                  this.widget.localization['want_delete_post'],
-                                  this.widget.localization,
+                                  MyLocalizations.instanceLocalization['warning'],
+                                  MyLocalizations.instanceLocalization['want_delete_post'],
                                   (){
                                     deletePost();
                                   }
@@ -119,7 +117,7 @@ class _PostWidgetState extends State<PostWidget> {
                               break;
                             case 3:
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return SignalPostDialog(localization, post, currentUser);
+                                return SignalPostDialog(post, currentUser);
                               }));
                               break;
                           }
@@ -129,7 +127,7 @@ class _PostWidgetState extends State<PostWidget> {
                           if(currentUser.id_subscriber == post.id_subscriber && currentUser.active == 1) {
                             list.add(
                               PopupMenuItem(
-                                child: Text(localization['update']),
+                                child: Text(MyLocalizations.instanceLocalization['update']),
                                 value: 1,
                                 enabled: (currentUser.id_subscriber ==
                                     post.id_subscriber &&
@@ -138,7 +136,7 @@ class _PostWidgetState extends State<PostWidget> {
                             );
                             list.add(
                               PopupMenuItem(
-                                child: Text(localization['delete']),
+                                child: Text(MyLocalizations.instanceLocalization['delete']),
                                 value: 2,
                                 enabled: (currentUser.id_subscriber ==
                                     post.id_subscriber &&
@@ -154,7 +152,7 @@ class _PostWidgetState extends State<PostWidget> {
                           if(currentUser.active == 1) {
                             list.add(
                               PopupMenuItem(
-                                child: Text(localization['report_as_abusive']),
+                                child: Text(MyLocalizations.instanceLocalization['report_as_abusive']),
                                 value: 3,
                                 enabled: (currentUser.active == 1),
                               ),
@@ -163,7 +161,7 @@ class _PostWidgetState extends State<PostWidget> {
                           if(currentUser.active == 1 && currentUser.type == User.USER_TYPE_ADMIN) {
                             list.add(
                                 PopupMenuItem(
-                                  child: Text(localization['block_post']),
+                                  child: Text(MyLocalizations.instanceLocalization['block_post']),
                                   value: 2,
                                   enabled: (currentUser.active == 1 &&
                                       currentUser.type == User.USER_TYPE_ADMIN),
@@ -190,7 +188,7 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                           (post.post.length > 150 && !showAllText)?
                           new TextSpan(
-                            text: '...${localization['see_more']}',
+                            text: '...${MyLocalizations.instanceLocalization['see_more']}',
                             style: new TextStyle(color: Theme.of(context).primaryColor,decoration: TextDecoration.underline,),
                             recognizer: new TapGestureRecognizer()
                               ..onTap = () {
@@ -225,12 +223,12 @@ class _PostWidgetState extends State<PostWidget> {
                       (this.widget.post.total_comments > 0)?
                       FlatButton(
                         child: Text(
-                          '${this.widget.post.total_comments} ${localization['comments']}'
+                          '${this.widget.post.total_comments} ${MyLocalizations.instanceLocalization['comments']}'
                         ),
                         onPressed: () {
                           if(this.widget.clickable) {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return new PostDetails(localization, post);
+                              return new PostDetails(post);
                             }));
                           }
                         },
@@ -254,7 +252,7 @@ class _PostWidgetState extends State<PostWidget> {
                             height: 20.0,
                           ),
                           label: Text(
-                            PostReaction.getReactionText(post.reaction.subscriber_reaction, localization),
+                            PostReaction.getReactionText(post.reaction.subscriber_reaction),
                             style: TextStyle(
                                 color: PostReaction.getReactionColor(post.reaction.subscriber_reaction, context)
                             ),
@@ -264,7 +262,7 @@ class _PostWidgetState extends State<PostWidget> {
                           onPressed: () {
                             if(this.widget.clickable) {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return new PostDetails(localization, post);
+                                return new PostDetails(post);
                               }));
                             }
                           },
@@ -275,7 +273,7 @@ class _PostWidgetState extends State<PostWidget> {
                               size: 20.0
                           ),
                           label: Text(
-                            localization['comment'],
+                            MyLocalizations.instanceLocalization['comment'],
                             style: TextStyle(
                             ),
                           )
@@ -289,15 +287,15 @@ class _PostWidgetState extends State<PostWidget> {
           onTap: () {
             if(this.widget.clickable) {
               MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (context) {
-                return new PostDetails(localization, post);
+                return new PostDetails(post);
               });
-              PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+              PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
             }
           },
         ),
         (showReactionBox)?
         Positioned(
-          child: PostReactionBox(localization, setReaction, post.id, currentUser.id_subscriber),
+          child: PostReactionBox(setReaction, post.id, currentUser.id_subscriber),
           right: 40.0,
           bottom: 60.0,
         ):
@@ -345,16 +343,16 @@ class _PostWidgetState extends State<PostWidget> {
     this.widget.post.deletePost(context).then((success){
       progressDialog.hide();
       if(success) {
-        Toast.show(this.widget.localization['post_deleted'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['post_deleted'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
         Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return Community(localization);
+              return Community();
             }
         ));
       }
       else{
-        Toast.show(this.widget.localization['error_occured'], context,duration: Toast.LENGTH_LONG,
+        Toast.show(MyLocalizations.instanceLocalization['error_occured'], context,duration: Toast.LENGTH_LONG,
             gravity: Toast.BOTTOM);
       }
     });

@@ -4,15 +4,14 @@ import '../models/match_lineup.dart';
 
 class MatchLineupLayout extends StatefulWidget{
 
-  Map localization;
   MatchItem matchItem;
 
-  MatchLineupLayout(this.localization, this.matchItem);
+  MatchLineupLayout(this.matchItem);
 
   @override
   MatchLineupLayoutState createState() {
     // TODO: implement createState
-    return MatchLineupLayoutState(localization, matchItem);
+    return MatchLineupLayoutState(matchItem);
   }
 
 
@@ -20,13 +19,12 @@ class MatchLineupLayout extends StatefulWidget{
 
 class MatchLineupLayoutState extends State<MatchLineupLayout>{
 
-  Map localization;
   MatchItem matchItem;
   List<MatchLineup> lineups = [];
 
   int idTeam = 0;
 
-  MatchLineupLayoutState(this.localization, this.matchItem);
+  MatchLineupLayoutState(this.matchItem);
 
   @override
   void initState() {

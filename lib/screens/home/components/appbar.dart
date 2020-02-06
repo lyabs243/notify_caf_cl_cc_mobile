@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/user.dart';
@@ -8,16 +9,15 @@ import '../../../components/profil_avatar.dart';
 
 class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
 
-  Map localization;
   User user;
 
-  HomeAppBar(this.user,this.localization);
+  HomeAppBar(this.user);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return AppBar(
-      title: Text(localization['app_title']),
+      title: Text(MyLocalizations.instanceLocalization['app_title']),
       actions: appbarIcons(context)
     );
   }
@@ -31,7 +31,7 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
                 return Login();
               }));
             },
-            child: Text(localization['login'],style: TextStyle(color: Colors.white),)
+            child: Text(MyLocalizations.instanceLocalization['login'],style: TextStyle(color: Colors.white),)
         )
       ];
     }
@@ -42,14 +42,14 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
             Icons.group,
             size: 40.0,
           ),
-          tooltip: localization['community'],
+          tooltip: MyLocalizations.instanceLocalization['community'],
           onPressed: () {
             MaterialPageRoute materialPageRoute = MaterialPageRoute(
                 builder: (BuildContext context){
-                  return Community(this.localization);
+                  return Community();
                 }
             );
-            PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+            PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
           },
         ),
         Padding(padding: EdgeInsets.only(right: 5.0, left: 5.0),),
@@ -59,10 +59,10 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
             MaterialPageRoute materialPageRoute = MaterialPageRoute
               (
                 builder: (BuildContext context){
-                  return UserProfile(this.user,this.user,localization);
+                  return UserProfile(this.user,this.user);
                 }
             );
-            PageTransition(context, localization, materialPageRoute, false).checkForRateAndShareSuggestion();
+            PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
           },
         ),
         Padding(padding: EdgeInsets.only(right: 8.0),),
