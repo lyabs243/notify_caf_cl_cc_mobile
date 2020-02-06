@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/fan_badge.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
@@ -61,11 +62,17 @@ class _UserBadgeState extends State<UserBadge> {
               backgroundColor: Colors.white,
             ),
           ),
-          Text(
-            this.widget._user.fanBadge.title,
-            textScaleFactor: 1.8,
-            style: TextStyle(
-                color: Colors.white
+          Container(
+            width: MediaQuery.of(context).size.width / 2,
+            child: Text(
+              this.widget._user.fanBadge.title,
+              overflow: TextOverflow.visible,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              textScaleFactor: 1.8,
+              style: TextStyle(
+                  color: Colors.white
+              ),
             ),
           ),
           (this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber)?
@@ -111,13 +118,13 @@ class _UserBadgeState extends State<UserBadge> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width / 1.2,
+            width: MediaQuery.of(context).size.width / 1.3,
             child: Text(
               (this.widget._currentUser.id_subscriber == this.widget._user.id_subscriber)?
               MyLocalizations.instanceLocalization['you_dont_have_badge']:
               MyLocalizations.instanceLocalization['user_dont_have_badge'],
               textAlign: TextAlign.center,
-              textScaleFactor: 1.5,
+              textScaleFactor: 1.3,
               style: TextStyle(
                   color: Colors.white
               ),

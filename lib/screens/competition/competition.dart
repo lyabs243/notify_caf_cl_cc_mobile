@@ -121,7 +121,7 @@ class _CompetitionPageState extends State<CompetitionPage>{
                           ),
                           Text(
                             items[i].title,
-                            textScaleFactor: 1.8,
+                            textScaleFactor: 1.5,
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor
                             ),

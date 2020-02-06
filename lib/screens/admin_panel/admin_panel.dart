@@ -94,7 +94,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>{
                           ),
                           Text(
                             items[i].title,
-                            textScaleFactor: 1.8,
+                            textScaleFactor: 1.6,
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor
                             ),
