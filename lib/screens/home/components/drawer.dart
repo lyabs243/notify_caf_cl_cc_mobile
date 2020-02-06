@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/screens/admin_panel/admin_panel.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
+import 'package:flutter_cafclcc/screens/settings/settings.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/drawer_item.dart';
 import '../../../models/user.dart';
@@ -155,8 +156,9 @@ class _HomeDrawerState extends State<HomeDrawer>{
 				iconPath: 'assets/icons/profile.png',expandableItems: competitions);
 		DrawerItem profil = new DrawerItem(5, this.widget.localization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
 		DrawerItem admin_panel = new DrawerItem(6, this.widget.localization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-		DrawerItem login = new DrawerItem(7, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem logout = new DrawerItem(8, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+		DrawerItem settings = new DrawerItem(7, this.widget.localization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
+		DrawerItem login = new DrawerItem(8, this.widget.localization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem logout = new DrawerItem(9, this.widget.localization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
 		//set visibility
 		if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -178,6 +180,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		drawerItems.add(competition);
 		drawerItems.add(profil);
 		drawerItems.add(admin_panel);
+		drawerItems.add(settings);
 		drawerItems.add(login);
 		drawerItems.add(logout);
 	}
@@ -229,7 +232,15 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 7: //click on login
+			case 7: //click on settings
+				materialPageRoute = MaterialPageRoute
+							(
+								builder: (BuildContext context){
+									return Settings(this.widget.localization);
+								}
+						);
+				break;
+			case 8: //click on login
 				transition = false;
 				Navigator.pushReplacement(
 						context,
@@ -240,7 +251,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 8: //click on logout
+			case 9: //click on logout
 				transition = false;
 				Navigator.pushReplacement(
 						context,

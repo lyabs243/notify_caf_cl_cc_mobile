@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/screens/settings/settings.dart';
 import 'package:flutter_cafclcc/screens/user_profile/components/user_badge.dart';
 import '../../../models/user.dart';
 import '../../../components/profil_avatar.dart';
@@ -231,7 +232,8 @@ class _BodyState extends State<Body>{
     DrawerItem privacy = new DrawerItem(1, this.widget._localization['term_use'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
     DrawerItem blockUser = new DrawerItem(2, this.widget._localization['block_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
     DrawerItem unblockUser = new DrawerItem(3, this.widget._localization['unblock_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem logout = new DrawerItem(4, this.widget._localization['logout'], DrawerType.item, iconPath: 'assets/icons/logout.png');
+    DrawerItem settings = new DrawerItem(4, this.widget._localization['settings'], DrawerType.item, iconPath: 'assets/icons/date.png');
+    DrawerItem logout = new DrawerItem(5, this.widget._localization['logout'], DrawerType.item, iconPath: 'assets/icons/logout.png');
 
     //set visibility of block/unblock item
     if(this.widget._currentUser.type == User.USER_TYPE_ADMIN) {
@@ -254,6 +256,7 @@ class _BodyState extends State<Body>{
     _drawerItems.add(privacy);
     _drawerItems.add(blockUser);
     _drawerItems.add(unblockUser);
+    _drawerItems.add(settings);
     _drawerItems.add(logout);
 
   }
@@ -287,7 +290,16 @@ class _BodyState extends State<Body>{
             }
         );
         break;
-      case 4: //click on logout
+      case 4: //click on settings
+        Navigator.push(
+            _context,
+            MaterialPageRoute(
+                builder: (BuildContext context){
+                  return Settings(this.widget._localization);
+                }
+            ));
+        break;
+      case 5: //click on logout
         Navigator.pushReplacement(
             _context,
             MaterialPageRoute(
