@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/match_action.dart';
 import 'competition_item.dart';
 import 'edition_stage.dart';
 import 'package:intl/intl.dart';
 import '../services/notify_api.dart';
+import 'constants.dart' as constants;
 
 class MatchItem{
 
@@ -193,6 +195,31 @@ class MatchItem{
         matchActions);
 
     return matchItem;
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    String matchStatus = '';
+    String matchCompetition = this.competition.title + ' - ' +
+        this.editionStage.title;
+    String matchTeams = this.teamA + ' ' +
+        ((this.status == MatchItem.MATCH_STATUS_TYPE_PENDING)? ' - ': (this.teamA_goal.toString()+' - '+this.teamB_goal.toString())) +
+        ' ' + this.teamB;
+
+    if(this.status != MatchItem.MATCH_STATUS_TYPE_PENDING) {
+      matchStatus = this.match_status;
+    }
+    else {
+      matchStatus = constants.formatDateTime(this.match_date, true);
+    }
+
+    String viaApp = MyLocalizations.instanceLocalization['text_via_app'];
+    String shareApp = MyLocalizations.instanceLocalization['text_share_app'];
+
+    String aboutMatch = '$matchCompetition \n\n$matchStatus \n$matchTeams \n\n$viaApp \n\n$shareApp';
+
+    return aboutMatch;
   }
 
 }

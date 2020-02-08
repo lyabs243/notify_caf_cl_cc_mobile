@@ -5,6 +5,7 @@ import 'package:flutter_cafclcc/components/match_comments.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
+import 'package:share/share.dart';
 import '../../models/match_item.dart';
 import '../../models/edition_stage.dart';
 import 'components/header.dart';
@@ -148,7 +149,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                       color: Colors.white,
                     ),
                     onPressed: (){
-
+                      Share.share(matchItem.toString());
                     }
                 )
               ],
