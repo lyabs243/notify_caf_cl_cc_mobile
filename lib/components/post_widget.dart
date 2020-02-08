@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/image_viewer.dart';
 import 'package:flutter_cafclcc/components/post_reaction_box.dart';
 import 'package:flutter_cafclcc/components/profil_avatar.dart';
 import 'package:flutter_cafclcc/components/user_post_header_infos.dart';
@@ -204,13 +205,28 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 8.0)),
                   (post.url_image != null && post.url_image.length > 0)?
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.1,
-                    height: MediaQuery.of(context).size.height / 2.5,
-                    child: Image.network(
-                      post.url_image,
-                      fit: BoxFit.cover,
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 1.1,
+                      height: MediaQuery.of(context).size.height / 2.5,
+                      child: Image.network(
+                        post.url_image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                    onTap: () {
+                      if(!this.widget.clickable) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return ImageViewer(post.url_image);
+                        }));
+                      }
+                      else {
+                        MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (context) {
+                          return new PostDetails(post);
+                        });
+                        PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
+                      }
+                    },
                   ):
                   Container(),
                   Padding(padding: EdgeInsets.only(bottom: 8.0)),
