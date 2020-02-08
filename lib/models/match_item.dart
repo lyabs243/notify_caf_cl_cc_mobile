@@ -215,7 +215,7 @@ class MatchItem{
     }
 
     String viaApp = MyLocalizations.instanceLocalization['text_via_app'];
-    String shareApp = MyLocalizations.instanceLocalization['text_share_app'];
+    String shareApp = MyLocalizations.instanceLocalization['text_share_app_small'];
 
     String aboutMatch = '$matchCompetition \n\n$matchStatus \n$matchTeams \n\n$viaApp \n\n$shareApp';
 
