@@ -57,13 +57,36 @@ class _HomePageState extends State<HomePage>{
           this.user = user;
         }),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot){
-          return Scaffold(
-            appBar: HomeAppBar(user),
-            body: Body(fragment: this.fragment,competitionItem: this.competitionItem,),
-            drawer: HomeDrawer(user),
-          );
+          return WillPopScope(
+            onWillPop: _onWillPop,
+            child: Scaffold(
+              appBar: HomeAppBar(user),
+              body: Body(fragment: this.fragment,competitionItem: this.competitionItem,),
+              drawer: HomeDrawer(user),
+            ),
+          );;
         }
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text(MyLocalizations.instanceLocalization['text_are_you_sure']),
+        content: new Text(MyLocalizations.instanceLocalization['text_want_exit_app']),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text(MyLocalizations.instanceLocalization['no']),
+          ),
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text(MyLocalizations.instanceLocalization['yes']),
+          ),
+        ],
+      ),
+    )) ?? false;
   }
 
 }
