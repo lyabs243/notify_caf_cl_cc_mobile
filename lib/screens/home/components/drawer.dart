@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/components/about_screen.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/admin_panel/admin_panel.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
@@ -157,8 +158,9 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		DrawerItem profil = new DrawerItem(5, MyLocalizations.instanceLocalization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
 		DrawerItem admin_panel = new DrawerItem(6, MyLocalizations.instanceLocalization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
 		DrawerItem settings = new DrawerItem(7, MyLocalizations.instanceLocalization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
-		DrawerItem login = new DrawerItem(8, MyLocalizations.instanceLocalization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem logout = new DrawerItem(9, MyLocalizations.instanceLocalization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+		DrawerItem about = new DrawerItem(8, MyLocalizations.instanceLocalization['about'], DrawerType.item,iconPath: 'assets/icons/latest.png');
+		DrawerItem login = new DrawerItem(9, MyLocalizations.instanceLocalization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+		DrawerItem logout = new DrawerItem(10, MyLocalizations.instanceLocalization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
 		//set visibility
 		if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
@@ -181,6 +183,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		drawerItems.add(profil);
 		drawerItems.add(admin_panel);
 		drawerItems.add(settings);
+		drawerItems.add(about);
 		drawerItems.add(login);
 		drawerItems.add(logout);
 	}
@@ -240,7 +243,16 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						);
 				break;
-			case 8: //click on login
+			case 8: //click on about
+				materialPageRoute = MaterialPageRoute
+						(
+								builder: (BuildContext context){
+									return AboutScreen();
+								},
+								fullscreenDialog: true
+						);
+				break;
+			case 9: //click on login
 				transition = false;
 				Navigator.pushReplacement(
 						context,
