@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'localizations.dart';
 
 List<String> languages = ['en', 'fr'];
-const LINK_TERMS_USE = 'http://www.notifygroup.org';
+const LINK_TERMS_USE = 'https://notifysport.org/home/index.php/privacy-policy/';
 const APP_PACKAGE = 'org.notifygroup.afrofoot';
 
 const ADMOB_APP_ID = 'ca-app-pub-4011752044861705~2244034479';
