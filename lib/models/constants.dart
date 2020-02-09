@@ -17,6 +17,8 @@ const ADMOB_TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
 const ADMOB_TEST_INTERSTITIAL_ID = 'ca-app-pub-3940256099942544/1033173712';
 const ADMOB_TEST_REWARD_ID = 'ca-app-pub-3940256099942544/5224354917';
 
+const APP_VERSION = '1.0';
+
 bool canShowAds = false;
 
 /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".

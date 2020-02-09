@@ -37,6 +37,14 @@ class AboutScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Container(
+                child: Text(
+                  'Version ${constants.APP_VERSION}',
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor
+                  ),
+                ),
+              ),
               Padding(padding: EdgeInsets.only(top: 4.0, bottom: 4.0),),
               Container(
                 child: Text(
