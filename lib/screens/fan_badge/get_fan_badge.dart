@@ -112,34 +112,34 @@ class _GetFanBadgeState extends State<GetFanBadge> {
           ):
           (clubs.length <= 0)?
           EmptyData():
-          Container(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(
-                  child: new Card(
-                    child:
-                    (country.url_flag != null && country.url_flag.length > 0)?
-                     Image.network(country.url_flag, fit: BoxFit.cover,):
-                    Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    child: new Card(
+                      child:
+                      (country.url_flag != null && country.url_flag.length > 0)?
+                      Image.network(country.url_flag, fit: BoxFit.cover,):
+                      Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
+                    ),
+                    width: iconSize,
+                    height: iconSize,
                   ),
-                  width: iconSize,
-                  height: iconSize,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 8.0),),
-                Text(
-                  MyLocalizations.instanceLocalization['get_badge_now'],
-                  textAlign: TextAlign.center,
-                  textScaleFactor: 2.5,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 8.0),),
-                Expanded(
-                  child: Wrap(
-                    children: allClubs,
+                  Padding(padding: EdgeInsets.only(bottom: 8.0),),
+                  Text(
+                    MyLocalizations.instanceLocalization['get_badge_now'],
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 2.5,
                   ),
-                )
-              ],
+                  Padding(padding: EdgeInsets.only(bottom: 8.0),),
+                  Wrap(
+                      children: allClubs,
+                    ),
+                ],
+              ),
             ),
           ),
         )
