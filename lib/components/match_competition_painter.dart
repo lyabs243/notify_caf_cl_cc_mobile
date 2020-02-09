@@ -13,8 +13,8 @@ class MatchCompetitionPainter extends CustomPainter {
     paint.style = PaintingStyle.fill;
 
     var path = Path();
-    path.moveTo(size.width*80/100, size.height);
-    path.quadraticBezierTo(size.width * 85/100, 0, size.width, 0);
+    path.moveTo(size.width*75/100, size.height);
+    path.quadraticBezierTo(size.width * 75/100, 0, size.width, 0);
     path.lineTo(size.width, size.height);
 
     canvas.drawPath(path, paint);
