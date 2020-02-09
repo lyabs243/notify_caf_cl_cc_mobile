@@ -13,6 +13,7 @@ class HomeInfos{
   List<MatchItem> current_match = [];
   List<MatchItem> fixture = [];
   List<MatchItem> latest_result = [];
+  List<CompetitionItem> featured_competitions = [];
 
   Future initData(BuildContext context,int idUser,Function setHomeInfos) async {
     await NotifyApi(context).getJsonFromServer(
@@ -37,6 +38,15 @@ class HomeInfos{
         for(int i=0;i<map['NOTIFYGROUP']['latest_result'].length;i++){
           MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP']['latest_result'][i]);
           this.latest_result.add(matchItem);
+        }
+
+        for(int i=0;i<map['NOTIFYGROUP']['featured_competition'].length;i++){
+          CompetitionItem competitionItem = CompetitionItem.getFromMap(map['NOTIFYGROUP']['featured_competition'][i]);
+          this.featured_competitions.add(competitionItem);
+        }
+
+        if(this.featured_competitions.length > 0) {
+          CompetitionItem.mapCompetitionsFeature(this.featured_competitions);
         }
 
         setHomeInfos(this);

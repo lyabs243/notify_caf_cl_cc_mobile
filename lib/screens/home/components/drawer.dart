@@ -149,43 +149,48 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	initDrawerItems(){
 
 		DrawerItem header = new DrawerItem(0, MyLocalizations.instanceLocalization['app_title'], DrawerType.header);
-		List competitions = initCompetitions();
-		DrawerItem home = new DrawerItem(1, MyLocalizations.instanceLocalization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem news = new DrawerItem(2, MyLocalizations.instanceLocalization['news'], DrawerType.item,iconPath: 'assets/icons/latest.png');
-		DrawerItem community = new DrawerItem(3, MyLocalizations.instanceLocalization['community'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem competition = new DrawerItem(4, MyLocalizations.instanceLocalization['competition'], DrawerType.expandable,
-				iconPath: 'assets/icons/profile.png',expandableItems: competitions);
-		DrawerItem profil = new DrawerItem(5, MyLocalizations.instanceLocalization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-		DrawerItem admin_panel = new DrawerItem(6, MyLocalizations.instanceLocalization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-		DrawerItem settings = new DrawerItem(7, MyLocalizations.instanceLocalization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
-		DrawerItem about = new DrawerItem(8, MyLocalizations.instanceLocalization['about'], DrawerType.item,iconPath: 'assets/icons/latest.png');
-		DrawerItem login = new DrawerItem(9, MyLocalizations.instanceLocalization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
-		DrawerItem logout = new DrawerItem(10, MyLocalizations.instanceLocalization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+		List competitions;
+		initCompetitions().then((result) {
+			setState(() {
+				competitions = result;
+				DrawerItem home = new DrawerItem(1, MyLocalizations.instanceLocalization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
+				DrawerItem news = new DrawerItem(2, MyLocalizations.instanceLocalization['news'], DrawerType.item,iconPath: 'assets/icons/latest.png');
+				DrawerItem community = new DrawerItem(3, MyLocalizations.instanceLocalization['community'], DrawerType.item,iconPath: 'assets/icons/login.png');
+				DrawerItem competition = new DrawerItem(4, MyLocalizations.instanceLocalization['competition'], DrawerType.expandable,
+						iconPath: 'assets/icons/profile.png',expandableItems: competitions);
+				DrawerItem profil = new DrawerItem(5, MyLocalizations.instanceLocalization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
+				DrawerItem admin_panel = new DrawerItem(6, MyLocalizations.instanceLocalization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
+				DrawerItem settings = new DrawerItem(7, MyLocalizations.instanceLocalization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
+				DrawerItem about = new DrawerItem(8, MyLocalizations.instanceLocalization['about'], DrawerType.item,iconPath: 'assets/icons/latest.png');
+				DrawerItem login = new DrawerItem(9, MyLocalizations.instanceLocalization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
+				DrawerItem logout = new DrawerItem(10, MyLocalizations.instanceLocalization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 
-		//set visibility
-		if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
-			profil.visible = false;
-			community.visible = false;
-			logout.visible = false;
-		}
-		else{
-			login.visible = false;
-			if(this.widget.user.type == User.USER_TYPE_ADMIN){
-				admin_panel.visible = true;
-			}
-		}
+				//set visibility
+				if(this.widget.user.id_accout_type == User.NOT_CONNECTED_ACCOUNT_ID){
+					profil.visible = false;
+					community.visible = false;
+					logout.visible = false;
+				}
+				else{
+					login.visible = false;
+					if(this.widget.user.type == User.USER_TYPE_ADMIN){
+						admin_panel.visible = true;
+					}
+				}
 
-		drawerItems.add(header);
-		drawerItems.add(home);
-		drawerItems.add(news);
-		drawerItems.add(community);
-		drawerItems.add(competition);
-		drawerItems.add(profil);
-		drawerItems.add(admin_panel);
-		drawerItems.add(settings);
-		drawerItems.add(about);
-		drawerItems.add(login);
-		drawerItems.add(logout);
+				drawerItems.add(header);
+				drawerItems.add(home);
+				drawerItems.add(news);
+				drawerItems.add(community);
+				drawerItems.add(competition);
+				drawerItems.add(profil);
+				drawerItems.add(admin_panel);
+				drawerItems.add(settings);
+				drawerItems.add(about);
+				drawerItems.add(login);
+				drawerItems.add(logout);
+			});
+		});
 	}
 
 	onDrawerItemSelected(int id){
@@ -282,22 +287,16 @@ class _HomeDrawerState extends State<HomeDrawer>{
 	}
 
 	//init competion list
-	List<Widget> initCompetitions(){
+	Future<List<Widget>> initCompetitions() async{
 
-		CompetitionItem champions_league = new CompetitionItem(2, MyLocalizations.instanceLocalization['champions_league'],
-        null, '','',1,null);
-		CompetitionItem confederation_cup = new CompetitionItem(3, MyLocalizations.instanceLocalization['confederation_cup'],
-        null, '','',1,null);
-
-		List<CompetitionItem> competitions = [champions_league,confederation_cup];
-
-		DrawerItem drawerCL = new DrawerItem(0, competitions[0].title, DrawerType.item);
-		DrawerItem drawerCC = new DrawerItem(1, competitions[1].title, DrawerType.item);
-		DrawerItem drawerMore = new DrawerItem(2, MyLocalizations.instanceLocalization['more'], DrawerType.item);
+		List<CompetitionItem> competitions = await CompetitionItem.getFeaturedCompetitions();
 
 		List competitionDrawerItems = [];
-		competitionDrawerItems.add(drawerCL);
-		competitionDrawerItems.add(drawerCC);
+		for(int index=0; index<competitions.length; index++) {
+			DrawerItem drawer = new DrawerItem(index, competitions[index].title, DrawerType.item);
+			competitionDrawerItems.add(drawer);
+		}
+		DrawerItem drawerMore = new DrawerItem(competitions.length, MyLocalizations.instanceLocalization['more'], DrawerType.item);
 		competitionDrawerItems.add(drawerMore);
 
 		List<Widget> listWidget = [];
