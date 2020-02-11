@@ -79,9 +79,9 @@ class _StageTabviewState extends State<StageTabview>{
                             initMatchs();
                           });
                         },
-                        color: (selectedGroup == competitionStage.groups[index].id)? Colors.white : Theme.of(context).primaryColor,
+                        color: (selectedGroup == competitionStage.groups[index].id)? Theme.of(context).primaryColor : Colors.white,
                         elevation: 10.0,
-                        textColor: (selectedGroup == competitionStage.groups[index].id)? Theme.of(context).primaryColor : Colors.white,
+                        textColor: (selectedGroup == competitionStage.groups[index].id)? Colors.white : Theme.of(context).primaryColor,
                         child: Text(competitionStage.groups[index].title),
                         shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       ),
@@ -99,10 +99,10 @@ class _StageTabviewState extends State<StageTabview>{
                       child: Text(
                         MyLocalizations.instanceLocalization['last_results'],
                         style: TextStyle(
-                          color: (selectedButton == 1)? Theme.of(context).primaryColor : Colors.white,
+                          color: (selectedButton == 1)? Colors.white : Theme.of(context).primaryColor,
                         ),
                       ),
-                      color: (selectedButton == 1)? Colors.white : Theme.of(context).primaryColor,
+                      color: (selectedButton == 1)? Theme.of(context).primaryColor : Colors.white,
                       onPressed: (){
                         setState(() {
                             selectedButton = 1;
@@ -118,10 +118,10 @@ class _StageTabviewState extends State<StageTabview>{
                       child: Text(
                         MyLocalizations.instanceLocalization['fixture'],
                         style: TextStyle(
-                          color: (selectedButton == 2)? Theme.of(context).primaryColor : Colors.white,
+                          color: (selectedButton == 2)? Colors.white : Theme.of(context).primaryColor,
                         ),
                       ),
-                      color: (selectedButton == 2)? Colors.white : Theme.of(context).primaryColor,
+                      color: (selectedButton == 2)? Theme.of(context).primaryColor : Colors.white,
                       onPressed: (){
                         setState(() {
                             selectedButton = 2;
@@ -140,10 +140,10 @@ class _StageTabviewState extends State<StageTabview>{
                   child: Text(
                     MyLocalizations.instanceLocalization['table'],
                     style: TextStyle(
-                      color: (selectedButton == 3)? Theme.of(context).primaryColor : Colors.white,
+                      color: (selectedButton == 3)? Colors.white : Theme.of(context).primaryColor,
                     ),
                   ),
-                  color: (selectedButton == 3)? Colors.white : Theme.of(context).primaryColor,
+                  color: (selectedButton == 3)? Theme.of(context).primaryColor : Colors.white,
                   onPressed: (){
                     setState(() {
                         selectedButton = 3;
