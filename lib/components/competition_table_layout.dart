@@ -22,6 +22,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
   int idStageGroup, idEditionStage;
 
   List<GroupTableItem> tableItems = [];
+  bool isLoading = true;
 
   _CompetitionTableLayoutState(this.idStageGroup,
       this.idEditionStage);
@@ -44,13 +45,18 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
     GroupTableItem.getGroupTable(context, idStageGroup, idEditionStage).then((items){
       setState(() {
         tableItems.addAll(items);
+        isLoading = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return (tableItems.length <= 0)?
+    return (isLoading)?
+        Center(
+          child: CircularProgressIndicator(),
+        ):
+    ((tableItems.length <= 0)?
     EmptyData() :
     SingleChildScrollView(
       child: Container(
@@ -58,7 +64,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
           children: getTableRows(context),
         ),
       ),
-    );
+    ));
   }
 
   List<Widget> getTableRows(BuildContext context){
