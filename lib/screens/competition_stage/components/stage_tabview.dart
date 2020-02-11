@@ -156,7 +156,9 @@ class _StageTabviewState extends State<StageTabview>{
                     child: CircularProgressIndicator(),
                   ):
               (selectedButton == 3)?
-                CompetitionTableLayout(selectedGroup, competitionStage.id)  :
+                Expanded(
+                  child: CompetitionTableLayout(selectedGroup, competitionStage.id),
+                )  :
               (listMatch.length <= 0)?
               EmptyData():
               Expanded(
