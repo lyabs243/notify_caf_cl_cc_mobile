@@ -184,13 +184,13 @@ class _StageTabviewState extends State<StageTabview>{
                     ),
                     child: ListView.builder(
                     itemCount: listMatch.length,
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: MediaQuery.of(context).size.height / 12),
                     itemBuilder: (context,i){
                       return Card(
                         child: MatchLayout(listMatch[i]),
                         elevation: 8.0,
                       );
-                    }
+                    },
                 )
                 )
               )

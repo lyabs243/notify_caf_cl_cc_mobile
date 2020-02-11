@@ -343,7 +343,7 @@ class _CompetitionTableLayoutState extends State<CompetitionTableLayout>{
     tableRows.add(
       SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(4.5),
+          margin: EdgeInsets.only(left: 4.5, top: 4.5, right: 4.5, bottom: MediaQuery.of(context).size.height / 12),
           child: Column(
             children: <Widget>[
               Row(
