@@ -19,7 +19,7 @@ const ADMOB_TEST_REWARD_ID = 'ca-app-pub-3940256099942544/5224354917';
 
 const APP_VERSION = '1.0';
 
-bool canShowAds = true;
+bool canShowAds = false;
 
 /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
 Color fromHex(String hexString) {
@@ -88,11 +88,11 @@ String formatDateTime(DateTime dateTime, bool allDetails) {
 
   final aDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
   if(aDate == today) {
-    return DateFormat("'${MyLocalizations.instanceLocalization['today']},' h:mm a").format(dateTime);
+    return '${MyLocalizations.instanceLocalization['today']},' + DateFormat(" h:mm a").format(dateTime);
   } else if (aDate == yesterday) {
-    return DateFormat("'${MyLocalizations.instanceLocalization['yesterday']},' h:mm a").format(dateTime);
+    return '${MyLocalizations.instanceLocalization['yesterday']},' + DateFormat(" h:mm a").format(dateTime);
   } else if (aDate == tomorrow) {
-    return DateFormat("'${MyLocalizations.instanceLocalization['tomorrow']},' h:mm a").format(dateTime);
+    return '${MyLocalizations.instanceLocalization['tomorrow']},' + DateFormat(" h:mm a").format(dateTime);
   }
 
   return new DateFormat('E MMM dd, yyyy ${(allDetails)? 'h:mm a' : ''}').format(dateTime);
