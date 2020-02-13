@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
+import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
+import 'package:flutter_cafclcc/screens/match_edit/match_edit.dart';
 import 'package:share/share.dart';
 import '../../models/match_item.dart';
 import '../../models/edition_stage.dart';
@@ -44,6 +46,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   List<Widget> tabViews = [];
   List<Tab> tabs = [];
   bool isLoad = true;
+  User user;
 
   AdmobBanner admobBanner;
   
@@ -60,6 +63,11 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
       },
     );
+    User.getInstance().then((_user) {
+      setState(() {
+        user = _user;
+      });
+    });
     //if is from notification, init match item
     if(this.widget.fromNotification) {
       initMatch();
@@ -151,7 +159,25 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                     onPressed: (){
                       Share.share(matchItem.toString());
                     }
-                )
+                ),
+                (user != null && user.type == User.USER_TYPE_ADMIN)?
+                IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return MatchEdit(matchItem);
+                      })).then((result) {
+                        if(result != null) {
+                          setState(() {
+                            matchItem = result;
+                          });
+                        }
+                      });
+                    }
+                ): Container()
               ],
             ),
             SliverPersistentHeader(

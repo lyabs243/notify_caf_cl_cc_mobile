@@ -14,6 +14,7 @@ class MatchItem{
   static final String URL_GET_FIXTURE_MATCHS = 'http://notifysport.org/api/v1/index.php/competition/fixture/';
   static final String URL_GET_LATEST_RESULTS = 'http://notifysport.org/api/v1/index.php/competition/latest_results/';
   static final String URL_GET_MATCH = 'http://notifysport.org/api/v1/index.php/match/get/';
+  static final String URL_UPDATE_MATCH = 'http://notifysport.org/api/v1/index.php/match/update/';
 
   static final String MATCH_STATUS_TYPE_PENDING = "0";
   static final String MATCH_STATUS_TYPE_IN_PROGRESS = "1";
@@ -56,6 +57,31 @@ class MatchItem{
       }
     });
     return matchs;
+  }
+
+  Future<bool> updateMatch(BuildContext context, int teamAGoal, int teamBGoal, int teamAPenalty, int teamBPenalty,
+      String status) async {
+    bool success = true;
+    String url = URL_UPDATE_MATCH+this.id.toString() + '/' + this.id.toString();
+    Map<String,dynamic> params = {
+      'team_a_goal': teamAGoal,
+      'team_b_goal': teamBGoal,
+      'team_a_penalty': teamAPenalty,
+      'team_b_penalty': teamBPenalty,
+      'status': status
+    };
+    await NotifyApi(context).getJsonFromServer(url,params).then((map){
+      if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {
+        this.teamA_goal = teamAGoal;
+        this.teamB_goal = teamBGoal;
+        this.team_a_penalty = teamAPenalty;
+        this.team_b_penalty = teamBPenalty;
+      }
+      else{
+        success = false;
+      }
+    });
+    return success;
   }
 
   static Future get(BuildContext context,int idMatch) async {

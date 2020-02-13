@@ -182,5 +182,12 @@
   "text_are_you_sure": "Are you sure?",
   "text_want_exit_app": "Do you want to exit this App?",
   "date_format_date": "E MMM dd, yyyy",
-  "date_format_time": "h:mm a"
+  "date_format_time": "h:mm a",
+  "edit_match": "Edit Match",
+  "penalty": "Penalty",
+  "not_started": "Not started",
+  "in_progress": "In progress",
+  "postponed": "Postponed",
+  "to_define_manually": "To define manually",
+  "match_updated": "Match updated",
 }
