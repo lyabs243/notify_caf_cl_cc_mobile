@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/lang_code.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/match_action.dart';
 import 'competition_item.dart';
@@ -211,7 +212,9 @@ class MatchItem{
       matchStatus = this.match_status;
     }
     else {
-      matchStatus = constants.formatDateTime(this.match_date, true);
+      LangCode.getLangCode().then((code) {
+        matchStatus = constants.formatDateTime(this.match_date, true, code);
+      });
     }
 
     String viaApp = MyLocalizations.instanceLocalization['text_via_app'];

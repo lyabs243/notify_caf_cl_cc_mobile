@@ -180,5 +180,7 @@
   "about_text": "Notify Afro foot est une application de sport qui regroupe une communauté se passionne du football en donnant différentes fonctionnalités telles que :\n\n✦Le score en direct\n✦L’historique des différentes confrontations dans les différentes équipes\n✦Le classement des équipes\n✦Le classement des meilleurs buteurs\n✦Les posts par les utilisateurs\n✦Les vidéos des resumes des différents matchs, …\n\n©Tout droits reservés NotifyGroup Février 2020",
   "text_via_app": "Via #NotifyAfroFoot",
   "text_are_you_sure": "Êtes-vous sûr?",
-  "text_want_exit_app": "Voulez-vous quitter cete application?"
+  "text_want_exit_app": "Voulez-vous quitter cete application?",
+  "date_format_date": "E dd MMM yyyy",
+  "date_format_time": "H:mm"
 }

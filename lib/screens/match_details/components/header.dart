@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/lang_code.dart';
 import '../../../models/constants.dart' as constant;
 import '../../../models/match_item.dart';
 
@@ -20,6 +21,7 @@ class Header extends StatefulWidget{
 class _HeaderState extends State<Header>{
 
   MatchItem matchItem;
+  String langCode = 'en';
 
   _HeaderState(this.matchItem);
 
@@ -47,6 +49,11 @@ class _HeaderState extends State<Header>{
         }
       }
     });
+    LangCode.getLangCode().then((code) {
+      setState(() {
+        langCode = code;
+      });
+    });
   }
 
   @override
@@ -71,7 +78,7 @@ class _HeaderState extends State<Header>{
                 Text(
                   (matchItem.status != MatchItem.MATCH_STATUS_TYPE_PENDING)?
                   matchItem.match_status:
-                  constant.formatDateTime(matchItem.match_date, true),
+                  constant.formatDateTime(matchItem.match_date, true, langCode),
                   style: TextStyle(
                       color: Colors.white
                   ),

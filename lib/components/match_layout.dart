@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/match_competition_painter.dart';
+import 'package:flutter_cafclcc/models/lang_code.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../models/constants.dart' as constant;
 import '../models/match_item.dart';
@@ -24,6 +25,7 @@ class MatchLayout extends StatefulWidget{
 class MatchLayoutState extends State<MatchLayout>{
 
   MatchItem matchItem;
+  String langCode = 'en';
 
   MatchLayoutState(this.matchItem);
 
@@ -57,6 +59,11 @@ class MatchLayoutState extends State<MatchLayout>{
           }
         }
       }
+    });
+    LangCode.getLangCode().then((code) {
+      setState(() {
+        langCode = code;
+      });
     });
   }
 
@@ -126,7 +133,7 @@ class MatchLayoutState extends State<MatchLayout>{
                       && matchItem.status != MatchItem.MATCH_STATUS_TYPE_FULLTIME
                       && matchItem.status != MatchItem.MATCH_STATUS_TYPE_REPORT)?
                       matchItem.match_status:
-                      constant.formatDateTime(matchItem.match_date, false),
+                      constant.formatDateTime(matchItem.match_date, false, langCode),
                       textScaleFactor: 0.8,
                       textAlign: TextAlign.center,
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/Country.dart';
+import 'package:flutter_cafclcc/models/lang_code.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/fan_badge/get_fan_badge.dart';
@@ -64,6 +65,7 @@ class SelectLanguageWidget extends StatelessWidget {
         SharedPreferences.getInstance().then((sharedPreferences) {
           sharedPreferences.setString('lang', code);
           GlobalWidgetsLocalizations.load(Locale(code)).then((v) {
+            LangCode.code = code;
             if(goToHomePage) {
               MyLocalizationsDelegate().load(Locale(code)).then((value) {
                 Navigator.pushReplacement(

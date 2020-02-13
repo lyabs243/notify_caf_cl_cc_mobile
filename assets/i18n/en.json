@@ -180,5 +180,7 @@
   "about_text": "Notify Afro football is a sports application that brings together a community is passionate football by giving different features such as:\n\n✦The live score\n✦The history of the various confrontations in the different teams\n✦Team rankings\n✦The ranking of the top scorers\n✦The publication of posts by users\n✦Video summaries of the different games, ...\n\n©All rights reserved NotifyGroup February 2020",
   "text_via_app": "Via #NotifyAfroFoot",
   "text_are_you_sure": "Are you sure?",
-  "text_want_exit_app": "Do you want to exit this App?"
+  "text_want_exit_app": "Do you want to exit this App?",
+  "date_format_date": "E MMM dd, yyyy",
+  "date_format_time": "h:mm a"
 }

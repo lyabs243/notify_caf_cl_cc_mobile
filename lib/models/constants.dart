@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'localizations.dart';
 
@@ -79,7 +80,7 @@ String convertDateToAbout(DateTime dateTime){
   return result;
 }
 
-String formatDateTime(DateTime dateTime, bool allDetails) {
+String formatDateTime(DateTime dateTime, bool allDetails, String langCode) {
 
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
@@ -88,12 +89,15 @@ String formatDateTime(DateTime dateTime, bool allDetails) {
 
   final aDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
   if(aDate == today) {
-    return '${MyLocalizations.instanceLocalization['today']},' + DateFormat(" h:mm a").format(dateTime);
+    return '${MyLocalizations.instanceLocalization['today']},' +
+        DateFormat(" ${MyLocalizations.instanceLocalization['date_format_time']}").format(dateTime);
   } else if (aDate == yesterday) {
-    return '${MyLocalizations.instanceLocalization['yesterday']},' + DateFormat(" h:mm a").format(dateTime);
+    return '${MyLocalizations.instanceLocalization['yesterday']},' +
+        DateFormat(" ${MyLocalizations.instanceLocalization['date_format_time']}").format(dateTime);
   } else if (aDate == tomorrow) {
-    return '${MyLocalizations.instanceLocalization['tomorrow']},' + DateFormat(" h:mm a").format(dateTime);
+    return '${MyLocalizations.instanceLocalization['tomorrow']},' +
+        DateFormat(" ${MyLocalizations.instanceLocalization['date_format_time']}").format(dateTime);
   }
 
-  return new DateFormat('E MMM dd, yyyy ${(allDetails)? 'h:mm a' : ''}').format(dateTime);
+  return new DateFormat('${MyLocalizations.instanceLocalization['date_format_date']} ${(allDetails)? 'h:mm a' : ''}', langCode).format(dateTime);
 }
