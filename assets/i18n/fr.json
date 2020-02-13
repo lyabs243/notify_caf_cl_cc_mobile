@@ -189,5 +189,6 @@
   "in_progress": "En cours",
   "postponed": "Reporté",
   "to_define_manually": "À définir manuellement",
-  "match_updated": "Match mis à jour"
+  "match_updated": "Match mis à jour",
+  "other_matchs": "Autres matchs"
 }

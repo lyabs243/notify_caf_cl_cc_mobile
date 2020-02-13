@@ -65,6 +65,9 @@ class _MatchListState extends State<MatchsList>{
     else if(typeList == TypeList.FIXTURE){
     title = MyLocalizations.instanceLocalization['fixture'];
     }
+    else if(typeList == TypeList.OTHER){
+      title = MyLocalizations.instanceLocalization['other_matchs'];
+    }
     else{
       title = MyLocalizations.instanceLocalization['last_results'];
     }
@@ -154,6 +157,11 @@ class _MatchListState extends State<MatchsList>{
         initMatchs(result);
       });
     }
+    else if(typeList == TypeList.OTHER) {
+      MatchItem.getOtherFixtures(context, page, competitionType: idCompetitionType).then((result) {
+        initMatchs(result);
+      });
+    }
     else {
       MatchItem.getLatestResults(context, idCompetition, page, competitionType: idCompetitionType).then((result) {
         initMatchs(result);
@@ -176,12 +184,22 @@ class _MatchListState extends State<MatchsList>{
 
   Future addItems() async{
     List<MatchItem> matchItems = [];
-    if(typeList == TypeList.LIVE)
-      matchItems = await MatchItem.getCurrentMatchs(context, idCompetition, page, competitionType: idCompetitionType);
-    else if(typeList == TypeList.FIXTURE)
-      matchItems = await MatchItem.getFixtureMatchs(context, idCompetition, page, competitionType: idCompetitionType);
-    else
-      matchItems = await MatchItem.getLatestResults(context, idCompetition, page, competitionType: idCompetitionType);
+    if(typeList == TypeList.LIVE) {
+      matchItems = await MatchItem.getCurrentMatchs(
+          context, idCompetition, page, competitionType: idCompetitionType);
+    }
+    else if(typeList == TypeList.FIXTURE) {
+      matchItems = await MatchItem.getFixtureMatchs(
+          context, idCompetition, page, competitionType: idCompetitionType);
+    }
+    else if(typeList == TypeList.OTHER) {
+      matchItems = await MatchItem.getOtherFixtures(
+          context, page, competitionType: idCompetitionType);
+    }
+    else {
+      matchItems = await MatchItem.getLatestResults(
+          context, idCompetition, page, competitionType: idCompetitionType);
+    }
     if(matchItems.length > 0){
       admobBanner = AdmobBanner(
         adUnitId: constants.getAdmobBannerId(),
@@ -202,5 +220,6 @@ class _MatchListState extends State<MatchsList>{
 enum TypeList{
   LIVE,
   FIXTURE,
-  RESULT
+  RESULT,
+  OTHER
 }

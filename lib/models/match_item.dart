@@ -13,6 +13,7 @@ class MatchItem{
   static final String URL_GET_CURRENT_MATCHS = 'http://notifysport.org/api/v1/index.php/competition/current_matchs/';
   static final String URL_GET_FIXTURE_MATCHS = 'http://notifysport.org/api/v1/index.php/competition/fixture/';
   static final String URL_GET_LATEST_RESULTS = 'http://notifysport.org/api/v1/index.php/competition/latest_results/';
+  static final String URL_GET_OTHER_FIXTURES = 'http://notifysport.org/api/v1/index.php/competition/other_fixtures/0/';
   static final String URL_GET_MATCH = 'http://notifysport.org/api/v1/index.php/match/get/';
   static final String URL_UPDATE_MATCH = 'http://notifysport.org/api/v1/index.php/match/update/';
 
@@ -117,6 +118,21 @@ class MatchItem{
     List<MatchItem> matchs = [];
     await NotifyApi(context).getJsonFromServer(
         URL_GET_LATEST_RESULTS + idCompetition.toString() + '/' + page.toString() + '/' + competitionType.toString()
+        , null).then((map) {
+      if (map != null) {
+        for(int i=0;i<map['NOTIFYGROUP'].length;i++){
+          MatchItem matchItem = MatchItem.getFromMap(map['NOTIFYGROUP'][i]);
+          matchs.add(matchItem);
+        }
+      }
+    });
+    return matchs;
+  }
+
+  static Future getOtherFixtures(BuildContext context, int page, {competitionType: 0}) async {
+    List<MatchItem> matchs = [];
+    await NotifyApi(context).getJsonFromServer(
+        URL_GET_OTHER_FIXTURES + page.toString() + '/' + competitionType.toString()
         , null).then((map) {
       if (map != null) {
         for(int i=0;i<map['NOTIFYGROUP'].length;i++){
