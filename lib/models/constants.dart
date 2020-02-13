@@ -99,5 +99,6 @@ String formatDateTime(DateTime dateTime, bool allDetails, String langCode) {
         DateFormat(" ${MyLocalizations.instanceLocalization['date_format_time']}").format(dateTime);
   }
 
-  return new DateFormat('${MyLocalizations.instanceLocalization['date_format_date']} ${(allDetails)? 'h:mm a' : ''}', langCode).format(dateTime);
+  return new DateFormat('${MyLocalizations.instanceLocalization['date_format_date']} ${(allDetails)?
+  MyLocalizations.instanceLocalization['date_format_time'] : ''}', langCode).format(dateTime);
 }
