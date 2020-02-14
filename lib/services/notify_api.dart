@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/user.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,7 @@ class NotifyApi {
     if(langCode == null) {
       langCode = 'en';
     }
+    User user = await User.getInstance();
     String timezone = DateTime.now().timeZoneOffset.toString().substring(0,
         DateTime.now().timeZoneOffset.toString().lastIndexOf(new RegExp(':')));
     timezone = ((timezone.startsWith(new RegExp('-')))? '' : '+') + timezone;
@@ -25,7 +27,8 @@ class NotifyApi {
       'access_api': 'sgdhrnt_234lyS__',
       'lang': langCode,
       'version': '1',
-      'timezone': timezone
+      'timezone': timezone,
+      'id_user': user.id
     };
     //print("params -- ${params}");
     if (params != null) {
