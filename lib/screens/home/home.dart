@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'components/body.dart';
 import '../../models/localizations.dart';
 import '../../models/user.dart';
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage>{
             child: new Text(MyLocalizations.instanceLocalization['no']),
           ),
           new FlatButton(
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             child: new Text(MyLocalizations.instanceLocalization['yes']),
           ),
         ],
