@@ -2,6 +2,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
+import 'package:flutter_cafclcc/models/lang_code.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
@@ -157,7 +158,9 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                       color: Colors.white,
                     ),
                     onPressed: (){
-                      Share.share(matchItem.toString());
+                      LangCode.getLangCode().then((langCode) {
+                        Share.share(matchItem.summary(langCode));
+                      });
                     }
                 ),
                 (user != null && user.type == User.USER_TYPE_ADMIN)?

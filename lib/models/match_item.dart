@@ -240,8 +240,7 @@ class MatchItem{
     return matchItem;
   }
 
-  @override
-  String toString() {
+  String summary(String langCode) {
     super.toString();
     String matchStatus = '';
     String matchCompetition = this.competition.title + ' - ' +
@@ -254,9 +253,7 @@ class MatchItem{
       matchStatus = this.match_status;
     }
     else {
-      LangCode.getLangCode().then((code) {
-        matchStatus = constants.formatDateTime(this.match_date, true, code);
-      });
+      matchStatus = constants.formatDateTime(this.match_date, true, langCode);
     }
 
     String viaApp = MyLocalizations.instanceLocalization['text_via_app'];
