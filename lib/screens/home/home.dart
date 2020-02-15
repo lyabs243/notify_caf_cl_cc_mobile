@@ -9,28 +9,25 @@ import '../../models/competition_item.dart';
 
 class HomePage extends StatefulWidget{
 
-  Fragment fragment;
   CompetitionItem competitionItem;
 
-  HomePage({Key key, this.title,this.fragment: Fragment.HOME,this.competitionItem}) : super(key: key);
+  HomePage({Key key, this.title,this.competitionItem}) : super(key: key);
 
   final String title;
 
   @override
   State<HomePage> createState() {
-    // TODO: implement createState
-    return new _HomePageState(this.fragment,this.competitionItem);
+    return new _HomePageState(this.competitionItem);
   }
 
 }
 
 class _HomePageState extends State<HomePage>{
 
-  Fragment fragment;
   User user;
   CompetitionItem competitionItem;
 
-  _HomePageState(this.fragment,this.competitionItem);
+  _HomePageState(this.competitionItem);
 
   @override
   void initState() {
@@ -62,7 +59,7 @@ class _HomePageState extends State<HomePage>{
             onWillPop: _onWillPop,
             child: Scaffold(
               appBar: HomeAppBar(user),
-              body: Body(fragment: this.fragment,competitionItem: this.competitionItem,),
+              body: Body(competitionItem: this.competitionItem,),
               drawer: HomeDrawer(user),
             ),
           );;

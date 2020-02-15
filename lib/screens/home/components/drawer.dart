@@ -3,6 +3,7 @@ import 'package:flutter_cafclcc/components/about_screen.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/admin_panel/admin_panel.dart';
 import 'package:flutter_cafclcc/screens/community/community.dart';
+import 'package:flutter_cafclcc/screens/competition_list/competition_list.dart';
 import 'package:flutter_cafclcc/screens/settings/settings.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import '../../../models/drawer_item.dart';
@@ -203,7 +204,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 						context,
 						NoAnimationMaterialPageRoute(
 								builder: (BuildContext context){
-									return HomePage(fragment: Fragment.HOME,);
+									return HomePage();
 								}
 						));
 				break;
@@ -328,11 +329,11 @@ class _HomeDrawerState extends State<HomeDrawer>{
 							  PageTransition(context, materialPageRoute, false).checkForRateAndShareSuggestion();
 							  break;
 							case 2://more
-								Navigator.pushReplacement(
+								Navigator.push(
 											context,
-											NoAnimationMaterialPageRoute(
+											MaterialPageRoute(
 													builder: (BuildContext context){
-														return HomePage(fragment: Fragment.COMPETITION_LIST,);
+														return CompetitionList();
 													}
 											));
 								break;

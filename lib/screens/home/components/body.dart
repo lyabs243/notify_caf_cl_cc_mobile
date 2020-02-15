@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
+import 'package:flutter_cafclcc/screens/competition_list/competition_list.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import 'package:flutter_html/flutter_html.dart';
 import '../home.dart';
-import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
 import '../../../models/home_infos.dart';
 import '../../../models/user.dart';
@@ -21,15 +21,14 @@ import '../../../models/constants.dart' as constant;
 
 class Body extends StatefulWidget{
 
-  Fragment fragment;
   CompetitionItem competitionItem;
 
-  Body({this.fragment: Fragment.HOME,this.competitionItem});
+  Body({this.competitionItem});
 
   @override
   _BodyState createState() {
     // TODO: implement createState
-    return new _BodyState(fragment,competitionItem);
+    return new _BodyState(competitionItem);
   }
 
 }
@@ -37,7 +36,6 @@ class Body extends StatefulWidget{
 class _BodyState extends State<Body>{
 
   Widget homeContenair;
-  Fragment fragment;
   CompetitionItem competitionItem;
   HomeInfos homeInfos;
   RefreshController refreshController;
@@ -52,7 +50,7 @@ class _BodyState extends State<Body>{
 
   AdmobBanner admobBanner;
 
-  _BodyState(this.fragment,this.competitionItem);
+  _BodyState(this.competitionItem);
 
   @override
   void initState() {
@@ -64,20 +62,18 @@ class _BodyState extends State<Body>{
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
       },
     );
-    if(this.fragment == Fragment.HOME) {
-      refreshController = new RefreshController(initialRefresh: false);
-      homeInfos = new HomeInfos();
-      User.getInstance().then((user){
-        this.user = user;
-        if(!hasHomeInfos) {
-          homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
+    refreshController = new RefreshController(initialRefresh: false);
+    homeInfos = new HomeInfos();
+    User.getInstance().then((user){
+      this.user = user;
+      if(!hasHomeInfos) {
+        homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
           setState(() {
             initData();
           });
-          });
-        }
-      });
-    }
+        });
+      }
+    });
   }
 
   @override
@@ -89,10 +85,6 @@ class _BodyState extends State<Body>{
 
   @override
   Widget build(BuildContext context) {
-    if(this.fragment == Fragment.COMPETITION_LIST){
-      homeContenair = FragmentCompetitionList();
-    }
-    else{
       homeContenair = SmartRefresher(
           controller: refreshController,
           enablePullUp: false,
@@ -139,7 +131,7 @@ class _BodyState extends State<Body>{
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context){
-                                          return HomePage(fragment: Fragment.COMPETITION_LIST,);
+                                          return CompetitionList();
                                         }
                                     ));
                               }
@@ -197,7 +189,6 @@ class _BodyState extends State<Body>{
             ),
           ),
       );
-    }
     return homeContenair;
   }
 
