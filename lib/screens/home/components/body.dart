@@ -200,6 +200,7 @@ class _BodyState extends State<Body>{
     homeInfos.current_match.clear();
     homeInfos.fixture.clear();
     homeInfos.latest_result.clear();
+    homeInfos.featured_competitions.clear();
     homeInfos.initData(context, user.id,this.setHomeInfos).then((v) {
       setState(() {
         initData();
