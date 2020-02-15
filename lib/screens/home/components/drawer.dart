@@ -292,11 +292,11 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		List<CompetitionItem> competitions = await CompetitionItem.getFeaturedCompetitions();
 
 		List competitionDrawerItems = [];
-		for(int index=0; index<competitions.length; index++) {
+		for(int index=0; index<2; index++) {
 			DrawerItem drawer = new DrawerItem(index, competitions[index].title, DrawerType.item);
 			competitionDrawerItems.add(drawer);
 		}
-		DrawerItem drawerMore = new DrawerItem(competitions.length, MyLocalizations.instanceLocalization['more'], DrawerType.item);
+		DrawerItem drawerMore = new DrawerItem(2, MyLocalizations.instanceLocalization['more'], DrawerType.item);
 		competitionDrawerItems.add(drawerMore);
 
 		List<Widget> listWidget = [];
