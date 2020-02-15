@@ -2,8 +2,10 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
+import 'package:flutter_cafclcc/screens/competition/competition.dart';
 import 'package:flutter_cafclcc/services/page_transition.dart';
 import 'package:flutter_html/flutter_html.dart';
+import '../home.dart';
 import 'fragment/fragment_competitionlist.dart';
 import '../../../models/competition_item.dart';
 import '../../../models/home_infos.dart';
@@ -121,10 +123,50 @@ class _BodyState extends State<Body>{
                       },
                     ),
                   ),
-                  Card(
-                    elevation: 10.0,
-                    child: Column(
-                      children: liveWidgets,
+                  Container(
+                    height: 65.0,
+                    padding: EdgeInsets.all(5.0),
+                    child: new ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: homeInfos.featured_competitions.length+1,
+                      itemBuilder: (context,index){
+                        return Container(
+                          width: MediaQuery.of(context).size.width / 3,
+                          child: RaisedButton(
+                            onPressed: (){
+                              if(index == homeInfos.featured_competitions.length) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context){
+                                          return HomePage(fragment: Fragment.COMPETITION_LIST,);
+                                        }
+                                    ));
+                              }
+                              else {
+                                Navigator.push(
+                                    context, MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return CompetitionPage(homeInfos
+                                          .featured_competitions[index]);
+                                    }
+                                ));
+                              }
+                            },
+                            color: Theme.of(context).primaryColor,
+                            elevation: 15.0,
+                            textColor: Colors.white,
+                            child: Text(
+                              (index == homeInfos.featured_competitions.length)?
+                              MyLocalizations.instanceLocalization['see_more']:
+                              homeInfos.featured_competitions[index].title,
+                              textAlign: TextAlign.center,
+                            ),
+                            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                          ),
+                          padding: EdgeInsets.all(2.0),
+                        );
+                      },
                     ),
                   ),
                   (constant.canShowAds)?
@@ -132,6 +174,12 @@ class _BodyState extends State<Body>{
                     margin: EdgeInsets.only(bottom: 10.0, right: 10.0),
                     child: admobBanner,
                   ) : Container(),
+                  Card(
+                    elevation: 10.0,
+                    child: Column(
+                      children: liveWidgets,
+                    ),
+                  ),
                   Card(
                     elevation: 10.0,
                     child: Column(
