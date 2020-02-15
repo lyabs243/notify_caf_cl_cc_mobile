@@ -193,7 +193,9 @@ class _BodyState extends State<Body>{
   }
 
   void _onRefresh() async{
-    //isPageRefresh = true;
+    setState(() {
+      loadData = true;
+    });
     homeInfos.trending_news.clear();
     homeInfos.current_match.clear();
     homeInfos.fixture.clear();

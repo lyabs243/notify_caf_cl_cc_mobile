@@ -28,7 +28,7 @@ class _MatchListState extends State<MatchsList>{
   RefreshController refreshController;
   List<MatchItem> list = [];
   int page = 1;
-  bool isPageRefresh = false, isLoadPage = true;
+  bool isLoadPage = true;
   CompetitionItem competitionItem;
   int idCompetitionType;
   TypeList typeList;
@@ -134,7 +134,9 @@ class _MatchListState extends State<MatchsList>{
   }
 
   void _onRefresh() async{
-    isPageRefresh = true;
+    setState(() {
+      isLoadPage = true;
+    });
     await initItems();
     refreshController.refreshCompleted();
   }

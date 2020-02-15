@@ -199,7 +199,9 @@ class _PostSignalPageState extends State<PostSignalPage>{
   }
 
   void _onRefresh() async{
-    isPageRefresh = true;
+    setState(() {
+      isLoadPage = true;
+    });
     await initItems();
     refreshController.refreshCompleted();
   }

@@ -112,7 +112,9 @@ class _CompetitionScorersState extends State<CompetitionScorers>{
 
   void _onRefresh() async{
     page = 1;
-    isLoading = true;
+    setState(() {
+      isLoading = true;
+    });
     await initItems();
     refreshController.refreshCompleted();
   }

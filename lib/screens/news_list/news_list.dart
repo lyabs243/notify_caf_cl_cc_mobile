@@ -114,7 +114,9 @@ class _NewsListState extends State<NewsList> {
   }
 
   void _onRefresh() async{
-    isPageRefresh = true;
+    setState(() {
+      isLoadPage = true;
+    });
     await initItems();
     refreshController.refreshCompleted();
   }

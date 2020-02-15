@@ -160,7 +160,9 @@ class _ItemAppealState extends State<ItemAppeal>{
   }
 
   void _onRefresh() async{
-    isPageRefresh = true;
+    setState(() {
+      isPageLoading = true;
+    });
     await initItems();
     _refreshController.refreshCompleted();
   }
