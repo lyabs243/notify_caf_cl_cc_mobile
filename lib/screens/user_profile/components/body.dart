@@ -136,10 +136,15 @@ class _BodyState extends State<Body>{
                         width: MediaQuery.of(context).size.width/1.4,
                       ),
                       OutlineButton(
-                        child: Text(
-                          MyLocalizations.instanceLocalization['appeal'],
-                          style: TextStyle(
-                              color: Colors.white
+                        child: Container(
+                          width: MediaQuery.of(context).size.width/6,
+                          child: Text(
+                            MyLocalizations.instanceLocalization['appeal'],
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                            overflow: TextOverflow.fade,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         onPressed: (){
