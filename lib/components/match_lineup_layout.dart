@@ -53,7 +53,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
                 child: Text(
                   matchItem.teamA,
                   style: TextStyle(
-                    color: (idTeam == matchItem.teamAId)? Theme.of(context).primaryColor : Colors.white,
+                    color: (idTeam == matchItem.teamAId)? Colors.white : Theme.of(context).primaryColor,
                   ),
                 ),
                 onPressed: (){
@@ -62,7 +62,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
                     initLineup(idTeam);
                   });
                 },
-                color: (idTeam == matchItem.teamAId)? Colors.white : Theme.of(context).primaryColor,
+                color: (idTeam == matchItem.teamAId)? Theme.of(context).primaryColor : Colors.white,
               ),
             ),
             Container(
@@ -72,7 +72,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
                 child: Text(
                   matchItem.teamB,
                   style: TextStyle(
-                    color: (idTeam == matchItem.teamBId)? Theme.of(context).primaryColor : Colors.white,
+                    color: (idTeam == matchItem.teamBId)? Colors.white : Theme.of(context).primaryColor,
                   ),
                 ),
                 onPressed: (){
@@ -81,7 +81,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
                     initLineup(idTeam);
                   });
                 },
-                color: (idTeam == matchItem.teamBId)? Colors.white : Theme.of(context).primaryColor,
+                color: (idTeam == matchItem.teamBId)? Theme.of(context).primaryColor : Colors.white,
               ),
             )
           ],
