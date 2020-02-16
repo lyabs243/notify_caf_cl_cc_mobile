@@ -269,7 +269,7 @@ class _HomeDrawerState extends State<HomeDrawer>{
 								}
 						));
 				break;
-			case 9: //click on logout
+			case 10: //click on logout
 				transition = false;
 				Navigator.pushReplacement(
 						context,
