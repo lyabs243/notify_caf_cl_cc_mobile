@@ -21,7 +21,7 @@ class SuggestUserDialog extends StatelessWidget {
           BorderRadius.circular(10.0)),
       child: Container(
         padding: EdgeInsets.all(4.0),
-        height: 200,
+        height: MediaQuery.of(context).size.height / 1.5,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -76,11 +76,11 @@ class SuggestUserDialog extends StatelessWidget {
                   )
                 ],
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width /4,
+                    width: MediaQuery.of(context).size.width /1.5,
                     child: RaisedButton(
                       child: Text(
                         (this.suggestType == SuggestType.SUGGEST_RATE_APP)?
@@ -109,7 +109,7 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width /4,
+                    width: MediaQuery.of(context).size.width / 1.5,
                     child: RaisedButton(
                       child: Text(
                         MyLocalizations.instanceLocalization['remind_later'],
@@ -126,7 +126,7 @@ class SuggestUserDialog extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width /4,
+                    width: MediaQuery.of(context).size.width /1.5,
                     child: RaisedButton(
                       child: Text(
                         MyLocalizations.instanceLocalization['not_show_again'],
