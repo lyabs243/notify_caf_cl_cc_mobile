@@ -1,6 +1,7 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -90,7 +91,7 @@ class NewsDetails extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: FlatButton(
                     child: Text(
-                      'Read more',
+                      MyLocalizations.instanceLocalization['read_more'],
                       style: TextStyle(
                           color: Theme.of(context).primaryColor
                       ),
