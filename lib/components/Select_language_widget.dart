@@ -66,13 +66,12 @@ class SelectLanguageWidget extends StatelessWidget {
           sharedPreferences.setString('lang', code);
           GlobalWidgetsLocalizations.load(Locale(code)).then((v) {
             LangCode.code = code;
+            MyLocalizationsDelegate().load(Locale(code)).then((value) {
             if(goToHomePage) {
-              MyLocalizationsDelegate().load(Locale(code)).then((value) {
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) {
                   return HomePage();
                 }));
-              });
             }
             else {
               Navigator.pushReplacement(
@@ -80,6 +79,7 @@ class SelectLanguageWidget extends StatelessWidget {
                 return FirstLaunchPage(user);
               }));
             }
+            });
           });
 
         });
