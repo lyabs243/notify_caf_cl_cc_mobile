@@ -28,7 +28,7 @@ class NotifyApi {
       'lang': langCode,
       'version': '1',
       'timezone': timezone,
-      'id_user': user.id
+      'id_user': (user != null)? user.id : '0'
     };
     //print("params -- ${params}");
     if (params != null) {
