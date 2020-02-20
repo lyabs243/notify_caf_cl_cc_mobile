@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cafclcc/models/lang_code.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/match_item.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
+import '../../models/constants.dart' as constants;
 
 class MatchEdit extends StatefulWidget {
 
@@ -28,11 +31,13 @@ class _MatchEditState extends State<MatchEdit> {
   MyLocalizations.instanceLocalization['extra_time'], MyLocalizations.instanceLocalization['penalty_kick'],
   MyLocalizations.instanceLocalization['postponed'], MyLocalizations.instanceLocalization['to_define_manually']];
   List _statusValues = ["0", "1", "2", "3", "4", "5", "6", "7"];
+  DateTime _matchDate;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentStatus;
   bool _isLoading = false;
 
   int teamAGoal, teamBGoal, teamAPenalty, teamBPenalty;
+  String langCode = 'en';
 
   _MatchEditState(this.matchItem);
 
@@ -44,6 +49,13 @@ class _MatchEditState extends State<MatchEdit> {
     teamBGoal = matchItem.teamB_goal;
     teamAPenalty = matchItem.team_a_penalty;
     teamBPenalty = matchItem.team_b_penalty;
+    _matchDate = matchItem.match_date;
+
+    LangCode.getLangCode().then((code) {
+      setState(() {
+        langCode = code;
+      });
+    });
 
     _dropDownMenuItems = getDropDownMenuItems();
     _currentStatus = matchItem.status;
@@ -72,7 +84,7 @@ class _MatchEditState extends State<MatchEdit> {
                 setState(() {
                   _isLoading = true;
                   matchItem.updateMatch(context, teamAGoal, teamBGoal, teamAPenalty, teamBPenalty,
-                      _currentStatus).then((result) {
+                      _currentStatus, _matchDate).then((result) {
                     setState(() {
                       _isLoading = false;
                     });
@@ -314,6 +326,34 @@ class _MatchEditState extends State<MatchEdit> {
                       ),
                     )
                   ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                      height: 100.0,
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Text(
+                        'Match date',
+                        textScaleFactor: 1.5,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 100.0,
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      child: FlatButton(
+                        child: Text(
+                          constants.formatDateTime(_matchDate, true, langCode)
+                        ),
+                        onPressed: () {
+                          showDate();
+                        },
+                      ),
+                    )
+                  ],
                 )
               ],
             ),
@@ -324,6 +364,28 @@ class _MatchEditState extends State<MatchEdit> {
         opacity: 0.5,
       ),
     );
+  }
+
+  Future showDate() async {
+    DateTime date;
+    DateTime choice = await showDatePicker(
+      context: context,
+      initialDatePickerMode: DatePickerMode.day,
+      initialDate: matchItem.match_date?? new DateTime.now(),
+      firstDate: new DateTime(2010),
+      lastDate: new DateTime(2050),
+    );
+
+    if(choice != null) {
+      date = choice;
+      TimeOfDay timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now()
+      );
+      setState(() {
+        _matchDate = DateTime.utc(date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute);
+      });
+    }
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {

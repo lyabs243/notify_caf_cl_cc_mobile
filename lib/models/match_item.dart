@@ -61,7 +61,7 @@ class MatchItem{
   }
 
   Future<bool> updateMatch(BuildContext context, int teamAGoal, int teamBGoal, int teamAPenalty, int teamBPenalty,
-      String status) async {
+      String status, DateTime matchDate) async {
     bool success = true;
     String url = URL_UPDATE_MATCH+this.id.toString() + '/' + this.id.toString();
     Map<String,dynamic> params = {
@@ -69,7 +69,8 @@ class MatchItem{
       'team_b_goal': teamBGoal,
       'team_a_penalty': teamAPenalty,
       'team_b_penalty': teamBPenalty,
-      'status': status
+      'status': status,
+      'match_date': matchDate
     };
     await NotifyApi(context).getJsonFromServer(url,params).then((map){
       if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {
@@ -77,6 +78,7 @@ class MatchItem{
         this.teamB_goal = teamBGoal;
         this.team_a_penalty = teamAPenalty;
         this.team_b_penalty = teamBPenalty;
+        this.match_date = matchDate;
       }
       else{
         success = false;
