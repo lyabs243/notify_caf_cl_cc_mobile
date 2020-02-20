@@ -106,25 +106,30 @@ class _CompetitionListState extends State<CompetitionList>{
                     itemCount: list.length,
                     itemBuilder: (context,i){
                       return InkWell(
-                        child: Card(
-                          elevation: 10.0,
-                          child: Row(
-                            children: <Widget>[
-                              (list[i].trophy_icon_url != null && list[i].trophy_icon_url.length > 0)?
-                              ImageIcon(NetworkImage(list[i].trophy_icon_url),color: Theme.of(context).primaryColor,size: 100.0):
-                              ImageIcon(AssetImage('assets/default_trophy.png'),color: Theme.of(context).primaryColor,size: 100.0),
-                              Container(
-                                width: MediaQuery.of(context).size.width/1.5,
-                                child: Text(
-                                  list[i].title,
-                                  textScaleFactor: 1.3,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
+                        child: Container(
+                          height: 100.0,
+                          margin: EdgeInsets.all(4.0),
+                          child: Card(
+                            elevation: 10.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                (list[i].trophy_icon_url != null && list[i].trophy_icon_url.length > 0)?
+                                ImageIcon(NetworkImage(list[i].trophy_icon_url),color: Theme.of(context).primaryColor,size: 50.0):
+                                ImageIcon(AssetImage('assets/default_trophy.png'),color: Theme.of(context).primaryColor,size: 50.0),
+                                Container(
+                                  width: MediaQuery.of(context).size.width/1.5,
+                                  child: Text(
+                                    list[i].title,
+                                    textScaleFactor: 1.3,
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         onTap: (){
