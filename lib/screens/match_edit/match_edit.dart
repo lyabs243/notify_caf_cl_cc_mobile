@@ -412,7 +412,7 @@ class _MatchEditState extends State<MatchEdit> {
         initialTime: TimeOfDay.now()
       );
       setState(() {
-        _matchDate = DateTime.utc(date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute);
+        _matchDate = DateTime(date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute);
       });
     }
   }
