@@ -34,6 +34,7 @@ class MatchItem{
 
   int id, teamAId, teamBId, teamA_goal, teamB_goal, team_a_penalty, team_b_penalty, idGroupA, idGroupB;
   String teamA_small, teamB_small, teamA, teamB, teamA_logo, teamB_logo, match_status, status;
+  bool api_update;
   DateTime match_date;
   CompetitionItem competition;
   EditionStage editionStage;
@@ -43,7 +44,8 @@ class MatchItem{
       this.teamA_goal, this.teamB_goal, this.team_a_penalty,
       this.team_b_penalty, this.idGroupA, this.idGroupB, this.teamA_small,
       this.teamB_small, this.teamA, this.teamB, this.teamA_logo,
-      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage, this.match_status, this.actions);
+      this.teamB_logo, this.match_date, this.status, this.competition,this.editionStage, this.match_status,
+      this.actions, this.api_update);
 
   static Future getCurrentMatchs(BuildContext context,int idCompetition, int page, {competitionType: 0}) async {
     List<MatchItem> matchs = [];
@@ -61,7 +63,7 @@ class MatchItem{
   }
 
   Future<bool> updateMatch(BuildContext context, int teamAGoal, int teamBGoal, int teamAPenalty, int teamBPenalty,
-      String status, DateTime matchDate) async {
+      String status, DateTime matchDate, bool apiUpdate) async {
     bool success = true;
     String url = URL_UPDATE_MATCH+this.id.toString() + '/' + this.id.toString();
     Map<String,dynamic> params = {
@@ -70,7 +72,8 @@ class MatchItem{
       'team_a_penalty': teamAPenalty,
       'team_b_penalty': teamBPenalty,
       'status': status,
-      'match_date': matchDate
+      'match_date': matchDate,
+      'api_update': apiUpdate
     };
     await NotifyApi(context).getJsonFromServer(url,params).then((map){
       if(map != null && map['NOTIFYGROUP']['success'] == 1.toString()) {
@@ -79,6 +82,7 @@ class MatchItem{
         this.team_a_penalty = teamAPenalty;
         this.team_b_penalty = teamBPenalty;
         this.match_date = matchDate;
+        this.api_update = apiUpdate;
       }
       else{
         success = false;
@@ -164,8 +168,8 @@ class MatchItem{
     String teamB_logo = item['teamB_logo'];
     String match_status = item['match_status'];
     String status = item['status'];
+    bool api_update = (item['api_update'] == '1')? true : false;
     List<MatchAction> matchActions = [];
-
     if(item['actions'] != null) {
       List actions = item['actions'];
       actions.forEach((action){
@@ -237,7 +241,8 @@ class MatchItem{
         competition,
         editionStage,
         match_status,
-        matchActions);
+        matchActions,
+        api_update);
 
     return matchItem;
   }

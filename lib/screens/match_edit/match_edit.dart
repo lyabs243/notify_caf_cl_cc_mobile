@@ -34,7 +34,7 @@ class _MatchEditState extends State<MatchEdit> {
   DateTime _matchDate;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentStatus;
-  bool _isLoading = false;
+  bool _isLoading = false, apiUpdate;
 
   int teamAGoal, teamBGoal, teamAPenalty, teamBPenalty;
   String langCode = 'en';
@@ -50,6 +50,7 @@ class _MatchEditState extends State<MatchEdit> {
     teamAPenalty = matchItem.team_a_penalty;
     teamBPenalty = matchItem.team_b_penalty;
     _matchDate = matchItem.match_date;
+    apiUpdate = matchItem.api_update;
 
     LangCode.getLangCode().then((code) {
       setState(() {
@@ -84,7 +85,7 @@ class _MatchEditState extends State<MatchEdit> {
                 setState(() {
                   _isLoading = true;
                   matchItem.updateMatch(context, teamAGoal, teamBGoal, teamAPenalty, teamBPenalty,
-                      _currentStatus, _matchDate).then((result) {
+                      _currentStatus, _matchDate, apiUpdate).then((result) {
                     setState(() {
                       _isLoading = false;
                     });
@@ -351,6 +352,34 @@ class _MatchEditState extends State<MatchEdit> {
                         onPressed: () {
                           showDate();
                         },
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                      height: 100.0,
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Text(
+                        'Can update from api',
+                        textScaleFactor: 1.5,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 100.0,
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            apiUpdate = value;
+                          });
+                        },
+                        value: apiUpdate,
                       ),
                     )
                   ],
