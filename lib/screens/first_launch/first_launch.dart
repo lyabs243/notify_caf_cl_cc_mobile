@@ -247,21 +247,23 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
         child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text(
-                    title,
-                    textScaleFactor: 2.0,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Colors.white
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      title,
+                      textScaleFactor: 2.0,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.white
+                      ),
                     ),
                   ),
-                  height: MediaQuery.of(context).size.height / 25,
                 ),
-                Padding(padding: EdgeInsets.only(top: 8.0, bottom: 8.0),),
+                Padding(padding: EdgeInsets.only(top: 10.0, bottom: 10.0),),
                 Container(
                   child: Text(
                     description,
@@ -272,29 +274,29 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                         color: Colors.white
                     ),
                   ),
-                  height: MediaQuery.of(context).size.height / 10,
                 ),
-                Padding(padding: EdgeInsets.only(top: 8.0, bottom: 8.0),),
+                Padding(padding: EdgeInsets.only(top: 20.0, bottom: 20.0),),
                 (lastSlide)?
                 Container(
                   height: MediaQuery.of(context).size.height / 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween
                         ,children: <Widget>[
                           Container(
                             child: Text(
                               MyLocalizations.instanceLocalization['receive_notification_on_fixture_action'],
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white
                               ),
                               textScaleFactor: 1.5,
                             ),
-                            width: MediaQuery.of(context).size.width /1.8,
                           ),
                           Container(
+                            margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
                             child: CircleAvatar(
                               radius: 30.0,
                               child: ClipOval(
@@ -318,6 +320,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                       Container(
                         child: Text(
                           MyLocalizations.instanceLocalization['can_modify_choice'],
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white
                           ),
@@ -334,7 +337,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                     elevation: 80.0,
                     child: Image.asset(
                       asset,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 )
