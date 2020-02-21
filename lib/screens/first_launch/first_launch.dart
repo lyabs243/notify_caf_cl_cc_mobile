@@ -7,7 +7,9 @@ import 'package:flutter_cafclcc/models/user.dart';
 import 'package:flutter_cafclcc/screens/home/home.dart';
 import 'package:flutter_cafclcc/screens/login/login.dart';
 import 'package:http/http.dart';
+import 'package:onesignal/onesignal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/constants.dart' as constants;
 
 class FirstLaunchPage extends StatefulWidget {
 
@@ -38,6 +40,7 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
   int _current = 0;
   CarouselSlider carouselSlider;
   List<Widget> childs = [];
+  bool receiveNotifications = true;
 
   static List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -227,14 +230,15 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
           (
             MyLocalizations.instanceLocalization['first_launch_title_6'],
             MyLocalizations.instanceLocalization['first_launch_description_6'],
-            'assets/icons/let_start.png'
+            'assets/icons/let_start.png',
+            lastSlide: true
         )
     );
 
     return slideChilds;
   }
 
-  Widget buildSlideItem(String title, String description, String asset) {
+  Widget buildSlideItem(String title, String description, String asset, {bool lastSlide: false}) {
     return SingleChildScrollView(
       child: Container(
         color: Theme.of(context).primaryColor,
@@ -271,6 +275,58 @@ class _FirstLaunchPageState extends State<FirstLaunchPage> {
                   height: MediaQuery.of(context).size.height / 10,
                 ),
                 Padding(padding: EdgeInsets.only(top: 8.0, bottom: 8.0),),
+                (lastSlide)?
+                Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween
+                        ,children: <Widget>[
+                          Container(
+                            child: Text(
+                              MyLocalizations.instanceLocalization['receive_notification_on_fixture_action'],
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                              textScaleFactor: 1.5,
+                            ),
+                            width: MediaQuery.of(context).size.width /1.8,
+                          ),
+                          Container(
+                            child: CircleAvatar(
+                              radius: 30.0,
+                              child: ClipOval(
+                                child: Switch(
+                                  value: receiveNotifications,
+                                  onChanged: (value) {
+                                    OneSignal.shared.setSubscription(value).then((val) {
+                                      constants.setOnesignalSubscription(value);
+                                    });
+                                    setState(() {
+                                      receiveNotifications = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        child: Text(
+                          MyLocalizations.instanceLocalization['can_modify_choice'],
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                          textScaleFactor: 1.2,
+                        ),
+                      )
+                    ],
+                  ),
+                ):
                 Container(
                   width: MediaQuery.of(context).size.width/1.5,
                   height: MediaQuery.of(context).size.height / 1.7,

@@ -64,6 +64,7 @@ class _MyAppState extends State<MyApp> {
     Admob.initialize(constant.ADMOB_APP_ID);
     OneSignal.shared.init('11010fc6-b149-46a0-89f6-1ec83193e7ff');
     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared.setSubscription(true);
     OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
     });
     OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {

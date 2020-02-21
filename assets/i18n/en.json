@@ -191,5 +191,7 @@
   "to_define_manually": "To define manually",
   "match_updated": "Match updated",
   "other_matchs": "Other matchs",
-  "read_more": "Read more"
+  "read_more": "Read more",
+  "receive_notification_on_fixture_action": "Receive notifications on actions of different fixtures",
+  "can_modify_choice": "You can modify your choice whenever you want from the menu 'Parameter'."
 }
