@@ -74,7 +74,11 @@ class _SettingsState extends State<Settings> {
                   }
                 });
               },
-              leading: ImageIcon(AssetImage('assets/icons/date.png'),color: Theme.of(context).primaryColor),
+              leading: Icon
+                (
+                  Icons.language,
+                  color: Theme.of(context).primaryColor
+              ),
               trailing: Text(
                   (langCode == 'fr')?
                   MyLocalizations.instanceLocalization['french']:
