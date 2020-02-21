@@ -193,5 +193,6 @@
   "other_matchs": "Autres matchs",
   "read_more": "Lire plus",
   "receive_notification_on_fixture_action": "Recevoir les notifications sur le déroulement des différents matchs",
-  "can_modify_choice": "Vous pouvez modifier votre choix quand vous voulez à partir du menu \"Parametre'"
+  "can_modify_choice": "Vous pouvez modifier votre choix quand vous voulez à partir du menu \"Parametre'",
+  "must_login_to_comment": "Vous devez être connecter pour ajouter un commentaire"
 }

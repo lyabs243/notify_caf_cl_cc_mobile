@@ -9,6 +9,7 @@ import 'package:flutter_cafclcc/models/comment.dart';
 import 'package:flutter_cafclcc/models/constants.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/user.dart';
+import 'package:flutter_cafclcc/screens/login/login.dart';
 import 'package:flutter_cafclcc/screens/user_profile/user_profile.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -96,6 +97,9 @@ class _MatchCommentsState extends State<MatchComments>{
         ),
         child: Column(
           children: <Widget>[
+            (isLoadPage || currentUser == null)?
+            Container():
+            ((!isLoadPage && currentUser.id_subscriber > 0)?
             Container(
               padding: EdgeInsets.all(8.0),
               child: Row(
@@ -133,6 +137,50 @@ class _MatchCommentsState extends State<MatchComments>{
                   )
                 ],
               ),
+            ):
+            Container(
+              //color: Colors.red,
+              padding: EdgeInsets.all(5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      MyLocalizations.instanceLocalization['must_login_to_comment'],
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor
+                      ),
+                    ),
+                    width: MediaQuery.of(context).size.width/1.4,
+                  ),
+                  OutlineButton(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width/6,
+                      child: Text(
+                        MyLocalizations.instanceLocalization['login'],
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor
+                        ),
+                        overflow: TextOverflow.fade,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context){
+                          return Login();
+                        },
+                      ));
+                    },
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor, //Color of the border
+                      style: BorderStyle.solid, //Style of the border
+                      width: 0.8, //width of the border
+                    ),
+                  )
+                ],
+              ),
+            )
             ),
             Expanded(
               child: (isLoadPage)?
