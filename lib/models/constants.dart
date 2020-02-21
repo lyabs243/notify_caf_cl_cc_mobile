@@ -80,6 +80,23 @@ String convertDateToAbout(DateTime dateTime){
   return result;
 }
 
+Future<bool> getOnesignalSubscription() async {
+  SharedPreferences sharedPreferences = await SharedPreferences
+        .getInstance();
+  bool subscription = await sharedPreferences.getBool('onesignal_subscription');
+  if (subscription == null) {
+    subscription = true;
+  }
+  return subscription;
+}
+
+Future setOnesignalSubscription(bool _subscription) async {
+  SharedPreferences sharedPreferences = await SharedPreferences
+      .getInstance();
+  await sharedPreferences.setBool('onesignal_subscription', _subscription);
+}
+
+
 String formatDateTime(DateTime dateTime, bool allDetails, String langCode) {
 
   final now = DateTime.now();
