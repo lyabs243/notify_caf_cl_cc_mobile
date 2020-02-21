@@ -4,6 +4,7 @@ import 'package:flutter_cafclcc/components/suggest_user_dialog.dart';
 import 'package:flutter_cafclcc/models/match_item.dart';
 import 'package:flutter_cafclcc/models/user_suggest.dart';
 import 'package:flutter_cafclcc/screens/match_details/match_details.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/constants.dart' as constants;
 
@@ -14,14 +15,17 @@ class PageTransition {
   AdmobInterstitial interstitialAd;
   MaterialPageRoute materialPageRoute;
   bool pushReplacement = false;
+  ProgressDialog progressDialog;
 
   PageTransition (this.context, this.materialPageRoute, this.pushReplacement);
 
   //check if app can suggest user to share or rate application
   Future checkForRateAndShareSuggestion() async {
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
     interstitialAd = AdmobInterstitial(
       adUnitId: constants.getAdmobInterstitialId(),
       listener: (AdmobAdEvent event, Map<String, dynamic> args) async {
+        progressDialog.hide();
         if(event == AdmobAdEvent.loaded) {
           interstitialAd.show();
         }
@@ -47,6 +51,7 @@ class PageTransition {
     setTransitionNumber(newPageNumber);
     if(pageNumber > 0 && pageNumber % 6 == 0) {
       if(constants.canShowAds) {
+        progressDialog.show();
         await interstitialAd.load();
       }
     }

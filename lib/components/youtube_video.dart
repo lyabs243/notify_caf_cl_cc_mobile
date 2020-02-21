@@ -31,6 +31,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   MatchVideo matchVideo;
   User currentUser;
   TextEditingController _controller;
+  ProgressDialog progressDialog;
 
   AdmobReward rewardAd;
 
@@ -41,13 +42,15 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   @override
   void initState() {
     super.initState();
+
     rewardAd = AdmobReward(
         adUnitId: constants.getAdmobRewardId(),
         listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+          progressDialog.hide();
           if (event == AdmobAdEvent.loaded) {
              rewardAd.show();
           }
-          else if (event == AdmobAdEvent.closed) {
+          else if (event == AdmobAdEvent.closed || event == AdmobAdEvent.failedToLoad) {
             launch('https://www.youtube.com/embed/${matchVideo.youtube_video}');
           }
         });
@@ -80,6 +83,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
 
   @override
   Widget build(BuildContext context) {
+    progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
     return SingleChildScrollView(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -168,7 +172,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
             (
                 new Container(
                   alignment: Alignment.center,
-                  decoration: new BoxDecoration(
+                    decoration: new BoxDecoration(
                     image: new DecorationImage(
                       image: new NetworkImage(videoPreview),
                       fit: BoxFit.cover,
@@ -180,6 +184,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
                       child: Image.asset('assets/play_video.png'),
                       onTap: () async {
                         if(constants.canShowAds) {
+                          progressDialog.show();
                           await rewardAd.load();
                         }
                         else {
