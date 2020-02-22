@@ -31,6 +31,7 @@ class _MatchEditState extends State<MatchEdit> {
   MyLocalizations.instanceLocalization['extra_time'], MyLocalizations.instanceLocalization['penalty_kick'],
   MyLocalizations.instanceLocalization['postponed'], MyLocalizations.instanceLocalization['to_define_manually']];
   List _statusValues = ["0", "1", "2", "3", "4", "5", "6", "7"];
+  int matchDateTimestamp;
   DateTime _matchDate;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentStatus;
@@ -49,7 +50,8 @@ class _MatchEditState extends State<MatchEdit> {
     teamBGoal = matchItem.teamB_goal;
     teamAPenalty = matchItem.team_a_penalty;
     teamBPenalty = matchItem.team_b_penalty;
-    _matchDate = matchItem.match_date;
+    _matchDate = matchItem.match_date;;
+    matchDateTimestamp = (matchItem.match_date.millisecondsSinceEpoch / 1000).round();
     apiUpdate = matchItem.api_update;
 
     LangCode.getLangCode().then((code) {
@@ -85,7 +87,7 @@ class _MatchEditState extends State<MatchEdit> {
                 setState(() {
                   _isLoading = true;
                   matchItem.updateMatch(context, teamAGoal, teamBGoal, teamAPenalty, teamBPenalty,
-                      _currentStatus, _matchDate, apiUpdate).then((result) {
+                      _currentStatus, _matchDate, matchDateTimestamp, apiUpdate).then((result) {
                     setState(() {
                       _isLoading = false;
                     });
@@ -413,6 +415,7 @@ class _MatchEditState extends State<MatchEdit> {
       );
       setState(() {
         _matchDate = DateTime(date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute);
+        matchDateTimestamp = (_matchDate.millisecondsSinceEpoch / 1000).round();
       });
     }
   }
