@@ -70,80 +70,93 @@ class _GetFanBadgeState extends State<GetFanBadge> {
   @override
   Widget build(BuildContext context) {
     iconSize = MediaQuery.of(context).size.width/3.5;
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(country.nicename),
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute
-                (
-                    builder: (context) {
-                      return FanBadgeCountries(this.widget.materialPageRoute);
-                    }
-                ));
-              }
-          ),
-          actions: <Widget>[
-            IconButton(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(country.nicename),
+            leading: IconButton(
                 icon: Icon(
-                  Icons.clear,
+                  Icons.arrow_back,
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(context, this.widget.materialPageRoute);
+                  Navigator.pushReplacement(context, MaterialPageRoute
+                    (
+                      builder: (context) {
+                        return FanBadgeCountries(this.widget.materialPageRoute);
+                      }
+                  ));
                 }
-            )
-          ],
-        ),
-        body: SmartRefresher(
-          controller: refreshController,
-          enablePullDown: true,
-          onRefresh: _onRefresh,
-          header: (WaterDropMaterialHeader(
-            backgroundColor: Theme.of(context).primaryColor,
-          )   ),
-          child: (isLoadPage)?
-          Center(
-            child: CircularProgressIndicator(),
-          ):
-          (clubs.length <= 0)?
-          EmptyData():
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    child: new Card(
-                      child:
-                      (country.url_flag != null && country.url_flag.length > 0)?
-                      Image.network(country.url_flag, fit: BoxFit.cover,):
-                      Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
+            ),
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(context, this.widget.materialPageRoute);
+                  }
+              )
+            ],
+          ),
+          body: SmartRefresher(
+            controller: refreshController,
+            enablePullDown: true,
+            onRefresh: _onRefresh,
+            header: (WaterDropMaterialHeader(
+              backgroundColor: Theme.of(context).primaryColor,
+            )   ),
+            child: (isLoadPage)?
+            Center(
+              child: CircularProgressIndicator(),
+            ):
+            (clubs.length <= 0)?
+            EmptyData():
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      child: new Card(
+                        child:
+                        (country.url_flag != null && country.url_flag.length > 0)?
+                        Image.network(country.url_flag, fit: BoxFit.cover,):
+                        Image.asset("assets/app_icon.png",fit: BoxFit.cover,),
+                      ),
+                      width: iconSize,
+                      height: iconSize,
                     ),
-                    width: iconSize,
-                    height: iconSize,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 8.0),),
-                  Text(
-                    MyLocalizations.instanceLocalization['get_badge_now'],
-                    textAlign: TextAlign.center,
-                    textScaleFactor: 2.5,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 8.0),),
-                  Wrap(
+                    Padding(padding: EdgeInsets.only(bottom: 8.0),),
+                    Text(
+                      MyLocalizations.instanceLocalization['get_badge_now'],
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 2.5,
+                    ),
+                    Padding(padding: EdgeInsets.only(bottom: 8.0),),
+                    Wrap(
                       children: allClubs,
                     ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        )
+          )
+      ),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    Navigator.pushReplacement(context, MaterialPageRoute
+      (
+        builder: (context) {
+          return FanBadgeCountries(this.widget.materialPageRoute);
+        }
+    ));
+    return false;
   }
 
   initItems() async{
