@@ -26,7 +26,7 @@ class YoutubeVideo extends StatefulWidget{
 
 class _YoutubeVideoState extends State<YoutubeVideo>{
 
-  bool play = false;
+  bool play = false, isLoading = true;
   MatchItem matchItem;
   MatchVideo matchVideo;
   User currentUser;
@@ -77,6 +77,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
           if(matchVideo.thumbnails.length == 0 && matchVideo.youtube_video.length > 0){
             videoPreview = 'http://i3.ytimg.com/vi/${matchVideo.youtube_video}/hqdefault.jpg';
           }
+          isLoading = false;
         });
       });
   }
@@ -84,7 +85,11 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
   @override
   Widget build(BuildContext context) {
     progressDialog = new ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false);
-    return SingleChildScrollView(
+    return (isLoading)?
+        Center(
+          child: CircularProgressIndicator(),
+        ):
+    SingleChildScrollView(
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -172,7 +177,7 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
             (
                 new Container(
                   alignment: Alignment.center,
-                    decoration: new BoxDecoration(
+                  decoration: new BoxDecoration(
                     image: new DecorationImage(
                       image: new NetworkImage(videoPreview),
                       fit: BoxFit.cover,
@@ -198,7 +203,8 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
           ],
         ),
       ),
-    );
+    )
+    ;
   }
 
   Future addVideo() async{

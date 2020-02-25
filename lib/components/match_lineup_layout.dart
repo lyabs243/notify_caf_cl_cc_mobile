@@ -21,6 +21,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
 
   MatchItem matchItem;
   List<MatchLineup> lineups = [];
+  bool isLoading = true;
 
   int idTeam = 0;
 
@@ -58,6 +59,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
                 ),
                 onPressed: (){
                   setState(() {
+                    isLoading = true;
                     idTeam = matchItem.teamAId;
                     initLineup(idTeam);
                   });
@@ -77,6 +79,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
                 ),
                 onPressed: (){
                   setState(() {
+                    isLoading = true;
                     idTeam = matchItem.teamBId;
                     initLineup(idTeam);
                   });
@@ -86,6 +89,15 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
             )
           ],
         ),
+        (isLoading)?
+        Expanded(
+          child: Container(
+              height: MediaQuery.of(context).size.height / 2,
+              child: Center(
+                child: CircularProgressIndicator(),
+              )
+          ),
+        ):
         Expanded(
             child: ListView.builder(
                 itemCount: lineups.length,
@@ -123,6 +135,7 @@ class MatchLineupLayoutState extends State<MatchLineupLayout>{
     MatchLineup.getMatchLineup(context, matchItem.id,idTeam).then((list){
       setState(() {
         lineups.addAll(list);
+        isLoading = false;
       });
     });
   }

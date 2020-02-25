@@ -20,6 +20,7 @@ class MatchActionsLayout extends StatefulWidget{
 class _MatchActionsLayoutState extends State<MatchActionsLayout>{
 
   MatchItem matchItem;
+  bool isLoading = true;
 
   List<MatchAction> actions = [];
 
@@ -48,7 +49,11 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return (isLoading)?
+    Center(
+      child: CircularProgressIndicator(),
+    ):
+    Container(
       child: ListView.builder(
         padding: EdgeInsets.only(bottom: 50.0, top: 5.0),
         itemCount: actions.length,
@@ -100,13 +105,13 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
                         width: 30.0,
                         height: 30.0,
                         child: Image.asset(
-                          MatchAction.getActionIconPath(actions[i].type)
+                            MatchAction.getActionIconPath(actions[i].type)
                         ),
                       ),
                       Text(
                         MatchAction.getActionLable(actions[i].type),
                         style: TextStyle(
-                          color: Theme.of(context).primaryColor
+                            color: Theme.of(context).primaryColor
                         ),
                       )
                     ],
@@ -153,6 +158,7 @@ class _MatchActionsLayoutState extends State<MatchActionsLayout>{
       setState(() {
         actions.clear();
         actions.addAll(list);
+        isLoading = false;
       });
     });
   }
