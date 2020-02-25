@@ -154,15 +154,15 @@ class _HomeDrawerState extends State<HomeDrawer>{
 		initCompetitions().then((result) {
 			setState(() {
 				competitions = result;
-				DrawerItem home = new DrawerItem(1, MyLocalizations.instanceLocalization['home'], DrawerType.item,iconPath: 'assets/icons/login.png');
+				DrawerItem home = new DrawerItem(1, MyLocalizations.instanceLocalization['home'], DrawerType.item,iconPath: 'assets/icons/home.png');
 				DrawerItem news = new DrawerItem(2, MyLocalizations.instanceLocalization['news'], DrawerType.item,iconPath: 'assets/icons/latest.png');
-				DrawerItem community = new DrawerItem(3, MyLocalizations.instanceLocalization['community'], DrawerType.item,iconPath: 'assets/icons/login.png');
+				DrawerItem community = new DrawerItem(3, MyLocalizations.instanceLocalization['community'], DrawerType.item,iconPath: 'assets/icons/community.png');
 				DrawerItem competition = new DrawerItem(4, MyLocalizations.instanceLocalization['competition'], DrawerType.expandable,
-						iconPath: 'assets/icons/profile.png',expandableItems: competitions);
+						iconPath: 'assets/icons/competition.png',expandableItems: competitions);
 				DrawerItem profil = new DrawerItem(5, MyLocalizations.instanceLocalization['profil'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-				DrawerItem admin_panel = new DrawerItem(6, MyLocalizations.instanceLocalization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-				DrawerItem settings = new DrawerItem(7, MyLocalizations.instanceLocalization['settings'], DrawerType.item,iconPath: 'assets/icons/date.png');
-				DrawerItem about = new DrawerItem(8, MyLocalizations.instanceLocalization['about'], DrawerType.item,iconPath: 'assets/icons/latest.png');
+				DrawerItem admin_panel = new DrawerItem(6, MyLocalizations.instanceLocalization['admin_panel'], DrawerType.item,iconPath: 'assets/icons/admin_pannel.png',visible: false);
+				DrawerItem settings = new DrawerItem(7, MyLocalizations.instanceLocalization['settings'], DrawerType.item,iconPath: 'assets/icons/setting.png');
+				DrawerItem about = new DrawerItem(8, MyLocalizations.instanceLocalization['about'], DrawerType.item,iconPath: 'assets/icons/about.png');
 				DrawerItem login = new DrawerItem(9, MyLocalizations.instanceLocalization['login'], DrawerType.item,iconPath: 'assets/icons/login.png');
 				DrawerItem logout = new DrawerItem(10, MyLocalizations.instanceLocalization['logout'], DrawerType.item,iconPath: 'assets/icons/logout.png');
 

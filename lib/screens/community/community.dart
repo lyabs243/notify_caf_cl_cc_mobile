@@ -47,8 +47,18 @@ class _CommunityState extends State<Community> with SingleTickerProviderStateMix
             title: Text(MyLocalizations.instanceLocalization['community']),
             bottom: TabBar(
               tabs: [
-                Tab(text: MyLocalizations.instanceLocalization['all_posts'], icon: Icon(Icons.all_inclusive),),
-                Tab(text: MyLocalizations.instanceLocalization['your_posts'], icon: Icon(Icons.plus_one)),
+                Tab(
+                  text: MyLocalizations.instanceLocalization['all_posts'],
+                  icon: Icon(Icons.all_inclusive),
+                ),
+                Tab(
+                  text: MyLocalizations.instanceLocalization['your_posts'],
+                  icon: ImageIcon(
+                    AssetImage(
+                      'assets/icons/user_posts.png',
+                    ),
+                  )
+                ),
               ],
               controller: _tabController,
               indicator: UnderlineTabIndicator(

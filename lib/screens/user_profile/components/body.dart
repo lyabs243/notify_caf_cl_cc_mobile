@@ -235,9 +235,9 @@ class _BodyState extends State<Body>{
     _drawerItems.clear();
     DrawerItem header = new DrawerItem(0, this.widget._user.full_name, DrawerType.header);
     DrawerItem privacy = new DrawerItem(1, MyLocalizations.instanceLocalization['term_use'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem blockUser = new DrawerItem(2, MyLocalizations.instanceLocalization['block_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem unblockUser = new DrawerItem(3, MyLocalizations.instanceLocalization['unblock_user'], DrawerType.item, iconPath: 'assets/icons/privacy.png');
-    DrawerItem settings = new DrawerItem(4, MyLocalizations.instanceLocalization['settings'], DrawerType.item, iconPath: 'assets/icons/date.png');
+    DrawerItem blockUser = new DrawerItem(2, MyLocalizations.instanceLocalization['block_user'], DrawerType.item, iconPath: 'assets/icons/block_user.png');
+    DrawerItem unblockUser = new DrawerItem(3, MyLocalizations.instanceLocalization['unblock_user'], DrawerType.item, iconPath: 'assets/icons/unblock_user.png');
+    DrawerItem settings = new DrawerItem(4, MyLocalizations.instanceLocalization['settings'], DrawerType.item, iconPath: 'assets/icons/setting.png');
     DrawerItem logout = new DrawerItem(5, MyLocalizations.instanceLocalization['logout'], DrawerType.item, iconPath: 'assets/icons/logout.png');
 
     //set visibility of block/unblock item

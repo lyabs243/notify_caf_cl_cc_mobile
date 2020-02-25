@@ -37,13 +37,16 @@ class HomeAppBar extends StatelessWidget  with PreferredSizeWidget{
     }
     else {
       return [
-        IconButton(
-          icon: Icon(
-            Icons.group,
+        InkWell(
+          child: ImageIcon(
+            AssetImage
+            (
+              'assets/icons/community.png',
+            ),
+            color: Colors.white,
             size: 40.0,
           ),
-          tooltip: MyLocalizations.instanceLocalization['community'],
-          onPressed: () {
+          onTap: () {
             MaterialPageRoute materialPageRoute = MaterialPageRoute(
                 builder: (BuildContext context){
                   return Community();

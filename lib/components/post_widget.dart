@@ -284,7 +284,7 @@ class _PostWidgetState extends State<PostWidget> {
                           },
                           icon: ImageIcon(
                               AssetImage(
-                                  'assets/icons/date.png'
+                                  'assets/icons/comment.png'
                               ),
                               size: 20.0
                           ),

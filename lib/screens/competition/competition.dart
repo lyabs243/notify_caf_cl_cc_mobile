@@ -185,11 +185,11 @@ class _CompetitionPageState extends State<CompetitionPage>{
 
   initItems(){
 
-    DrawerItem live = new DrawerItem(1, MyLocalizations.instanceLocalization['live'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem last_results = new DrawerItem(2, MyLocalizations.instanceLocalization['last_results'], DrawerType.item,iconPath: 'assets/icons/profile.png');
-    DrawerItem fixture = new DrawerItem(3, MyLocalizations.instanceLocalization['fixture'], DrawerType.item,iconPath: 'assets/icons/logout.png',visible: false);
-    DrawerItem stages = new DrawerItem(4, MyLocalizations.instanceLocalization['stages'], DrawerType.item,iconPath: 'assets/icons/login.png');
-    DrawerItem scorers = new DrawerItem(5, MyLocalizations.instanceLocalization['scorers'], DrawerType.item,iconPath: 'assets/icons/logout.png');
+    DrawerItem live = new DrawerItem(1, MyLocalizations.instanceLocalization['live'], DrawerType.item,iconPath: 'assets/icons/live_match.png');
+    DrawerItem last_results = new DrawerItem(2, MyLocalizations.instanceLocalization['last_results'], DrawerType.item,iconPath: 'assets/icons/latest_results.png');
+    DrawerItem fixture = new DrawerItem(3, MyLocalizations.instanceLocalization['fixture'], DrawerType.item,iconPath: 'assets/icons/fixture.png',visible: false);
+    DrawerItem stages = new DrawerItem(4, MyLocalizations.instanceLocalization['stages'], DrawerType.item,iconPath: 'assets/icons/competition.png');
+    DrawerItem scorers = new DrawerItem(5, MyLocalizations.instanceLocalization['scorers'], DrawerType.item,iconPath: 'assets/icons/scorers.png');
 
     items.add(live);
     items.add(last_results);
