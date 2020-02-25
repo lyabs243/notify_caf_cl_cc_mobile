@@ -186,7 +186,11 @@ class _YoutubeVideoState extends State<YoutubeVideo>{
                   child: Container(
                     height: MediaQuery.of(context).size.height /3,
                     child: InkWell(
-                      child: Image.asset('assets/play_video.png'),
+                      child: Container(
+                        height: 200,
+                        width: 200,
+                        child: Image.asset('assets/play_video.png'),
+                      ),
                       onTap: () async {
                         if(constants.canShowAds) {
                           progressDialog.show();
