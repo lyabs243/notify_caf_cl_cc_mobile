@@ -31,14 +31,14 @@ class _MatchListState extends State<MatchsList>{
   int pageCompetitions=1;
   int page = 1;
   int selectedCompetition = 0;
-  bool isLoadPage = true, isLoadCompetition = false, isLoadCompetitionMatchs = false;
+  bool isLoadPage = true, isLoadCompetition = false, isLoadCompetitionMatchs = false, isAddingItems = false;
   CompetitionItem competitionItem;
   int idCompetitionType;
   TypeList typeList;
   int idCompetition = 0;
   String title = '';
   ScrollController _scrollController;
-  AdmobBanner admobBanner;
+  AdmobBanner admobBanner, admobBannerBottom;
 
   _MatchListState(this.competitionItem,this.idCompetitionType,this.typeList);
 
@@ -56,6 +56,12 @@ class _MatchListState extends State<MatchsList>{
     admobBanner = AdmobBanner(
       adUnitId: constants.getAdmobBannerId(),
       adSize: AdmobBannerSize.LARGE_BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    admobBannerBottom = AdmobBanner(
+      adUnitId: constants.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
       },
     );
@@ -186,7 +192,7 @@ class _MatchListState extends State<MatchsList>{
                   builder: (BuildContext context,LoadStatus mode){
                     Widget body ;
                     if(mode==LoadStatus.loading){
-                      body =  CircularProgressIndicator();
+                      body =  Container();
                     }
                     else{
                       body = Container();
@@ -205,18 +211,28 @@ class _MatchListState extends State<MatchsList>{
                     itemCount: list.length,
                     padding: EdgeInsets.all(4.0),
                     itemBuilder: (context,i){
-                      return Column(
-                        children: <Widget>[
-                          (constants.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                            child: admobBanner,
-                          ): Container(),
-                          Card(
-                            child: MatchLayout(list[i]),
-                            elevation: 8.0,
-                          )
-                        ],
+                      return Container(
+                        child: Column(
+                          children: <Widget>[
+                            (constants.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                              child: admobBanner,
+                            ): Container(),
+                            Card(
+                              child: MatchLayout(list[i]),
+                              elevation: 8.0,
+                            ),
+                            (i == list.length - 1 && isAddingItems)?
+                            Container(
+                              child: Text(
+                                MyLocalizations.instanceLocalization['loading'],
+                                textScaleFactor: 2.0,
+                              ),
+                            ): Container(),
+                          ],
+                        ),
+                        margin: EdgeInsets.only(bottom: (i == list.length -1)? 20.0 : 0.0),
                       );
                     }
                 ),
@@ -225,6 +241,11 @@ class _MatchListState extends State<MatchsList>{
             ],
           ),
         ),
+        bottomSheet: (constants.canShowAds)?
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: admobBannerBottom,
+        ): Container(height: 1.0,)
     );
   }
 
@@ -295,6 +316,9 @@ class _MatchListState extends State<MatchsList>{
   }
 
   Future addItems() async{
+    setState(() {
+      isAddingItems = true;
+    });
     List<MatchItem> matchItems = [];
     if(typeList == TypeList.LIVE) {
       matchItems = await MatchItem.getCurrentMatchs(
@@ -324,6 +348,9 @@ class _MatchListState extends State<MatchsList>{
         page++;
       });
     }
+    setState(() {
+      isAddingItems = false;
+    });
     refreshController.loadComplete();
   }
 

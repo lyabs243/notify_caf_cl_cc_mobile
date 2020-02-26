@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/news_item_widget.dart';
+import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_cafclcc/models/user.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -24,11 +25,11 @@ class NewsList extends StatefulWidget{
 class _NewsListState extends State<NewsList> {
 
   RefreshController refreshController;
-  bool isPageRefresh = false, isLoadPage = true;
+  bool isPageRefresh = false, isLoadPage = true, isAddingItems = false;
   int page = 1, idCompetitionType;
   List<NewsItem> news = [];
   User user;
-  AdmobBanner admobBanner;
+  AdmobBanner admobBanner, admobBannerBottom;
 
   _NewsListState(this.idCompetitionType);
 
@@ -38,6 +39,12 @@ class _NewsListState extends State<NewsList> {
     admobBanner = AdmobBanner(
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.LARGE_BANNER,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    admobBannerBottom = AdmobBanner(
+      adUnitId: constant.getAdmobBannerId(),
+      adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
       },
     );
@@ -77,7 +84,7 @@ class _NewsListState extends State<NewsList> {
             builder: (BuildContext context,LoadStatus mode){
               Widget body ;
               if(mode==LoadStatus.loading){
-                body =  CircularProgressIndicator();
+                body =  Container();
               }
               else{
                 body = Container();
@@ -97,19 +104,34 @@ class _NewsListState extends State<NewsList> {
           ListView.builder(
               itemCount: news.length,
               itemBuilder: (context, i) {
-                return Column(
-                  children: <Widget>[
-                    (constant.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                      child: admobBanner,
-                    ): Container(),
-                    NewsItemWidget(news[i])
-                  ],
+                return Container(
+                  child: Column(
+                    children: <Widget>[
+                      (constant.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                        child: admobBanner,
+                      ): Container(),
+                      NewsItemWidget(news[i]),
+                      (i == news.length - 1 && isAddingItems)?
+                      Container(
+                        child: Text(
+                          MyLocalizations.instanceLocalization['loading'],
+                          textScaleFactor: 2.0,
+                        ),
+                      ): Container(),
+                    ],
+                  ),
+                  margin: EdgeInsets.only(bottom: (i == news.length -1)? 20.0 : 0.0),
                 );
               }
           )
       ),
+        bottomSheet: (constant.canShowAds)?
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: admobBannerBottom,
+        ): Container(height: 1.0,)
     );
   }
 
@@ -147,6 +169,9 @@ class _NewsListState extends State<NewsList> {
   }
 
   Future addItems() async{
+    setState(() {
+      isAddingItems = true;
+    });
     List<NewsItem> newsItems = [];
     newsItems = await NewsItem.getLatestNews(context, this.user.id, page, competitionType: idCompetitionType);
     if(newsItems.length > 0){
@@ -161,6 +186,9 @@ class _NewsListState extends State<NewsList> {
         page++;
       });
     }
+    setState(() {
+      isAddingItems = false;
+    });
     refreshController.loadComplete();
   }
 
