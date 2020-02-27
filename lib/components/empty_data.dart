@@ -17,7 +17,7 @@ class EmptyData extends StatelessWidget{
               width: 200.0,
               height: 200.0,
               child: Image.asset(
-                'assets/no_data_found.jpg',
+                'assets/no_data_found.png',
                 fit: BoxFit.cover,
               ),
             ),
