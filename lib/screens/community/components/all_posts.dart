@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
@@ -25,9 +26,10 @@ class _AllPostsState extends State<AllPosts> {
 
   List<Post> posts = [];
   RefreshController refreshController;
-  bool isPageRefresh = false, isLoadPage = true;
+  bool isPageRefresh = false, isLoadPage = true, showAdmobBannerRectangle = false;
   int page = 1;
   AdmobBanner admobBanner;
+  FacebookNativeAd facebookNativeAd;
 
   _AllPostsState(this.activeSubscriber, this.idSubscriber);
 
@@ -38,6 +40,32 @@ class _AllPostsState extends State<AllPosts> {
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookNativeAd = FacebookNativeAd(
+      placementId: constant.FACEBOOK_AD_NATIVE_ID,
+      adType: NativeAdType.NATIVE_AD,
+      width: double.infinity,
+      height: 300,
+      backgroundColor: Colors.blue,
+      titleColor: Colors.white,
+      descriptionColor: Colors.white,
+      buttonColor: Colors.deepPurple,
+      buttonTitleColor: Colors.white,
+      buttonBorderColor: Colors.white,
+      listener: (result, value) {
+        switch (result) {
+          case NativeAdResult.ERROR:
+            break;
+          case NativeAdResult.LOADED:
+            break;
+          case NativeAdResult.CLICKED:
+            break;
+          case NativeAdResult.LOGGING_IMPRESSION:
+            break;
+          case NativeAdResult.MEDIA_DOWNLOADED:
+            break;
+        }
       },
     );
     refreshController = new RefreshController(initialRefresh: false);
@@ -87,7 +115,7 @@ class _AllPostsState extends State<AllPosts> {
                 (constant.canShowAds && (index - 1 == 0 || (index - 1) % 10 == 0))?
                 Container(
                   margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                  child: admobBanner,
+                  child: (showAdmobBannerRectangle)? admobBanner : facebookNativeAd,
                 ): Container(),
                 PostWidget(posts[index]),
               ],

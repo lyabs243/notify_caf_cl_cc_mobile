@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_interstitial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/suggest_user_dialog.dart';
 import 'package:flutter_cafclcc/models/match_item.dart';
@@ -14,7 +15,7 @@ class PageTransition {
 
   AdmobInterstitial interstitialAd;
   MaterialPageRoute materialPageRoute;
-  bool pushReplacement = false;
+  bool pushReplacement = false, showAdmobInterstitial = false;
   ProgressDialog progressDialog;
 
   PageTransition (this.context, this.materialPageRoute, this.pushReplacement);
@@ -52,7 +53,53 @@ class PageTransition {
     if(pageNumber > 0 && pageNumber % 6 == 0) {
       if(constants.canShowAds) {
         progressDialog.show();
-        await interstitialAd.load();
+        if(showAdmobInterstitial) {
+          await interstitialAd.load();
+        }
+        else {
+          FacebookInterstitialAd.loadInterstitialAd(
+            placementId: constants.FACEBOOK_AD_INTERSTITIAL_ID,
+            listener: (result, value) {
+              print(result);
+              switch (result) {
+                case InterstitialAdResult.ERROR:
+                  progressDialog.hide();
+                  if(!pushReplacement) {
+                    Navigator.push(context, materialPageRoute);
+                  }
+                  else {
+                    Navigator.pushReplacement(context, materialPageRoute);
+                  }
+                  break;
+                case InterstitialAdResult.LOADED:
+                  FacebookInterstitialAd.showInterstitialAd(delay: 5000);
+                  break;
+                case InterstitialAdResult.CLICKED:
+                  FacebookInterstitialAd.destroyInterstitialAd();
+                  if(!pushReplacement) {
+                    Navigator.push(context, materialPageRoute);
+                  }
+                  else {
+                    Navigator.pushReplacement(context, materialPageRoute);
+                  }
+                  break;
+                case InterstitialAdResult.LOGGING_IMPRESSION:
+                  break;
+                case InterstitialAdResult.DISMISSED:
+                  if(!pushReplacement) {
+                    Navigator.push(context, materialPageRoute);
+                  }
+                  else {
+                    Navigator.pushReplacement(context, materialPageRoute);
+                  }
+                  break;
+                case InterstitialAdResult.DISPLAYED:
+                  progressDialog.hide();
+                  break;
+              }
+            },
+          );
+        }
       }
     }
     else if(pageNumber > 0 && pageNumber % 10 == 0) {

@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/screens/settings/settings.dart';
@@ -35,11 +36,12 @@ class _BodyState extends State<Body>{
   List<DrawerItem> _drawerItems;
   BuildContext _context;
   bool isPageLoading = true;
-  bool isLoading = false;
+  bool isLoading = false, showAdmobBanner = false;
 
   bool isCurrentUser = false;
 
   AdmobBanner admobBanner;
+  FacebookBannerAd facebookBannerAd;
 
   @override
   void setState(fn) {
@@ -56,6 +58,22 @@ class _BodyState extends State<Body>{
       adUnitId: constants.getAdmobBannerId(),
       adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookBannerAd = FacebookBannerAd(
+      placementId: constants.FACEBOOK_AD_BANNER_ID,
+      bannerSize: BannerSize.STANDARD,
+      listener: (result, value) {
+        switch (result) {
+          case BannerAdResult.ERROR:
+            break;
+          case BannerAdResult.LOADED:
+            break;
+          case BannerAdResult.CLICKED:
+            break;
+          case BannerAdResult.LOGGING_IMPRESSION:
+            break;
+        }
       },
     );
     initData();
@@ -168,7 +186,7 @@ class _BodyState extends State<Body>{
                 (constants.canShowAds)?
                 Container(
                   margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                  child: admobBanner,
+                  child: (showAdmobBanner)? admobBanner : facebookBannerAd,
                 ): Container()
               ],
             );

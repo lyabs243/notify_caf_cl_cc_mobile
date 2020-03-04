@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
 import 'package:flutter_cafclcc/components/match_comments.dart';
@@ -46,12 +47,13 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
   List<Widget> tabViews = [];
   List<Tab> tabs = [];
-  bool isLoad = true;
+  bool isLoad = true, showAdmobBanner = false;
   User user;
 
   AdmobBanner admobBanner;
   
   TabController _controller;
+  FacebookBannerAd facebookBannerAd;
 
   _MatchDetailsState(this.matchItem);
 
@@ -62,6 +64,22 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookBannerAd = FacebookBannerAd(
+      placementId: constant.FACEBOOK_AD_BANNER_ID,
+      bannerSize: BannerSize.STANDARD,
+      listener: (result, value) {
+        switch (result) {
+          case BannerAdResult.ERROR:
+            break;
+          case BannerAdResult.LOADED:
+            break;
+          case BannerAdResult.CLICKED:
+            break;
+          case BannerAdResult.LOGGING_IMPRESSION:
+            break;
+        }
       },
     );
     User.getInstance().then((_user) {
@@ -212,7 +230,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       bottomSheet: (constant.canShowAds)?
       Container(
         width: MediaQuery.of(context).size.width,
-        child: admobBanner,
+        child: (showAdmobBanner)? admobBanner : facebookBannerAd,
       ): Container(height: 1.0,),
     );
   }

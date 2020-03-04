@@ -1,5 +1,8 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
+import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advertising_id/flutter_advertising_id.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:flutter_cafclcc/models/news_item.dart';
 import 'package:flutter_cafclcc/screens/competition/competition.dart';
@@ -40,7 +43,7 @@ class _BodyState extends State<Body>{
   HomeInfos homeInfos;
   RefreshController refreshController;
   bool loadData = true;
-  bool hasHomeInfos = false;
+  bool hasHomeInfos = false, showAdmob = false;
   User user;
 
   List<Widget> liveWidgets = [];
@@ -49,6 +52,7 @@ class _BodyState extends State<Body>{
   List<Widget> trendingNews = [];
 
   AdmobBanner admobBanner;
+  FacebookNativeAd facebookNativeAd;
 
   _BodyState(this.competitionItem);
 
@@ -56,10 +60,39 @@ class _BodyState extends State<Body>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    /*FlutterAdvertisingId.advertisingId.then((id) {
+      print('Ad id: $id');
+    });*/
     admobBanner = AdmobBanner(
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.LARGE_BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookNativeAd = FacebookNativeAd(
+      placementId: constant.FACEBOOK_AD_BANNER_NATIVE_ID,
+      adType: NativeAdType.NATIVE_BANNER_AD,
+      bannerAdSize: NativeBannerAdSize.HEIGHT_100,
+      width: double.infinity,
+      backgroundColor: Colors.blue,
+      titleColor: Colors.white,
+      descriptionColor: Colors.white,
+      buttonColor: Colors.deepPurple,
+      buttonTitleColor: Colors.white,
+      buttonBorderColor: Colors.white,
+      listener: (result, value) {
+        switch (result) {
+          case NativeAdResult.ERROR:
+            break;
+          case NativeAdResult.LOADED:
+            break;
+          case NativeAdResult.CLICKED:
+            break;
+          case NativeAdResult.LOGGING_IMPRESSION:
+            break;
+          case NativeAdResult.MEDIA_DOWNLOADED:
+            break;
+        }
       },
     );
     refreshController = new RefreshController(initialRefresh: false);
@@ -164,7 +197,7 @@ class _BodyState extends State<Body>{
                   (constant.canShowAds)?
                   Container(
                     margin: EdgeInsets.only(top: 5.0),
-                    child: admobBanner,
+                    child: (showAdmob)? admobBanner : facebookNativeAd,
                   ) : Container(),
                   Card(
                     elevation: 10.0,

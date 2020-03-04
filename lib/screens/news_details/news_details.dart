@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
@@ -8,17 +9,53 @@ import 'package:url_launcher/url_launcher.dart';
 import 'components/header.dart';
 import '../../models/constants.dart';
 
-class NewsDetails extends StatelessWidget {
+class NewsDetails extends StatefulWidget {
+
+  NewsItem newsItem;
+
+  NewsDetails(this.newsItem);
+
+  @override
+  _NewsDetailsState createState() {
+    return _NewsDetailsState(this.newsItem);
+  }
+
+}
+
+class _NewsDetailsState extends State<NewsDetails> {
 
   NewsItem newsItem;
   AdmobBanner admobBanner;
+  FacebookBannerAd facebookBannerAd;
+  bool showAdmobBanner = false;
 
-  NewsDetails(this.newsItem) {
+  _NewsDetailsState(this.newsItem);
+
+  @override
+  void initState() {
+    super.initState();
     Admob.initialize(ADMOB_APP_ID);
     admobBanner = AdmobBanner(
       adUnitId: getAdmobBannerId(),
       adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+
+    facebookBannerAd = FacebookBannerAd(
+      placementId: FACEBOOK_AD_BANNER_ID,
+      bannerSize: BannerSize.STANDARD,
+      listener: (result, value) {
+        switch (result) {
+          case BannerAdResult.ERROR:
+            break;
+          case BannerAdResult.LOADED:
+            break;
+          case BannerAdResult.CLICKED:
+            break;
+          case BannerAdResult.LOGGING_IMPRESSION:
+            break;
+        }
       },
     );
   }
@@ -52,7 +89,7 @@ class NewsDetails extends StatelessWidget {
                 (canShowAds)?
                 Container(
                   margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                  child: admobBanner,
+                  child: (showAdmobBanner)? admobBanner : facebookBannerAd,
                 ): Container(),
                 Container(
                   alignment: Alignment.bottomLeft,

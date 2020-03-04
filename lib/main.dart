@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/Select_language_widget.dart';
 import 'package:flutter_cafclcc/screens/first_launch/first_launch.dart';
@@ -42,6 +43,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    FacebookAudienceNetwork.init(
+      testingId: "37b1da9d-b48c-4103-a393-2e095e734bd6",
+    );
     FirstLaunchPage.isFirstLaunch().then((value) {
       setState(() {
         firstLaunch = value;

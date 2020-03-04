@@ -107,6 +107,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:[4,5)'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
+    compile 'com.facebook.android:audience-network-sdk:5.+'
     //implementation 'com.google.firebase:firebase-analytics:17.0.1'
     //implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 }

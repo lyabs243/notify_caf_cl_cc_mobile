@@ -1,4 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
+import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/empty_data.dart';
@@ -25,11 +27,13 @@ class NewsList extends StatefulWidget{
 class _NewsListState extends State<NewsList> {
 
   RefreshController refreshController;
-  bool isPageRefresh = false, isLoadPage = true, isAddingItems = false;
+  bool isPageRefresh = false, isLoadPage = true, isAddingItems = false, showAdmobBanner = false, showAdmobBannerLarge = false;
   int page = 1, idCompetitionType;
   List<NewsItem> news = [];
   User user;
   AdmobBanner admobBanner, admobBannerBottom;
+  FacebookBannerAd facebookBannerAd;
+  FacebookNativeAd facebookNativeAd;
 
   _NewsListState(this.idCompetitionType);
 
@@ -40,6 +44,48 @@ class _NewsListState extends State<NewsList> {
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.LARGE_BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookBannerAd = FacebookBannerAd(
+      placementId: constant.FACEBOOK_AD_BANNER_ID,
+      bannerSize: BannerSize.STANDARD,
+      listener: (result, value) {
+        switch (result) {
+          case BannerAdResult.ERROR:
+            break;
+          case BannerAdResult.LOADED:
+            break;
+          case BannerAdResult.CLICKED:
+            break;
+          case BannerAdResult.LOGGING_IMPRESSION:
+            break;
+        }
+      },
+    );
+    facebookNativeAd = FacebookNativeAd(
+      placementId: constant.FACEBOOK_AD_BANNER_NATIVE_ID,
+      adType: NativeAdType.NATIVE_BANNER_AD,
+      bannerAdSize: NativeBannerAdSize.HEIGHT_100,
+      width: double.infinity,
+      backgroundColor: Colors.blue,
+      titleColor: Colors.white,
+      descriptionColor: Colors.white,
+      buttonColor: Colors.deepPurple,
+      buttonTitleColor: Colors.white,
+      buttonBorderColor: Colors.white,
+      listener: (result, value) {
+        switch (result) {
+          case NativeAdResult.ERROR:
+            break;
+          case NativeAdResult.LOADED:
+            break;
+          case NativeAdResult.CLICKED:
+            break;
+          case NativeAdResult.LOGGING_IMPRESSION:
+            break;
+          case NativeAdResult.MEDIA_DOWNLOADED:
+            break;
+        }
       },
     );
     admobBannerBottom = AdmobBanner(
@@ -110,7 +156,7 @@ class _NewsListState extends State<NewsList> {
                       (constant.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
                       Container(
                         margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                        child: admobBanner,
+                        child: (showAdmobBanner)? admobBanner : facebookNativeAd,
                       ): Container(),
                       NewsItemWidget(news[i]),
                       (i == news.length - 1 && isAddingItems)?
@@ -130,7 +176,7 @@ class _NewsListState extends State<NewsList> {
         bottomSheet: (constant.canShowAds)?
         Container(
           width: MediaQuery.of(context).size.width,
-          child: admobBannerBottom,
+          child: (showAdmobBanner)? admobBannerBottom : facebookBannerAd,
         ): Container(height: 1.0,)
     );
   }

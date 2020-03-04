@@ -1,4 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
+import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/models/localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -31,7 +33,8 @@ class _MatchListState extends State<MatchsList>{
   int pageCompetitions=1;
   int page = 1;
   int selectedCompetition = 0;
-  bool isLoadPage = true, isLoadCompetition = false, isLoadCompetitionMatchs = false, isAddingItems = false;
+  bool isLoadPage = true, isLoadCompetition = false, isLoadCompetitionMatchs = false, isAddingItems = false,
+      showAdmobBanner = false, showAdmobLargeBanner = false;
   CompetitionItem competitionItem;
   int idCompetitionType;
   TypeList typeList;
@@ -39,6 +42,8 @@ class _MatchListState extends State<MatchsList>{
   String title = '';
   ScrollController _scrollController;
   AdmobBanner admobBanner, admobBannerBottom;
+  FacebookBannerAd facebookBannerAd;
+  FacebookNativeAd facebookNativeAd;
 
   _MatchListState(this.competitionItem,this.idCompetitionType,this.typeList);
 
@@ -63,6 +68,48 @@ class _MatchListState extends State<MatchsList>{
       adUnitId: constants.getAdmobBannerId(),
       adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookBannerAd = FacebookBannerAd(
+      placementId: constants.FACEBOOK_AD_BANNER_ID,
+      bannerSize: BannerSize.STANDARD,
+      listener: (result, value) {
+        switch (result) {
+          case BannerAdResult.ERROR:
+            break;
+          case BannerAdResult.LOADED:
+            break;
+          case BannerAdResult.CLICKED:
+            break;
+          case BannerAdResult.LOGGING_IMPRESSION:
+            break;
+        }
+      },
+    );
+    facebookNativeAd = FacebookNativeAd(
+      placementId: constants.FACEBOOK_AD_BANNER_NATIVE_ID,
+      adType: NativeAdType.NATIVE_BANNER_AD,
+      bannerAdSize: NativeBannerAdSize.HEIGHT_100,
+      width: double.infinity,
+      backgroundColor: Colors.blue,
+      titleColor: Colors.white,
+      descriptionColor: Colors.white,
+      buttonColor: Colors.deepPurple,
+      buttonTitleColor: Colors.white,
+      buttonBorderColor: Colors.white,
+      listener: (result, value) {
+        switch (result) {
+          case NativeAdResult.ERROR:
+            break;
+          case NativeAdResult.LOADED:
+            break;
+          case NativeAdResult.CLICKED:
+            break;
+          case NativeAdResult.LOGGING_IMPRESSION:
+            break;
+          case NativeAdResult.MEDIA_DOWNLOADED:
+            break;
+        }
       },
     );
     _scrollController = ScrollController();
@@ -217,7 +264,7 @@ class _MatchListState extends State<MatchsList>{
                             (constants.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
                             Container(
                               margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                              child: admobBanner,
+                              child: (showAdmobLargeBanner)? admobBanner : facebookNativeAd,
                             ): Container(),
                             Card(
                               child: MatchLayout(list[i]),
@@ -244,7 +291,7 @@ class _MatchListState extends State<MatchsList>{
         bottomSheet: (constants.canShowAds)?
         Container(
           width: MediaQuery.of(context).size.width,
-          child: admobBannerBottom,
+          child: (showAdmobBanner)? admobBannerBottom : facebookBannerAd,
         ): Container(height: 1.0,)
     );
   }

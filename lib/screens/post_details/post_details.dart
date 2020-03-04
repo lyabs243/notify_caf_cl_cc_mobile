@@ -1,4 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:facebook_audience_network/ad/ad_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cafclcc/components/comment_widget.dart';
 import 'package:flutter_cafclcc/components/post_widget.dart';
@@ -34,13 +35,14 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
   List<Comment> comments = [];
   RefreshController refreshController;
   ProgressDialog progressDialog;
-  bool isPageRefresh = false, isLoadPage = true;
+  bool isPageRefresh = false, isLoadPage = true, showAdmobBanner = false;
   int page = 1;
 
   User currentUser;
   TextEditingController _controller;
 
   AdmobBanner admobBanner;
+  FacebookBannerAd facebookBannerAd;
 
   _PostDetailsState(this.post);
 
@@ -51,6 +53,22 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       adUnitId: constant.getAdmobBannerId(),
       adSize: AdmobBannerSize.BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+      },
+    );
+    facebookBannerAd = FacebookBannerAd(
+      placementId: constant.FACEBOOK_AD_BANNER_ID,
+      bannerSize: BannerSize.STANDARD,
+      listener: (result, value) {
+        switch (result) {
+          case BannerAdResult.ERROR:
+            break;
+          case BannerAdResult.LOADED:
+            break;
+          case BannerAdResult.CLICKED:
+            break;
+          case BannerAdResult.LOGGING_IMPRESSION:
+            break;
+        }
       },
     );
     refreshController = new RefreshController(initialRefresh: false);
@@ -113,7 +131,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
                             (constant.canShowAds)?
                             Container(
                               margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                              child: admobBanner,
+                              child: (showAdmobBanner)? admobBanner : facebookBannerAd,
                             ): Container()
                           ],
                         ) :
