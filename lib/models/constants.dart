@@ -37,15 +37,15 @@ Color fromHex(String hexString) {
 }
 
 String getAdmobBannerId() {
-  return ADMOB_BANNER_ID;
+  return ADMOB_TEST_BANNER_ID;
 }
 
 String getAdmobInterstitialId() {
-  return ADMOB_INTERSTITIAL_ID;
+  return ADMOB_TEST_INTERSTITIAL_ID;
 }
 
 String getAdmobRewardId() {
-  return ADMOB_REWARD_ID;
+  return ADMOB_TEST_REWARD_ID;
 }
 
 String convertDateToAbout(DateTime dateTime){

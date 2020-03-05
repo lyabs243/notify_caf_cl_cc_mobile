@@ -36,7 +36,7 @@ class _BodyState extends State<Body>{
   List<DrawerItem> _drawerItems;
   BuildContext _context;
   bool isPageLoading = true;
-  bool isLoading = false, showAdmobBanner = false;
+  bool isLoading = false, showAdmobBanner = false, isFacebookBannerLoaded = false;
 
   bool isCurrentUser = false;
 
@@ -66,8 +66,14 @@ class _BodyState extends State<Body>{
       listener: (result, value) {
         switch (result) {
           case BannerAdResult.ERROR:
+            setState(() {
+              showAdmobBanner = true;
+            });
             break;
           case BannerAdResult.LOADED:
+            setState(() {
+              isFacebookBannerLoaded = true;
+            });
             break;
           case BannerAdResult.CLICKED:
             break;
@@ -77,6 +83,15 @@ class _BodyState extends State<Body>{
       },
     );
     initData();
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookBannerLoaded) {
+        setState(() {
+          showAdmobBanner = true;
+        });
+      }
+    });
   }
 
   initData() async {

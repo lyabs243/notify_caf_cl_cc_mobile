@@ -35,7 +35,7 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
   List<Comment> comments = [];
   RefreshController refreshController;
   ProgressDialog progressDialog;
-  bool isPageRefresh = false, isLoadPage = true, showAdmobBanner = false;
+  bool isPageRefresh = false, isLoadPage = true, showAdmobBanner = false, isFacebookBannerAdLoaded = false;
   int page = 1;
 
   User currentUser;
@@ -61,8 +61,14 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       listener: (result, value) {
         switch (result) {
           case BannerAdResult.ERROR:
+            setState(() {
+              showAdmobBanner = true;
+            });
             break;
           case BannerAdResult.LOADED:
+            setState(() {
+              isFacebookBannerAdLoaded = true;
+            });
             break;
           case BannerAdResult.CLICKED:
             break;
@@ -81,6 +87,15 @@ class _PostDetailsState extends State<PostDetails> with SingleTickerProviderStat
       });
     });
     initItems();
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookBannerAdLoaded) {
+        setState(() {
+          showAdmobBanner = true;
+        });
+      }
+    });
   }
 
   @override

@@ -27,7 +27,7 @@ class _NewsDetailsState extends State<NewsDetails> {
   NewsItem newsItem;
   AdmobBanner admobBanner;
   FacebookBannerAd facebookBannerAd;
-  bool showAdmobBanner = false;
+  bool showAdmobBanner = false, isFacebookBanerLoaded = false;
 
   _NewsDetailsState(this.newsItem);
 
@@ -48,8 +48,14 @@ class _NewsDetailsState extends State<NewsDetails> {
       listener: (result, value) {
         switch (result) {
           case BannerAdResult.ERROR:
+            setState(() {
+              showAdmobBanner = true;
+            });
             break;
           case BannerAdResult.LOADED:
+            setState(() {
+              isFacebookBanerLoaded = true;
+            });
             break;
           case BannerAdResult.CLICKED:
             break;
@@ -58,6 +64,15 @@ class _NewsDetailsState extends State<NewsDetails> {
         }
       },
     );
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookBanerLoaded) {
+        setState(() {
+          showAdmobBanner = true;
+        });
+      }
+    });
   }
 
   @override

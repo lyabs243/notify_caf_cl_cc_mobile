@@ -27,7 +27,8 @@ class NewsList extends StatefulWidget{
 class _NewsListState extends State<NewsList> {
 
   RefreshController refreshController;
-  bool isPageRefresh = false, isLoadPage = true, isAddingItems = false, showAdmobBanner = false, showAdmobBannerLarge = false;
+  bool isPageRefresh = false, isLoadPage = true, isAddingItems = false, showAdmobBanner = false,
+      showAdmobBannerLarge = false, isFacebookBannerAdLoaded = false, isFacebookNativeAdLoaded = false;
   int page = 1, idCompetitionType;
   List<NewsItem> news = [];
   User user;
@@ -52,8 +53,14 @@ class _NewsListState extends State<NewsList> {
       listener: (result, value) {
         switch (result) {
           case BannerAdResult.ERROR:
+            setState(() {
+              showAdmobBanner = true;
+            });
             break;
           case BannerAdResult.LOADED:
+            setState(() {
+              isFacebookBannerAdLoaded = true;
+            });
             break;
           case BannerAdResult.CLICKED:
             break;
@@ -76,8 +83,15 @@ class _NewsListState extends State<NewsList> {
       listener: (result, value) {
         switch (result) {
           case NativeAdResult.ERROR:
+            setState(() {
+              showAdmobBannerLarge = true;
+            });
             break;
           case NativeAdResult.LOADED:
+            setState(() {
+              showAdmobBannerLarge = false;
+              isFacebookNativeAdLoaded = true;
+            });
             break;
           case NativeAdResult.CLICKED:
             break;
@@ -99,6 +113,20 @@ class _NewsListState extends State<NewsList> {
       this.user = user;
       if(this.news.length == 0) {
         initItems();
+      }
+    });
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookNativeAdLoaded) {
+        setState(() {
+          showAdmobBannerLarge = true;
+        });
+      }
+      if(!isFacebookBannerAdLoaded) {
+        setState(() {
+          showAdmobBanner = true;
+        });
       }
     });
   }
@@ -156,7 +184,7 @@ class _NewsListState extends State<NewsList> {
                       (constant.canShowAds && (i - 1 == 0 || (i - 1) % 10 == 0))?
                       Container(
                         margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                        child: (showAdmobBanner)? admobBanner : facebookNativeAd,
+                        child: (showAdmobBannerLarge)? admobBanner : facebookNativeAd,
                       ): Container(),
                       NewsItemWidget(news[i]),
                       (i == news.length - 1 && isAddingItems)?

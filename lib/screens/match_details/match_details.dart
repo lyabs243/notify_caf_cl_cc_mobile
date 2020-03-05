@@ -47,7 +47,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
 
   List<Widget> tabViews = [];
   List<Tab> tabs = [];
-  bool isLoad = true, showAdmobBanner = false;
+  bool isLoad = true, showAdmobBanner = false, isFacebookBannerAdLoaded = false;
   User user;
 
   AdmobBanner admobBanner;
@@ -72,8 +72,14 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       listener: (result, value) {
         switch (result) {
           case BannerAdResult.ERROR:
+            setState(() {
+              showAdmobBanner = true;
+            });
             break;
           case BannerAdResult.LOADED:
+            setState(() {
+              isFacebookBannerAdLoaded = true;
+            });
             break;
           case BannerAdResult.CLICKED:
             break;
@@ -94,6 +100,15 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     if(matchItem != null) {
       initTabsDetails();
     }
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookBannerAdLoaded) {
+        setState(() {
+          showAdmobBanner = true;
+        });
+      }
+    });
   }
 
   initMatch() async {

@@ -26,7 +26,7 @@ class _AllPostsState extends State<AllPosts> {
 
   List<Post> posts = [];
   RefreshController refreshController;
-  bool isPageRefresh = false, isLoadPage = true, showAdmobBannerRectangle = false;
+  bool isPageRefresh = false, isLoadPage = true, showAdmobBannerRectangle = false, isFacebookNativeAdLoaded = false;
   int page = 1;
   AdmobBanner admobBanner;
   FacebookNativeAd facebookNativeAd;
@@ -56,8 +56,15 @@ class _AllPostsState extends State<AllPosts> {
       listener: (result, value) {
         switch (result) {
           case NativeAdResult.ERROR:
+            setState(() {
+              showAdmobBannerRectangle = true;
+            });
             break;
           case NativeAdResult.LOADED:
+            setState(() {
+              showAdmobBannerRectangle = false;
+              isFacebookNativeAdLoaded = true;
+            });
             break;
           case NativeAdResult.CLICKED:
             break;
@@ -155,6 +162,14 @@ class _AllPostsState extends State<AllPosts> {
           page++;
         }
         isLoadPage = false;
+        //check if facebook ad is loaded, else it will show admob
+        Future.delayed(const Duration(milliseconds: 3500), () {
+          if(!isFacebookNativeAdLoaded) {
+            setState(() {
+              showAdmobBannerRectangle = true;
+            });
+          }
+        });
       });
     });
   }

@@ -43,7 +43,7 @@ class _BodyState extends State<Body>{
   HomeInfos homeInfos;
   RefreshController refreshController;
   bool loadData = true;
-  bool hasHomeInfos = false, showAdmob = false;
+  bool hasHomeInfos = false, showAdmob = false, isFacebookNativeAdLoaded = false;
   User user;
 
   List<Widget> liveWidgets = [];
@@ -83,8 +83,14 @@ class _BodyState extends State<Body>{
       listener: (result, value) {
         switch (result) {
           case NativeAdResult.ERROR:
+            setState(() {
+              showAdmob = true;
+            });
             break;
           case NativeAdResult.LOADED:
+            setState(() {
+              isFacebookNativeAdLoaded = true;
+            });
             break;
           case NativeAdResult.CLICKED:
             break;
@@ -260,6 +266,15 @@ class _BodyState extends State<Body>{
 
     //init fixture widgets
     initSpecificWidget(TypeList.RESULT, homeInfos.latest_result, resultWidgets, MyLocalizations.instanceLocalization['last_results']);
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookNativeAdLoaded) {
+        setState(() {
+          showAdmob = true;
+        });
+      }
+    });
   }
 
   initNewsWidgets() {

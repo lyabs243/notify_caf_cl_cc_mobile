@@ -54,16 +54,15 @@ class PageTransition {
       if(constants.canShowAds) {
         progressDialog.show();
         if(showAdmobInterstitial) {
-          await interstitialAd.load();
+          loadAdmobInterstitial();
         }
         else {
           FacebookInterstitialAd.loadInterstitialAd(
             placementId: constants.FACEBOOK_AD_INTERSTITIAL_ID,
             listener: (result, value) {
-              print(result);
               switch (result) {
                 case InterstitialAdResult.ERROR:
-                  progressDialog.hide();
+                  loadAdmobInterstitial();
                   if(!pushReplacement) {
                     Navigator.push(context, materialPageRoute);
                   }
@@ -154,6 +153,10 @@ class PageTransition {
         Navigator.pushReplacement(context, materialPageRoute);
       }
     }
+  }
+
+  Future loadAdmobInterstitial() async {
+    await interstitialAd.load();
   }
 
   Future<int> getTransitionNumber() async {

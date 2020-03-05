@@ -34,7 +34,7 @@ class _MatchListState extends State<MatchsList>{
   int page = 1;
   int selectedCompetition = 0;
   bool isLoadPage = true, isLoadCompetition = false, isLoadCompetitionMatchs = false, isAddingItems = false,
-      showAdmobBanner = false, showAdmobLargeBanner = false;
+      showAdmobBanner = false, showAdmobLargeBanner = false, isFacebookBannerLoaded = false, isFacebookNativeAdLoaded = false;
   CompetitionItem competitionItem;
   int idCompetitionType;
   TypeList typeList;
@@ -76,8 +76,14 @@ class _MatchListState extends State<MatchsList>{
       listener: (result, value) {
         switch (result) {
           case BannerAdResult.ERROR:
+            setState(() {
+              showAdmobBanner = true;
+            });
             break;
           case BannerAdResult.LOADED:
+            setState(() {
+              isFacebookBannerLoaded = true;
+            });
             break;
           case BannerAdResult.CLICKED:
             break;
@@ -100,8 +106,15 @@ class _MatchListState extends State<MatchsList>{
       listener: (result, value) {
         switch (result) {
           case NativeAdResult.ERROR:
+            setState(() {
+              showAdmobLargeBanner = true;
+            });
             break;
           case NativeAdResult.LOADED:
+            setState(() {
+              showAdmobLargeBanner = false;
+              isFacebookNativeAdLoaded = true;
+            });
             break;
           case NativeAdResult.CLICKED:
             break;
@@ -132,6 +145,20 @@ class _MatchListState extends State<MatchsList>{
     }
     initCompetitions();
     initItems();
+
+    //check if facebook ad is loaded, else it will show admob
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if(!isFacebookNativeAdLoaded) {
+        setState(() {
+          showAdmobLargeBanner = true;
+        });
+      }
+      if(!isFacebookBannerLoaded) {
+        setState(() {
+          showAdmobBanner = true;
+        });
+      }
+    });
   }
 
   @override
