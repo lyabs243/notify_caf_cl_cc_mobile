@@ -54,7 +54,7 @@ class PageTransition {
       if(constants.canShowAds) {
         progressDialog.show();
         if(showAdmobInterstitial) {
-          loadAdmobInterstitial();
+          await loadAdmobInterstitial();
         }
         else {
           FacebookInterstitialAd.loadInterstitialAd(
@@ -62,13 +62,15 @@ class PageTransition {
             listener: (result, value) {
               switch (result) {
                 case InterstitialAdResult.ERROR:
-                  loadAdmobInterstitial();
-                  if(!pushReplacement) {
-                    Navigator.push(context, materialPageRoute);
-                  }
-                  else {
-                    Navigator.pushReplacement(context, materialPageRoute);
-                  }
+                  loadAdmobInterstitial().then((value) {
+                    if(!pushReplacement) {
+                      Navigator.push(context, materialPageRoute);
+                    }
+                    else {
+                      Navigator.pushReplacement(context, materialPageRoute);
+                    }
+                  });
+
                   break;
                 case InterstitialAdResult.LOADED:
                   FacebookInterstitialAd.showInterstitialAd(delay: 5000);
