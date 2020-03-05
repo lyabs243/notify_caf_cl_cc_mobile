@@ -144,6 +144,14 @@ class PageTransition {
           }
         });
       }
+      else {
+        if(!pushReplacement) {
+          Navigator.push(context, materialPageRoute);
+        }
+        else {
+          Navigator.pushReplacement(context, materialPageRoute);
+        }
+      }
     }
     else {
       if(!pushReplacement) {
